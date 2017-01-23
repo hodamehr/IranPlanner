@@ -1,0 +1,1 @@
+include ':app', ':widget', ':androidsvg-1.2.2-beta-1'
