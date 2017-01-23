@@ -16,7 +16,7 @@
 <View
     android:layout_width="wrap_content"
     android:layout_height="3dp"
-    android:background="@color/gray"
+    android:background="@color/greyDark"
     android:layout_centerVertical="true"/>
 
         <TextView

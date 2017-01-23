@@ -128,20 +128,22 @@ public class SearchCityCityActivity extends StandardActivity implements Callback
 
     @Override
     public void onResponse(Call<ResultItineraryList> call, Response<ResultItineraryList> response) {
-        Log.e("get result from server", response.body().toString());
-        ResultItineraryList jsonResponse = response.body();
-        List<ResultItinerary> data = jsonResponse.getResultItinerary();
-        ItineraryListFragment itineraryListFragment = new ItineraryListFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("resuliItineraryList", (Serializable) data);
-        itineraryListFragment.setArguments(bundle);
-        loadFragment(this, itineraryListFragment, R.id.containerCityCity, true, 0, 0);
-        checkfragment = true;
+        if (response.body().getStatus().getStatus().equals("200")) {
+            Log.e("get result from server", response.body().toString());
+            ResultItineraryList jsonResponse = response.body();
+            List<ResultItinerary> data = jsonResponse.getResultItinerary();
+            ItineraryListFragment itineraryListFragment = new ItineraryListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("resuliItineraryList", (Serializable) data);
+            itineraryListFragment.setArguments(bundle);
+            loadFragment(this, itineraryListFragment, R.id.containerCityCity, true, 0, 0);
+            checkfragment = true;
+        }
     }
 
     @Override
     public void onFailure(Call<ResultItineraryList> call, Throwable t) {
-        Toast.makeText(getApplicationContext(),"خطا در برقراری ارتباط با اینترنت",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "خطا در برقراری ارتباط با اینترنت", Toast.LENGTH_LONG).show();
         Log.e(" error from server", "error");
     }
 

@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.util.List;
 
@@ -62,23 +63,12 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
 
         viewHolder.itinerary_from_city_name.setText(android.get(i).getItineraryFromCityName() + " - " + android.get(i).getItineraryToCityName());
         viewHolder.itinerary_duration.setText("مدت زمان سفر " + Util.persianNumbers(android.get(i).getItineraryDuration()) + " روز");
-        List<ItineraryPercentage> Percentages = android.get(i).getItineraryPercentage();
-        float percentage = 0f;
-        String type = null;
-        for (ItineraryPercentage itineraryPercentage : Percentages) {
-            float a = Float.valueOf(itineraryPercentage.getItineraryAttractionTypePercentage());
-            if (a > percentage) {
-                percentage = a;
-                type = itineraryPercentage.getItineraryAttractionType();
-            }
-        }
-        viewHolder.textTpeTravel.setText(type);
+        viewHolder.textTpeTravel.setText(android.get(i).getItineraryPercentage().get(0).getItineraryAttractionType());
+        viewHolder.progressMax.setProgress(Float.valueOf(android.get(i).getItineraryPercentage().get(0).getItineraryAttractionTypePercentage()));
         viewHolder.itinerary_transport_name.setText(android.get(i).getItineraryTransportName());
         viewHolder.itinerary_count_attraction.setText(Util.persianNumbers(android.get(i).getItineraryCountAttraction()) + " مکان دیدنی");
 
         viewHolder.travelTypePic.setTypeface(Util.getFontAwesome(context));
-        viewHolder.progressMax.setMax(100);
-
         if (android.get(i).getItineraryImgUrl() != null) {
             String url = android.get(i).getItineraryImgUrl();
 //            Glide.with(context).load(url)   .into(viewHolder.imgItineraryList);
@@ -90,7 +80,7 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
 
                         @Override
                         public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                           //// TODO: 22/01/2017  get defeult picture
+                            //// TODO: 22/01/2017  get defeult picture
                             return false;
                         }
 
@@ -123,7 +113,7 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
         private TextView itinerary_count_attraction;
         private TextView textTpeTravel;
         private ImageView imgItineraryList;
-        private ProgressBar progressMax;
+        private CircularProgressBar progressMax;
         private ProgressBar imageLoading;
         private TextView travelTypePic;
 
@@ -136,11 +126,12 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
             itinerary_count_attraction = (TextView) view.findViewById(R.id.itinerary_count_attraction);
             imgItineraryList = (ImageView) view.findViewById(R.id.imgItineraryListMore);
             travelTypePic = (TextView) view.findViewById(R.id.travelTypePic);
-            progressMax = (ProgressBar) view.findViewById(R.id.progressMax);
+            progressMax = (CircularProgressBar) view.findViewById(R.id.progressMax);
             imageLoading = (ProgressBar) view.findViewById(R.id.imageLoading);
             imageLoading.setVisibility(View.VISIBLE);
-            progressMax.setProgress(50);
-            progressMax.clearAnimation();
+            int animationDuration = 2500; // 2500ms = 2,5s
+            progressMax.setProgressWithAnimation(65, animationDuration);
+
 //            progressMax.getIndeterminateDrawable().setColorFilter(
 //                    context.getResources().getColor(pink),
 //                    android.graphics.PorterDuff.Mode.SRC_IN);

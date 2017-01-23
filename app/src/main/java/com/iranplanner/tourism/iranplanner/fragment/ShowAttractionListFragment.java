@@ -2,6 +2,7 @@ package com.iranplanner.tourism.iranplanner.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -51,8 +52,17 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
         attractionRecyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-                Log.e("string", "item clicked" + position );
-                itineraryActionList.get(position);
+                ResultItineraryAttraction ResultItineraryAttraction= itineraryActionList.get(position);
+                DetailAttractionFragment fragment = new DetailAttractionFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("ResultItineraryAttraction", ResultItineraryAttraction);
+
+
+
+                fragment.setArguments(bundle);
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.Holder, fragment, "NewFragmentTag");
+                ft.commit();
             }
         }));
 

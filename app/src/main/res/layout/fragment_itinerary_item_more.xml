@@ -19,8 +19,7 @@
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_itinerary"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp">
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -41,7 +40,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@+id/imgItineraryListMore"
-                        android:background="@color/gray"
+                        android:background="@color/greyDark"
                         android:paddingLeft="@dimen/padding_standard"
                         android:paddingRight="@dimen/padding_standard">
 
@@ -179,28 +178,131 @@
                         android:id="@+id/part3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/supplierLayoutTravelType"
-                        android:padding="@dimen/margin_standard">
+                        android:layout_below="@+id/supplierLayoutTravelType">
 
                         <TextView
                             android:id="@+id/typeOfItinerary"
-                            style="@style/StandardText"
+                            style="@style/StandardTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
+                            android:paddingBottom="@dimen/padding_standard"
+                            android:paddingLeft="@dimen/padding_standard"
+                            android:paddingRight="@dimen/padding_standard"
+                            android:paddingTop="@dimen/padding_standard"
                             android:text="نوع برنامه سفر" />
+
+                        <LinearLayout
+                            android:id="@+id/typeOfItineraryDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/typeOfItinerary"
+                            android:layout_marginLeft="@dimen/margin_standard"
+                            android:layout_marginRight="@dimen/margin_standard"
+                            android:weightSum="3">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                    android:id="@+id/progress1"
+                                    android:layout_width="48dp"
+                                    android:layout_height="51dp"
+                                    app:cpb_background_progressbar_color="@color/greyLight"
+                                    app:cpb_background_progressbar_width="5dp"
+                                    app:cpb_progressbar_color="@color/pink"
+                                    app:cpb_progressbar_width="5dp" />
+
+                                <TextView
+                                    android:id="@+id/textTpeTravel1"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/margin_xshort"
+                                    android:maxLines="1"
+                                    android:text="هنری"
+                                    android:textColor="@color/pink" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                    android:id="@+id/progress2"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:cpb_background_progressbar_color="@color/greyLight"
+                                    app:cpb_background_progressbar_width="5dp"
+                                    app:cpb_progressbar_color="@color/pink"
+                                    app:cpb_progressbar_width="5dp" />
+
+                                <TextView
+                                    android:id="@+id/textTpeTravel2"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/margin_xshort"
+                                    android:maxLines="1"
+                                    android:text="فرهنگی هنری"
+                                    android:textColor="@color/pink" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                    android:id="@+id/progress3"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    app:cpb_background_progressbar_color="@color/greyLight"
+                                    app:cpb_background_progressbar_width="5dp"
+                                    app:cpb_progressbar_color="@color/pink"
+                                    app:cpb_progressbar_width="5dp" />
+
+                                <TextView
+                                    android:id="@+id/textTpeTravel3"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/margin_xshort"
+                                    android:maxLines="1"
+                                    android:text="فرهنگی هنری"
+                                    android:textColor="@color/pink" />
+
+                            </LinearLayout>
+                        </LinearLayout>
 
                         <Button
                             android:id="@+id/showItinerys"
-                            style="@style/StandardText"
+                            style="@style/StandardTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/typeOfItinerary"
+                            android:layout_below="@id/typeOfItineraryDetail"
                             android:layout_centerInParent="true"
+                            android:layout_margin="16dp"
                             android:background="@color/pink"
-                            android:padding="@dimen/padding_short"
+                            android:paddingLeft="@dimen/padding_larg"
+                            android:paddingRight="@dimen/padding_larg"
                             android:text="نمایش برنامه سفر"
+                            android:textColor="@color/greyDark"
 
                             />
                     </RelativeLayout>
@@ -218,15 +320,160 @@
                             android:name="com.google.android.gms.maps.SupportMapFragment"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
                             android:focusableInTouchMode="true"
                             tools:context="com.iranplanner.tourism.iranplanner.MapsActivity" />
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/travelHold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/mapHolder">
+
+                        <LinearLayout
+                            android:id="@+id/fasl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="6">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:id="@+id/textShahrivar"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:maxLines="1"
+                                    android:text="شهریور"
+                                    android:textColor="@color/pink" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:id="@+id/textMordad"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:maxLines="1"
+                                    android:text="مرداد"
+                                    android:textColor="@color/pink" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:id="@+id/texttir"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:maxLines="1"
+                                    android:text="تیر"
+                                    android:textColor="@color/pink" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+
+                                android:background="@color/greenLight"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/textKhordad"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:maxLines="1"
+                                    android:text="خرداد"
+                                    android:textColor="@color/pink" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+
+                                android:background="@color/green"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:id="@+id/textOrdibehesht"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:maxLines="1"
+                                    android:text="اردیبهشت"
+                                    android:textColor="@color/pink" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@color/greenLight"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:id="@+id/textTpeFarvardin"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:maxLines="1"
+                                    android:text="فروردین"
+                                    android:textColor="@color/pink" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
-                        android:layout_below="@id/mapHolder"
+                        android:layout_below="@id/travelHold"
                         android:background="#dfdfdf">
+
                         <RelativeLayout
                             android:id="@+id/fallHolder"
                             android:layout_width="match_parent"
@@ -238,13 +485,12 @@
                                 style="@style/StandardTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
                                 android:layout_marginLeft="@dimen/margin_standard"
                                 android:layout_toRightOf="@+id/mehrHolder"
                                 android:paddingBottom="@dimen/margin_standard"
                                 android:paddingTop="@dimen/margin_standard"
-                                android:layout_centerVertical="true"
-                                android:text="پاییز"
-                                />
+                                android:text="پاییز" />
 
                             <LinearLayout
                                 android:id="@+id/abanHolder"
@@ -258,12 +504,12 @@
                                 >
 
                                 <Button
+                                    android:id="@+id/aban"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
+                                    android:background="@drawable/circle_tohi"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_launcher"
-                                    android:id="@+id/aban"
-                                    android:background="@drawable/circle_tohi" />
+                                    android:src="@mipmap/ic_launcher" />
 
                                 <TextView
 
@@ -271,8 +517,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="5dp"
-                                    android:text="آبان"
-                                    android:paddingBottom="@dimen/padding_short"/>
+                                    android:paddingBottom="@dimen/padding_short"
+                                    android:text="آبان" />
 
 
                             </LinearLayout>
@@ -289,12 +535,12 @@
                                 android:paddingTop="@dimen/padding_short">
 
                                 <Button
+                                    android:id="@+id/mehr"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
+                                    android:background="@drawable/circle_tohi"
                                     android:scaleType="centerCrop"
-                                    android:id="@+id/mehr"
-                                    android:src="@mipmap/ic_launcher"
-                                    android:background="@drawable/circle_tohi" />
+                                    android:src="@mipmap/ic_launcher" />
 
                                 <TextView
                                     style="@style/StandardText"
@@ -319,12 +565,12 @@
                                 android:paddingTop="@dimen/padding_short">
 
                                 <Button
+                                    android:id="@+id/azar"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
+                                    android:background="@drawable/circle_tohi"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_launcher"
-                                    android:id="@+id/azar"
-                                    android:background="@drawable/circle_tohi" />
+                                    android:src="@mipmap/ic_launcher" />
 
                                 <TextView
                                     style="@style/StandardText"
@@ -343,41 +589,41 @@
                             android:layout_below="@+id/summerHolder">-->
 
 
-                            <!--<TextView-->
-                                <!--android:id="@+id/fall"-->
-                                <!--style="@style/StandardTitle"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_toRightOf="@+id/mehrHolder"-->
-                                <!--android:paddingBottom="@dimen/margin_standard"-->
-                                <!--android:paddingTop="@dimen/margin_standard"-->
-                                <!--android:text="پاییز" />-->
+                        <!--<TextView-->
+                        <!--android:id="@+id/fall"-->
+                        <!--style="@style/StandardTitle"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_toRightOf="@+id/mehrHolder"-->
+                        <!--android:paddingBottom="@dimen/margin_standard"-->
+                        <!--android:paddingTop="@dimen/margin_standard"-->
+                        <!--android:text="پاییز" />-->
 
-                            <!--<Button-->
-                                <!--android:id="@+id/mehrHolder"-->
-                                <!--android:layout_width="20dp"-->
-                                <!--android:layout_height="20dp"-->
-                                <!--android:layout_centerVertical="true"-->
-                                <!--android:layout_marginRight="@dimen/padding_big"-->
-                                <!--android:layout_toRightOf="@+id/abanHolder"-->
-                                <!--android:background="@drawable/circle_tohi" />-->
+                        <!--<Button-->
+                        <!--android:id="@+id/mehrHolder"-->
+                        <!--android:layout_width="20dp"-->
+                        <!--android:layout_height="20dp"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginRight="@dimen/padding_big"-->
+                        <!--android:layout_toRightOf="@+id/abanHolder"-->
+                        <!--android:background="@drawable/circle_tohi" />-->
 
-                            <!--<Button-->
-                                <!--android:id="@+id/abanHolder"-->
-                                <!--android:layout_width="20dp"-->
-                                <!--android:layout_height="20dp"-->
-                                <!--android:layout_centerInParent="true"-->
-                                <!--android:layout_marginRight="@dimen/padding_big"-->
-                                <!--android:background="@drawable/circle_tohi" />-->
+                        <!--<Button-->
+                        <!--android:id="@+id/abanHolder"-->
+                        <!--android:layout_width="20dp"-->
+                        <!--android:layout_height="20dp"-->
+                        <!--android:layout_centerInParent="true"-->
+                        <!--android:layout_marginRight="@dimen/padding_big"-->
+                        <!--android:background="@drawable/circle_tohi" />-->
 
-                            <!--<Button-->
-                                <!--android:id="@+id/azar"-->
-                                <!--android:layout_width="20dp"-->
-                                <!--android:layout_height="20dp"-->
-                                <!--android:layout_centerVertical="true"-->
-                                <!--android:layout_marginRight="@dimen/padding_big"-->
-                                <!--android:layout_toLeftOf="@+id/abanHolder"-->
-                                <!--android:background="@drawable/circle_tohi" />-->
+                        <!--<Button-->
+                        <!--android:id="@+id/azar"-->
+                        <!--android:layout_width="20dp"-->
+                        <!--android:layout_height="20dp"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginRight="@dimen/padding_big"-->
+                        <!--android:layout_toLeftOf="@+id/abanHolder"-->
+                        <!--android:background="@drawable/circle_tohi" />-->
                         <!--</RelativeLayout>-->
 
                         <RelativeLayout
@@ -525,6 +771,7 @@
                                 android:text="زمستان" />
                         </RelativeLayout>
                     </RelativeLayout>
+
                 </RelativeLayout>
 
 

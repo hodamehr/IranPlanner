@@ -17,6 +17,7 @@ import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import java.sql.Date;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
 import tools.Util;
@@ -75,7 +76,7 @@ public class AttractionsListAdapter extends RecyclerView.Adapter<AttractionsList
         private TextView itinerary_attraction_name;
         private TextView textCityName;
         private TextView textTimeDuration;
-        private ImageView ImageAttraction;
+        private CircleImageView ImageAttraction;
 
 
         public ViewHolder(View view) {
@@ -83,7 +84,7 @@ public class AttractionsListAdapter extends RecyclerView.Adapter<AttractionsList
             itinerary_attraction_name = (TextView) view.findViewById(R.id.itinerary_attraction_name);
             textCityName = (TextView) view.findViewById(R.id.textCityName);
             textTimeDuration = (TextView) view.findViewById(R.id.textTimeDuration);
-            ImageAttraction = (ImageView) view.findViewById(R.id.ImageAttraction);
+            ImageAttraction = (CircleImageView) view.findViewById(R.id.ImageAttraction);
         }
 
 

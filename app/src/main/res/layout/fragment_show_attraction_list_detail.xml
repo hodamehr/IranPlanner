@@ -129,13 +129,14 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true">
 
-                        <ImageView
-                            android:layout_width="72dp"
-                            android:layout_height="72dp"
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/ImageAttraction"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignTop="@+id/itinerary_attraction_name"
                             android:layout_marginLeft="@dimen/margin_standard"
-                            android:layout_marginTop="@dimen/margin_standard"
-                            android:src="@drawable/emam2"
-                            android:id="@+id/ImageAttraction"/>
+                            android:background="@drawable/ic_svg_grey_pattern"/>
 
                         <TextView
                             android:id="@+id/itinerary_attraction_name"
@@ -156,8 +157,7 @@
 
                             android:gravity="right"
                             android:orientation="horizontal"
-                            android:paddingBottom="@dimen/padding_short"
-                            >
+                            android:paddingBottom="@dimen/padding_short">
 
 
                             <TextView
@@ -167,17 +167,15 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:maxLines="1"
-                                android:text="textCityName"
-                                />
+                                android:text="textCityName" />
 
                             <ImageView
                                 android:id="@+id/imageCityName"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_launcher"
                                 android:layout_margin="5dp"
-                                />
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_launcher" />
 
 
                         </LinearLayout>
@@ -205,9 +203,9 @@
                                 android:id="@+id/imageTimeDuration"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
+                                android:layout_margin="5dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_launcher"
-                                android:layout_margin="5dp"/>
+                                android:src="@mipmap/ic_launcher" />
 
                         </LinearLayout>
                     </RelativeLayout>

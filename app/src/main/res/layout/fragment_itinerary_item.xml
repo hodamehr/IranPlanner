@@ -39,6 +39,7 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
+                            android:background="@drawable/ic_svg_grey_pattern"
                             android:scaleType="centerCrop" />
 
                         <ProgressBar
@@ -88,12 +89,14 @@
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <ProgressBar
+                            <com.mikhaellopez.circularprogressbar.CircularProgressBar
                                 android:id="@+id/progressMax"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_launcher" />
+                                app:cpb_background_progressbar_color="@color/greyLight"
+                                app:cpb_background_progressbar_width="5dp"
+                                app:cpb_progressbar_color="@color/pink"
+                                app:cpb_progressbar_width="5dp" />
                             <!--android:theme="@style/CircularProgress"-->
 
                             <TextView

@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.iranplanner.tourism.iranplanner.activity.MapFullActivity;
 import com.iranplanner.tourism.iranplanner.activity.ShowAttractionActivity;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -79,6 +80,13 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         TextView txtItinerary_attraction_type = (TextView) findViewById(R.id.txtItinerary_attraction_type);
         TextView txtItinerary_count_attraction = (TextView) findViewById(R.id.txtItinerary_count_attraction);
         TextView showItinerys = (TextView) findViewById(R.id.showItinerys);
+        TextView textTpeTravel1 = (TextView) findViewById(R.id.textTpeTravel1);
+        TextView textTpeTravel2 = (TextView) findViewById(R.id.textTpeTravel2);
+        TextView textTpeTravel3 = (TextView) findViewById(R.id.textTpeTravel3);
+        CircularProgressBar progress1 = (CircularProgressBar) findViewById(R.id.progress1);
+        CircularProgressBar progress2 = (CircularProgressBar) findViewById(R.id.progress2);
+        CircularProgressBar progress3 = (CircularProgressBar) findViewById(R.id.progress3);
+
         ImageView imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
 
         imgItineraryListMore.setImageBitmap(bmp);
@@ -86,6 +94,12 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         txtItinerary_attraction_Difficulty.setText(itineraryData.getItineraryDifficulty().getItineraryDifficultyGroup());
         txtItinerary_count_attraction.setText(itineraryData.getItineraryCountAttraction() + "مکان دیدنی");
         txtItinerary_attraction_type.setText(itineraryData.getItineraryTransportName());
+        textTpeTravel1.setText(itineraryData.getItineraryPercentage().get(0).getItineraryAttractionType());
+        textTpeTravel2.setText(itineraryData.getItineraryPercentage().get(1).getItineraryAttractionType());
+        textTpeTravel3.setText(itineraryData.getItineraryPercentage().get(2).getItineraryAttractionType());
+        progress1.setProgress(Float.valueOf(itineraryData.getItineraryPercentage().get(0).getItineraryAttractionTypePercentage()));
+        progress2.setProgress(Float.valueOf(itineraryData.getItineraryPercentage().get(1).getItineraryAttractionTypePercentage()));
+        progress3.setProgress(Float.valueOf(itineraryData.getItineraryPercentage().get(2).getItineraryAttractionTypePercentage()));
         itineraryId = itineraryData.getItineraryId();
         getAttraction(itineraryId);
         showItinerys.setOnClickListener(new View.OnClickListener() {
