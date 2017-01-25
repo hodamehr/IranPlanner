@@ -56,38 +56,34 @@ public class MapDirection {
     LocationRequest mLocationRequest;
     ResultItinerary itineraryData;
     List<ItineraryLodgingCity> lodgingCities;
-    public MapDirection( GoogleMap  mMap,Context context,List<ItineraryLodgingCity> lodgingCities,ArrayList<LatLng> MarkerPoints) {
-       this.mMap=mMap;
-        this.context=context;
-        this.lodgingCities=lodgingCities;
-        this.MarkerPoints=MarkerPoints;
+
+    public MapDirection(GoogleMap mMap, Context context, List<ItineraryLodgingCity> lodgingCities, ArrayList<LatLng> MarkerPoints) {
+        this.mMap = mMap;
+        this.context = context;
+        this.lodgingCities = lodgingCities;
+        this.MarkerPoints = MarkerPoints;
     }
 
-    public void readytoDirect(){
-
-        // Already two locations
-
+    public void readytoDirect() {
 
         MarkerOptions options = new MarkerOptions();
-//        LatLng w=new LatLng(36.2605,59.6168);
-//        MarkerPoints.add(w);
-//        options.position(w);
         for (ItineraryLodgingCity lodgingCity : lodgingCities) {
-
-            LatLng point=new LatLng(Float.valueOf(lodgingCity.getCityPositionLat()),Float.valueOf(lodgingCity.getCityPositionLon()));
-            MarkerPoints.add(point);
-            options.position(point);
+                LatLng point = new LatLng(Float.valueOf(lodgingCity.getCityPositionLat()), Float.valueOf(lodgingCity.getCityPositionLon()));
+                MarkerPoints.add(point);
+                options.position(point);
         }
 
         // Add new marker to the Google Map Android API V2
-        mMap.addMarker(options);
+        if(options!=null){
+            mMap.addMarker(options);
+        }
 
         // Checks, whether start and end locations are captured
         LatLng origin;
-        LatLng dest ;
+        LatLng dest;
 
         if (MarkerPoints.size() >= 2) {
-            for (int j = 0; j < MarkerPoints.size()-1; j++) {
+            for (int j = 0; j < MarkerPoints.size() - 1; j++) {
                 origin = MarkerPoints.get(j);
                 dest = MarkerPoints.get(j + 1);
 
@@ -107,6 +103,7 @@ public class MapDirection {
         }
 
     }
+
     private String getUrl(LatLng origin, LatLng dest) {
 
         // Origin of route
@@ -242,7 +239,7 @@ public class MapDirection {
             PolylineOptions lineOptions = null;
 
             // Traversing through all the routes
-            if(result!=null){
+            if (result != null) {
                 for (int i = 0; i < result.size(); i++) {
                     points = new ArrayList<>();
                     lineOptions = new PolylineOptions();

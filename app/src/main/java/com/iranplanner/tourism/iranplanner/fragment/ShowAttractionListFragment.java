@@ -1,6 +1,7 @@
 package com.iranplanner.tourism.iranplanner.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.iranplanner.tourism.iranplanner.MapsActivity;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.adapter.AttractionsListAdapter;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
+import com.iranplanner.tourism.iranplanner.standard.attractionDetailActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +33,7 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
     private AttractionsListAdapter adapter;
     LinearLayoutManager mLayoutManager;
     List<ResultItineraryAttraction> itineraryActionList;
-    int dayNumber,allDays;
+    int dayNumber, allDays;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -41,7 +45,7 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
         itineraryActionList = (List<ResultItineraryAttraction>) bundle.getSerializable("itineraryActionList");
         dayNumber = bundle.getInt("dayNumber");
         allDays = bundle.getInt("allDays");
-        textDayNumber.setText(" روز "+ String.valueOf(dayNumber)+" از "+allDays);
+        textDayNumber.setText(" روز " + String.valueOf(dayNumber) + " از " + allDays);
         attractionRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         attractionRecyclerView.setLayoutManager(layoutManager);
@@ -52,17 +56,18 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
         attractionRecyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-                ResultItineraryAttraction ResultItineraryAttraction= itineraryActionList.get(position);
-                DetailAttractionFragment fragment = new DetailAttractionFragment();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("ResultItineraryAttraction", ResultItineraryAttraction);
+                ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+                Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+                intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+                startActivity(intent);
+//                DetailAttractionFragment fragment = new DetailAttractionFragment();
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("ResultItineraryAttraction", ResultItineraryAttraction);
 
-
-
-                fragment.setArguments(bundle);
-                final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.Holder, fragment, "NewFragmentTag");
-                ft.commit();
+//                fragment.setArguments(bundle);
+//                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.replace(R.id.Holder, fragment, "NewFragmentTag");
+//                ft.commit();
             }
         }));
 

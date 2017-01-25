@@ -17,5 +17,7 @@
     <string name="icon_Road">&#xf018;</string>
     <string name="icon_Culture">&#xf19c;</string>
     <string name="icon_eye">&#xf06e;</string>
+    <string name="title_activity_attraction_detail">Map</string>
+    <string name="provience_name">استان </string>
 
 </resources>

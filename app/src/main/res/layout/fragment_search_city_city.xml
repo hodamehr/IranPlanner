@@ -46,7 +46,8 @@
                     android:layout_marginTop="@dimen/margin_standard"
                     android:hint="@string/search_ok"
                     android:text="@string/icon_heart"
-                    android:textColor="@color/blue"/>
+                    android:textColor="@color/blue" />
+
 
             </RelativeLayout>
 

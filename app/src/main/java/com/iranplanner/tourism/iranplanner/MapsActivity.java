@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.ItineraryLodgingCity;
+import entity.ItineraryPercentage;
 import entity.ItinerarySeasson;
 import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
@@ -65,6 +66,13 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
     ResultItinerary itineraryData;
     private String itineraryId;
     List<ResultItineraryAttraction> itineraryActionList;
+    CircularProgressBar progress1;
+    CircularProgressBar progress2;
+    CircularProgressBar progress3;
+    TextView textTpeTravel1;
+    TextView textTpeTravel2;
+    TextView textTpeTravel3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,26 +88,20 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         TextView txtItinerary_attraction_type = (TextView) findViewById(R.id.txtItinerary_attraction_type);
         TextView txtItinerary_count_attraction = (TextView) findViewById(R.id.txtItinerary_count_attraction);
         TextView showItinerys = (TextView) findViewById(R.id.showItinerys);
-        TextView textTpeTravel1 = (TextView) findViewById(R.id.textTpeTravel1);
-        TextView textTpeTravel2 = (TextView) findViewById(R.id.textTpeTravel2);
-        TextView textTpeTravel3 = (TextView) findViewById(R.id.textTpeTravel3);
-        CircularProgressBar progress1 = (CircularProgressBar) findViewById(R.id.progress1);
-        CircularProgressBar progress2 = (CircularProgressBar) findViewById(R.id.progress2);
-        CircularProgressBar progress3 = (CircularProgressBar) findViewById(R.id.progress3);
-
+        textTpeTravel1 = (TextView) findViewById(R.id.textTpeTravel1);
+        textTpeTravel2 = (TextView) findViewById(R.id.textTpeTravel2);
+        textTpeTravel3 = (TextView) findViewById(R.id.textTpeTravel3);
+        progress1 = (CircularProgressBar) findViewById(R.id.progress1);
+        progress2 = (CircularProgressBar) findViewById(R.id.progress2);
+        progress3 = (CircularProgressBar) findViewById(R.id.progress3);
         ImageView imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
 
         imgItineraryListMore.setImageBitmap(bmp);
         setMonth();
+        SetPercentage();
+
         txtItinerary_attraction_Difficulty.setText(itineraryData.getItineraryDifficulty().getItineraryDifficultyGroup());
         txtItinerary_count_attraction.setText(itineraryData.getItineraryCountAttraction() + "مکان دیدنی");
-        txtItinerary_attraction_type.setText(itineraryData.getItineraryTransportName());
-        textTpeTravel1.setText(itineraryData.getItineraryPercentage().get(0).getItineraryAttractionType());
-        textTpeTravel2.setText(itineraryData.getItineraryPercentage().get(1).getItineraryAttractionType());
-        textTpeTravel3.setText(itineraryData.getItineraryPercentage().get(2).getItineraryAttractionType());
-        progress1.setProgress(Float.valueOf(itineraryData.getItineraryPercentage().get(0).getItineraryAttractionTypePercentage()));
-        progress2.setProgress(Float.valueOf(itineraryData.getItineraryPercentage().get(1).getItineraryAttractionTypePercentage()));
-        progress3.setProgress(Float.valueOf(itineraryData.getItineraryPercentage().get(2).getItineraryAttractionTypePercentage()));
         itineraryId = itineraryData.getItineraryId();
         getAttraction(itineraryId);
         showItinerys.setOnClickListener(new View.OnClickListener() {
@@ -113,16 +115,12 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
                 }
             }
         });
-
-
         //-------------------map
-
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
         // Initializing
         MarkerPoints = new ArrayList<>();
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -191,7 +189,41 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
 
 
     }
+    private void SetPercentage(){
+                ArrayList<String> addtypes = new ArrayList<>();
+        ArrayList<String> addtypesper = new ArrayList<>();
+        ArrayList<String> deleteType = new ArrayList<>();
+        ArrayList<String> deleteTypeper = new ArrayList<>();
+        deleteType.add("مذهبی");
+        deleteType.add("تاریخی و فرهنگی");
+        deleteType.add("طبیعی");
+        deleteType.add("تفریحی و ورزشی");
+        deleteTypeper.add("0");
+        deleteTypeper.add("0");
+        deleteTypeper.add("0");
+        deleteTypeper.add("0");
+        for (ItineraryPercentage p : itineraryData.getItineraryPercentage()) {
+            addtypes.add(p.getItineraryAttractionType());
+            addtypesper.add(p.getItineraryAttractionTypePercentage());
 
+            if (deleteType.contains(p.getItineraryAttractionType())) {
+                deleteType.remove(p.getItineraryAttractionType());
+            }
+        }
+        if (addtypes.size() <= 3) {
+            for (int i = addtypes.size(); i < 3; i++) {
+                addtypes.add(deleteType.get(i));
+                addtypesper.add(deleteTypeper.get(i));
+            }
+        }
+
+        textTpeTravel1.setText(addtypes.get(0));
+        textTpeTravel2.setText(addtypes.get(1));
+        textTpeTravel3.setText(addtypes.get(2));
+        progress1.setProgress(Float.valueOf(addtypesper.get(0)));
+        progress2.setProgress(Float.valueOf(addtypesper.get(1)));
+        progress3.setProgress(Float.valueOf(addtypesper.get(2)));
+    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;

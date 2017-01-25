@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -17,20 +16,19 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.iranplanner.tourism.iranplanner.MapsActivity;
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.activity.SearchCityCityActivity;
 
 
 public class MainSearchFragment extends Fragment implements View.OnClickListener {
 
-    Button findMyLocation, cityTrip;
+    Button findMyLocation, cityTrip,provinceTrip;
 
     public static MainSearchFragment newInstance() {
         MainSearchFragment fragment = new MainSearchFragment();
@@ -43,8 +41,10 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_search, container, false);
         findMyLocation = (Button) view.findViewById(R.id.findMyLocation);
+        provinceTrip = (Button) view.findViewById(R.id.provinceTrip);
         cityTrip = (Button) view.findViewById(R.id.cityTrip);
         cityTrip.setOnClickListener(this);
+        provinceTrip.setOnClickListener(this);
 
 
         findMyLocation.setOnClickListener(this);
@@ -73,7 +73,7 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
                 .setCancelable(false)
                 .setPositiveButton("بله", new DialogInterface.OnClickListener() {
                     public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
                 })
                 .setNegativeButton("خیر", new DialogInterface.OnClickListener() {
@@ -104,8 +104,22 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
 //                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
                 break;
             case R.id.cityTrip:
-                Intent intent = new Intent(getActivity(), SearchCityCityActivity.class);
-                startActivity(intent);
+                SearchCityCityFragment fragment = new SearchCityCityFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.SearchHolder, fragment);
+                ft.addToBackStack(null);
+                ft.commit();
+                break;
+            case R.id.provinceTrip:
+                SearchProvinceFragment fragmentProvience = new SearchProvinceFragment();
+                FragmentTransaction fts = getFragmentManager().beginTransaction();
+                fts.replace(R.id.SearchHolder, fragmentProvience);
+                fts.addToBackStack(null);
+                fts.commit();
+                break;
+
+            case R.id.attractionTrip:
+
                 break;
         }
 

@@ -41,11 +41,7 @@ public class DetailAttractionFragment extends StandardFragment {
         int totalMinute = Integer.parseInt(attraction.getAttarctionEstimatedTime());
         Util.convertMinuteToHour(totalMinute, textTimeDuration);
 
-//        if(bundle.getByteArray("byteArray")!=null) {
-//            byte[] mybyte=bundle.getByteArray("byteArray");
-//            Bitmap b = BitmapFactory.decodeByteArray(mybyte,0,mybyte.length);
-//            imageAttraction.setImageBitmap(b);
-//        }
+
         if (attraction.getAttractionPrice() == null) {
             textEntranceFee.setText("ندارد");
         } else {

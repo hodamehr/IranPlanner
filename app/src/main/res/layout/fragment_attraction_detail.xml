@@ -187,6 +187,7 @@
                             android:layout_height="match_parent"
                             android:focusableInTouchMode="true"
                             tools:context="com.iranplanner.tourism.iranplanner.MapsActivity" />
+
                     </RelativeLayout>
 
 

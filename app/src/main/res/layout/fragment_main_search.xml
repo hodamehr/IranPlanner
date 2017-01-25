@@ -1,56 +1,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/SearchHolder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerInParent="true"
-    android:background="@color/white"
-    tools:context="com.iranplanner.tourism.iranplanner.fragment.MainSearchFragment">
+    tools:context="com.iranplanner.tourism.iranplanner.fragment.MainSearchFragment"
+    android:background="@color/white">
 
-
-    <Button
-        android:id="@+id/iranTrip"
-        style="@style/StandardText"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="سفر ایرانگردی" />
+        android:id="@+id/searchButtonHolder">
 
-    <Button
-        android:id="@+id/cityTrip"
-        style="@style/StandardText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/iranTrip"
-        android:layout_below="@+id/iranTrip"
-        android:text="شهر گردی" />
+        <Button
+            android:id="@+id/iranTrip"
+            style="@style/StandardText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="سفر ایرانگردی" />
 
-    <Button
-        android:id="@+id/provinceTtip"
-        style="@style/StandardText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cityTrip"
-        android:layout_centerHorizontal="true"
-        android:text="استان گردی" />
+        <Button
+            android:id="@+id/cityTrip"
+            style="@style/StandardText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/iranTrip"
+            android:layout_below="@+id/iranTrip"
+            android:text="شهر گردی" />
 
-    <Button
-        android:id="@+id/attractionTrip"
-        style="@style/StandardText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/provinceTtip"
-        android:layout_below="@+id/provinceTtip"
-        android:text="جاذبه گردی" />
+        <Button
+            android:id="@+id/provinceTrip"
+            style="@style/StandardText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cityTrip"
+            android:layout_centerHorizontal="true"
+            android:text="استان گردی" />
 
-    <Button
-        android:id="@+id/findMyLocation"
-        style="@style/StandardText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/attractionTrip"
-        android:layout_centerHorizontal="true"
-        android:text="شهر من را پیدا کن" />
+        <Button
+            android:id="@+id/attractionTrip"
+            style="@style/StandardText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/provinceTrip"
+            android:layout_below="@+id/provinceTrip"
+            android:text="جاذبه گردی" />
+
+        <Button
+            android:id="@+id/findMyLocation"
+            style="@style/StandardText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/attractionTrip"
+            android:layout_centerHorizontal="true"
+            android:text="شهر من را پیدا کن" />
+    </RelativeLayout>
+
 
 </RelativeLayout>
 
