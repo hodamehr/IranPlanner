@@ -35,15 +35,15 @@
                     <RelativeLayout
                         android:id="@+id/supplierLayoutMore"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/part2"
                         android:paddingLeft="@dimen/padding_standard"
-                        android:paddingRight="@dimen/padding_standard">
+                        android:paddingRight="@dimen/padding_standard"
+                        android:layout_marginBottom="@dimen/margin_standard">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentTop="true"
                             android:gravity="center"
@@ -51,20 +51,19 @@
 
                             <ImageView
                                 android:id="@+id/imageGps"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_visiting_time" />
+                                android:src="@mipmap/ic_duration_bluee" />
 
                             <TextView
                                 android:id="@+id/textGps"
-                                style="@style/StandardText"
+                                style="@style/SmallText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
                                 android:maxLines="1"
-                                android:text="مسیریاب" />
-
+                                android:text="مسیریابی"
+                        />
 
                         </LinearLayout>
 
@@ -78,17 +77,16 @@
 
                             <ImageView
                                 android:id="@+id/imageTimeOpen"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@mipmap/ic_duration_time_blue" />
 
                             <TextView
                                 android:id="@+id/textTimeOpen"
-                                style="@style/StandardText"
+                                style="@style/SmallText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
                                 android:maxLines="1"
                                 android:text="باز است" />
                         </LinearLayout>
@@ -103,17 +101,16 @@
 
                             <ImageView
                                 android:id="@+id/imageMore"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@mipmap/ic_info_blue_new" />
 
                             <TextView
                                 android:id="@+id/textMore"
-                                style="@style/StandardText"
+                                style="@style/SmallText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
                                 android:maxLines="1"
                                 android:text="بیشتر" />
 
@@ -125,9 +122,9 @@
                         android:id="@+id/part2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true">
+                        android:layout_alignParentStart="true">
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/ImageAttraction"
@@ -157,7 +154,7 @@
 
                             android:gravity="right"
                             android:orientation="horizontal"
-                            android:paddingBottom="@dimen/padding_short">
+                            android:paddingBottom="@dimen/margin_xshort">
 
 
                             <TextView
@@ -175,7 +172,7 @@
                                 android:layout_height="20dp"
                                 android:layout_margin="5dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@mipmap/ic_pinblack" />
 
 
                         </LinearLayout>
@@ -205,7 +202,7 @@
                                 android:layout_height="20dp"
                                 android:layout_margin="5dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@mipmap/ic_duration_grey" />
 
                         </LinearLayout>
                     </RelativeLayout>

@@ -68,7 +68,7 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
         viewHolder.itinerary_transport_name.setText(android.get(i).getItineraryTransportName());
         viewHolder.itinerary_count_attraction.setText(Util.persianNumbers(android.get(i).getItineraryCountAttraction()) + " مکان دیدنی");
 
-        viewHolder.travelTypePic.setTypeface(Util.getFontAwesome(context));
+
         if (android.get(i).getItineraryImgUrl() != null) {
             String url = android.get(i).getItineraryImgUrl();
 //            Glide.with(context).load(url)   .into(viewHolder.imgItineraryList);
@@ -115,7 +115,7 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
         private ImageView imgItineraryList;
         private CircularProgressBar progressMax;
         private ProgressBar imageLoading;
-        private TextView travelTypePic;
+        private ImageView travelTypePic;
 
         public ViewHolder(View view) {
             super(view);
@@ -125,7 +125,7 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
             textTpeTravel = (TextView) view.findViewById(R.id.textTpeTravel);
             itinerary_count_attraction = (TextView) view.findViewById(R.id.itinerary_count_attraction);
             imgItineraryList = (ImageView) view.findViewById(R.id.imgItineraryListMore);
-            travelTypePic = (TextView) view.findViewById(R.id.travelTypePic);
+            travelTypePic = (ImageView) view.findViewById(R.id.travelTypePic);
             progressMax = (CircularProgressBar) view.findViewById(R.id.progressMax);
             imageLoading = (ProgressBar) view.findViewById(R.id.imageLoading);
             imageLoading.setVisibility(View.VISIBLE);

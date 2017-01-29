@@ -54,6 +54,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import server.getJsonInterface;
 import tools.MapDirection;
 import retrofit2.Callback;
+import tools.Util;
 
 import static android.R.attr.data;
 
@@ -107,7 +108,7 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         SetPercentage();
 
         txtItinerary_attraction_Difficulty.setText(itineraryData.getItineraryDifficulty().getItineraryDifficultyGroup());
-        txtItinerary_count_attraction.setText(itineraryData.getItineraryCountAttraction() + "مکان دیدنی");
+        txtItinerary_count_attraction.setText(Util.persianNumbers(itineraryData.getItineraryCountAttraction()) + " مکان دیدنی");
         itineraryId = itineraryData.getItineraryId();
         getAttraction(itineraryId);
         showItinerys.setOnClickListener(new View.OnClickListener() {

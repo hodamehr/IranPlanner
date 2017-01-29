@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.ResultItineraryAttraction;
+import tools.Util;
 
 
 public class ShowAttractionListFragment extends StandardFragment implements /*Callback<ResultItineraryList>,*/ DataTransferInterface {
@@ -45,7 +46,7 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
         itineraryActionList = (List<ResultItineraryAttraction>) bundle.getSerializable("itineraryActionList");
         dayNumber = bundle.getInt("dayNumber");
         allDays = bundle.getInt("allDays");
-        textDayNumber.setText(" روز " + String.valueOf(dayNumber) + " از " + allDays);
+        textDayNumber.setText(" روز " + Util.persianNumbers(String.valueOf(dayNumber)) + " از " + allDays);
         attractionRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         attractionRecyclerView.setLayoutManager(layoutManager);

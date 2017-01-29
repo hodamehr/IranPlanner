@@ -21,12 +21,12 @@ public class Util {
             int hours = (int) Math.floor(totalMinute / 60);
             totalMinute %= 60;
             if (totalMinute == 0) {
-                textView.setText("طول بازدید: " + hours + " ساعت ");
+                textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf( hours)) + " ساعت ");
             } else {
-                textView.setText("طول بازدید: " + hours + " ساعت و " + totalMinute + " دقیقه ");
+                textView.setText("طول بازدید: " +  Util.persianNumbers(String.valueOf( hours))+ " ساعت و " + totalMinute + " دقیقه ");
             }
         } else {
-            textView.setText("طول بازدید: " + totalMinute + " دقیقه ");
+            textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf( totalMinute))  + " دقیقه ");
         }
     }
 

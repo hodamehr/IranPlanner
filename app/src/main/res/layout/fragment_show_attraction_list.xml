@@ -1,32 +1,53 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.iranplanner.tourism.iranplanner.fragment.ShowAttractionListFragment"
-    android:id="@+id/Holder"
-   >
+    tools:context="com.iranplanner.tourism.iranplanner.fragment.ShowAttractionListFragment">
 
 
     <RelativeLayout
         android:id="@+id/viewDayNumber"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@color/greyDark">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/pink">
 
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/padding_larg"
+            android:src="@mipmap/ic_arow_right"
+            android:id="@+id/arrowRight"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/padding_larg"
+            android:src="@mipmap/ic_arow_left"
+            android:id="@+id/arrowLeft"/>
         <TextView
+            android:id="@+id/textDayNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="days"
-            android:id="@+id/textDayNumber"
-            android:textColor="@color/textColorWhite"/>
+            style="@style/StandardTitle"
+            android:textColor="@color/textColorWhite" />
 
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/attractionListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/viewDayNumber">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/viewDayNumber"></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

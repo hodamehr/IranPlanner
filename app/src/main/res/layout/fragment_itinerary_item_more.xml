@@ -39,10 +39,12 @@
                         android:id="@+id/supplierLayoutMore"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_below="@+id/imgItineraryListMore"
-                        android:background="@color/greyDark"
+
+                        android:background="#74030000"
                         android:paddingLeft="@dimen/padding_standard"
-                        android:paddingRight="@dimen/padding_standard">
+                        android:paddingRight="@dimen/padding_standard"
+                        android:layout_alignBottom="@+id/imgItineraryListMore"
+                        >
 
                         <TextView
                             android:id="@+id/itinerary_name"
@@ -81,8 +83,8 @@
                         android:id="@+id/supplierLayoutTravelType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/supplierLayoutMore"
-                        android:background="@color/blue"
+                        android:layout_below="@+id/imgItineraryListMore"
+                        android:background="@color/greySemiligte"
                         android:paddingLeft="@dimen/padding_standard"
                         android:paddingRight="@dimen/padding_standard">
 
@@ -101,7 +103,7 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@mipmap/ic_direction" />
 
                             <TextView
                                 android:id="@+id/txtItinerary_attraction_Difficulty"
@@ -129,7 +131,7 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@mipmap/ic_road" />
 
                             <TextView
                                 android:id="@+id/txtItinerary_attraction_type"
@@ -157,7 +159,7 @@
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@mipmap/ic_eye" />
 
                             <TextView
                                 android:id="@+id/txtItinerary_count_attraction"
@@ -312,7 +314,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
                         android:layout_below="@id/part3"
-                        android:background="#ffcc00"
+                        android:background="@color/greyLight"
                         android:focusableInTouchMode="true">
 
                         <fragment
