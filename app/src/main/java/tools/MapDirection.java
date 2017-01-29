@@ -25,6 +25,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.iranplanner.tourism.iranplanner.MapsActivity;
+import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.fragment.ItineraryListFragment;
 
 import org.json.JSONObject;
 
@@ -32,6 +34,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,12 +43,21 @@ import java.util.List;
 
 import entity.ItineraryLodgingCity;
 import entity.ResultItinerary;
+import entity.ResultItineraryList;
+import entity.map.MapResult;
+import entity.map.Route;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import server.getJsonInterface;
 
 /**
  * Created by h.vahidimehr on 15/01/2017.
  */
 
-public class MapDirection {
+public class MapDirection implements Callback<Route> {
 
     Context context;
     private GoogleMap mMap;
@@ -64,19 +76,21 @@ public class MapDirection {
         this.MarkerPoints = MarkerPoints;
     }
 
-    public void readytoDirect() {
+    public List<Marker> readytoDirect() {
+        List<Marker> markers = new ArrayList<>();
+        MarkerOptions options = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker));
 
-        MarkerOptions options = new MarkerOptions();
         for (ItineraryLodgingCity lodgingCity : lodgingCities) {
-                LatLng point = new LatLng(Float.valueOf(lodgingCity.getCityPositionLat()), Float.valueOf(lodgingCity.getCityPositionLon()));
-                MarkerPoints.add(point);
-                options.position(point);
+            LatLng point = new LatLng(Float.valueOf(lodgingCity.getCityPositionLat()), Float.valueOf(lodgingCity.getCityPositionLon()));
+            MarkerPoints.add(point);
+            options.position(point);
+            markers.add(mMap.addMarker(options));
         }
 
         // Add new marker to the Google Map Android API V2
-        if(options!=null){
-            mMap.addMarker(options);
-        }
+//        if (options != null) {
+//            mMap.addMarker(options);
+//        }
 
         // Checks, whether start and end locations are captured
         LatLng origin;
@@ -86,6 +100,8 @@ public class MapDirection {
             for (int j = 0; j < MarkerPoints.size() - 1; j++) {
                 origin = MarkerPoints.get(j);
                 dest = MarkerPoints.get(j + 1);
+//// TODO: 28/01/2017
+//                getItinerary(origin, dest);
 
                 // Getting URL to the Google Directions API
                 String url = getUrl(origin, dest);
@@ -101,7 +117,7 @@ public class MapDirection {
             }
 
         }
-
+        return markers;
     }
 
     private String getUrl(LatLng origin, LatLng dest) {
@@ -170,6 +186,7 @@ public class MapDirection {
         return data;
     }
 
+
     // Fetches data from url passed
     private class FetchUrl extends AsyncTask<String, Void, String> {
 
@@ -192,10 +209,7 @@ public class MapDirection {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
             ParserTask parserTask = new ParserTask();
-
-
             // Invokes the thread for parsing the JSON data
             parserTask.execute(result);
 
@@ -261,7 +275,7 @@ public class MapDirection {
                     // Adding all the points in the route to LineOptions
                     lineOptions.addAll(points);
                     lineOptions.width(10);
-                    lineOptions.color(Color.RED);
+                    lineOptions.color(context.getResources().getColor(R.color.pink));
 
                     Log.d("onPostExecute", "onPostExecute lineoptions decoded");
 
@@ -287,7 +301,7 @@ public class MapDirection {
 //        mGoogleApiClient.connect();
 //    }
 
-//    @Override
+    //    @Override
 //    public void onConnected(Bundle bundle) {
 //
 //        mLocationRequest = new LocationRequest();
@@ -405,5 +419,35 @@ public class MapDirection {
 //            // You can add here other case statements according to your requirement.
 //        }
 //    }
+    public void getItinerary(LatLng origin, LatLng dest) {
+        // Origin of route
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
 
+        // Destination of route
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+
+
+        // Sensor enabled
+        String sensor = "sensor=false";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://maps.googleapis.com/maps/api/directions/")
+//                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        getJsonInterface getJsonInterface = retrofit.create(getJsonInterface.class);
+        Call<Route> call = getJsonInterface.getMapResult(str_origin, str_dest, sensor);
+        call.enqueue(this);
+    }
+
+
+    @Override
+    public void onResponse(Call<Route> call, Response<Route> response) {
+        Route jsonResponse = response.body();
+    }
+
+    @Override
+    public void onFailure(Call<Route> call, Throwable t) {
+
+    }
 }

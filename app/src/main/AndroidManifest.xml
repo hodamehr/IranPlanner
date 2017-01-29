@@ -41,7 +41,7 @@
         <activity android:name=".activity.ShowAttractionActivity" />
         <activity
             android:name=".standard.attractionDetailActivity"
-            android:label="@string/title_activity_attraction_detail"></activity>
+            android:label="@string/title_activity_attraction_detail" />
     </application>
 
 </manifest>

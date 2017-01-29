@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +23,15 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.iranplanner.tourism.iranplanner.activity.MapFullActivity;
 import com.iranplanner.tourism.iranplanner.activity.ShowAttractionActivity;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
@@ -72,6 +77,7 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
     TextView textTpeTravel1;
     TextView textTpeTravel2;
     TextView textTpeTravel3;
+    List<Marker> markers;
 
 
     @Override
@@ -190,7 +196,7 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
 
     }
     private void SetPercentage(){
-                ArrayList<String> addtypes = new ArrayList<>();
+        ArrayList<String> addtypes = new ArrayList<>();
         ArrayList<String> addtypesper = new ArrayList<>();
         ArrayList<String> deleteType = new ArrayList<>();
         ArrayList<String> deleteTypeper = new ArrayList<>();
@@ -227,6 +233,10 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        //------------- no zoom
+        mMap.getUiSettings().setAllGesturesEnabled(false);
+        mMap.getUiSettings().setMapToolbarEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(false);
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -251,7 +261,7 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
 
         // Already two locations
 
-        mapDirection.readytoDirect();
+        markers = mapDirection.readytoDirect();
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -263,6 +273,27 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
             }
         });
 
+    }
+
+    //camera zoom to all of points
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus == true) {
+            RelativeLayout myLinearLayout = (RelativeLayout) findViewById(R.id.mapHolder);
+            int width = myLinearLayout.getWidth();
+            int height = myLinearLayout.getHeight();
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for (Marker marker : markers) {
+                builder.include(marker.getPosition());
+            }
+            LatLngBounds bounds = builder.build();
+//        int width = getResources().getDisplayMetrics().widthPixels;
+//        int height = getResources().getDisplayMetrics().heightPixels;
+            int padding = (int) (width * 0.12); // offset from edges of the map 12% of screen
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
+            mMap.animateCamera(cu);
+        }
     }
 
     protected synchronized void buildGoogleApiClient() {

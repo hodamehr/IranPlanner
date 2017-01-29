@@ -2,6 +2,8 @@ package server;
 
 import entity.ResultItineraryAttractionList;
 import entity.ResultItineraryList;
+import entity.map.MapResult;
+import entity.map.Route;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -30,4 +32,11 @@ public interface getJsonInterface {
     Call<ResultItineraryList> getItinerarysFromProvince(@Query("action") String param1,
                                                         @Query("province") String param2,
                                                         @Query("offset") String param3);
+
+//    ?https://maps.googleapis.com/maps/api/directions/json?origin=35.6859016418457,51.38629913330078&destination=36.40290069580078,55.01570129394531&sensor=false
+    @GET("https://maps.googleapis.com/maps/api/directions/json")
+    Call<Route> getMapResult(@Query("origin") String param1,
+                             @Query("destination") String param2,
+                             @Query("sensor") String param3);
+
 }
