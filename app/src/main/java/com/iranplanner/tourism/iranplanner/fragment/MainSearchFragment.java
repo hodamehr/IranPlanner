@@ -17,6 +17,7 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,8 @@ import com.iranplanner.tourism.iranplanner.R;
 
 public class MainSearchFragment extends Fragment implements View.OnClickListener {
 
-    Button findMyLocation, cityTrip,provinceTrip;
+    Button findMyLocation, cityTrip, provinceTrip;
+    CardView card_view_city, card_view_privence, card_view_ostan, card_view_attraction;
 
     public static MainSearchFragment newInstance() {
         MainSearchFragment fragment = new MainSearchFragment();
@@ -40,14 +42,21 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_search, container, false);
-        findMyLocation = (Button) view.findViewById(R.id.findMyLocation);
-        provinceTrip = (Button) view.findViewById(R.id.provinceTrip);
-        cityTrip = (Button) view.findViewById(R.id.cityTrip);
-        cityTrip.setOnClickListener(this);
-        provinceTrip.setOnClickListener(this);
+        card_view_city = (CardView) view.findViewById(R.id.card_view_city);
+        card_view_privence = (CardView) view.findViewById(R.id.card_view_privence);
+        card_view_ostan = (CardView) view.findViewById(R.id.card_view_ostan);
+        card_view_attraction = (CardView) view.findViewById(R.id.card_view_attraction);
 
-
-        findMyLocation.setOnClickListener(this);
+        card_view_city.setOnClickListener(this);
+        card_view_privence.setOnClickListener(this);
+        card_view_ostan.setOnClickListener(this);
+        card_view_attraction.setOnClickListener(this);
+//        findMyLocation = (Button) view.findViewById(R.id.findMyLocation);
+//        provinceTrip = (Button) view.findViewById(R.id.provinceTrip);
+//        cityTrip = (Button) view.findViewById(R.id.cityTrip);
+//        cityTrip.setOnClickListener(this);
+//        provinceTrip.setOnClickListener(this);
+//        findMyLocation.setOnClickListener(this);
         return view;
     }
 
@@ -89,7 +98,7 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.findMyLocation:
+//            case R.id.findMyLocation:
 //                Intent intentMapActivity =new Intent(getContext(), MapsActivity.class);
 //                startActivity(intentMapActivity);
 //                LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -102,15 +111,15 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
 //
 //                }
 //                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
-                break;
-            case R.id.cityTrip:
+//                break;
+            case R.id.card_view_city:
                 SearchCityCityFragment fragment = new SearchCityCityFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.SearchHolder, fragment);
                 ft.addToBackStack(null);
                 ft.commit();
                 break;
-            case R.id.provinceTrip:
+            case R.id.card_view_privence:
                 SearchProvinceFragment fragmentProvience = new SearchProvinceFragment();
                 FragmentTransaction fts = getFragmentManager().beginTransaction();
                 fts.replace(R.id.SearchHolder, fragmentProvience);
@@ -118,7 +127,7 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
                 fts.commit();
                 break;
 
-            case R.id.attractionTrip:
+            case R.id.card_view_attraction:
 
                 break;
         }

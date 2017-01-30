@@ -96,7 +96,10 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
             @Override
             public void onItemClick(View view, final int position) {
                 ImageView imageView = (ImageView) view.findViewById(R.id.imgItineraryListMore);
-                MyThread m = new MyThread(imageView, position);
+                TextView textView = (TextView) view.findViewById(R.id.itinerary_duration);
+                textView.getText();
+
+                MyThread m = new MyThread(imageView, position,textView.getText().toString());
                 m.run();
             }
         }));
@@ -133,23 +136,27 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
 
         private ImageView img;
         int position;
+        String duration;
 
-        public MyThread(ImageView img, int position) {
+        public MyThread(ImageView img, int position,String duration) {
             this.img = img;
             this.position = position;
+            this.duration=duration;
         }
 
         @Override
         public void run() {
-            img.buildDrawingCache();
-            Bitmap btm = img.getDrawingCache();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            btm.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] bytes = stream.toByteArray();
+//            img.buildDrawingCache();
+//            Bitmap btm = img.getDrawingCache();
+//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//            btm.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//            byte[] bytes = stream.toByteArray();
             Log.e("string", "item clicked");
             Intent intent = new Intent(getActivity(), MapsActivity.class);
             intent.putExtra("itineraryData", (Serializable) data.get(position));
-            intent.putExtra("BMP", bytes);
+            intent.putExtra("dutation",duration);
+
+//            intent.putExtra("BMP", bytes);
             startActivity(intent);
         }
     }

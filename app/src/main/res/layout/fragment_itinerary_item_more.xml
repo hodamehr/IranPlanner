@@ -38,8 +38,7 @@
                     <RelativeLayout
                         android:id="@+id/supplierLayoutMore"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-
+                        android:layout_height="55dp"
                         android:background="#74030000"
                         android:paddingLeft="@dimen/padding_standard"
                         android:paddingRight="@dimen/padding_standard"
@@ -48,7 +47,7 @@
 
                         <TextView
                             android:id="@+id/itinerary_name"
-                            style="@style/StandardText"
+                            style="@style/StandardTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -64,9 +63,10 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/itinerartMoreShare"
+                            android:layout_toRightOf="@+id/itineraryDuration"
                             android:scaleType="centerCrop"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/ic_calenderwhite"
+                            />
 
                         <ImageView
                             android:id="@+id/itinerartMoreShare"
@@ -75,7 +75,19 @@
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_margin="5dp"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/ic_launcher"
+                            android:visibility="gone"
+                           />
+                        <TextView
+                            android:id="@+id/itineraryDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="5dp"
+                            android:text="text"
+                            android:textColor="@color/white_"
+                            />
 
                     </RelativeLayout>
 
@@ -91,7 +103,6 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentTop="true"
                             android:gravity="center"
@@ -100,19 +111,22 @@
 
                             <ImageView
                                 android:id="@+id/itinerary_attraction_Difficulty"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_direction" />
+                                android:src="@mipmap/ic_level_grey" />
 
                             <TextView
                                 android:id="@+id/txtItinerary_attraction_Difficulty"
-                                style="@style/StandardText"
+                                style="@style/SmallText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginBottom="5dp"
                                 android:maxLines="1"
-                                android:text="مسیریاب" />
+                                android:text="درجه سختی"
+                              />
 
 
                         </LinearLayout>
@@ -128,19 +142,22 @@
 
                             <ImageView
                                 android:id="@+id/itinerary_attraction_type"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_road" />
+                                android:src="@mipmap/ic_road_grey" />
 
                             <TextView
                                 android:id="@+id/txtItinerary_attraction_type"
-                                style="@style/StandardText"
+                                style="@style/SmallText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginBottom="5dp"
                                 android:maxLines="1"
-                                android:text="جاده ای" />
+                                android:text="جاده ای"
+                                />
 
 
                         </LinearLayout>
@@ -156,17 +173,19 @@
 
                             <ImageView
                                 android:id="@+id/itinerary_count_attraction"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_eye" />
+                                android:src="@mipmap/ic_eye_grey" />
 
                             <TextView
                                 android:id="@+id/txtItinerary_count_attraction"
-                                style="@style/StandardText"
+                                style="@style/SmallText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginBottom="5dp"
                                 android:maxLines="1"
                                 android:text="تعداد جاذبه" />
 
@@ -299,12 +318,12 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/typeOfItineraryDetail"
                             android:layout_centerInParent="true"
-                            android:layout_margin="16dp"
+                            android:layout_margin="@dimen/padding_larg"
                             android:background="@color/pink"
                             android:paddingLeft="@dimen/padding_larg"
                             android:paddingRight="@dimen/padding_larg"
                             android:text="نمایش برنامه سفر"
-                            android:textColor="@color/greyDark"
+                            android:textColor="@color/white_"
 
                             />
                     </RelativeLayout>
@@ -470,7 +489,7 @@
                         </LinearLayout>
                     </RelativeLayout>
 
-                    <RelativeLayout
+                  <!--  <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:layout_below="@id/travelHold"
@@ -584,49 +603,49 @@
                             </LinearLayout>
 
                         </RelativeLayout>
-                        <!--<RelativeLayout
+                        &lt;!&ndash;<RelativeLayout
                             android:id="@+id/fallHolder"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/summerHolder">-->
+                            android:layout_below="@+id/summerHolder">&ndash;&gt;
 
 
-                        <!--<TextView-->
-                        <!--android:id="@+id/fall"-->
-                        <!--style="@style/StandardTitle"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_toRightOf="@+id/mehrHolder"-->
-                        <!--android:paddingBottom="@dimen/margin_standard"-->
-                        <!--android:paddingTop="@dimen/margin_standard"-->
-                        <!--android:text="پاییز" />-->
+                        &lt;!&ndash;<TextView&ndash;&gt;
+                        &lt;!&ndash;android:id="@+id/fall"&ndash;&gt;
+                        &lt;!&ndash;style="@style/StandardTitle"&ndash;&gt;
+                        &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                        &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                        &lt;!&ndash;android:layout_toRightOf="@+id/mehrHolder"&ndash;&gt;
+                        &lt;!&ndash;android:paddingBottom="@dimen/margin_standard"&ndash;&gt;
+                        &lt;!&ndash;android:paddingTop="@dimen/margin_standard"&ndash;&gt;
+                        &lt;!&ndash;android:text="پاییز" />&ndash;&gt;
 
-                        <!--<Button-->
-                        <!--android:id="@+id/mehrHolder"-->
-                        <!--android:layout_width="20dp"-->
-                        <!--android:layout_height="20dp"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:layout_marginRight="@dimen/padding_big"-->
-                        <!--android:layout_toRightOf="@+id/abanHolder"-->
-                        <!--android:background="@drawable/circle_tohi" />-->
+                        &lt;!&ndash;<Button&ndash;&gt;
+                        &lt;!&ndash;android:id="@+id/mehrHolder"&ndash;&gt;
+                        &lt;!&ndash;android:layout_width="20dp"&ndash;&gt;
+                        &lt;!&ndash;android:layout_height="20dp"&ndash;&gt;
+                        &lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;
+                        &lt;!&ndash;android:layout_marginRight="@dimen/padding_big"&ndash;&gt;
+                        &lt;!&ndash;android:layout_toRightOf="@+id/abanHolder"&ndash;&gt;
+                        &lt;!&ndash;android:background="@drawable/circle_tohi" />&ndash;&gt;
 
-                        <!--<Button-->
-                        <!--android:id="@+id/abanHolder"-->
-                        <!--android:layout_width="20dp"-->
-                        <!--android:layout_height="20dp"-->
-                        <!--android:layout_centerInParent="true"-->
-                        <!--android:layout_marginRight="@dimen/padding_big"-->
-                        <!--android:background="@drawable/circle_tohi" />-->
+                        &lt;!&ndash;<Button&ndash;&gt;
+                        &lt;!&ndash;android:id="@+id/abanHolder"&ndash;&gt;
+                        &lt;!&ndash;android:layout_width="20dp"&ndash;&gt;
+                        &lt;!&ndash;android:layout_height="20dp"&ndash;&gt;
+                        &lt;!&ndash;android:layout_centerInParent="true"&ndash;&gt;
+                        &lt;!&ndash;android:layout_marginRight="@dimen/padding_big"&ndash;&gt;
+                        &lt;!&ndash;android:background="@drawable/circle_tohi" />&ndash;&gt;
 
-                        <!--<Button-->
-                        <!--android:id="@+id/azar"-->
-                        <!--android:layout_width="20dp"-->
-                        <!--android:layout_height="20dp"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:layout_marginRight="@dimen/padding_big"-->
-                        <!--android:layout_toLeftOf="@+id/abanHolder"-->
-                        <!--android:background="@drawable/circle_tohi" />-->
-                        <!--</RelativeLayout>-->
+                        &lt;!&ndash;<Button&ndash;&gt;
+                        &lt;!&ndash;android:id="@+id/azar"&ndash;&gt;
+                        &lt;!&ndash;android:layout_width="20dp"&ndash;&gt;
+                        &lt;!&ndash;android:layout_height="20dp"&ndash;&gt;
+                        &lt;!&ndash;android:layout_centerVertical="true"&ndash;&gt;
+                        &lt;!&ndash;android:layout_marginRight="@dimen/padding_big"&ndash;&gt;
+                        &lt;!&ndash;android:layout_toLeftOf="@+id/abanHolder"&ndash;&gt;
+                        &lt;!&ndash;android:background="@drawable/circle_tohi" />&ndash;&gt;
+                        &lt;!&ndash;</RelativeLayout>&ndash;&gt;
 
                         <RelativeLayout
                             android:id="@+id/summerHolder"
@@ -642,12 +661,12 @@
                                 android:layout_marginRight="@dimen/padding_big"
                                 android:layout_toRightOf="@+id/mordad"
                                 android:background="@drawable/circle_tohi" />
-                            <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="تیر"-->
-                            <!--android:layout_below="@id/tir"-->
-                            <!--android:layout_alignRight="@id/tir"/>-->
+                            &lt;!&ndash;<TextView&ndash;&gt;
+                            &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                            &lt;!&ndash;android:text="تیر"&ndash;&gt;
+                            &lt;!&ndash;android:layout_below="@id/tir"&ndash;&gt;
+                            &lt;!&ndash;android:layout_alignRight="@id/tir"/>&ndash;&gt;
 
                             <Button
                                 android:id="@+id/mordad"
@@ -656,11 +675,11 @@
                                 android:layout_centerInParent="true"
                                 android:layout_marginRight="@dimen/padding_big"
                                 android:background="@drawable/circle_tohi" />
-                            <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="مرداد"-->
-                            <!--android:layout_below="@id/mordad"/>-->
+                            &lt;!&ndash;<TextView&ndash;&gt;
+                            &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                            &lt;!&ndash;android:text="مرداد"&ndash;&gt;
+                            &lt;!&ndash;android:layout_below="@id/mordad"/>&ndash;&gt;
                             <Button
                                 android:id="@+id/shahrivar"
                                 android:layout_width="20dp"
@@ -670,11 +689,11 @@
                                 android:layout_marginRight="@dimen/padding_big"
                                 android:layout_toLeftOf="@+id/mordad"
                                 android:background="@drawable/circle_tohi" />
-                            <!--<TextView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="شهریور"-->
-                            <!--android:layout_below="@id/shahrivar"/>-->
+                            &lt;!&ndash;<TextView&ndash;&gt;
+                            &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                            &lt;!&ndash;android:text="شهریور"&ndash;&gt;
+                            &lt;!&ndash;android:layout_below="@id/shahrivar"/>&ndash;&gt;
 
                             <TextView
                                 android:id="@+id/summer"
@@ -772,7 +791,7 @@
                                 android:paddingTop="@dimen/margin_standard"
                                 android:text="زمستان" />
                         </RelativeLayout>
-                    </RelativeLayout>
+                    </RelativeLayout>-->
 
                 </RelativeLayout>
 

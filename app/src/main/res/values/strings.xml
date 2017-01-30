@@ -6,7 +6,7 @@
     <string name="from_city">از کجا</string>
     <string name="end_city">به کجا</string>
     <string name="end_Attraction">به جاذبه</string>
-    <string name="search_ok">بزن بریم</string>
+    <string name="search_ok">جستجو</string>
     <string name="title_activity_main_search">MainSearchActivity</string>
     <string name="itinerary_count_attraction">مکان برای بازدید</string>
     <string name="title_activity_maps">Map</string>

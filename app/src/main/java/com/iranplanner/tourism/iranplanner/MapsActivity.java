@@ -87,13 +87,18 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
-        byte[] bytes = intent.getByteArrayExtra("BMP");
-        bundle.getByteArray("BMP");
-        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        String dutation =  bundle.getString("dutation");
+//        byte[] bytes = intent.getByteArrayExtra("BMP");
+//        bundle.getByteArray("BMP");
+//        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         setContentView(R.layout.fragment_itinerary_item_more);
         TextView txtItinerary_attraction_Difficulty = (TextView) findViewById(R.id.txtItinerary_attraction_Difficulty);
         TextView txtItinerary_attraction_type = (TextView) findViewById(R.id.txtItinerary_attraction_type);
         TextView txtItinerary_count_attraction = (TextView) findViewById(R.id.txtItinerary_count_attraction);
+        TextView itineraryDuration = (TextView) findViewById(R.id.itineraryDuration);
+        TextView itinerary_name = (TextView) findViewById(R.id.itinerary_name);
+        itineraryDuration.setText(dutation);
+        itinerary_name.setText(itineraryData.getItineraryFromCityName()+"-"+itineraryData.getItineraryToCityName());
         TextView showItinerys = (TextView) findViewById(R.id.showItinerys);
         textTpeTravel1 = (TextView) findViewById(R.id.textTpeTravel1);
         textTpeTravel2 = (TextView) findViewById(R.id.textTpeTravel2);
@@ -103,8 +108,8 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         progress3 = (CircularProgressBar) findViewById(R.id.progress3);
         ImageView imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
 
-        imgItineraryListMore.setImageBitmap(bmp);
-        setMonth();
+//        imgItineraryListMore.setImageBitmap(bmp);
+        /*setMonth();*/
         SetPercentage();
 
         txtItinerary_attraction_Difficulty.setText(itineraryData.getItineraryDifficulty().getItineraryDifficultyGroup());
@@ -135,7 +140,7 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
 
     }
 
-    private void setMonth() {
+ /*   private void setMonth() {
 
         Button farvardin = (Button) findViewById(R.id.farvardin);
         Button ordibehesht = (Button) findViewById(R.id.ordibehesht);
@@ -195,7 +200,7 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         }
 
 
-    }
+    }*/
     private void SetPercentage(){
         ArrayList<String> addtypes = new ArrayList<>();
         ArrayList<String> addtypesper = new ArrayList<>();

@@ -62,7 +62,7 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
     public void onBindViewHolder(final ItineraryListAdapter.ViewHolder viewHolder, int i) {
 
         viewHolder.itinerary_from_city_name.setText(android.get(i).getItineraryFromCityName() + " - " + android.get(i).getItineraryToCityName());
-        viewHolder.itinerary_duration.setText("مدت زمان سفر " + Util.persianNumbers(android.get(i).getItineraryDuration()) + " روز");
+        viewHolder.itinerary_duration.setText( Util.persianNumbers(android.get(i).getItineraryDuration()) + " روز");
         viewHolder.textTpeTravel.setText(android.get(i).getItineraryPercentage().get(0).getItineraryAttractionType());
         viewHolder.progressMax.setProgress(Float.valueOf(android.get(i).getItineraryPercentage().get(0).getItineraryAttractionTypePercentage()));
         viewHolder.itinerary_transport_name.setText(android.get(i).getItineraryTransportName());

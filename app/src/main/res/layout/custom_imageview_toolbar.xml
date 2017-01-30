@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<!--    <ImageView
+        android:layout_width="800dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_iranplaner_toolbar"
+        android:layout_toLeftOf="@+id/logo"/>-->
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:src="@mipmap/ic_logo_part1_toolbar"
+        android:id="@+id/logo"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin_standard"       />
+</RelativeLayout>

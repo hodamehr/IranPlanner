@@ -17,12 +17,14 @@ import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import autoComplet.MyFilterableAdapterCity;
 import autoComplet.readJsonCity;
 import entity.City;
 import entity.ResultItinerary;
 import entity.ResultItineraryList;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -103,20 +105,15 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
 
     public void getItinerary(String cityId, String offset, boolean checkfragment) {
         this.checkfragment = checkfragment;
-////        recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
-//        recyclerView.setHasFixedSize(true);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
-//        recyclerView.setLayoutManager(layoutManager);
-
-//        Gson gson = new GsonBuilder()
-//                .setLenient()
-//                .create();
-//        OkHttpClient client = new OkHttpClient();
-
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.parsdid.com/iranplanner/app/")
-//                .client(client)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -128,14 +125,14 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
     @Override
     public void onResponse(Call<ResultItineraryList> call, Response<ResultItineraryList> response) {
 //        Log.e("get result from server", response.body().toString());
-        if(response.body()!=null){
+        if (response.body() != null) {
             ResultItineraryList jsonResponse = response.body();
             List<ResultItinerary> data = jsonResponse.getResultItinerary();
             ItineraryListFragment itineraryListFragment = new ItineraryListFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable("resuliItineraryList", (Serializable) data);
-            bundle.putString("fromWhere","fromCityToCity");
-            bundle.putString("nextOffset",response.body().getStatistics().getOffsetNext().toString());
+            bundle.putString("fromWhere", "fromCityToCity");
+            bundle.putString("nextOffset", response.body().getStatistics().getOffsetNext().toString());
             itineraryListFragment.setArguments(bundle);
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.replace(R.id.SearchHolder, itineraryListFragment);
@@ -149,7 +146,7 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
 
     @Override
     public void onFailure(Call<ResultItineraryList> call, Throwable t) {
-        Toast.makeText(getContext(),"Internet kooooooooooooooooooo?",Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Internet kooooooooooooooooooo?", Toast.LENGTH_LONG).show();
         Log.e(" error from server", "error");
     }
 

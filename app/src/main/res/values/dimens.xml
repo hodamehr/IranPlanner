@@ -14,4 +14,5 @@
     <dimen name="padding_short">8dp</dimen>
 
     <dimen name="flexible_space_image_height">240dp</dimen>
+    <dimen name="button_standard">55dp</dimen>
 </resources>
