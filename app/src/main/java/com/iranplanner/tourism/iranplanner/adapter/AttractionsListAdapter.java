@@ -11,6 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 
@@ -21,6 +25,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
 import tools.Util;
+
+import static com.iranplanner.tourism.iranplanner.R.id.imgItineraryListMore;
 
 /**
  * Created by Hoda on 10/01/2017.
@@ -56,10 +62,27 @@ public class AttractionsListAdapter extends RecyclerView.Adapter<AttractionsList
         viewHolder.textCityName.setText(attractions.get(i).getCityTitle() + " , " + attractions.get(i).getProvinceTitle());
 
         int totalMinute = Integer.parseInt(attractions.get(i).getAttarctionEstimatedTime());
-        Util.convertMinuteToHour(totalMinute,viewHolder.textTimeDuration);
+        Util.convertMinuteToHour(totalMinute, viewHolder.textTimeDuration);
+
         if (attractions.get(i).getItineraryImgUrl() != null) {
             String url = attractions.get(i).getItineraryImgUrl();
-            Glide.with(context).load(url).into(viewHolder.ImageAttraction);
+            Glide.with(context)
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .listener(new RequestListener<String, GlideDrawable>() {
+
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            //// TODO: 22/01/2017  get defeult picture
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
+                    .into(viewHolder.ImageAttraction);
 
         } else {
             Glide.clear(viewHolder.ImageAttraction);

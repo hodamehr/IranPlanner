@@ -11,6 +11,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,6 +28,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.iranplanner.tourism.iranplanner.R;
+
 
 import entity.ResultItineraryAttraction;
 import tools.Util;
@@ -56,7 +62,30 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         attractionPlace.setText(attraction.getProvinceTitle() + " - " + attraction.getCityTitle());
         int totalMinute = Integer.parseInt(attraction.getAttarctionEstimatedTime());
         Util.convertMinuteToHour(totalMinute, textTimeDuration);
+        if (attraction.getItineraryImgUrl() != null) {
+            String url = attraction.getItineraryImgUrl();
+            Glide.with(getApplicationContext())
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .listener(new RequestListener<String, GlideDrawable>() {
 
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            //// TODO: 22/01/2017  get defeult picture
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
+                    .into(imageAttraction);
+
+        } else {
+            Glide.clear(imageAttraction);
+            imageAttraction.setImageDrawable(null);
+        }
         if (attraction.getAttractionPrice() == null) {
             textEntranceFee.setText("ندارد");
         } else {

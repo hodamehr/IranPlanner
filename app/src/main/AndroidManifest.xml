@@ -26,6 +26,7 @@
                    />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".standard.StandardActivity" />
         <activity android:name=".activity.SearchCityCityActivity" />
         App Indexing. See https://g.co/AppIndexing/AndroidStudio for more information. -->

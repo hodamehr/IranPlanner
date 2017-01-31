@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -76,6 +77,7 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
             viewHolder.imageLoading.setVisibility(View.VISIBLE);
             Glide.with(context)
                     .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .listener(new RequestListener<String, GlideDrawable>() {
 
                         @Override
@@ -95,6 +97,7 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
         } else {
             Glide.clear(viewHolder.imgItineraryList);
             viewHolder.imgItineraryList.setImageDrawable(null);
+
         }
 
 

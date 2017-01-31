@@ -14,6 +14,15 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <TextView
+        style="@style/StandardTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/pink"
+        android:padding="@dimen/margin_standard"
+        android:text="@string/title_activity_login"
+        android:id="@+id/logintext"/>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
@@ -23,6 +32,6 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="56dp"        />
+        android:layout_height="56dp" />
 
 </LinearLayout>

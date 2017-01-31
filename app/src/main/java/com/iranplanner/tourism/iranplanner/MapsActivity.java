@@ -18,6 +18,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -107,6 +112,35 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         progress2 = (CircularProgressBar) findViewById(R.id.progress2);
         progress3 = (CircularProgressBar) findViewById(R.id.progress3);
         ImageView imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
+
+        if (itineraryData.getItineraryImgUrl() != null) {
+            String url = itineraryData.getItineraryImgUrl();
+//            Glide.with(context).load(url)   .into(viewHolder.imgItineraryList);
+
+            imgItineraryListMore.setVisibility(View.VISIBLE);
+            Glide.with(getApplicationContext())
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .listener(new RequestListener<String, GlideDrawable>() {
+
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            //// TODO: 22/01/2017  get defeult picture
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
+                    .into(imgItineraryListMore)
+            ;
+        } else {
+            Glide.clear(imgItineraryListMore);
+            imgItineraryListMore.setImageDrawable(null);
+
+        }
 
 //        imgItineraryListMore.setImageBitmap(bmp);
         /*setMonth();*/
@@ -224,8 +258,8 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         }
         if (addtypes.size() <= 3) {
             for (int i = addtypes.size(); i < 3; i++) {
-                addtypes.add(deleteType.get(i));
-                addtypesper.add(deleteTypeper.get(i));
+                addtypes.add(deleteType.get(i-1));
+                addtypesper.add(deleteTypeper.get(i-1));
             }
         }
 
