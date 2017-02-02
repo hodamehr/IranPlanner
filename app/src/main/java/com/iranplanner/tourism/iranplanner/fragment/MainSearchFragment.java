@@ -29,8 +29,7 @@ import com.iranplanner.tourism.iranplanner.R;
 
 public class MainSearchFragment extends Fragment implements View.OnClickListener {
 
-    Button findMyLocation, cityTrip, provinceTrip;
-    CardView card_view_city, card_view_privence, card_view_ostan, card_view_attraction;
+    CardView card_view_city, card_view_privence, card_view_Iran, card_view_attraction;
 
     public static MainSearchFragment newInstance() {
         MainSearchFragment fragment = new MainSearchFragment();
@@ -44,12 +43,12 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.fragment_main_search, container, false);
         card_view_city = (CardView) view.findViewById(R.id.card_view_city);
         card_view_privence = (CardView) view.findViewById(R.id.card_view_privence);
-        card_view_ostan = (CardView) view.findViewById(R.id.card_view_ostan);
+        card_view_Iran = (CardView) view.findViewById(R.id.card_view_Iran);
         card_view_attraction = (CardView) view.findViewById(R.id.card_view_attraction);
 
         card_view_city.setOnClickListener(this);
         card_view_privence.setOnClickListener(this);
-        card_view_ostan.setOnClickListener(this);
+        card_view_Iran.setOnClickListener(this);
         card_view_attraction.setOnClickListener(this);
 //        findMyLocation = (Button) view.findViewById(R.id.findMyLocation);
 //        provinceTrip = (Button) view.findViewById(R.id.provinceTrip);

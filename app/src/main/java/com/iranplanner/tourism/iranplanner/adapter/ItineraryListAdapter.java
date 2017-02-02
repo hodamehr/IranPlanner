@@ -23,7 +23,6 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.util.List;
 
-import entity.ItineraryPercentage;
 import entity.ResultItinerary;
 import tools.Util;
 
@@ -63,11 +62,13 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
     public void onBindViewHolder(final ItineraryListAdapter.ViewHolder viewHolder, int i) {
 
         viewHolder.itinerary_from_city_name.setText(android.get(i).getItineraryFromCityName() + " - " + android.get(i).getItineraryToCityName());
-        viewHolder.itinerary_duration.setText( Util.persianNumbers(android.get(i).getItineraryDuration()) + " روز");
+        viewHolder.itinerary_duration.setText(Util.persianNumbers(android.get(i).getItineraryDuration()) + " روز");
         viewHolder.textTpeTravel.setText(android.get(i).getItineraryPercentage().get(0).getItineraryAttractionType());
         viewHolder.progressMax.setProgress(Float.valueOf(android.get(i).getItineraryPercentage().get(0).getItineraryAttractionTypePercentage()));
         viewHolder.itinerary_transport_name.setText(android.get(i).getItineraryTransportName());
         viewHolder.itinerary_count_attraction.setText(Util.persianNumbers(android.get(i).getItineraryCountAttraction()) + " مکان دیدنی");
+        float perc = Float.valueOf(android.get(i).getItineraryPercentage().get(0).getItineraryAttractionTypePercentage());
+        viewHolder.textPercentage.setText((Util.persianNumbers(String.valueOf((int) perc)) + "%"));
 
 
         if (android.get(i).getItineraryImgUrl() != null) {
@@ -114,7 +115,7 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
         private TextView itinerary_duration;
         private TextView itinerary_transport_name;
         private TextView itinerary_count_attraction;
-        private TextView textTpeTravel;
+        private TextView textTpeTravel, textPercentage, textPercentage1, textPercentage2, textPercentage3;
         private ImageView imgItineraryList;
         private CircularProgressBar progressMax;
         private ProgressBar imageLoading;
@@ -126,6 +127,7 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
             itinerary_duration = (TextView) view.findViewById(R.id.itinerary_duration);
             itinerary_transport_name = (TextView) view.findViewById(R.id.itinerary_transport_name);
             textTpeTravel = (TextView) view.findViewById(R.id.textTpeTravel);
+            textPercentage = (TextView) view.findViewById(R.id.textPercentage);
             itinerary_count_attraction = (TextView) view.findViewById(R.id.itinerary_count_attraction);
             imgItineraryList = (ImageView) view.findViewById(R.id.imgItineraryListMore);
             travelTypePic = (ImageView) view.findViewById(R.id.travelTypePic);

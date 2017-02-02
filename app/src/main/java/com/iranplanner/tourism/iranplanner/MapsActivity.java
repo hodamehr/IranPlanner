@@ -1,10 +1,9 @@
 package com.iranplanner.tourism.iranplanner;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,7 +34,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.iranplanner.tourism.iranplanner.activity.MapFullActivity;
 import com.iranplanner.tourism.iranplanner.activity.ShowAttractionActivity;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
@@ -48,20 +45,17 @@ import java.util.List;
 
 import entity.ItineraryLodgingCity;
 import entity.ItineraryPercentage;
-import entity.ItinerarySeasson;
 import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
 import entity.ResultItineraryAttractionList;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import server.getJsonInterface;
 import tools.MapDirection;
-import retrofit2.Callback;
 import tools.Util;
-
-import static android.R.attr.data;
 
 public class MapsActivity extends StandardActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -84,6 +78,10 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
     TextView textTpeTravel2;
     TextView textTpeTravel3;
     List<Marker> markers;
+    TextView textPercentage1;
+    TextView textPercentage2;
+    TextView textPercentage3;
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -92,7 +90,7 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
-        String dutation =  bundle.getString("dutation");
+        String dutation = bundle.getString("dutation");
 //        byte[] bytes = intent.getByteArrayExtra("BMP");
 //        bundle.getByteArray("BMP");
 //        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -103,7 +101,7 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         TextView itineraryDuration = (TextView) findViewById(R.id.itineraryDuration);
         TextView itinerary_name = (TextView) findViewById(R.id.itinerary_name);
         itineraryDuration.setText(dutation);
-        itinerary_name.setText(itineraryData.getItineraryFromCityName()+"-"+itineraryData.getItineraryToCityName());
+        itinerary_name.setText(itineraryData.getItineraryFromCityName() + "-" + itineraryData.getItineraryToCityName());
         TextView showItinerys = (TextView) findViewById(R.id.showItinerys);
         textTpeTravel1 = (TextView) findViewById(R.id.textTpeTravel1);
         textTpeTravel2 = (TextView) findViewById(R.id.textTpeTravel2);
@@ -111,6 +109,9 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         progress1 = (CircularProgressBar) findViewById(R.id.progress1);
         progress2 = (CircularProgressBar) findViewById(R.id.progress2);
         progress3 = (CircularProgressBar) findViewById(R.id.progress3);
+        textPercentage1 = (TextView) findViewById(R.id.textPercentage1);
+        textPercentage2 = (TextView) findViewById(R.id.textPercentage2);
+        textPercentage3 = (TextView) findViewById(R.id.textPercentage3);
         ImageView imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
 
         if (itineraryData.getItineraryImgUrl() != null) {
@@ -149,16 +150,15 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         txtItinerary_attraction_Difficulty.setText(itineraryData.getItineraryDifficulty().getItineraryDifficultyGroup());
         txtItinerary_count_attraction.setText(Util.persianNumbers(itineraryData.getItineraryCountAttraction()) + " مکان دیدنی");
         itineraryId = itineraryData.getItineraryId();
-        getAttraction(itineraryId);
+
         showItinerys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("open itinerarylist", "open");
-                if (itineraryActionList != null) {
-                    Intent intent = new Intent(getApplicationContext(), ShowAttractionActivity.class);
-                    intent.putExtra("ResultItineraryAttraction", (Serializable) itineraryActionList);
-                    startActivity(intent);
-                }
+                getAttraction(itineraryId);
+                showProgressDialog();
+//                progressLoadingHolderItineraryMore.setVisibility(View.VISIBLE);
+
             }
         });
         //-------------------map
@@ -174,68 +174,77 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
 
     }
 
- /*   private void setMonth() {
+    private void showProgressDialog() {
+        progressDialog = new ProgressDialog(MapsActivity.this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("لطفا منتظر بمانید");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+    }
 
-        Button farvardin = (Button) findViewById(R.id.farvardin);
-        Button ordibehesht = (Button) findViewById(R.id.ordibehesht);
-        Button khordad = (Button) findViewById(R.id.khordad);
-        Button tir = (Button) findViewById(R.id.tir);
-        Button mordad = (Button) findViewById(R.id.mordad);
-        Button shahrivar = (Button) findViewById(R.id.shahrivar);
-        Button mehr = (Button) findViewById(R.id.mehr);
-        Button aban = (Button) findViewById(R.id.aban);
-        Button azar = (Button) findViewById(R.id.azar);
-        Button dey = (Button) findViewById(R.id.dey);
-        Button bahman = (Button) findViewById(R.id.bahman);
-        Button esfand = (Button) findViewById(R.id.esfand);
-        for (ItinerarySeasson itinerarySeasson : itineraryData.getItinerarySeasson()) {
-            String month = itinerarySeasson.getMonthName();
-            switch (month) {
-                case "1":
-                    farvardin.setBackground(getDrawable(R.drawable.circle_stroke));
-                    break;
-                case "2":
-                    ordibehesht.setBackground(getDrawable(R.drawable.circle_stroke));
-                    break;
-                case "3":
-                    khordad.setBackground(getDrawable(R.drawable.circle_stroke));
-                    break;
-                case "4":
-                    tir.setBackground(getDrawable(R.drawable.circle_stroke));
-                    break;
-                case "5":
-                    mordad.setBackground(getDrawable(R.drawable.circle_stroke));
-                    break;
-                case "6":
-                    shahrivar.setBackground(getDrawable(R.drawable.circle_stroke));
-                    break;
-                case "7":
-                    mehr.setBackground(getDrawable(R.drawable.circle_stroke));
-                    break;
-                case "8":
-                    aban.setBackground(getDrawable(R.drawable.circle_stroke));
-                    break;
-                case "9":
-                    azar.setBackground(getDrawable(R.drawable.circle_stroke));
-                    break;
-                case "10":
-                    dey.setBackground(getDrawable(R.drawable.circle_stroke));
-                    break;
-                case "11":
-                    bahman.setBackground(getDrawable(R.drawable.circle_stroke));
-                    break;
-                case "12":
-                    esfand.setBackground(getDrawable(R.drawable.circle_stroke));
-                    break;
-                default:
-                    farvardin.setBackground(getDrawable(R.drawable.circle_tohi));
-                    break;
-            }
-        }
+    /*   private void setMonth() {
+
+           Button farvardin = (Button) findViewById(R.id.farvardin);
+           Button ordibehesht = (Button) findViewById(R.id.ordibehesht);
+           Button khordad = (Button) findViewById(R.id.khordad);
+           Button tir = (Button) findViewById(R.id.tir);
+           Button mordad = (Button) findViewById(R.id.mordad);
+           Button shahrivar = (Button) findViewById(R.id.shahrivar);
+           Button mehr = (Button) findViewById(R.id.mehr);
+           Button aban = (Button) findViewById(R.id.aban);
+           Button azar = (Button) findViewById(R.id.azar);
+           Button dey = (Button) findViewById(R.id.dey);
+           Button bahman = (Button) findViewById(R.id.bahman);
+           Button esfand = (Button) findViewById(R.id.esfand);
+           for (ItinerarySeasson itinerarySeasson : itineraryData.getItinerarySeasson()) {
+               String month = itinerarySeasson.getMonthName();
+               switch (month) {
+                   case "1":
+                       farvardin.setBackground(getDrawable(R.drawable.circle_stroke));
+                       break;
+                   case "2":
+                       ordibehesht.setBackground(getDrawable(R.drawable.circle_stroke));
+                       break;
+                   case "3":
+                       khordad.setBackground(getDrawable(R.drawable.circle_stroke));
+                       break;
+                   case "4":
+                       tir.setBackground(getDrawable(R.drawable.circle_stroke));
+                       break;
+                   case "5":
+                       mordad.setBackground(getDrawable(R.drawable.circle_stroke));
+                       break;
+                   case "6":
+                       shahrivar.setBackground(getDrawable(R.drawable.circle_stroke));
+                       break;
+                   case "7":
+                       mehr.setBackground(getDrawable(R.drawable.circle_stroke));
+                       break;
+                   case "8":
+                       aban.setBackground(getDrawable(R.drawable.circle_stroke));
+                       break;
+                   case "9":
+                       azar.setBackground(getDrawable(R.drawable.circle_stroke));
+                       break;
+                   case "10":
+                       dey.setBackground(getDrawable(R.drawable.circle_stroke));
+                       break;
+                   case "11":
+                       bahman.setBackground(getDrawable(R.drawable.circle_stroke));
+                       break;
+                   case "12":
+                       esfand.setBackground(getDrawable(R.drawable.circle_stroke));
+                       break;
+                   default:
+                       farvardin.setBackground(getDrawable(R.drawable.circle_tohi));
+                       break;
+               }
+           }
 
 
-    }*/
-    private void SetPercentage(){
+       }*/
+    private void SetPercentage() {
         ArrayList<String> addtypes = new ArrayList<>();
         ArrayList<String> addtypesper = new ArrayList<>();
         ArrayList<String> deleteType = new ArrayList<>();
@@ -251,15 +260,14 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         for (ItineraryPercentage p : itineraryData.getItineraryPercentage()) {
             addtypes.add(p.getItineraryAttractionType());
             addtypesper.add(p.getItineraryAttractionTypePercentage());
-
             if (deleteType.contains(p.getItineraryAttractionType())) {
                 deleteType.remove(p.getItineraryAttractionType());
             }
         }
         if (addtypes.size() <= 3) {
             for (int i = addtypes.size(); i < 3; i++) {
-                addtypes.add(deleteType.get(i-1));
-                addtypesper.add(deleteTypeper.get(i-1));
+                addtypes.add(deleteType.get(i - 1));
+                addtypesper.add(deleteTypeper.get(i - 1));
             }
         }
 
@@ -269,7 +277,15 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         progress1.setProgress(Float.valueOf(addtypesper.get(0)));
         progress2.setProgress(Float.valueOf(addtypesper.get(1)));
         progress3.setProgress(Float.valueOf(addtypesper.get(2)));
+        float perc1 = Float.valueOf(addtypesper.get(0));
+        float perc2 = Float.valueOf(addtypesper.get(1));
+        float perc3 = Float.valueOf(addtypesper.get(2));
+
+        textPercentage1.setText((Util.persianNumbers(String.valueOf((int) perc1)) + "%"));
+        textPercentage2.setText((Util.persianNumbers(String.valueOf((int) perc2)) + "%"));
+        textPercentage3.setText((Util.persianNumbers(String.valueOf((int) perc3)) + "%"));
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -476,10 +492,14 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
     @Override
     public void onResponse(Call<ResultItineraryAttractionList> call, Response<ResultItineraryAttractionList> response) {
         Log.e("ok", "ResultItineraryAttractionList");
+
         if (response.body() != null) {
             ResultItineraryAttractionList jsonResponse = response.body();
             itineraryActionList = jsonResponse.getResultItineraryAttraction();
-
+            progressDialog.dismiss();
+            Intent intent = new Intent(getApplicationContext(), ShowAttractionActivity.class);
+            intent.putExtra("ResultItineraryAttraction", (Serializable) itineraryActionList);
+            startActivity(intent);
 
 //            ResultItineraryList jsonResponse = response.body();
 //            List<ResultItinerary> data = jsonResponse.getResultItinerary();
@@ -505,6 +525,10 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
 
     @Override
     public void onFailure(Call<ResultItineraryAttractionList> call, Throwable t) {
+
         Log.e("Responce  body", "itinerary detail null");
+        Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
+        progressDialog.dismiss();
+
     }
 }

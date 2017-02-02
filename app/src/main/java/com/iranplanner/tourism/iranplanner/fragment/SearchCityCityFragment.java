@@ -1,11 +1,14 @@
 package com.iranplanner.tourism.iranplanner.fragment;
 
+import android.app.ProgressDialog;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -38,6 +41,7 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
     String cityEnd;
     AutoCompleteTextView fromCity_city, endCity_city;
     boolean checkfragment = false;
+    ProgressDialog progressDialog;
     ProgressBar waitingForData;
     RelativeLayout SearchHolderForWatiting;
 
@@ -52,12 +56,14 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //        bara inke keybord bala nayad
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         View view = inflater.inflate(R.layout.fragment_search_city_city, container, false);
         fromCity_city = (AutoCompleteTextView) view.findViewById(R.id.fromCity_city);
         endCity_city = (AutoCompleteTextView) view.findViewById(R.id.endCity_city);
         Button searchOk_city = (Button) view.findViewById(R.id.searchOk_city);
-//         waitingForData = (ProgressBar) view.findViewById(R.id.waitingForData);
-//        SearchHolderForWatiting = (RelativeLayout) view.findViewById(R.id.SearchHolderForWatiting);
+
         final List<City> temp1 = autoComplete(fromCity_city);
         final List<City> temp2 = autoComplete(endCity_city);
 
@@ -72,7 +78,7 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
                 cityEnd = returnCityId(endCity_city, temp2);
                 if (cityFrom != null && cityEnd != null) {
                     getItinerary(cityFrom, "0", false);
-//                    SearchHolderForWatiting.setVisibility(View.GONE);
+                    showProgressDialog();
 
                 } else {
                     Toast.makeText(getActivity(), "please correct name of city ", Toast.LENGTH_SHORT).show();
@@ -81,6 +87,15 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
             }
         });
         return view;
+    }
+
+    private void showProgressDialog() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("لطفا منتظر بمانید");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     public List<City> autoComplete(AutoCompleteTextView city) {
@@ -125,6 +140,7 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
     @Override
     public void onResponse(Call<ResultItineraryList> call, Response<ResultItineraryList> response) {
 //        Log.e("get result from server", response.body().toString());
+        progressDialog.dismiss();
         if (response.body() != null) {
             ResultItineraryList jsonResponse = response.body();
             List<ResultItinerary> data = jsonResponse.getResultItinerary();
@@ -146,8 +162,10 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
 
     @Override
     public void onFailure(Call<ResultItineraryList> call, Throwable t) {
-        Toast.makeText(getContext(), "Internet kooooooooooooooooooo?", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
         Log.e(" error from server", "error");
+        progressDialog.dismiss();
+
     }
 
 }

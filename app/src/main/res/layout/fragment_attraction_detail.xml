@@ -31,7 +31,6 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/ic_svg_grey_pattern"
                         android:scaleType="centerCrop" />
 
                     <RelativeLayout
@@ -39,11 +38,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageAttraction"
-                        android:background="#74030000"
-                        android:padding="@dimen/margin_short"
-
-
-                        >
+                        android:background="@color/transparent_grey"
+                        android:padding="@dimen/margin_short"       >
 
                         <TextView
                             android:id="@+id/attractionName"
@@ -225,7 +221,6 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentTop="true"
-                            android:background="@color/blue"
                             android:padding="@dimen/padding_short"
                             android:text="جدول ساعات بازدید" />
 

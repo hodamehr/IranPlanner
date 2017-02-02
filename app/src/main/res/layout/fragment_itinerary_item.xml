@@ -4,11 +4,10 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/margin_short"
-    android:paddingRight="@dimen/margin_short"
-    android:paddingTop="@dimen/margin_short">
+    android:background="@color/background"
+    android:baselineAligned="false"
+    android:orientation="vertical">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,14 +16,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/margin_standard">
+            android:orientation="vertical">
+
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_itinerary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/margin_short">
+                android:layout_marginTop="@dimen/margin_short"
+                app:cardCornerRadius="10dp"
+                app:cardUseCompatPadding="true">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -40,17 +41,16 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_centerInParent="true"
-                           android:translationZ="1dp"/>
+                            android:translationZ="1dp" />
 
                         <ImageView
                             android:id="@+id/imgItineraryListMore"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/ic_svg_grey_pattern"
-                            android:scaleType="centerCrop"
-                            android:layout_alignParentTop="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:scaleType="centerCrop" />
                     </RelativeLayout>
 
 
@@ -58,8 +58,8 @@
                         android:id="@+id/supplierLayoutMore"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_below="@+id/part2"
-                        android:background="#dedddb"
+                        android:layout_below="@+id/imageTextAttractionHolder"
+                        android:background="@color/greyLight"
                         android:paddingLeft="@dimen/padding_standard"
                         android:paddingRight="@dimen/padding_standard">
 
@@ -139,70 +139,78 @@
 
                     <RelativeLayout
 
-                        android:id="@+id/overlapImageHolder"
-                        android:layout_width="wrap_content"
-                        android:layout_height="90dp"
-                        android:layout_above="@id/part2"
-                        android:layout_alignParentLeft="true"
+                    android:id="@+id/overlapImageHolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="90dp"
+                    android:layout_above="@id/imageTextAttractionHolder"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="-70dp"
+                    android:layout_marginLeft="24dp"
+                    android:adjustViewBounds="true"
+                    android:translationZ="1dp">
+
+
+                    <ImageView
+                        android:id="@+id/imageTypeAttraction"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="-70dp"
-                        android:layout_marginLeft="24dp"
-                        android:adjustViewBounds="true">
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/circle_stroke" />
 
+                    <RelativeLayout
+                        android:id="@+id/progressHolder"
+                        android:layout_width="wrap_content"
 
-                        <ImageView
-                            android:id="@+id/imageTypeAttraction"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/margin_short"
+                        android:orientation="vertical">
+
+                        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                            android:id="@+id/progressMax"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_centerHorizontal="true"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/circle_stroke" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_centerInParent="true"
-
-                                android:layout_marginTop="@dimen/margin_short"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                                    android:id="@+id/progressMax"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    app:cpb_background_progressbar_color="@color/greyLight"
-                                    app:cpb_background_progressbar_width="5dp"
-                                    app:cpb_progressbar_color="@color/pink"
-                                    app:cpb_progressbar_width="5dp" />
-                                <!--android:theme="@style/CircularProgress"-->
-
-                                <TextView
-                                    android:id="@+id/textTpeTravel"
-                                    style="@style/StandardText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/margin_xshort"
-                                    android:maxLines="1"
-                                    android:text="فرهنگی هنری"
-                                    android:textColor="@color/pink" />
-
-                            </LinearLayout>
-
-
+                            app:cpb_background_progressbar_color="@color/greyLight"
+                            app:cpb_background_progressbar_width="5dp"
+                            app:cpb_progressbar_color="@color/pink"
+                            app:cpb_progressbar_width="5dp" />
+                        <!--android:theme="@style/CircularProgress"-->
+                        <TextView
+                            android:id="@+id/textPercentage"
+                            style="@style/SmallText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:maxLines="1"
+                            android:text="85%"
+                            android:textColor="@color/pink" />
 
                     </RelativeLayout>
 
+
+                    <TextView
+                        android:id="@+id/textTpeTravel"
+                        style="@style/SmallText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/progressHolder"
+                        android:layout_centerHorizontal="true"
+                        android:maxLines="1"
+                        android:text="hh"
+                        android:textColor="@color/pink" />
+                </RelativeLayout>
+
                     <RelativeLayout
-                        android:id="@+id/part2"
+                        android:id="@+id/imageTextAttractionHolder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/imageHolder"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                       >
+                        android:layout_below="@+id/imageHolder"
+                        android:background="@color/white_">
 
                         <TextView
                             android:id="@+id/itinerary_attraction_name"
@@ -258,7 +266,6 @@
                             android:text="۳ روز" />-->
 
 
-
                     </RelativeLayout>
 
                 </RelativeLayout>
@@ -267,6 +274,45 @@
 
 
         </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout><!--
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f5f5f5"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_short"
+    android:paddingRight="@dimen/margin_short"
+    android:paddingTop="@dimen/margin_short">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_standard">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_itinerary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/margin_short">
+
+
+
+            </android.support.v7.widget.CardView>
+
+
+        </LinearLayout>
     </ScrollView>
 
 </LinearLayout>
+-->

@@ -32,14 +32,13 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/ic_svg_grey_pattern"
                         android:scaleType="centerCrop" />
 
                     <RelativeLayout
                         android:id="@+id/supplierLayoutMore"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
-                        android:background="#74030000"
+                        android:background="@color/transparent_grey"
                         android:paddingLeft="@dimen/padding_standard"
                         android:paddingRight="@dimen/padding_standard"
                         android:layout_alignBottom="@+id/imgItineraryListMore"
@@ -230,18 +229,47 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:orientation="vertical">
+                                <RelativeLayout
+                                    android:id="@+id/progressHolder3"
+                                    android:layout_width="wrap_content"
 
-                                <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                                    android:id="@+id/progress1"
-                                    android:layout_width="55dp"
-                                    android:layout_height="55dp"
-                                    app:cpb_background_progressbar_color="@color/greyLight"
-                                    app:cpb_background_progressbar_width="5dp"
-                                    app:cpb_progressbar_color="@color/pink"
-                                    app:cpb_progressbar_width="5dp" />
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/margin_short"
+                                    android:orientation="vertical">
+
+                                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                        android:id="@+id/progress3"
+                                        android:layout_width="55dp"
+                                        android:layout_height="55dp"
+                                        android:layout_centerHorizontal="true"
+                                        app:cpb_background_progressbar_color="@color/greyLight"
+                                        app:cpb_background_progressbar_width="5dp"
+                                        app:cpb_progressbar_color="@color/pink"
+                                        app:cpb_progressbar_width="5dp" />
+                                    <!--android:theme="@style/CircularProgress"-->
+                                    <TextView
+                                        android:id="@+id/textPercentage3"
+                                        style="@style/SmallText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:maxLines="1"
+                                        android:text="80%"
+                                        android:textColor="@color/pink" />
+
+                                </RelativeLayout>
+                                <!--<com.mikhaellopez.circularprogressbar.CircularProgressBar-->
+                                    <!--android:id="@+id/progress1"-->
+                                    <!--android:layout_width="55dp"-->
+                                    <!--android:layout_height="55dp"-->
+                                    <!--app:cpb_background_progressbar_color="@color/greyLight"-->
+                                    <!--app:cpb_background_progressbar_width="5dp"-->
+                                    <!--app:cpb_progressbar_color="@color/pink"-->
+                                    <!--app:cpb_progressbar_width="5dp" />-->
 
                                 <TextView
-                                    android:id="@+id/textTpeTravel1"
+                                    android:id="@+id/textTpeTravel3"
                                     style="@style/StandardText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -259,15 +287,44 @@
 
                                 android:gravity="center"
                                 android:orientation="vertical">
+                                <RelativeLayout
+                                    android:id="@+id/progressHolder2"
+                                    android:layout_width="wrap_content"
 
-                                <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                                    android:id="@+id/progress2"
-                                    android:layout_width="55dp"
-                                    android:layout_height="55dp"
-                                    app:cpb_background_progressbar_color="@color/greyLight"
-                                    app:cpb_background_progressbar_width="5dp"
-                                    app:cpb_progressbar_color="@color/pink"
-                                    app:cpb_progressbar_width="5dp" />
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/margin_short"
+                                    android:orientation="vertical">
+
+                                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                        android:id="@+id/progress2"
+                                        android:layout_width="55dp"
+                                        android:layout_height="55dp"
+                                        android:layout_centerHorizontal="true"
+                                        app:cpb_background_progressbar_color="@color/greyLight"
+                                        app:cpb_background_progressbar_width="5dp"
+                                        app:cpb_progressbar_color="@color/pink"
+                                        app:cpb_progressbar_width="5dp" />
+                                    <!--android:theme="@style/CircularProgress"-->
+                                    <TextView
+                                        android:id="@+id/textPercentage2"
+                                        style="@style/SmallText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:maxLines="1"
+                                        android:text="80%"
+                                        android:textColor="@color/pink" />
+
+                                </RelativeLayout>
+                                <!--<com.mikhaellopez.circularprogressbar.CircularProgressBar-->
+                                    <!--android:id="@+id/progress2"-->
+                                    <!--android:layout_width="55dp"-->
+                                    <!--android:layout_height="55dp"-->
+                                    <!--app:cpb_background_progressbar_color="@color/greyLight"-->
+                                    <!--app:cpb_background_progressbar_width="5dp"-->
+                                    <!--app:cpb_progressbar_color="@color/pink"-->
+                                    <!--app:cpb_progressbar_width="5dp" />-->
 
                                 <TextView
                                     android:id="@+id/textTpeTravel2"
@@ -288,18 +345,47 @@
 
                                 android:gravity="center"
                                 android:orientation="vertical">
+                                <RelativeLayout
+                                    android:id="@+id/progressHolder1"
+                                    android:layout_width="wrap_content"
 
-                                <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                                    android:id="@+id/progress3"
-                                    android:layout_width="55dp"
-                                    android:layout_height="55dp"
-                                    app:cpb_background_progressbar_color="@color/greyLight"
-                                    app:cpb_background_progressbar_width="5dp"
-                                    app:cpb_progressbar_color="@color/pink"
-                                    app:cpb_progressbar_width="5dp" />
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="@dimen/margin_short"
+                                    android:orientation="vertical">
+
+                                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                        android:id="@+id/progress1"
+                                        android:layout_width="55dp"
+                                        android:layout_height="55dp"
+                                        android:layout_centerHorizontal="true"
+                                        app:cpb_background_progressbar_color="@color/greyLight"
+                                        app:cpb_background_progressbar_width="5dp"
+                                        app:cpb_progressbar_color="@color/pink"
+                                        app:cpb_progressbar_width="5dp" />
+                                    <!--android:theme="@style/CircularProgress"-->
+                                    <TextView
+                                        android:id="@+id/textPercentage1"
+                                        style="@style/SmallText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:maxLines="1"
+                                        android:text="80%"
+                                        android:textColor="@color/pink" />
+
+                                </RelativeLayout>
+                                <!--<com.mikhaellopez.circularprogressbar.CircularProgressBar-->
+                                    <!--android:id="@+id/progress3"-->
+                                    <!--android:layout_width="55dp"-->
+                                    <!--android:layout_height="55dp"-->
+                                    <!--app:cpb_background_progressbar_color="@color/greyLight"-->
+                                    <!--app:cpb_background_progressbar_width="5dp"-->
+                                    <!--app:cpb_progressbar_color="@color/pink"-->
+                                    <!--app:cpb_progressbar_width="5dp" />-->
 
                                 <TextView
-                                    android:id="@+id/textTpeTravel3"
+                                    android:id="@+id/textTpeTravel1"
                                     style="@style/StandardText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -323,9 +409,7 @@
                             android:paddingLeft="@dimen/padding_larg"
                             android:paddingRight="@dimen/padding_larg"
                             android:text="نمایش برنامه سفر"
-                            android:textColor="@color/white_"
-
-                            />
+                            android:textColor="@color/white_" />
                     </RelativeLayout>
 
                     <RelativeLayout

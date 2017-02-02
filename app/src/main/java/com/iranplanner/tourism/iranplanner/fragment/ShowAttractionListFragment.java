@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.iranplanner.tourism.iranplanner.MapsActivity;
@@ -57,10 +59,39 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
         attractionRecyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-                ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
-                Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
-                intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
-                startActivity(intent);
+               LinearLayout navigateBtn= (LinearLayout) view.findViewById(R.id.navigateBtn);
+                navigateBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.e("i am clicked","navigatBtn");
+
+                    }
+                });
+
+                RelativeLayout imageTextAttractionHolder= (RelativeLayout) view.findViewById(R.id.imageTextAttractionHolder);
+                imageTextAttractionHolder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+                        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+                        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+                        startActivity(intent);
+                    }
+                });
+                LinearLayout moreInfoHolder= (LinearLayout) view.findViewById(R.id.moreInfoHolder);
+moreInfoHolder.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+        startActivity(intent);
+    }
+});
+//                ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+//                Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+//                intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+//                startActivity(intent);
 //                DetailAttractionFragment fragment = new DetailAttractionFragment();
 //                Bundle bundle = new Bundle();
 //                bundle.putSerializable("ResultItineraryAttraction", ResultItineraryAttraction);

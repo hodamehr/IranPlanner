@@ -4,7 +4,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f5f5f5"
+    android:background="@color/background"
     android:baselineAligned="false"
     android:orientation="vertical">
 
@@ -36,7 +36,7 @@
                         android:id="@+id/supplierLayoutMore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/part2"
+                        android:layout_below="@+id/imageTextAttractionHolder"
                         android:paddingLeft="@dimen/padding_standard"
                         android:paddingRight="@dimen/padding_standard"
                         android:layout_marginBottom="@dimen/margin_standard">
@@ -47,7 +47,8 @@
                             android:layout_alignParentRight="true"
                             android:layout_alignParentTop="true"
                             android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:id="@+id/navigateBtn">
 
                             <ImageView
                                 android:id="@+id/imageGps"
@@ -97,7 +98,8 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
                             android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:id="@+id/moreInfoHolder">
 
                             <ImageView
                                 android:id="@+id/imageMore"
@@ -119,12 +121,13 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/part2"
+                        android:id="@+id/imageTextAttractionHolder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true">
+                        android:layout_alignParentStart="true"
+                        >
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/ImageAttraction"
