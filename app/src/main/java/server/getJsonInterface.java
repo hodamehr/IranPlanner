@@ -1,17 +1,12 @@
 package server;
 
-import android.util.Log;
-
 import entity.Login;
+import entity.LoginResult;
 import entity.ResultItineraryAttractionList;
 import entity.ResultItineraryList;
 import entity.ResultUserLogin;
-import entity.map.MapResult;
-import entity.map.Route;
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -25,6 +20,10 @@ public interface getJsonInterface {
                                             @Query("limit") String param4,
                                             @Query("offset") String param5);
 
+    @GET("api-user.php?action=login&email=faridsaniee@gmail.com&password=090afe0d4abb5dfdccb84641fe115680")
+    Call<LoginResult> getLoginResult(@Query("action") String param1,
+                                     @Query("email") String param2,
+                                     @Query("password") String param3);
 
     @GET("api-itinerary.php")
     Call<ResultItineraryAttractionList> getItineraryAttractionList(
@@ -39,21 +38,11 @@ public interface getJsonInterface {
                                                         @Query("province") String param2,
                                                         @Query("offset") String param3);
 
-    //    ?https://maps.googleapis.com/maps/api/directions/json?origin=35.6859016418457,51.38629913330078&destination=36.40290069580078,55.01570129394531&sensor=false
-    @GET("https://maps.googleapis.com/maps/api/directions/json")
-    Call<Route> getMapResult(@Query("origin") String param1,
-                             @Query("destination") String param2,
-                             @Query("sensor") String param3);
 
+    @GET("api-user.php?action=login&email=faridsaniee@gmail.com&password=090afe0d4abb5dfdccb84641fe115680")
+    Call<ResultUserLogin> checkLogin(@Query("action") String param1,
+                                     @Query("email") String param2,
+                                     @Query("password") String param3);
 
-    //        @POST("/SF_UserLogin.svc/rest/login/{employeeCode}/{password}") // Assume your base url is http://172.16.7.203/sfAppServices/
-    @POST("api-user.php?action=login/{email}/{password}")
-    // Assume your base url is http://172.16.7.203/sfAppServices/
-    public Call<Login> login(@Path("email") String email, @Path("password") String password);
-
-//    @GET("/me?site=stackoverflow&order=desc&sort=reputation&filter=default)
-    @POST("/api-user.php/{email}/{password}")
-    Call<ResultUserLogin> tt(@Path("email") String email, @Path("password") String password);
-//    Call<Login> tt(@Path("email") String email, @Path("password") String password);
 
 }

@@ -81,7 +81,7 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
                     showProgressDialog();
 
                 } else {
-                    Toast.makeText(getActivity(), "please correct name of city ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "لطفا نام شهر را اصلاح کنید", Toast.LENGTH_SHORT).show();
                 }
                 Log.d("search ok clicked", "true");
             }
@@ -140,7 +140,6 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
     @Override
     public void onResponse(Call<ResultItineraryList> call, Response<ResultItineraryList> response) {
 //        Log.e("get result from server", response.body().toString());
-        progressDialog.dismiss();
         if (response.body() != null) {
             ResultItineraryList jsonResponse = response.body();
             List<ResultItinerary> data = jsonResponse.getResultItinerary();
@@ -155,6 +154,8 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
             ft.addToBackStack(null);
             ft.commit();
             checkfragment = true;
+            progressDialog.dismiss();
+
 //            SearchHolderForWatiting.setVisibility(View.VISIBLE);
         }
 

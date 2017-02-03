@@ -10,16 +10,16 @@ public class Status  implements Serializable {
 
     @SerializedName("Status")
     @Expose
-    private String status;
+    private Integer status;
     @SerializedName("Message")
     @Expose
     private String message;
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.coinpany.core.android.widget.CTouchyWebView;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,6 +41,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     ResultItineraryAttraction attraction;
     TextView attractionName, attractionPlace, textTimeDuration, textEntranceFee, attractionType, textBody;
     Marker marker;
+    protected CTouchyWebView contentFullDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,22 +49,41 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         setContentView(R.layout.fragment_attraction_detail);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-
+        contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
+        contentFullDescription.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
+        contentFullDescription.setLongClickable(false);
+        contentFullDescription.setHapticFeedbackEnabled(false);
         attractionName = (TextView) findViewById(R.id.attractionName);
         attractionPlace = (TextView) findViewById(R.id.attractionPlace);
         textTimeDuration = (TextView) findViewById(R.id.textTimeDuration);
         textEntranceFee = (TextView) findViewById(R.id.textEntranceFee);
         attractionType = (TextView) findViewById(R.id.attractionType);
-        textBody = (TextView) findViewById(R.id.textBody);
         ImageView imageAttraction = (ImageView) findViewById(R.id.imageAttraction);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         attraction = (entity.ResultItineraryAttraction) bundle.getSerializable("ResultItineraryAttraction");
         attractionName.setText(attraction.getAttractionTitle());
-        textBody.setText(Html.fromHtml(attraction.getAttarctionBody()));
         attractionPlace.setText(attraction.getProvinceTitle() + " - " + attraction.getCityTitle());
         int totalMinute = Integer.parseInt(attraction.getAttarctionEstimatedTime());
         Util.convertMinuteToHour(totalMinute, textTimeDuration);
+//        String htmlText = " %s ";
+        String myData = attraction.getAttarctionBody();
+        String pish = "<html><head><style type=\"text/css\">@font-face {font-family: MyFont;src: url(\"file:///android_asset/fonts/IRANSansMobile.ttf\")}body {font-family: MyFont;font-size: medium;text-align: justify;}</style></head><body>";
+        String pas = "</body></html>";
+        String myHtmlString = pish + myData + pas;
+        contentFullDescription.loadDataWithBaseURL(null,myHtmlString, "text/html", "UTF-8", null);
+
+//        String htmlText = "<html><body style=\"text-align:justify\"> %s </body></Html>";
+
+//        contentFullDescription.loadData(String.format(htmlText, myData), "text/html", "utf-8");
+//        contentFullDescription.loadData(String.format(htmlText, myData), "text/html; charset=utf-8", "utf-8");
+//        contentFullDescription.loadDataWithBaseURL("file:///android_asset/", attraction.getAttarctionBody(), "text/html", "utf-8", null);
+
         if (attraction.getItineraryImgUrl() != null) {
             String url = attraction.getItineraryImgUrl();
             Glide.with(getApplicationContext())
@@ -105,7 +127,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         attraction.getAttractionPositionOn();
         float lan = Float.valueOf(attraction.getAttractionPositionLat());
         float lon = Float.valueOf(attraction.getAttractionPositionOn());
-        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker));
+        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_eye));
 
         marker = mMap.addMarker(markerOptions
                 .position(new LatLng(lan, lon))
