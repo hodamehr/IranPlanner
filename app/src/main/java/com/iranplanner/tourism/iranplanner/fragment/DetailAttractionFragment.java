@@ -31,7 +31,6 @@ public class DetailAttractionFragment extends StandardFragment {
         textTimeDuration = (TextView) view.findViewById(R.id.textTimeDuration);
         textEntranceFee = (TextView) view.findViewById(R.id.textEntranceFee);
         attractionType = (TextView) view.findViewById(R.id.attractionType);
-        textBody = (TextView) view.findViewById(R.id.textBody);
         ImageView imageAttraction = (ImageView) view.findViewById(R.id.imageAttraction);
         Bundle bundle = getArguments();
         ResultItineraryAttraction attraction = (entity.ResultItineraryAttraction) bundle.getSerializable("ResultItineraryAttraction");

@@ -43,21 +43,12 @@ import java.util.List;
 
 import entity.ItineraryLodgingCity;
 import entity.ResultItinerary;
-import entity.ResultItineraryList;
-import entity.map.MapResult;
-import entity.map.Route;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import server.getJsonInterface;
 
 /**
  * Created by h.vahidimehr on 15/01/2017.
  */
 
-public class MapDirection implements Callback<Route> {
+public class MapDirection  {
 
     Context context;
     private GoogleMap mMap;
@@ -419,35 +410,5 @@ public class MapDirection implements Callback<Route> {
 //            // You can add here other case statements according to your requirement.
 //        }
 //    }
-    public void getItinerary(LatLng origin, LatLng dest) {
-        // Origin of route
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
 
-        // Destination of route
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-
-
-        // Sensor enabled
-        String sensor = "sensor=false";
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://maps.googleapis.com/maps/api/directions/")
-//                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        getJsonInterface getJsonInterface = retrofit.create(getJsonInterface.class);
-        Call<Route> call = getJsonInterface.getMapResult(str_origin, str_dest, sensor);
-        call.enqueue(this);
-    }
-
-
-    @Override
-    public void onResponse(Call<Route> call, Response<Route> response) {
-        Route jsonResponse = response.body();
-    }
-
-    @Override
-    public void onFailure(Call<Route> call, Throwable t) {
-
-    }
 }
