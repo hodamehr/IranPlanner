@@ -43,7 +43,6 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
     boolean checkfragment = false;
     ProgressDialog progressDialog;
     ProgressBar waitingForData;
-    RelativeLayout SearchHolderForWatiting;
 
     public static SearchCityCityFragment newInstance() {
         SearchCityCityFragment fragment = new SearchCityCityFragment();
@@ -156,7 +155,6 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
             checkfragment = true;
             progressDialog.dismiss();
 
-//            SearchHolderForWatiting.setVisibility(View.VISIBLE);
         }
 
     }

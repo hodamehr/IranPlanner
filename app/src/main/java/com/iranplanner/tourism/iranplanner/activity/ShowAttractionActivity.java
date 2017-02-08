@@ -32,7 +32,6 @@ public class ShowAttractionActivity extends StandardActivity {
         if (extras != null) {
             itineraryActionList = (List<ResultItineraryAttraction>) extras.getSerializable("ResultItineraryAttraction");
         }
-
         adapterViewPager = new ShowDetailItineraryAdapter(getSupportFragmentManager(),getDayGroup(itineraryActionList));
         vpPager.setAdapter(adapterViewPager);
     }

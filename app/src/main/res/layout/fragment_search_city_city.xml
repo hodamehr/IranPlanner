@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
 
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,11 +17,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:orientation="vertical"
             android:paddingLeft="@dimen/padding_24"
             android:paddingRight="@dimen/padding_24"
-            android:paddingTop="@dimen/padding_larg"
-            android:layout_gravity="right">
+            android:paddingTop="@dimen/padding_larg">
 
             <ImageView
                 android:layout_width="100dp"
@@ -43,8 +41,9 @@
                     style="@style/StandardText"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/padding_big"
+                    android:gravity="right"
                     android:hint="از شهر"
-                    android:gravity="right"/>
+                    android:inputType="text" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -58,8 +57,11 @@
                     style="@style/StandardText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="right"
                     android:hint="به شهر"
-                    android:gravity="right"/>
+                    android:inputType="text"
+
+                    />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton
@@ -73,6 +75,7 @@
 
         </LinearLayout>
     </ScrollView>
+
 
 </LinearLayout><!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:id="@+id/containerCityCity"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@color/white"--><!--android:padding="@dimen/margin_standard"--><!--tools:context="com.iranplanner.tourism.iranplanner.fragment.SearchCityCityFragment">-->
 

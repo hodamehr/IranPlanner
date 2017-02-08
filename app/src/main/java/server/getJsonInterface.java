@@ -4,6 +4,7 @@ import entity.Login;
 import entity.LoginResult;
 import entity.ResultItineraryAttractionList;
 import entity.ResultItineraryList;
+import entity.ResultRegister;
 import entity.ResultUserLogin;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -24,6 +25,15 @@ public interface getJsonInterface {
     Call<LoginResult> getLoginResult(@Query("action") String param1,
                                      @Query("email") String param2,
                                      @Query("password") String param3);
+    @GET("api-user.php")
+//    api.parsdid.com/iranplanner/app/api-user.php?action=register&email=z@zhoda.com&password=hhhhh&fname=hoda&lname=vahidi&gender=1&cid=1
+    Call<ResultRegister> getRegisterResult(@Query("action") String action,
+                                           @Query("email") String email,
+                                           @Query("password") String password,
+                                           @Query("fname") String fname,
+                                           @Query("lname") String lname,
+                                           @Query("gender") String gender,
+                                           @Query("cid") String cid);
 
     @GET("api-itinerary.php")
     Call<ResultItineraryAttractionList> getItineraryAttractionList(
@@ -39,10 +49,7 @@ public interface getJsonInterface {
                                                         @Query("offset") String param3);
 
 
-    @GET("api-user.php?action=login&email=faridsaniee@gmail.com&password=090afe0d4abb5dfdccb84641fe115680")
-    Call<ResultUserLogin> checkLogin(@Query("action") String param1,
-                                     @Query("email") String param2,
-                                     @Query("password") String param3);
+
 
 
 }

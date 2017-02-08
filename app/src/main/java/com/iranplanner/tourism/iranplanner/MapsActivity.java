@@ -42,12 +42,14 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import entity.ItineraryLodgingCity;
 import entity.ItineraryPercentage;
 import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
 import entity.ResultItineraryAttractionList;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -479,8 +481,14 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
 
 
     public void getAttraction(String itineraryId) {
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface stackOverflowAPI = retrofit.create(getJsonInterface.class);

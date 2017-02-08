@@ -12,9 +12,11 @@ import android.widget.TextView;
 
 
 import com.iranplanner.tourism.iranplanner.activity.LoginActivity;
+import com.iranplanner.tourism.iranplanner.activity.SignupActivity;
 import com.iranplanner.tourism.iranplanner.adapter.TabPagerAdapter;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 
+import entity.ResultRegister;
 import server.test;
 
 public class MainActivity extends StandardActivity {
@@ -28,19 +30,20 @@ public class MainActivity extends StandardActivity {
 //        test.getItinerary("342");
         // Setup the viewPager
         Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
-        TextView logintext= (TextView) findViewById(R.id.logintext);
-        logintext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
 
-            }
-        });
+
         setSupportActionBar(toolbar);
         View logo = getLayoutInflater().inflate(R.layout.custom_imageview_toolbar, null);
         toolbar.addView(logo);
-
+        TextView logintext= (TextView) findViewById(R.id.logintext);
+//        logintext.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(getApplicationContext(), SignupActivity.class);
+//                startActivity(intent);
+//
+//            }
+//        });
 //        getSupportActionBar().setDisplayShowHomeEnabled(true);
 //        getSupportActionBar().setIcon(R.mipmap.ic_air_gret);
 
