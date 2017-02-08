@@ -67,7 +67,7 @@ public class SearchCityCityActivity extends StandardActivity implements Callback
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 //                imm.hideSoftInputFromWindow(EditTextName.getWindowToken(), 0);
                 //--------------
-                getItinerary("342", "0", false);
+                getItinerary("342", "0", false,"342" );
 
                 //// TODO: 17/01/2017 inja code asli hast 
 //                cityFrom = returnCityId(fromCity_city, temp1);
@@ -102,7 +102,7 @@ public class SearchCityCityActivity extends StandardActivity implements Callback
     }
 
 
-    public void getItinerary(String cityId, String offset, boolean checkfragment) {
+    public void getItinerary(String cityId, String offset, boolean checkfragment,String toCity) {
         this.checkfragment = checkfragment;
 ////        recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
 //        recyclerView.setHasFixedSize(true);
@@ -122,7 +122,7 @@ public class SearchCityCityActivity extends StandardActivity implements Callback
                 .build();
 
         getJsonInterface getJsonInterface = retrofit.create(getJsonInterface.class);
-        Call<ResultItineraryList> call = getJsonInterface.getItinerarys("list", "fa", cityId, "", offset);
+        Call<ResultItineraryList> call = getJsonInterface.getItinerarys("list", "fa", cityId, "", offset,toCity);
         call.enqueue(this);
     }
 

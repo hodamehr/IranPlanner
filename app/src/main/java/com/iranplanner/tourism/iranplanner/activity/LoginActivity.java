@@ -2,7 +2,9 @@ package com.iranplanner.tourism.iranplanner.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -163,7 +165,7 @@ public class LoginActivity extends StandardActivity implements Callback<LoginRes
         if (response.body() != null) {
             LoginResult jsonResponse = response.body();
             ResultUserLogin resultUserLogin = jsonResponse.getResultUserLogin();
-            resultUserLogin.getUserFname();
+            saveInSharePrivence(resultUserLogin.getUserEmail(),resultUserLogin.getUserFname(),resultUserLogin.getUserLname(),resultUserLogin.getUserUid().toString());
         }
     }
 
@@ -171,4 +173,22 @@ public class LoginActivity extends StandardActivity implements Callback<LoginRes
     public void onFailure(Call<LoginResult> call, Throwable t) {
         Log.e("error", t.toString());
     }
+
+    private void saveInSharePrivence(String email,String lastName,String gender,String userId) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("email", email);
+        editor.putString("fname", lastName);
+        editor.putString("gender", gender);
+        editor.putString("gender", gender);
+        editor.putString("userId", userId);
+        editor.apply();
+    }
+
+//    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//    String name = preferences.getString("Name", "");
+//    if(!name.equalsIgnoreCase(""))
+//    {
+//        name = name + "  Sethi";  /* Edit the value here*/
+//    }
 }

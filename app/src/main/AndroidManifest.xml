@@ -42,9 +42,9 @@
             android:label="@string/title_activity_map_full" />
         <activity android:name=".activity.ShowAttractionActivity" />
         <activity
-            android:name=".standard.attractionDetailActivity"
+            android:name=".activity.attractionDetailActivity"
             android:label="@string/title_activity_attraction_detail" />
-        <activity android:name=".activity.SignUpActivity"/>
+        <activity android:name=".activity.SignupActivity"/>
     </application>
 
 </manifest>

@@ -65,9 +65,11 @@ public class MapDirection  {
         this.context = context;
         this.lodgingCities = lodgingCities;
         this.MarkerPoints = MarkerPoints;
+        mMap.clear();
     }
 
     public List<Marker> readytoDirect() {
+        mMap.clear();
         List<Marker> markers = new ArrayList<>();
         MarkerOptions options = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker));
 
@@ -240,11 +242,13 @@ public class MapDirection  {
         // Executes in UI thread, after the parsing process
         @Override
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
+
             ArrayList<LatLng> points;
             PolylineOptions lineOptions = null;
 
             // Traversing through all the routes
             if (result != null) {
+
                 for (int i = 0; i < result.size(); i++) {
                     points = new ArrayList<>();
                     lineOptions = new PolylineOptions();
@@ -280,6 +284,12 @@ public class MapDirection  {
             } else {
                 Log.d("onPostExecute", "without Polylines drawn");
             }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
         }
     }
 

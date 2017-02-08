@@ -24,6 +24,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -34,6 +35,7 @@ import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import entity.Attraction;
 import entity.ItineraryLodgingCity;
 import entity.ResultItinerary;
 import tools.MapDirection;
@@ -51,6 +53,7 @@ public class MapFullActivity extends StandardActivity implements OnMapReadyCallb
     LocationRequest mLocationRequest;
     ResultItinerary itineraryData;
     List<Marker> markers;
+    List<ItineraryLodgingCity> lodgingCities;
 
 
     @Override
@@ -58,10 +61,8 @@ public class MapFullActivity extends StandardActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
-
+        lodgingCities = (List<ItineraryLodgingCity>) bundle.getSerializable("lodgingCities");
         setContentView(R.layout.activity_map_full);
-
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
@@ -111,25 +112,29 @@ public class MapFullActivity extends StandardActivity implements OnMapReadyCallb
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-        List<ItineraryLodgingCity> lodgingCities = itineraryData.getItineraryLodgingCity();
+        prepareMarkers();
+
+    }
+
+    private void prepareMarkers() {
         if (MarkerPoints.size() > 1) {
             MarkerPoints.clear();
             mMap.clear();
         }
-        MapDirection mapDirection = new MapDirection(mMap, getApplicationContext(), lodgingCities, MarkerPoints);
+        if (lodgingCities != null) {
 
+            MapDirection mapDirection = new MapDirection(mMap, getApplicationContext(), lodgingCities, MarkerPoints);
+            // Already two locations
+            markers = mapDirection.readytoDirect();
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng) {
+                    Log.e("map is ckicked", "true");
+                }
+            });
 
-        // Already two locations
-
-        markers = mapDirection.readytoDirect();
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                Log.e("map is ckicked", "true");
-
-            }
-        });
-
+        }
+        onWindowFocusChanged(true);
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -163,33 +168,42 @@ public class MapFullActivity extends StandardActivity implements OnMapReadyCallb
     @Override
     public void onLocationChanged(Location location) {
 
-//        mLastLocation = location;
-//        if (mCurrLocationMarker != null) {
-//            mCurrLocationMarker.remove();
-//        }
-//
-//        //Place current location marker
-//        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-//        MarkerOptions markerOptions = new MarkerOptions();
-//        markerOptions.position(latLng);
-//        markerOptions.title("Current Position");
-//        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-//        mCurrLocationMarker = mMap.addMarker(markerOptions);
-//
-//        //move map camera
+
+        mLastLocation = location;
+        if (mCurrLocationMarker != null) {
+            mCurrLocationMarker.remove();
+        }
+        ItineraryLodgingCity i = new ItineraryLodgingCity();
+        i.setCityPositionLat(String.valueOf(location.getLatitude()));
+        i.setCityPositionLon(String.valueOf(location.getLongitude()));
+        lodgingCities.add(0, i);
+        //Place current location marker
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        markerOptions.title("موقعیت شما");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        mCurrLocationMarker = mMap.addMarker(markerOptions);
+//        onMapReady(mMap);
+        //move map camera
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 //        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-//
-//        //stop location updates
-//        if (mGoogleApiClient != null) {
-//            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-//        }
-
+        //stop location updates
+        if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }
+        MarkerPoints.clear();
+        prepareMarkers();
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;

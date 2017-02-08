@@ -70,6 +70,18 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
         float perc = Float.valueOf(android.get(i).getItineraryPercentage().get(0).getItineraryAttractionTypePercentage());
         viewHolder.textPercentage.setText((Util.persianNumbers(String.valueOf((int) perc)) + "%"));
 
+            if(android.get(i).getItineraryTransportId().equals("2830")){
+                viewHolder.travelTypePic.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_air_gret));
+
+            }else if(android.get(i).getItineraryTransportId().equals("2931")){
+                viewHolder.travelTypePic.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_train_grey));
+
+            }else if(android.get(i).getItineraryTransportId().equals("2829")){
+                viewHolder.travelTypePic.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_road_grey));
+
+            }
+
+
 
         if (android.get(i).getItineraryImgUrl() != null) {
             String url = android.get(i).getItineraryImgUrl();

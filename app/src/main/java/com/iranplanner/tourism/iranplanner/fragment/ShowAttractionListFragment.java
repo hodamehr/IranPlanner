@@ -1,9 +1,12 @@
 package com.iranplanner.tourism.iranplanner.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.provider.Settings;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,18 +17,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.iranplanner.tourism.iranplanner.MapsActivity;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
+import com.iranplanner.tourism.iranplanner.activity.MapFullActivity;
 import com.iranplanner.tourism.iranplanner.adapter.AttractionsListAdapter;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
-import com.iranplanner.tourism.iranplanner.standard.attractionDetailActivity;
+import com.iranplanner.tourism.iranplanner.activity.attractionDetailActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import entity.ItineraryLodgingCity;
 import entity.ResultItineraryAttraction;
 import tools.Util;
 
@@ -48,7 +52,7 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
         itineraryActionList = (List<ResultItineraryAttraction>) bundle.getSerializable("itineraryActionList");
         dayNumber = bundle.getInt("dayNumber");
         allDays = bundle.getInt("allDays");
-        textDayNumber.setText(" روز " + Util.persianNumbers(String.valueOf(dayNumber)) + " از " + allDays);
+        textDayNumber.setText(" روز " + Util.persianNumbers(String.valueOf(dayNumber)) + " از " + Util.persianNumbers(String.valueOf(allDays)));
         attractionRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         attractionRecyclerView.setLayoutManager(layoutManager);
@@ -59,16 +63,24 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
         attractionRecyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-               LinearLayout navigateBtn= (LinearLayout) view.findViewById(R.id.navigateBtn);
+                LinearLayout navigateBtn = (LinearLayout) view.findViewById(R.id.navigateBtn);
                 navigateBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.e("i am clicked","navigatBtn");
+                        final LocationManager manager = (LocationManager) getContext().getSystemService( Context.LOCATION_SERVICE );
+
+                        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+                            // Call your Alert message
+                             buildAlertMessageNoGps(position);
+                        }else {
+                            openMapFull(position);
+                        }
+
 
                     }
                 });
 
-                RelativeLayout imageTextAttractionHolder= (RelativeLayout) view.findViewById(R.id.imageTextAttractionHolder);
+                RelativeLayout imageTextAttractionHolder = (RelativeLayout) view.findViewById(R.id.imageTextAttractionHolder);
                 imageTextAttractionHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -78,16 +90,16 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
                         startActivity(intent);
                     }
                 });
-                LinearLayout moreInfoHolder= (LinearLayout) view.findViewById(R.id.moreInfoHolder);
-moreInfoHolder.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
-        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
-        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
-        startActivity(intent);
-    }
-});
+                LinearLayout moreInfoHolder = (LinearLayout) view.findViewById(R.id.moreInfoHolder);
+                moreInfoHolder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+                        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+                        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+                        startActivity(intent);
+                    }
+                });
 //                ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
 //                Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
 //                intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
@@ -126,7 +138,51 @@ moreInfoHolder.setOnClickListener(new View.OnClickListener() {
         });
         return view;
     }
+    private void buildAlertMessageNoGps(final int position) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("GPS شما فعال نیست. آیا تمایل به روشن کردن آن دارید")
+                .setCancelable(false)
+//                // TODO: 06/02/2017  below
+                // toye startActivityForResult be jaye code request posotion ro ferestam . ye joor kalak .
+                .setPositiveButton("بله", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), position);
+                    }
+                })
+                .setNegativeButton("خیر", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
 
+        final AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+                                Log.e("map is ckicked", "true");
+        openMapFull(requestCode);
+//        if (resultCode == 1) {
+//            switch (requestCode) {
+//                case 1:
+//                    Log.e("resultact","ok");
+//                    break;
+//            }
+//        }
+    }
+
+    private void openMapFull(int position){
+        Intent intent = new Intent(getContext(), MapFullActivity.class);
+        ItineraryLodgingCity i = new ItineraryLodgingCity();
+        i.setCityPositionLat(itineraryActionList.get(position).getAttractionPositionLat());
+        i.setCityPositionLon(itineraryActionList.get(position).getAttractionPositionOn());
+        List<ItineraryLodgingCity> lodgingCities = new ArrayList<ItineraryLodgingCity>();
+        lodgingCities.add(i);
+        intent.putExtra("lodgingCities", (Serializable) lodgingCities);
+        startActivity(intent);
+    }
     private boolean loading = true;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
 

@@ -4,12 +4,37 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.widget.TextView;
 
-import com.iranplanner.tourism.iranplanner.adapter.AttractionsListAdapter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by Hoda on 10/01/2017.
  */
 public class Util {
+    public static final String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     public static Typeface getFontAwesome(Context context) {
         Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/fontawesome-webfont.ttf");
@@ -21,12 +46,12 @@ public class Util {
             int hours = (int) Math.floor(totalMinute / 60);
             totalMinute %= 60;
             if (totalMinute == 0) {
-                textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf( hours)) + " ساعت ");
+                textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf(hours)) + " ساعت ");
             } else {
-                textView.setText("طول بازدید: " +  Util.persianNumbers(String.valueOf( hours))+ " ساعت و " + totalMinute + " دقیقه ");
+                textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf(hours)) + " ساعت و " + totalMinute + " دقیقه ");
             }
         } else {
-            textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf( totalMinute))  + " دقیقه ");
+            textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf(totalMinute)) + " دقیقه ");
         }
     }
 

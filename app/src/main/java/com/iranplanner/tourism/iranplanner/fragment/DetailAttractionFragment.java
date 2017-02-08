@@ -42,9 +42,9 @@ public class DetailAttractionFragment extends StandardFragment {
 
 
         if (attraction.getAttractionPrice() == null) {
-            textEntranceFee.setText("ندارد");
+            textEntranceFee.setText("رایگان");
         } else {
-            textEntranceFee.setText(attraction.getAttractionPrice().toString());
+            textEntranceFee.setText(Util.persianNumbers(attraction.getAttractionPrice().toString()));
         }
         attractionType.setText(attraction.getAttarctionItineraryTypeTitle());
         return view;
