@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.fragment.LoginFragment;
 import com.iranplanner.tourism.iranplanner.fragment.MainSearchFragment;
 import com.iranplanner.tourism.iranplanner.fragment.PageFragment;
 
@@ -18,13 +19,12 @@ import com.iranplanner.tourism.iranplanner.fragment.PageFragment;
  */
 public class TabPagerAdapter extends FragmentPagerAdapter {
     private Context context;
-    public final int PAGE_COUNT = 3;
+    public final int PAGE_COUNT = 2;
     private int[] mTabsIcons = {
-            R.drawable.ic_media_fullscreen_shrink,
-            R.drawable.ic_media_fullscreen_shrink,
-            R.drawable.ic_media_fullscreen_shrink};
+            R.mipmap.ic_search_pink,
+            R.mipmap.ic_user_pink};
 
-    private final String[] mTabsTitle = {"جستجو", "برنامه سفر", "تست"};
+    private final String[] mTabsTitle = {"جستجو", "حساب من" };
     public TabPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
@@ -44,13 +44,11 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         switch (pos) {
 
             case 0:
+
                 return  MainSearchFragment.newInstance();
 
             case 1:
-                return PageFragment.newInstance(2);
-            case 2:
-
-                return PageFragment.newInstance(3);
+                return LoginFragment.newInstance();
 
         }
         return null;
@@ -65,5 +63,11 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return mTabsTitle[position];
     }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
 }
 

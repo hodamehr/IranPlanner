@@ -1,22 +1,12 @@
 package tools;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -24,9 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.iranplanner.tourism.iranplanner.MapsActivity;
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.fragment.ItineraryListFragment;
 
 import org.json.JSONObject;
 
@@ -34,7 +22,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -65,9 +52,11 @@ public class MapDirection  {
         this.context = context;
         this.lodgingCities = lodgingCities;
         this.MarkerPoints = MarkerPoints;
+        mMap.clear();
     }
 
     public List<Marker> readytoDirect() {
+        mMap.clear();
         List<Marker> markers = new ArrayList<>();
         MarkerOptions options = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker));
 
@@ -240,11 +229,13 @@ public class MapDirection  {
         // Executes in UI thread, after the parsing process
         @Override
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
+
             ArrayList<LatLng> points;
             PolylineOptions lineOptions = null;
 
             // Traversing through all the routes
             if (result != null) {
+
                 for (int i = 0; i < result.size(); i++) {
                     points = new ArrayList<>();
                     lineOptions = new PolylineOptions();
@@ -280,6 +271,12 @@ public class MapDirection  {
             } else {
                 Log.d("onPostExecute", "without Polylines drawn");
             }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
         }
     }
 

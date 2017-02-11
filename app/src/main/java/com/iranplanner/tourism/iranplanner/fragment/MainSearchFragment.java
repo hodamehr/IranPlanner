@@ -22,7 +22,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.iranplanner.tourism.iranplanner.R;
 
@@ -36,16 +35,14 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         return fragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_search, container, false);
+        View view = inflater.inflate(R.layout.search_main_fragment, container, false);
         card_view_city = (CardView) view.findViewById(R.id.card_view_city);
         card_view_privence = (CardView) view.findViewById(R.id.card_view_privence);
         card_view_Iran = (CardView) view.findViewById(R.id.card_view_Iran);
         card_view_attraction = (CardView) view.findViewById(R.id.card_view_attraction);
-
         card_view_city.setOnClickListener(this);
         card_view_privence.setOnClickListener(this);
         card_view_Iran.setOnClickListener(this);
@@ -98,7 +95,7 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
 //            case R.id.findMyLocation:
-//                Intent intentMapActivity =new Intent(getContext(), MapsActivity.class);
+//                Intent intentMapActivity =new Intent(getContext(), MoreItemItineraryActivity.class);
 //                startActivity(intentMapActivity);
 //                LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 //                LocationListener locationListener = new LocationListinerGps(getContext());
@@ -111,7 +108,7 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
 //                }
 //                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 //                break;
-            case R.id.card_view_city:
+            case R.id.card_view_Iran:
                 SearchCityCityFragment fragment = new SearchCityCityFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.SearchHolder, fragment);
@@ -127,7 +124,18 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
                 break;
 
             case R.id.card_view_attraction:
-
+                SearchCityAttractionFragment fragmentAttraction = new SearchCityAttractionFragment();
+                FragmentTransaction fta = getFragmentManager().beginTransaction();
+                fta.replace(R.id.SearchHolder, fragmentAttraction);
+                fta.addToBackStack(null);
+                fta.commit();
+                break;
+            case R.id.card_view_city:
+                SearchCityFragment searchCityFragment = new SearchCityFragment();
+                FragmentTransaction ftci = getFragmentManager().beginTransaction();
+                ftci.replace(R.id.SearchHolder, searchCityFragment);
+                ftci.addToBackStack(null);
+                ftci.commit();
                 break;
         }
 

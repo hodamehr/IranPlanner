@@ -1,4 +1,4 @@
-package com.iranplanner.tourism.iranplanner;
+package com.iranplanner.tourism.iranplanner.activity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -21,6 +21,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.coinpany.core.android.widget.CTouchyWebView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -34,20 +35,21 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.iranplanner.tourism.iranplanner.activity.MapFullActivity;
-import com.iranplanner.tourism.iranplanner.activity.ShowAttractionActivity;
+import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import entity.ItineraryLodgingCity;
 import entity.ItineraryPercentage;
 import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
 import entity.ResultItineraryAttractionList;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,7 +59,7 @@ import server.getJsonInterface;
 import tools.MapDirection;
 import tools.Util;
 
-public class MapsActivity extends StandardActivity implements OnMapReadyCallback,
+public class MoreItemItineraryActivity extends StandardActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, Callback<ResultItineraryAttractionList> {
@@ -81,28 +83,26 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
     TextView textPercentage1;
     TextView textPercentage2;
     TextView textPercentage3;
+    TextView txtItinerary_attraction_type;
     ProgressDialog progressDialog;
+    ImageView itinerary_attraction_type_more;
+    protected CTouchyWebView contentFullDescription;
+    TextView txtItinerary_attraction_Difficulty;
+    TextView txtItinerary_count_attraction;
+    ImageView imgItineraryListMore;
+    TextView itineraryDuration;
+    TextView itinerary_name;
+    TextView showItinerys;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
-        String dutation = bundle.getString("dutation");
-//        byte[] bytes = intent.getByteArrayExtra("BMP");
-//        bundle.getByteArray("BMP");
-//        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    private void findView() {
         setContentView(R.layout.fragment_itinerary_item_more);
-        TextView txtItinerary_attraction_Difficulty = (TextView) findViewById(R.id.txtItinerary_attraction_Difficulty);
-        TextView txtItinerary_attraction_type = (TextView) findViewById(R.id.txtItinerary_attraction_type);
-        TextView txtItinerary_count_attraction = (TextView) findViewById(R.id.txtItinerary_count_attraction);
-        TextView itineraryDuration = (TextView) findViewById(R.id.itineraryDuration);
-        TextView itinerary_name = (TextView) findViewById(R.id.itinerary_name);
-        itineraryDuration.setText(dutation);
-        itinerary_name.setText(itineraryData.getItineraryFromCityName() + "-" + itineraryData.getItineraryToCityName());
-        TextView showItinerys = (TextView) findViewById(R.id.showItinerys);
+        txtItinerary_attraction_Difficulty = (TextView) findViewById(R.id.txtItinerary_attraction_Difficulty);
+        txtItinerary_attraction_type = (TextView) findViewById(R.id.txtItinerary_attraction_type);
+        txtItinerary_count_attraction = (TextView) findViewById(R.id.txtItinerary_count_attraction);
+        itineraryDuration = (TextView) findViewById(R.id.itineraryDuration);
+        itinerary_name = (TextView) findViewById(R.id.itinerary_name);
+        itinerary_attraction_type_more = (ImageView) findViewById(R.id.itinerary_attraction_type_more);
+        showItinerys = (TextView) findViewById(R.id.showItinerys);
         textTpeTravel1 = (TextView) findViewById(R.id.textTpeTravel1);
         textTpeTravel2 = (TextView) findViewById(R.id.textTpeTravel2);
         textTpeTravel3 = (TextView) findViewById(R.id.textTpeTravel3);
@@ -112,52 +112,44 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
         textPercentage1 = (TextView) findViewById(R.id.textPercentage1);
         textPercentage2 = (TextView) findViewById(R.id.textPercentage2);
         textPercentage3 = (TextView) findViewById(R.id.textPercentage3);
-        ImageView imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
+        imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
+        contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
+    }
 
-        if (itineraryData.getItineraryImgUrl() != null) {
-            String url = itineraryData.getItineraryImgUrl();
-//            Glide.with(context).load(url)   .into(viewHolder.imgItineraryList);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        findView();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
+        String duration = bundle.getString("duration");
+//        byte[] bytes = intent.getByteArrayExtra("BMP");
+//        bundle.getByteArray("BMP");
+//        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-            imgItineraryListMore.setVisibility(View.VISIBLE);
-            Glide.with(getApplicationContext())
-                    .load(url)
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .listener(new RequestListener<String, GlideDrawable>() {
-
-                        @Override
-                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            //// TODO: 22/01/2017  get defeult picture
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                            return false;
-                        }
-                    })
-                    .into(imgItineraryListMore)
-            ;
-        } else {
-            Glide.clear(imgItineraryListMore);
-            imgItineraryListMore.setImageDrawable(null);
-
-        }
-
-//        imgItineraryListMore.setImageBitmap(bmp);
-        /*setMonth();*/
-        SetPercentage();
 
         txtItinerary_attraction_Difficulty.setText(itineraryData.getItineraryDifficulty().getItineraryDifficultyGroup());
         txtItinerary_count_attraction.setText(Util.persianNumbers(itineraryData.getItineraryCountAttraction()) + " مکان دیدنی");
-        itineraryId = itineraryData.getItineraryId();
+        setTypeOfTravel();
+        itineraryDuration.setText(duration);
+        if (itineraryData.getItineraryFromCityName().equals(itineraryData.getItineraryToCityName())) {
+            itinerary_name.setText(itineraryData.getItineraryFromCityName() + " (گشت درون شهری) ");
+        } else {
+            itinerary_name.setText(itineraryData.getItineraryFromCityName() + "-" + itineraryData.getItineraryToCityName());
+        }
 
+        setWebViewContent();
+        SetPercentage();
+        setImageView();
+
+        itineraryId = itineraryData.getItineraryId();
         showItinerys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("open itinerarylist", "open");
                 getAttraction(itineraryId);
                 showProgressDialog();
-//                progressLoadingHolderItineraryMore.setVisibility(View.VISIBLE);
 
             }
         });
@@ -174,8 +166,37 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
 
     }
 
+    private void setWebViewContent() {
+        contentFullDescription.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
+        contentFullDescription.setLongClickable(false);
+        contentFullDescription.setHapticFeedbackEnabled(false);
+        String myData = itineraryData.getItineraryBody();
+        String pish = "<html><head><style type=\"text/css\">@font-face {font-family: MyFont;src: url(\"file:///android_asset/fonts/IRANSansMobile.ttf\")}body {font-family: MyFont;font-size: medium;text-align: justify;}</style></head><body>";
+        String pas = "</body></html>";
+        String myHtmlString = pish + myData + pas;
+        contentFullDescription.loadDataWithBaseURL(null, myHtmlString, "text/html", "UTF-8", null);
+    }
+
+    private void setTypeOfTravel() {
+        if (itineraryData.getItineraryTransportId().equals("2830")) {
+            itinerary_attraction_type_more.setImageDrawable(getResources().getDrawable(R.mipmap.ic_air_gret));
+            txtItinerary_attraction_type.setText("هوایی");
+        } else if (itineraryData.getItineraryTransportId().equals("2831")) {
+            itinerary_attraction_type_more.setImageDrawable(getResources().getDrawable(R.mipmap.ic_train_grey));
+            txtItinerary_attraction_type.setText("ترن");
+        } else if (itineraryData.getItineraryTransportId().equals("2829")) {
+            itinerary_attraction_type_more.setImageDrawable(getResources().getDrawable(R.mipmap.ic_road_grey));
+            txtItinerary_attraction_type.setText("جاده ای");
+        }
+    }
+
     private void showProgressDialog() {
-        progressDialog = new ProgressDialog(MapsActivity.this);
+        progressDialog = new ProgressDialog(MoreItemItineraryActivity.this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("لطفا منتظر بمانید");
         progressDialog.show();
@@ -244,6 +265,37 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
 
 
        }*/
+
+    private void setImageView() {
+        if (itineraryData.getItineraryImgUrl() != null) {
+            String url = itineraryData.getItineraryImgUrl();
+
+            imgItineraryListMore.setVisibility(View.VISIBLE);
+            Glide.with(getApplicationContext())
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .listener(new RequestListener<String, GlideDrawable>() {
+
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            //// TODO: 22/01/2017  get defeult picture
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
+                    .into(imgItineraryListMore)
+            ;
+        } else {
+            Glide.clear(imgItineraryListMore);
+            imgItineraryListMore.setImageDrawable(null);
+
+        }
+    }
+
     private void SetPercentage() {
         ArrayList<String> addtypes = new ArrayList<>();
         ArrayList<String> addtypesper = new ArrayList<>();
@@ -323,9 +375,11 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
             public void onMapClick(LatLng latLng) {
                 Log.e("map is ckicked", "true");
                 Intent intent = new Intent(getApplicationContext(), MapFullActivity.class);
-                intent.putExtra("itineraryData", (Serializable) itineraryData);
+//                intent.putExtra("itineraryData", (Serializable) itineraryData);
+//                intent.putExtra("fromWhere", "itinerary");
+                List<ItineraryLodgingCity> lodgingCities = itineraryData.getItineraryLodgingCity();
+                intent.putExtra("lodgingCities", (Serializable) lodgingCities);
                 startActivity(intent);
-
             }
         });
 
@@ -479,8 +533,14 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
 
 
     public void getAttraction(String itineraryId) {
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface stackOverflowAPI = retrofit.create(getJsonInterface.class);
@@ -510,9 +570,9 @@ public class MapsActivity extends StandardActivity implements OnMapReadyCallback
 //            itineraryListFragment.setArguments(bundle);
 //            loadFragment(this, itineraryListFragment, R.id.containerCityCity, true, 0, 0);
 
-//            for (ResultItineraryAttraction attraction : itineraryActionList) {
+//            for (ResultItineraryAttraction attraction.json : itineraryActionList) {
 //                for (int a = 0; a <= itineraryActionList.size(); a++) {
-//                    if (attraction.getItineraryDayplanName() == String.valueOf(a)) {
+//                    if (attraction.json.getItineraryDayplanName() == String.valueOf(a)) {
 //
 //                    }
 //                }

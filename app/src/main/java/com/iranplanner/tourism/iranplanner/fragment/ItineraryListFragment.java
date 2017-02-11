@@ -2,15 +2,7 @@ package com.iranplanner.tourism.iranplanner.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,33 +10,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.coinpany.core.android.widget.loading.RotateLoading;
-import com.iranplanner.tourism.iranplanner.MapsActivity;
+import com.iranplanner.tourism.iranplanner.activity.MoreItemItineraryActivity;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.adapter.ItineraryListAdapter;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import entity.ItineraryPercentage;
 import entity.ResultItinerary;
 import entity.ResultItineraryList;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import server.getJsonInterface;
-
-import static android.R.attr.bitmap;
 
 /**
  * Created by h.vahidimehr on 10/01/2017.
@@ -61,30 +52,57 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
     TextView waiting;
     private boolean fromCityToCity;
     private boolean fromProvince;
+    private boolean fromCity;
+    private boolean fromAttraction;
     String provinceId;
-    int dataSize;
-    String nextOffset;
+    String nextOffset, endCity;
+    String attractionId, cityFrom;
+
+    private ProgressBar waitingLoading;
+
+    private void checkFromWhereGetBundle() {
+        Bundle bundle = getArguments();
+
+        data = (List<ResultItinerary>) bundle.getSerializable("resuliItineraryList");
+        String fromWhere = bundle.getString("fromWhere");
+        provinceId = bundle.getString("provinceId");
+        nextOffset = bundle.getString("nextOffset");
+        endCity = bundle.getString("endCity");
+        attractionId = bundle.getString("attractionId");
+        cityFrom = bundle.getString("cityFrom");
+        if (fromWhere.equals("fromProvince")) {
+            fromCityToCity = false;
+            fromProvince = true;
+            fromCity = false;
+            fromAttraction = false;
+        } else if (fromWhere.equals("fromCityToCity")) {
+            fromCityToCity = true;
+            fromProvince = false;
+            fromCity = false;
+            fromAttraction = false;
+
+        } else if (fromWhere.equals("fromCity")) {
+            fromCityToCity = false;
+            fromProvince = false;
+            fromCity = true;
+            fromAttraction = false;
+        } else if (fromWhere.equals("fromAttraction")) {
+            fromCityToCity = false;
+            fromProvince = false;
+            fromCity = false;
+            fromAttraction = true;
+        }
+    }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_itinerary_list, container, false);
-        Bundle bundle = getArguments();
-        data = (List<ResultItinerary>) bundle.getSerializable("resuliItineraryList");
-
-        String fromWhere = bundle.getString("fromWhere");
-        provinceId = bundle.getString("provinceId");
-        nextOffset = bundle.getString("nextOffset");
-        if (fromWhere.equals("fromProvince")) {
-            fromCityToCity = false;
-            fromProvince = true;
-        } else if (fromWhere.equals("fromCityToCity")) {
-            fromCityToCity = true;
-            fromProvince = false;
-        }
-        dataSize = 20;
         recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
-        waiting = (TextView) view.findViewById(R.id.waiting);
+        waitingLoading = (ProgressBar) view.findViewById(R.id.waitingLoading);
+        checkFromWhereGetBundle();
+
+
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
@@ -98,8 +116,7 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
                 ImageView imageView = (ImageView) view.findViewById(R.id.imgItineraryListMore);
                 TextView textView = (TextView) view.findViewById(R.id.itinerary_duration);
                 textView.getText();
-
-                MyThread m = new MyThread(imageView, position,textView.getText().toString());
+                MyThread m = new MyThread(imageView, position, textView.getText().toString());
                 m.run();
             }
         }));
@@ -110,17 +127,24 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) //check for scroll down
                 {
-                    //// TODO: 25/01/2017 ina ro check kon data size
                     visibleItemCount = mLayoutManager.getChildCount();
                     totalItemCount = mLayoutManager.getItemCount();
                     pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount ) {
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         if (fromCityToCity) {
-                            getItineraryc(data.get(0).getItineraryFromCityId().toString(), nextOffset);
-                            waiting.setVisibility(View.VISIBLE);
+                            getItineraryCityToCity(data.get(0).getItineraryFromCityId().toString(), nextOffset, endCity);
+                            waitingLoading.setVisibility(View.VISIBLE);
                         } else if (fromProvince) {
-                            getItineraryp(nextOffset, provinceId);
-                            waiting.setVisibility(View.VISIBLE);
+                            getItineraryProvince(nextOffset, provinceId);
+                            waitingLoading.setVisibility(View.VISIBLE);
+
+                        } else if (fromAttraction) {
+                            getItineraryAttraction(cityFrom, nextOffset, attractionId);
+                            waitingLoading.setVisibility(View.VISIBLE);
+
+                        } else if (fromCity) {
+                            getItineraryCity(cityFrom, nextOffset, cityFrom);
+                            waitingLoading.setVisibility(View.VISIBLE);
                         }
 
                     }
@@ -138,10 +162,10 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
         int position;
         String duration;
 
-        public MyThread(ImageView img, int position,String duration) {
+        public MyThread(ImageView img, int position, String duration) {
             this.img = img;
             this.position = position;
-            this.duration=duration;
+            this.duration = duration;
         }
 
         @Override
@@ -152,9 +176,9 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
 //            btm.compress(Bitmap.CompressFormat.PNG, 100, stream);
 //            byte[] bytes = stream.toByteArray();
             Log.e("string", "item clicked");
-            Intent intent = new Intent(getActivity(), MapsActivity.class);
+            Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
             intent.putExtra("itineraryData", (Serializable) data.get(position));
-            intent.putExtra("dutation",duration);
+            intent.putExtra("duration", duration);
 
 //            intent.putExtra("BMP", bytes);
             startActivity(intent);
@@ -164,24 +188,58 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
     private boolean loading = true;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
 
-    public void getItineraryc(String cityId, String offset) {
+    private OkHttpClient setHttpClient() {
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
+        return okHttpClient;
+    }
+
+    public void getItineraryCityToCity(String cityId, String offset, String toCity) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .client(setHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(getJsonInterface.class);
-        Call<ResultItineraryList> callc = getJsonInterface.getItinerarys("list", "fa", cityId, "", offset);
-        callc.enqueue(this);
+        Call<ResultItineraryList> call = getJsonInterface.getItinerarys("list", "fa", cityId, "", offset, toCity);
+        call.enqueue(this);
     }
 
-    public void getItineraryp(String offset, String provinceId) {
-
+    public void getItineraryProvince(String offset, String provinceId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .client(setHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
         Call<ResultItineraryList> call = getJsonInterface.getItinerarysFromProvince("searchprovince", provinceId, offset);
+        call.enqueue(this);
+    }
+
+    public void getItineraryCity(String cityId, String offset, String toCity) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .client(setHttpClient())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+        Call<ResultItineraryList> call = getJsonInterface.getItinerarys("list", "fa", cityId, "", offset, toCity);
+        call.enqueue(this);
+    }
+
+    public void getItineraryAttraction(String cityId, String offset, String attractionId) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .client(setHttpClient())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+        Call<ResultItineraryList> call = getJsonInterface.getItinerarysAttraction("searchattractioncity", "fa", cityId, "", offset, attractionId);
         call.enqueue(this);
     }
 
@@ -191,23 +249,23 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
             loading = false;
             ResultItineraryList jsonResponse = response.body();
             List<ResultItinerary> jj = jsonResponse.getResultItinerary();
-            if( !nextOffset.equals(response.body().getStatistics().getOffsetNext().toString())){
+            if (!nextOffset.equals(response.body().getStatistics().getOffsetNext().toString())) {
                 data.addAll(jj);
                 adapter.notifyDataSetChanged();
-                waiting.setVisibility(View.INVISIBLE);
-                nextOffset=response.body().getStatistics().getOffsetNext().toString();
+                waitingLoading.setVisibility(View.INVISIBLE);
+                nextOffset = response.body().getStatistics().getOffsetNext().toString();
             }
 
         } else {
             Log.e("Responce body", "null");
-            waiting.setVisibility(View.INVISIBLE);
+            waitingLoading.setVisibility(View.INVISIBLE);
         }
-//        rotateloading.stop();
     }
 
     @Override
     public void onFailure(Call<ResultItineraryList> call, Throwable t) {
         Log.e(" error from server", "error");
+        Toast.makeText(getContext(), "عدم ارتباط با اینترنت", Toast.LENGTH_LONG).show();
     }
 
 

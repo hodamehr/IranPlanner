@@ -37,18 +37,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageTextAttractionHolder"
+                        android:layout_marginBottom="@dimen/margin_standard"
                         android:paddingLeft="@dimen/padding_standard"
-                        android:paddingRight="@dimen/padding_standard"
-                        android:layout_marginBottom="@dimen/margin_standard">
+                        android:paddingRight="@dimen/padding_standard">
 
                         <LinearLayout
+                            android:id="@+id/navigateBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentTop="true"
+                            android:background="?android:attr/selectableItemBackground"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:id="@+id/navigateBtn">
+                            android:paddingLeft="@dimen/padding_standard"
+                            android:paddingRight="@dimen/padding_standard">
 
                             <ImageView
                                 android:id="@+id/imageGps"
@@ -63,8 +66,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
-                                android:text="مسیریابی"
-                        />
+                                android:text="مسیریابی" />
 
                         </LinearLayout>
 
@@ -74,7 +76,8 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerInParent="true"
                             android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:id="@+id/imageTimeOpen"
@@ -93,13 +96,16 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/moreInfoHolder"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentTop="true"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:id="@+id/moreInfoHolder">
+                            android:paddingLeft="@dimen/padding_standard"
+                            android:paddingRight="@dimen/padding_standard"
+                            android:background="?android:attr/selectableItemBackground">
 
                             <ImageView
                                 android:id="@+id/imageMore"
@@ -124,10 +130,10 @@
                         android:id="@+id/imageTextAttractionHolder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        >
+                        android:layout_alignParentTop="true"
+                        android:background="?android:attr/selectableItemBackground">
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/ImageAttraction"
@@ -135,8 +141,7 @@
                             android:layout_height="100dp"
                             android:layout_alignParentLeft="true"
                             android:layout_alignTop="@+id/itinerary_attraction_name"
-                            android:layout_marginLeft="@dimen/margin_standard"
-                            />
+                            android:layout_marginLeft="@dimen/margin_standard" />
 
                         <TextView
                             android:id="@+id/itinerary_attraction_name"
@@ -205,7 +210,7 @@
                                 android:layout_height="20dp"
                                 android:layout_margin="5dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_duration_grey" />
+                                android:src="@mipmap/ic_duration_time_grey" />
 
                         </LinearLayout>
                     </RelativeLayout>

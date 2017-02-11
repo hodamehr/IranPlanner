@@ -21,10 +21,10 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textAllCaps="false"
-        android:textColor="#555"
+        android:textColor="@color/pink"
         android:textSize="12sp"
         tools:text="@string/title_section1"
         android:background="?android:attr/selectableItemBackground"
-        style="@style/StandardText"
+        style="@style/SmallText"
         />
 </LinearLayout>

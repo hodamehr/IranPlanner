@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,20 +30,15 @@ import tools.Util;
  */
 // in adapter baraye neshon dadane list az itinerary ha hast.
 public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdapter.ViewHolder> {
-    private List<ResultItinerary> android;
+    private List<ResultItinerary> itineraries;
     Context context;
     int rowLayout;
     DataTransferInterface dtInterface;
-    //    public ItineraryListAdapter(List<ResultItinerary> android, Context context, int rowLayout) {
-//        this.android = android;
-//        this.context = context;
-//        this.rowLayout = rowLayout;
-//
-//    }
+
     LayoutInflater inflater;
 
-    public ItineraryListAdapter(Activity a, DataTransferInterface dtInterface, List<ResultItinerary> android, Context context, int rowLayout) {
-        this.android = android;
+    public ItineraryListAdapter(Activity a, DataTransferInterface dtInterface, List<ResultItinerary> itinerarys, Context context, int rowLayout) {
+        this.itineraries = itinerarys;
         this.context = context;
         this.rowLayout = rowLayout;
         Activity activity = a;
@@ -60,19 +54,35 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
 
     @Override
     public void onBindViewHolder(final ItineraryListAdapter.ViewHolder viewHolder, int i) {
+        if (itineraries.get(i).getItineraryFromCityName().equals(itineraries.get(i).getItineraryToCityName())) {
+            viewHolder.itinerary_from_city_name.setText(itineraries.get(i).getItineraryFromCityName() + " (گشت درون شهری) ");
+        } else {
+            viewHolder.itinerary_from_city_name.setText(itineraries.get(i).getItineraryFromCityName() + " - " + itineraries.get(i).getItineraryToCityName());
+        }
+        viewHolder.itinerary_duration.setText(Util.persianNumbers(itineraries.get(i).getItineraryDuration()) + " روز");
+        float perc = Float.valueOf(itineraries.get(i).getItineraryPercentage().get(0).getItineraryAttractionTypePercentage());
+        viewHolder.textTpeTravel.setText(itineraries.get(i).getItineraryPercentage().get(0).getItineraryAttractionType());
+        int animationDuration = 2500; // 2500ms = 2,5s
 
-        viewHolder.itinerary_from_city_name.setText(android.get(i).getItineraryFromCityName() + " - " + android.get(i).getItineraryToCityName());
-        viewHolder.itinerary_duration.setText(Util.persianNumbers(android.get(i).getItineraryDuration()) + " روز");
-        viewHolder.textTpeTravel.setText(android.get(i).getItineraryPercentage().get(0).getItineraryAttractionType());
-        viewHolder.progressMax.setProgress(Float.valueOf(android.get(i).getItineraryPercentage().get(0).getItineraryAttractionTypePercentage()));
-        viewHolder.itinerary_transport_name.setText(android.get(i).getItineraryTransportName());
-        viewHolder.itinerary_count_attraction.setText(Util.persianNumbers(android.get(i).getItineraryCountAttraction()) + " مکان دیدنی");
-        float perc = Float.valueOf(android.get(i).getItineraryPercentage().get(0).getItineraryAttractionTypePercentage());
+        viewHolder.progressMax.setProgressWithAnimation(perc, animationDuration);
+        viewHolder.progressMax.setProgress(perc);
+        viewHolder.itinerary_transport_name.setText(itineraries.get(i).getItineraryTransportName());
+        viewHolder.itinerary_count_attraction.setText(Util.persianNumbers(itineraries.get(i).getItineraryCountAttraction()) + " مکان دیدنی");
         viewHolder.textPercentage.setText((Util.persianNumbers(String.valueOf((int) perc)) + "%"));
 
+        if (itineraries.get(i).getItineraryTransportId().equals("2830")) {
+            viewHolder.travelTypePic.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_air_gret));
 
-        if (android.get(i).getItineraryImgUrl() != null) {
-            String url = android.get(i).getItineraryImgUrl();
+        } else if (itineraries.get(i).getItineraryTransportId().equals("2831")) {
+            viewHolder.travelTypePic.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_train_grey));
+
+        } else if (itineraries.get(i).getItineraryTransportId().equals("2829")) {
+            viewHolder.travelTypePic.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_road_grey));
+
+        }
+
+        if (itineraries.get(i).getItineraryImgUrl() != null) {
+            String url = itineraries.get(i).getItineraryImgUrl();
 //            Glide.with(context).load(url)   .into(viewHolder.imgItineraryList);
 
             viewHolder.imageLoading.setVisibility(View.VISIBLE);
@@ -107,7 +117,7 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
 
     @Override
     public int getItemCount() {
-        return android.size();
+        return itineraries.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener */ {
@@ -134,12 +144,11 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
             progressMax = (CircularProgressBar) view.findViewById(R.id.progressMax);
             imageLoading = (ProgressBar) view.findViewById(R.id.imageLoading);
             imageLoading.setVisibility(View.VISIBLE);
-            int animationDuration = 2500; // 2500ms = 2,5s
-            progressMax.setProgressWithAnimation(65, animationDuration);
+
 
 //            progressMax.getIndeterminateDrawable().setColorFilter(
 //                    context.getResources().getColor(pink),
-//                    android.graphics.PorterDuff.Mode.SRC_IN);
+//                    itineraries.graphics.PorterDuff.Mode.SRC_IN);
         }
 
     }

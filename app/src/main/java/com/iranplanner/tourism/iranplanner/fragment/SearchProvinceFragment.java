@@ -1,11 +1,13 @@
 package com.iranplanner.tourism.iranplanner.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
@@ -37,6 +39,7 @@ public class SearchProvinceFragment extends StandardFragment implements Callback
     String provinceId = null;
     AutoCompleteTextView textProvience;
     boolean checkfragment = false;
+    ProgressDialog progressDialog;
 
     public static SearchCityCityFragment newInstance() {
         SearchCityCityFragment fragment = new SearchCityCityFragment();
@@ -48,6 +51,8 @@ public class SearchProvinceFragment extends StandardFragment implements Callback
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         View view = inflater.inflate(R.layout.fragment_provience_search, container, false);
         textProvience = (AutoCompleteTextView) view.findViewById(R.id.textProvience);
         Button searchOk_provience = (Button) view.findViewById(R.id.searchOk_provience);
@@ -77,13 +82,21 @@ public class SearchProvinceFragment extends StandardFragment implements Callback
         textProvience.setAdapter(adapter);
         return provinces;
     }
-
+    private void showProgressDialog() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("لطفا منتظر بمانید");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+    }
     public String returnProvinceId(AutoCompleteTextView textView, List<Province> provinceList) {
 
         for (Province p : provinceList) {
             Log.e("Province", p.getProvinceName());
             if (p.getProvinceName().equals(textView.getText().toString())) {
                 provinceId = p.getProvinceId();
+                showProgressDialog();
             }
         }
         return provinceId;
@@ -107,27 +120,37 @@ public class SearchProvinceFragment extends StandardFragment implements Callback
 
     @Override
     public void onResponse(Call<ResultItineraryList> call, Response<ResultItineraryList> response) {
-        Log.e("get result from server", response.body().toString());
-        ResultItineraryList jsonResponse = response.body();
-        List<ResultItinerary> data = jsonResponse.getResultItinerary();
-        ItineraryListFragment itineraryListFragment = new ItineraryListFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("resuliItineraryList", (Serializable) data);
-        bundle.putString("fromWhere","fromProvince");
-        bundle.putString("provinceId",provinceId);
-        bundle.putString("nextOffset",response.body().getStatistics().getOffsetNext().toString());
-        itineraryListFragment.setArguments(bundle);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.SearchHolder, itineraryListFragment);
-        ft.addToBackStack(null);
-        ft.commit();
+        if (response.body() != null) {
+            Log.e("get result from server", response.body().toString());
+            ResultItineraryList jsonResponse = response.body();
+            List<ResultItinerary> data = jsonResponse.getResultItinerary();
+            ItineraryListFragment itineraryListFragment = new ItineraryListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("resuliItineraryList", (Serializable) data);
+            bundle.putString("fromWhere", "fromProvince");
+            bundle.putString("provinceId", provinceId);
+            bundle.putString("endCity", "");
+            bundle.putString("nextOffset", response.body().getStatistics().getOffsetNext().toString());
+            itineraryListFragment.setArguments(bundle);
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.SearchHolder, itineraryListFragment);
+            ft.addToBackStack(null);
+            ft.commit();
+            progressDialog.dismiss();
+        }else {
+            Toast.makeText(getContext(), "برنامه سفری یافت نشد", Toast.LENGTH_LONG).show();
+            progressDialog.dismiss();
+        }
 //        loadFragment(this, itineraryListFragment, R.id.containerCityCity, true, 0, 0);
+        progressDialog.dismiss();
+
         checkfragment = true;
     }
 
     @Override
     public void onFailure(Call<ResultItineraryList> call, Throwable t) {
         Log.e(" error from server", "error");
+        progressDialog.dismiss();
     }
 
 }

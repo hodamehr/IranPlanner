@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -43,7 +44,6 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
     boolean checkfragment = false;
     ProgressDialog progressDialog;
     ProgressBar waitingForData;
-    RelativeLayout SearchHolderForWatiting;
 
     public static SearchCityCityFragment newInstance() {
         SearchCityCityFragment fragment = new SearchCityCityFragment();
@@ -53,16 +53,18 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
     }
 
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //        bara inke keybord bala nayad
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
         View view = inflater.inflate(R.layout.fragment_search_city_city, container, false);
         fromCity_city = (AutoCompleteTextView) view.findViewById(R.id.fromCity_city);
         endCity_city = (AutoCompleteTextView) view.findViewById(R.id.endCity_city);
         Button searchOk_city = (Button) view.findViewById(R.id.searchOk_city);
+        fromCity_city.setImeOptions(EditorInfo.IME_ACTION_NEXT);
 
         final List<City> temp1 = autoComplete(fromCity_city);
         final List<City> temp2 = autoComplete(endCity_city);
@@ -76,8 +78,12 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
                 //// TODO: 17/01/2017 inja code asli hast
                 cityFrom = returnCityId(fromCity_city, temp1);
                 cityEnd = returnCityId(endCity_city, temp2);
-                if (cityFrom != null && cityEnd != null) {
-                    getItinerary(cityFrom, "0", false);
+                if (endCity_city.getText() == null) {
+                    cityEnd = "";
+                }
+                if (cityFrom != null) {
+
+                    getItinerary(cityFrom, "0", false, cityEnd);
                     showProgressDialog();
 
                 } else {
@@ -118,7 +124,7 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
     }
 
 
-    public void getItinerary(String cityId, String offset, boolean checkfragment) {
+    public void getItinerary(String cityId, String offset, boolean checkfragment, String toCity) {
         this.checkfragment = checkfragment;
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(60, TimeUnit.SECONDS)
@@ -133,7 +139,7 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
                 .build();
 
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-        Call<ResultItineraryList> call = getJsonInterface.getItinerarys("list", "fa", cityId, "", offset);
+        Call<ResultItineraryList> call = getJsonInterface.getItinerarys("list", "fa", cityId, "", offset, toCity);
         call.enqueue(this);
     }
 
@@ -147,6 +153,8 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
             Bundle bundle = new Bundle();
             bundle.putSerializable("resuliItineraryList", (Serializable) data);
             bundle.putString("fromWhere", "fromCityToCity");
+            bundle.putString("endCity", cityEnd);
+
             bundle.putString("nextOffset", response.body().getStatistics().getOffsetNext().toString());
             itineraryListFragment.setArguments(bundle);
             FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -155,10 +163,11 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
             ft.commit();
             checkfragment = true;
             progressDialog.dismiss();
-
-//            SearchHolderForWatiting.setVisibility(View.VISIBLE);
+        } else {
+            Toast.makeText(getContext(), "برنامه سفری یافت نشد", Toast.LENGTH_LONG).show();
+            progressDialog.dismiss();
         }
-
+        progressDialog.dismiss();
     }
 
     @Override

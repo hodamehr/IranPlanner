@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
 
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,18 +17,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:orientation="vertical"
             android:paddingLeft="@dimen/padding_24"
             android:paddingRight="@dimen/padding_24"
-            android:paddingTop="@dimen/padding_larg"
-            android:layout_gravity="right">
+            android:paddingTop="@dimen/padding_larg">
 
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/button_standard"
-                android:src="@mipmap/ic_city_gardi" />
+                android:src="@mipmap/ic_iran_gardi" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -43,8 +41,10 @@
                     style="@style/StandardText"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/padding_big"
+                    android:gravity="right"
                     android:hint="از شهر"
-                    android:gravity="right"/>
+                    android:inputType="text"
+                    android:imeOptions="actionNext"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -58,8 +58,12 @@
                     style="@style/StandardText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="right"
                     android:hint="به شهر"
-                    android:gravity="right"/>
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+
+                    />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton
@@ -69,10 +73,13 @@
                 android:layout_marginBottom="@dimen/padding_24"
                 android:layout_marginTop="@dimen/padding_24"
                 android:padding="@dimen/padding_standard"
+                android:textColor="@color/white_"
+                android:background="@drawable/button_corner"
                 android:text="جستجو" />
 
         </LinearLayout>
     </ScrollView>
+
 
 </LinearLayout><!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:id="@+id/containerCityCity"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@color/white"--><!--android:padding="@dimen/margin_standard"--><!--tools:context="com.iranplanner.tourism.iranplanner.fragment.SearchCityCityFragment">-->
 

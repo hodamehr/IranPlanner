@@ -73,7 +73,6 @@ public class MyFilterableAdapterProvince extends ArrayAdapter {
 //                    tempItems.indexOf(names);
 
                     if (first) {
-//                        if (names.getProvinceName().toLowerCase().regionMatches(0, constraint.toString(), 0, 2)) {
                         if (names.getProvinceName().toLowerCase().contains(constraint.toString())) {
                             suggestions.add(names);
                             first = false;
