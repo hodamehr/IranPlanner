@@ -11,7 +11,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -91,8 +94,10 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     TextView txtItinerary_count_attraction;
     ImageView imgItineraryListMore;
     TextView itineraryDuration;
-    TextView itinerary_name;
+    TextView fromCityName, toCityName;
     TextView showItinerys;
+    LinearLayout interestHolder;
+    RelativeLayout ratingHolder;
 
     private void findView() {
         setContentView(R.layout.fragment_itinerary_item_more);
@@ -100,7 +105,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         txtItinerary_attraction_type = (TextView) findViewById(R.id.txtItinerary_attraction_type);
         txtItinerary_count_attraction = (TextView) findViewById(R.id.txtItinerary_count_attraction);
         itineraryDuration = (TextView) findViewById(R.id.itineraryDuration);
-        itinerary_name = (TextView) findViewById(R.id.itinerary_name);
+        fromCityName = (TextView) findViewById(R.id.fromCityName);
+        toCityName = (TextView) findViewById(R.id.toCityName);
         itinerary_attraction_type_more = (ImageView) findViewById(R.id.itinerary_attraction_type_more);
         showItinerys = (TextView) findViewById(R.id.showItinerys);
         textTpeTravel1 = (TextView) findViewById(R.id.textTpeTravel1);
@@ -112,6 +118,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         textPercentage1 = (TextView) findViewById(R.id.textPercentage1);
         textPercentage2 = (TextView) findViewById(R.id.textPercentage2);
         textPercentage3 = (TextView) findViewById(R.id.textPercentage3);
+        interestHolder = (LinearLayout) findViewById(R.id.interestHolder);
+        ratingHolder = (RelativeLayout) findViewById(R.id.ratingHolder);
         imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
         contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
     }
@@ -134,15 +142,32 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         setTypeOfTravel();
         itineraryDuration.setText(duration);
         if (itineraryData.getItineraryFromCityName().equals(itineraryData.getItineraryToCityName())) {
-            itinerary_name.setText(itineraryData.getItineraryFromCityName() + " (گشت درون شهری) ");
+            fromCityName.setText(itineraryData.getItineraryFromCityName());
+            toCityName.setText("درون شهری");
         } else {
-            itinerary_name.setText(itineraryData.getItineraryFromCityName() + "-" + itineraryData.getItineraryToCityName());
+            fromCityName.setText(itineraryData.getItineraryFromCityName());
+            toCityName.setText(itineraryData.getItineraryToCityName());
         }
 
         setWebViewContent();
         SetPercentage();
         setImageView();
 
+        interestHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ratingHolder.setVisibility(View.VISIBLE);
+                ratingHolder.setAlpha(0.0f);
+
+// Start the animation
+                ratingHolder.animate()
+                        .translationY(ratingHolder.getHeight())
+
+                        .alpha(1.0f);
+//                ratingHolder.setVisibility(View.VISIBLE);
+//                anim(ratingHolder);
+            }
+        });
         itineraryId = itineraryData.getItineraryId();
         showItinerys.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +189,17 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+    }
+
+    private void anim(RelativeLayout layout) {
+        Animation slide_down = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_down);
+
+        Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_up);
+
+// Start animation
+        layout.startAnimation(slide_up);
     }
 
     private void setWebViewContent() {
