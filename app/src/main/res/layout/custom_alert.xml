@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/padding_short"
+    android:paddingRight="@dimen/padding_short">
+
+    <TextView
+        style="@style/StandardTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:paddingBottom="@dimen/padding_standard"
+        android:paddingRight="@dimen/margin_standard"
+        android:paddingTop="@dimen/padding_standard"
+        android:id="@+id/txtAlertTitle"
+        android:text="fddddddddddddddd"
+        android:textColor="@color/pink" />
+
+
+    <TextView
+        android:id="@+id/alertDescription"
+        style="@style/StandardText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="right"
+        android:paddingBottom="@dimen/padding_standard"
+        android:paddingRight="@dimen/margin_standard"
+        android:text="@string/title_activity_login"
+        android:textColor="#555" />
+
+    <com.coinpany.core.android.widget.CDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/txtNo"
+            style="@style/StandardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:padding="@dimen/padding_standard"
+            android:text="خیر"
+            android:textColor="@color/pink" />
+
+        <com.coinpany.core.android.widget.CDivider
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/txtOk"
+            style="@style/StandardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/txtNo"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:padding="@dimen/padding_standard"
+            android:text="بله"
+            android:textColor="@color/pink" />
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
+

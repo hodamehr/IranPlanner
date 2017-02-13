@@ -1,9 +1,13 @@
 package com.iranplanner.tourism.iranplanner.activity;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,11 +15,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +32,9 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.coinpany.core.android.widget.CTouchyWebView;
+import com.coinpany.core.android.widget.Utils;
+import com.coinpany.core.android.widget.calendar.dateutil.CLocale;
+import com.coinpany.core.android.widget.calendar.dateutil.PersianCalendar;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -45,6 +55,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import entity.ItineraryLodgingCity;
@@ -61,11 +72,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import server.getJsonInterface;
 import tools.MapDirection;
 import tools.Util;
+import tools.widget.PersianDatePicker;
 
 public class MoreItemItineraryActivity extends StandardActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, Callback<ResultItineraryAttractionList> {
+        LocationListener, Callback<ResultItineraryAttractionList>,Animation.AnimationListener {
 
     private GoogleMap mMap;
     ArrayList<LatLng> MarkerPoints;
@@ -96,8 +108,11 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     TextView itineraryDuration;
     TextView fromCityName, toCityName;
     TextView showItinerys;
-    LinearLayout interestHolder;
+    TextView txtOk;
+    LinearLayout rateHolder;
     RelativeLayout ratingHolder;
+     Animation animation;
+    PersianCalendar persianCurrentDate;
 
     private void findView() {
         setContentView(R.layout.fragment_itinerary_item_more);
@@ -118,10 +133,11 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         textPercentage1 = (TextView) findViewById(R.id.textPercentage1);
         textPercentage2 = (TextView) findViewById(R.id.textPercentage2);
         textPercentage3 = (TextView) findViewById(R.id.textPercentage3);
-        interestHolder = (LinearLayout) findViewById(R.id.interestHolder);
+        rateHolder = (LinearLayout) findViewById(R.id.rateHolder);
         ratingHolder = (RelativeLayout) findViewById(R.id.ratingHolder);
         imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
         contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
+        txtOk = (TextView) findViewById(R.id.txtOk);
     }
 
     @Override
@@ -152,22 +168,28 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         setWebViewContent();
         SetPercentage();
         setImageView();
-
-        interestHolder.setOnClickListener(new View.OnClickListener() {
+        txtOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                CommentOptionsDialog dialog = new CommentOptionsDialog(getApplicationContext());
+//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//                dialog.show();
+                Dialog dialog = new Dialog(MoreItemItineraryActivity.this,R.style.Theme_Dialog);
+                dialog.setContentView(R.layout.calender);
+                dialog.setTitle("j");
+                dialog.show();
+            }
+        });
+        animation=AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+        animation.setAnimationListener(this);
+        rateHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ratingHolder.setVisibility(View.VISIBLE);
-                ratingHolder.setAlpha(0.0f);
 
-// Start the animation
-                ratingHolder.animate()
-                        .translationY(ratingHolder.getHeight())
-
-                        .alpha(1.0f);
-//                ratingHolder.setVisibility(View.VISIBLE);
-//                anim(ratingHolder);
             }
         });
+
         itineraryId = itineraryData.getItineraryId();
         showItinerys.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,7 +239,67 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         String myHtmlString = pish + myData + pas;
         contentFullDescription.loadDataWithBaseURL(null, myHtmlString, "text/html", "UTF-8", null);
     }
+    public class CommentOptionsDialog extends Dialog implements View.OnClickListener {
 
+        public Activity c;
+        PersianDatePicker childBirthDate;
+
+        RelativeLayout container;
+        ImageView btnEdit, btnAdd;
+        TextView  popupName;
+        String popupNameText;
+
+        public CommentOptionsDialog(Context context) {
+            super(context);
+        }
+
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            setContentView(R.layout.calender);
+//            findViewById(R.id.optionHeader).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    dismiss();
+//                }
+//            });
+//            childBirthDate = (PersianDatePicker) findViewById(R.id.travelDate);
+//            childBirthDate.setMaxYear(persianCurrentDate.getPersianYear());
+//            childBirthDate.setMinYear(persianCurrentDate.getPersianYear() - 50);
+//            childBirthDate.setDisplayDate(persianCurrentDate.getTime());
+//            final TextView dateTxt = (TextView) findViewById(R.id.dateTxt);
+//            ImageView cancelDialog = (ImageView) findViewById(R.id.cancelDialog);
+//            cancelDialog.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    cancel();
+//                }
+//            });
+//
+//            btnEdit = (ImageView) findViewById(R.id.btnEdit);
+//            btnAdd = (ImageView) findViewById(R.id.btnAdd);
+//
+//            popupName.setText(popupNameText);
+////            btnEdit.setOnClickListener(this);
+////            btnAdd.setOnClickListener(this);
+//             final CLocale locale = new CLocale("fa_IR@calendar=persian");
+//            dateTxt.setText(Utils.getSimpleDate(locale, childBirthDate.getDisplayDate()));
+//            childBirthDate.setOnDateChangedListener(new PersianDatePicker.OnDateChangedListener() {
+//                @Override
+//                public void onDateChanged(int newYear, int newMonth, int newDay) {
+//                    dateTxt.setText(Utils.getSimpleDate(locale, childBirthDate.getDisplayDate()));
+//                }
+//            });
+        }
+
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
     private void setTypeOfTravel() {
         if (itineraryData.getItineraryTransportId().equals("2830")) {
             itinerary_attraction_type_more.setImageDrawable(getResources().getDrawable(R.mipmap.ic_air_gret));
@@ -625,6 +707,21 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         Log.e("Responce  body", "itinerary detail null");
         Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
         progressDialog.dismiss();
+
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
 
     }
 }

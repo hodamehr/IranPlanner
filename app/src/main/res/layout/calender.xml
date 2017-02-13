@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/optionHeader">
+
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_standard"
+        app:cardUseCompatPadding="true">
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/linear1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_standard">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <TextView
+                            android:id="@+id/popupName"
+                            style="@style/StandardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="right"
+                            android:gravity="right"
+                            android:text="تاریخ سفر"
+                            android:textColor="@color/pink"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/cancelDialog"
+                            style="@style/CSelectableItemBackground"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:src="@mipmap/ic_air"
+                            android:tint="@color/appMainColor" />
+
+                        <ImageView
+                            android:id="@+id/btnAdd"
+                            style="@style/CSelectableItemBackground"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignLeft="@+id/btnEdit"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignStart="@+id/btnEdit"
+                            android:clickable="true"
+                            android:src="@mipmap/ic_air"
+                            android:tint="@color/appMainColor" />
+
+
+                    </RelativeLayout>
+                        <tools.widget.PersianDatePicker
+                            android:id="@+id/travelDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_alignParentRight="true"
+                            app:displayMonthNames="true"
+                            app:minYear="1395"
+                            app:maxYear="1397"
+                            />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/dateTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/linear1"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:background="#aaa"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="date"
+                    android:textColor="#eee" />
+            </RelativeLayout>
+
+        </ScrollView>
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

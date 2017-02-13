@@ -102,9 +102,9 @@
                     <RelativeLayout
                         android:id="@+id/supplierLayoutMore"
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
+                        android:layout_height="60dp"
                         android:layout_alignBottom="@+id/imageHolder"
-                        android:background="@color/greyLight">
+                        android:background="@color/white_">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -112,23 +112,23 @@
                             android:weightSum="4">
 
                             <LinearLayout
+                                android:id="@+id/wish"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:orientation="vertical"
                                 android:paddingTop="@dimen/padding_short">
 
                                 <ImageView
-                                    android:id="@+id/itinerary_attraction_Difficulty1"
+                                    android:id="@+id/wishBtn"
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_level_grey" />
+                                    android:src="@mipmap/ic_wish_grey" />
 
                                 <TextView
-                                    android:id="@+id/txtItinerary_attraction_Difficulty1"
+                                    android:id="@+id/wishTxt"
                                     style="@style/SmallText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -136,29 +136,30 @@
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
                                     android:maxLines="1"
-                                    android:text="درجه سختی" />
+                                    android:text="آرزوی دیدن" />
 
 
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/done"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
 
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:orientation="vertical"
                                 android:paddingTop="@dimen/padding_short">
 
                                 <ImageView
-                                    android:id="@+id/itinerary_attraction_Difficulty2"
+                                    android:id="@+id/doneBtn"
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_level_grey" />
+                                    android:src="@mipmap/ic_done_grey" />
 
                                 <TextView
-                                    android:id="@+id/txtItinerary_attraction_Difficulty2"
+                                    android:id="@+id/doneTxt"
                                     style="@style/SmallText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -166,26 +167,26 @@
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
                                     android:maxLines="1"
-                                    android:text="درجه سختی" />
+                                    android:text="ندیده ام" />
 
 
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/rateHolder"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:orientation="vertical"
-                                android:paddingTop="@dimen/padding_short"
-                                android:id="@+id/interestHolder">
+                                android:paddingTop="@dimen/padding_short">
 
                                 <ImageView
-                                    android:id="@+id/btnInterest"
+                                    android:id="@+id/rateImg"
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_level_grey" />
+                                    android:src="@mipmap/ic_rate_grey" />
 
                                 <TextView
                                     android:id="@+id/txtInterest"
@@ -202,6 +203,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/bookmark"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -210,14 +212,14 @@
                                 android:paddingTop="@dimen/padding_short">
 
                                 <ImageView
-                                    android:id="@+id/itinerary_attraction_Difficulty4"
+                                    android:id="@+id/bookmarkImg"
                                     android:layout_width="25dp"
                                     android:layout_height="25dp"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_level_grey" />
+                                    android:src="@mipmap/ic_bookmark_grey" />
 
                                 <TextView
-                                    android:id="@+id/txtItinerary_attraction_Difficulty4"
+                                    android:id="@+id/saveTxt"
                                     style="@style/SmallText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -225,7 +227,7 @@
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
                                     android:maxLines="1"
-                                    android:text="درجه سختی" />
+                                    android:text="ذخیره" />
 
 
                             </LinearLayout>
@@ -237,14 +239,36 @@
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:layout_below="@id/imageHolder"
-                        android:background="@color/pink"
-                        android:visibility="gone"></RelativeLayout>
+                        android:background="@color/greyLight"></RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/dateHolder"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_below="@id/ratingHolder">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="ok"
+    android:id="@+id/txtOk"/>
+                    <!--    <tools.widget.PersianDatePicker
+                            android:id="@+id/travelDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_alignParentRight="true"
+                            app:displayMonthNames="true"
+                            app:minYear="1395"
+                            app:maxYear="1397"
+                            />-->
+                    </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/supplierLayoutTravelType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/ratingHolder"
+                        android:layout_below="@+id/dateHolder"
                         android:background="@color/greyLight"
                         android:paddingLeft="@dimen/padding_standard"
                         android:paddingRight="@dimen/padding_standard">
