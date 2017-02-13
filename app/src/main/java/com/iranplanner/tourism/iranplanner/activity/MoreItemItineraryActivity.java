@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -74,6 +75,8 @@ import tools.MapDirection;
 import tools.Util;
 import tools.widget.PersianDatePicker;
 
+import static com.iranplanner.tourism.iranplanner.R.id.dateHolder;
+
 public class MoreItemItineraryActivity extends StandardActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -110,7 +113,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     TextView showItinerys;
     TextView txtOk;
     LinearLayout rateHolder;
-    RelativeLayout ratingHolder;
+    RelativeLayout ratingHolder,GroupHolder,supplierLayoutMore;
      Animation animation;
     PersianCalendar persianCurrentDate;
 
@@ -135,6 +138,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         textPercentage3 = (TextView) findViewById(R.id.textPercentage3);
         rateHolder = (LinearLayout) findViewById(R.id.rateHolder);
         ratingHolder = (RelativeLayout) findViewById(R.id.ratingHolder);
+        GroupHolder = (RelativeLayout) findViewById(R.id.GroupHolder);
+        supplierLayoutMore = (RelativeLayout) findViewById(R.id.supplierLayoutMore);
         imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
         contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
         txtOk = (TextView) findViewById(R.id.txtOk);
@@ -185,7 +190,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         rateHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ratingHolder.setVisibility(View.VISIBLE);
+//                ratingHolder.setVisibility(View.VISIBLE);
+                moveViewToScreenCenter();
 
             }
         });
@@ -212,7 +218,14 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         mapFragment.getMapAsync(this);
 
     }
-
+    private void moveViewToScreenCenter()
+    {
+        TranslateAnimation anim = new TranslateAnimation(0,0,0,supplierLayoutMore.getHeight());
+        anim.setDuration(1000);
+        anim.setFillAfter( true );
+        ratingHolder.startAnimation(anim);
+        GroupHolder.startAnimation(anim);
+    }
     private void anim(RelativeLayout layout) {
         Animation slide_down = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.slide_down);
