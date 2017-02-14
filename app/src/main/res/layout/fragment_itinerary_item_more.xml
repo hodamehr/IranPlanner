@@ -108,8 +108,7 @@
                         <RelativeLayout
                             android:id="@+id/VisitedLayout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone">
+                            android:layout_height="wrap_content">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -141,7 +140,7 @@
                                         android:layout_marginLeft="5dp"
                                         android:layout_marginRight="5dp"
                                         android:maxLines="1"
-                                        android:text="دیدم" />
+                                        android:text="قبلا اینجا بودم" />
 
 
                                 </LinearLayout>
@@ -171,7 +170,7 @@
                                         android:layout_marginLeft="5dp"
                                         android:layout_marginRight="5dp"
                                         android:maxLines="1"
-                                        android:text="ندیدم" />
+                                        android:text="الان اینجا هستم" />
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -182,8 +181,7 @@
                         <RelativeLayout
                             android:id="@+id/LikeLayout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone">
+                            android:layout_height="wrap_content">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -191,7 +189,7 @@
                                 android:weightSum="3">
 
                                 <LinearLayout
-                                    android:id="@+id/likeHolder"
+                                    android:id="@+id/dislikeHolder"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -200,15 +198,15 @@
                                     android:paddingTop="@dimen/padding_short">
 
                                     <ImageView
-                                        android:id="@+id/likeImg"
+                                        android:id="@+id/dislikeImg"
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
                                         android:padding="@dimen/margin_xxshort"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_wish_grey" />
+                                        android:src="@mipmap/ic_dislike_grey" />
 
                                     <TextView
-                                        android:id="@+id/likeTxt"
+                                        android:id="@+id/dislikeTxt"
                                         style="@style/SmallText"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -216,8 +214,7 @@
                                         android:layout_marginLeft="5dp"
                                         android:layout_marginRight="5dp"
                                         android:maxLines="1"
-                                        android:text="دوست دارم" />
-
+                                        android:text="علاقه مندی" />
 
                                 </LinearLayout>
 
@@ -237,7 +234,7 @@
                                         android:layout_height="30dp"
                                         android:padding="@dimen/margin_xxshort"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_done_grey" />
+                                        android:src="@mipmap/ic_ok_grey" />
 
                                     <TextView
                                         android:id="@+id/okTxt"
@@ -254,7 +251,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:id="@+id/dislikeHolder"
+                                    android:id="@+id/likeHolder"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -263,15 +260,15 @@
                                     android:paddingTop="@dimen/padding_short">
 
                                     <ImageView
-                                        android:id="@+id/dislikeImg"
+                                        android:id="@+id/likeImg"
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
                                         android:padding="@dimen/margin_xxshort"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_rate_grey" />
+                                        android:src="@mipmap/ic_like_empty_prey" />
 
                                     <TextView
-                                        android:id="@+id/dislikeTxt"
+                                        android:id="@+id/likeTxt"
                                         style="@style/SmallText"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -279,11 +276,10 @@
                                         android:layout_marginLeft="5dp"
                                         android:layout_marginRight="5dp"
                                         android:maxLines="1"
-                                        android:text="علاقه مندی" />
+                                        android:text="دوست دارم" />
+
 
                                 </LinearLayout>
-
-
                             </LinearLayout>
                         </RelativeLayout>
 
@@ -311,7 +307,7 @@
                                 android:paddingTop="@dimen/padding_short">
 
                                 <ImageView
-                                    android:id="@+id/wishBtn"
+                                    android:id="@+id/wishImg"
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:padding="@dimen/margin_xxshort"
@@ -444,8 +440,8 @@
                                 android:id="@+id/txtOk"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="ok"
-                                android:background="@color/blue"/>
+                                android:background="@color/blue"
+                                android:text="ok" />
                             <!--    <tools.widget.PersianDatePicker
                                     android:id="@+id/travelDate"
                                     android:layout_width="wrap_content"

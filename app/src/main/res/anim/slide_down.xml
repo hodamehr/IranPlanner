@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:fillAfter="true">
-<scale
-    android:fromXScale="1dp"
-    android:fromYScale="0dp"
-    android:toXScale="1dp"
-    android:toYScale="1dp"
+
+    <!--android:toXDelta=”0%p”-->
+    <!--android:fromYDelta=”-100%p”-->
+    <!--android:toYDelta=”0%p”-->
+    <!--android:duration=”1000″ />-->
+<!--<scale-->
+    <!--android:fromXScale="1dp"-->
+    <!--android:fromYScale="0dp"-->
+    <!--android:toXScale="1dp"-->
+    <!--android:toYScale="1dp"-->
 
 
-    />
-    <!--<translate
+  <translate
         android:duration="1000"
         android:fromYDelta="100%"
-        android:toYDelta="0" />-->
+        android:toYDelta="0" />
 </set>

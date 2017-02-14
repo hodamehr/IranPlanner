@@ -11,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -20,7 +19,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
@@ -80,7 +79,7 @@ import tools.widget.PersianDatePicker;
 public class MoreItemItineraryActivity extends StandardActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, Callback<ResultItineraryAttractionList>, Animation.AnimationListener {
+        LocationListener, Callback<ResultItineraryAttractionList>, Animation.AnimationListener, View.OnClickListener {
 
     private GoogleMap mMap;
     ArrayList<LatLng> MarkerPoints;
@@ -112,13 +111,14 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     TextView fromCityName, toCityName;
     TextView showItinerys;
     TextView txtOk;
-    LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder;
-    RelativeLayout ratingHolder, GroupHolder, supplierLayoutMore, VisitedLayout;
-    Animation animation;
+    LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder;
+    RelativeLayout ratingHolder, GroupHolder, supplierLayoutMore, VisitedLayout, LikeLayout;
     PersianCalendar persianCurrentDate;
-    ImageView bookmarkImg, doneImg;
+    ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg;
     RotateAnimation rotate;
     String rotateImage;
+    Animation translateAnimation;
+    boolean ratingHolderFlag = false;
 
     private void findView() {
         setContentView(R.layout.fragment_itinerary_item_more);
@@ -143,16 +143,27 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         doneHolder = (LinearLayout) findViewById(R.id.doneHolder);
         nowVisitedHolder = (LinearLayout) findViewById(R.id.nowVisitedHolder);
         beftorVisitedHolder = (LinearLayout) findViewById(R.id.beftorVisitedHolder);
+        dislikeHolder = (LinearLayout) findViewById(R.id.dislikeHolder);
+        okHolder = (LinearLayout) findViewById(R.id.okHolder);
+        likeHolder = (LinearLayout) findViewById(R.id.likeHolder);
         bookmarkHolder = (LinearLayout) findViewById(R.id.bookmarkHolder);
         ratingHolder = (RelativeLayout) findViewById(R.id.ratingHolder);
         GroupHolder = (RelativeLayout) findViewById(R.id.GroupHolder);
         VisitedLayout = (RelativeLayout) findViewById(R.id.VisitedLayout);
+        LikeLayout = (RelativeLayout) findViewById(R.id.LikeLayout);
         supplierLayoutMore = (RelativeLayout) findViewById(R.id.supplierLayoutMore);
         imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
         contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
         txtOk = (TextView) findViewById(R.id.txtOk);
         bookmarkImg = (ImageView) findViewById(R.id.bookmarkImg);
         doneImg = (ImageView) findViewById(R.id.doneImg);
+
+        dislikeImg = (ImageView) findViewById(R.id.dislikeImg);
+        okImg = (ImageView) findViewById(R.id.okImg);
+        likeImg = (ImageView) findViewById(R.id.likeImg);
+        rateImg = (ImageView) findViewById(R.id.rateImg);
+        beftorVisitedImg = (ImageView) findViewById(R.id.beftorVisitedImg);
+        nowVisitedImg = (ImageView) findViewById(R.id.nowVisitedImg);
     }
 //wish visited like
 
@@ -162,18 +173,17 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
         findView();
 
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
         String duration = bundle.getString("duration");
-//        byte[] bytes = intent.getByteArrayExtra("BMP");
-//        bundle.getByteArray("BMP");
-//        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-
+        setTypeOfTravel();
+        setWebViewContent();
+        SetPercentage();
+        setImageView();
         txtItinerary_attraction_Difficulty.setText(itineraryData.getItineraryDifficulty().getItineraryDifficultyGroup());
         txtItinerary_count_attraction.setText(Util.persianNumbers(itineraryData.getItineraryCountAttraction()) + " مکان دیدنی");
-        setTypeOfTravel();
         itineraryDuration.setText(duration);
         if (itineraryData.getItineraryFromCityName().equals(itineraryData.getItineraryToCityName())) {
             fromCityName.setText(itineraryData.getItineraryFromCityName());
@@ -183,9 +193,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             toCityName.setText(itineraryData.getItineraryToCityName());
         }
 
-        setWebViewContent();
-        SetPercentage();
-        setImageView();
+
 //        txtOk.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -200,8 +208,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 //            }
 //        });
 
-        animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
-        animation.setAnimationListener(this);
+        //listener bara inke vaghti maghadir width , height set shod
         supplierLayoutMore.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -209,89 +216,22 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 int height = supplierLayoutMore.getHeight();
                 if (width > 0 && height > 0) {
                     slideUpAnimation(0);
+                    VisitedLayout.setVisibility(View.INVISIBLE);
+                    LikeLayout.setVisibility(View.INVISIBLE);
                 }
             }
         });
-
-        rateHolder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                ratingHolder.setVisibility(View.VISIBLE);
-                slideDownAnimation();
-
-
-            }
-        });
-        doneHolder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                VisitedLayout.setVisibility(View.VISIBLE);
-                slideDownAnimation();
-                rotateImage = "doneImg";
-                if (getUseRIdFromShareprefrence() != null) {
-                    animWaiting(doneImg);
-                    String uid = getUseRIdFromShareprefrence();
-                    getInterestResult(uid, itineraryId, "1", "bookmark");
-
-                } else {
-                    Log.e("user is not login", "error");
-
-                }
-            }
-        });
-        nowVisitedHolder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rotateImage = "doneImg";
-                if (getUseRIdFromShareprefrence() != null) {
-                    animWaiting(doneImg);
-                    String uid = getUseRIdFromShareprefrence();
-                    getInterestResult(uid, itineraryId, "1", "visited");
-
-                } else {
-                    Log.e("user is not login", "error");
-
-                }
-            }
-        });
-        beftorVisitedHolder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rotateImage = "doneImg";
-                if (getUseRIdFromShareprefrence() != null) {
-                    animWaiting(doneImg);
-                    String uid = getUseRIdFromShareprefrence();
-                    getInterestResult(uid, itineraryId, "2", "visited");
-                } else {
-                    Log.e("user is not login", "error");
-                }
-            }
-        });
+        ratingHolder.setOnClickListener(this);
+        rateHolder.setOnClickListener(this);
+        doneHolder.setOnClickListener(this);
+        likeImg.setOnClickListener(this);
+        okImg.setOnClickListener(this);
+        dislikeImg.setOnClickListener(this);
+        nowVisitedImg.setOnClickListener(this);
+        beftorVisitedImg.setOnClickListener(this);
         itineraryId = itineraryData.getItineraryId();
-        bookmarkHolder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rotateImage = "bookmarkImg";
-                if (getUseRIdFromShareprefrence() != null) {
-                    animWaiting(bookmarkImg);
-                    String uid = getUseRIdFromShareprefrence();
-                    getInterestResult(uid, itineraryId, "1", "bookmark");
-
-                } else {
-                    Log.e("user is not login", "error");
-
-                }
-            }
-        });
-        showItinerys.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("open itinerarylist", "open");
-                getAttraction(itineraryId);
-                showProgressDialog();
-
-            }
-        });
+        bookmarkHolder.setOnClickListener(this);
+        showItinerys.setOnClickListener(this);
         //-------------------map
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -325,6 +265,118 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         return okHttpClient;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+
+//                    nowVisitedImg beftorVisitedImg bookmarkHolder showItinerys
+
+            case R.id.ratingHolder:
+                if (ratingHolderFlag) {
+                    slideUpAnimation(1000);
+                }
+                break;
+            case R.id.rateHolder:
+                VisitedLayout.setVisibility(View.INVISIBLE);
+                LikeLayout.setVisibility(View.VISIBLE);
+                rotateImage = "rateImg";
+                slideDownAnimation();
+                break;
+            case R.id.doneHolder:
+                LikeLayout.setVisibility(View.INVISIBLE);
+                VisitedLayout.setVisibility(View.VISIBLE);
+                rotateImage = "doneImg";
+                slideDownAnimation();
+                break;
+            case R.id.likeImg:
+                rotateImage = "likeImg";
+                if (getUseRIdFromShareprefrence() != null) {
+                    animWaiting(likeImg);
+                    String uid = getUseRIdFromShareprefrence();
+                    getInterestResult(uid, itineraryId, "1", "like");
+
+                } else {
+                    Log.e("user is not login", "error");
+
+                }
+                break;
+            case R.id.okImg:
+                rotateImage = "okImg";
+                if (getUseRIdFromShareprefrence() != null) {
+                    animWaiting(okImg);
+                    String uid = getUseRIdFromShareprefrence();
+                    getInterestResult(uid, itineraryId, "2", "like");
+
+                } else {
+                    Log.e("user is not login", "error");
+
+                }
+                break;
+            case R.id.dislikeImg:
+                rotateImage = "dislikeImg";
+                if (getUseRIdFromShareprefrence() != null) {
+                    animWaiting(dislikeImg);
+                    String uid = getUseRIdFromShareprefrence();
+                    getInterestResult(uid, itineraryId, "3", "like");
+
+                } else {
+                    Log.e("user is not login", "error");
+
+                }
+                break;
+            case R.id.nowVisitedImg:
+                rotateImage = "nowVisitedImg";
+                if (getUseRIdFromShareprefrence() != null) {
+                    animWaiting(nowVisitedImg);
+                    String uid = getUseRIdFromShareprefrence();
+                    getInterestResult(uid, itineraryId, "1", "visited");
+
+                } else {
+                    Log.e("user is not login", "error");
+
+                }
+                break;
+            case R.id.beftorVisitedImg:
+                rotateImage = "beftorVisitedImg";
+                if (getUseRIdFromShareprefrence() != null) {
+                    animWaiting(beftorVisitedImg);
+                    String uid = getUseRIdFromShareprefrence();
+                    getInterestResult(uid, itineraryId, "2", "visited");
+                } else {
+                    Log.e("user is not login", "error");
+                }
+                break;
+            case R.id.bookmarkHolder:
+                rotateImage = "bookmarkImg";
+                if (getUseRIdFromShareprefrence() != null) {
+                    animWaiting(bookmarkImg);
+                    String uid = getUseRIdFromShareprefrence();
+                    getInterestResult(uid, itineraryId, "1", "bookmark");
+
+                } else {
+                    Log.e("user is not login", "error");
+
+                }
+                break;
+            case R.id.showItinerys:
+                Log.e("open itinerarylist", "open");
+                getAttraction(itineraryId);
+                showProgressDialog();
+                break;
+
+
+        }
+    }
+
+
+    public class ReverseInterpolator implements Interpolator {
+        @Override
+        public float getInterpolation(float paramFloat) {
+            return Math.abs(paramFloat - 1f);
+        }
+    }
+
     public void getInterestResult(String uid, String nid, String gvalue, String gtype) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.parsdid.com/iranplanner/app/")
@@ -339,6 +391,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 if (response.body() != null) {
                     InterestResult jsonResponse = response.body();
                     ResultData resultData = jsonResponse.getResultData();
+                    //// TODO: 14/02/2017
                     rotate.setRepeatCount(0);
                     checkWhichImageIntrested(rotateImage);
 //                    bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
@@ -362,8 +415,30 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             case "bookmarkImg":
                 bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
                 break;
-            case "doneImg":
+            case "nowVisitedImg":
                 doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+                slideUpAnimation(1000);
+                break;
+            case "beftorVisitedImg":
+                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+                slideUpAnimation(1000);
+                break;
+            case "dislikeImg":
+                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
+                slideUpAnimation(1000);
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
+
+                break;
+            case "okImg":
+                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
+                slideUpAnimation(1000);
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
+
+                break;
+            case "likeImg":
+                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_heart_full));
+                slideUpAnimation(1000);
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_heart_full));
                 break;
             default:
                 break;
@@ -380,20 +455,25 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     }
 
     private void slideDownAnimation() {
-        TranslateAnimation anim = new TranslateAnimation(0, 0, 0, supplierLayoutMore.getHeight());
-        anim.setDuration(1000);
-        anim.setFillAfter(true);
-        ratingHolder.startAnimation(anim);
-        GroupHolder.startAnimation(anim);
+//        TranslateAnimation anim = new TranslateAnimation(0,0,-(supplierLayoutMore.getHeight()),supplierLayoutMore.getHeight());
+        TranslateAnimation anim1 = new TranslateAnimation(0, 0, -(supplierLayoutMore.getHeight()), 0);
+        anim1.setDuration(1000);
+        anim1.setFillAfter(true);
+        ratingHolder.startAnimation(anim1);
+        ratingHolderFlag = true;
+        GroupHolder.startAnimation(anim1);
     }
 
-
-    private void slideUpAnimation(int duration) {
+    //
+//
+    private Animation slideUpAnimation(int duration) {
         TranslateAnimation anim = new TranslateAnimation(0, 0, 0, -(supplierLayoutMore.getHeight()));
         anim.setDuration(duration);
         anim.setFillAfter(true);
         ratingHolder.startAnimation(anim);
+        ratingHolderFlag = false;
         GroupHolder.startAnimation(anim);
+        return anim;
     }
 
     private void setWebViewContent() {
@@ -902,4 +982,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     public void onAnimationRepeat(Animation animation) {
 
     }
+
+
 }
