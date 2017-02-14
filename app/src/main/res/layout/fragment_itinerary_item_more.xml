@@ -102,46 +102,190 @@
                         android:id="@+id/ratingHolder"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
-                        android:layout_alignTop="@+id/supplierLayoutMore"
+                        android:layout_below="@+id/supplierLayoutMore"
                         android:background="@color/greyLight">
 
-                        <LinearLayout
+                        <RelativeLayout
+                            android:id="@+id/VisitedLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:weightSum="1">
+                            android:visibility="gone">
 
                             <LinearLayout
-                                android:id="@+id/wish1"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:paddingTop="@dimen/padding_short">
+                                android:weightSum="2">
 
-                                <ImageView
-                                    android:id="@+id/wishBtn1"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_wish_grey" />
-
-                                <TextView
-                                    android:id="@+id/wishTx1t"
-                                    style="@style/SmallText"
+                                <LinearLayout
+                                    android:id="@+id/beftorVisitedHolder"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:maxLines="1"
-                                    android:text="آرزوی دیدن" />
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:paddingTop="@dimen/padding_short">
+
+                                    <ImageView
+                                        android:id="@+id/beftorVisitedImg"
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:scaleType="centerCrop"
+                                        android:src="@mipmap/ic_wish_grey" />
+
+                                    <TextView
+                                        android:id="@+id/beftorVisitedTxt"
+                                        style="@style/SmallText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:maxLines="1"
+                                        android:text="دیدم" />
 
 
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/nowVisitedHolder"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:paddingTop="@dimen/padding_short">
+
+                                    <ImageView
+                                        android:id="@+id/nowVisitedImg"
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:scaleType="centerCrop"
+                                        android:src="@mipmap/ic_wish_grey" />
+
+                                    <TextView
+                                        android:id="@+id/nowVisitedTxt"
+                                        style="@style/SmallText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:maxLines="1"
+                                        android:text="ندیدم" />
+
+                                </LinearLayout>
                             </LinearLayout>
 
 
-                        </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/LikeLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="3">
+
+                                <LinearLayout
+                                    android:id="@+id/likeHolder"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:paddingTop="@dimen/padding_short">
+
+                                    <ImageView
+                                        android:id="@+id/likeImg"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:padding="@dimen/margin_xxshort"
+                                        android:scaleType="centerCrop"
+                                        android:src="@mipmap/ic_wish_grey" />
+
+                                    <TextView
+                                        android:id="@+id/likeTxt"
+                                        style="@style/SmallText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="@dimen/margin_xshort"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:maxLines="1"
+                                        android:text="دوست دارم" />
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/okHolder"
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:paddingTop="@dimen/padding_short">
+
+                                    <ImageView
+                                        android:id="@+id/okImg"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:padding="@dimen/margin_xxshort"
+                                        android:scaleType="centerCrop"
+                                        android:src="@mipmap/ic_done_grey" />
+
+                                    <TextView
+                                        android:id="@+id/okTxt"
+                                        style="@style/SmallText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="@dimen/margin_xshort"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:maxLines="1"
+                                        android:text="خوبه" />
+
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/dislikeHolder"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:paddingTop="@dimen/padding_short">
+
+                                    <ImageView
+                                        android:id="@+id/dislikeImg"
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:padding="@dimen/margin_xxshort"
+                                        android:scaleType="centerCrop"
+                                        android:src="@mipmap/ic_rate_grey" />
+
+                                    <TextView
+                                        android:id="@+id/dislikeTxt"
+                                        style="@style/SmallText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="@dimen/margin_xshort"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:maxLines="1"
+                                        android:text="علاقه مندی" />
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+                        </RelativeLayout>
 
                     </RelativeLayout>
 
@@ -168,8 +312,9 @@
 
                                 <ImageView
                                     android:id="@+id/wishBtn"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
                                     android:src="@mipmap/ic_wish_grey" />
 
@@ -178,7 +323,7 @@
                                     style="@style/SmallText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginBottom="@dimen/margin_xshort"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
                                     android:maxLines="1"
@@ -188,7 +333,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/done"
+                                android:id="@+id/doneHolder"
                                 android:layout_width="wrap_content"
 
                                 android:layout_height="wrap_content"
@@ -198,9 +343,10 @@
                                 android:paddingTop="@dimen/padding_short">
 
                                 <ImageView
-                                    android:id="@+id/doneBtn"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:id="@+id/doneImg"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
                                     android:src="@mipmap/ic_done_grey" />
 
@@ -209,7 +355,7 @@
                                     style="@style/SmallText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginBottom="@dimen/margin_xshort"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
                                     android:maxLines="1"
@@ -229,8 +375,9 @@
 
                                 <ImageView
                                     android:id="@+id/rateImg"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
                                     android:src="@mipmap/ic_rate_grey" />
 
@@ -239,7 +386,7 @@
                                     style="@style/SmallText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginBottom="@dimen/margin_xshort"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
                                     android:maxLines="1"
@@ -249,7 +396,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/bookmark"
+                                android:id="@+id/bookmarkHolder"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -259,8 +406,9 @@
 
                                 <ImageView
                                     android:id="@+id/bookmarkImg"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
                                     android:src="@mipmap/ic_bookmark_grey" />
 
@@ -269,7 +417,7 @@
                                     style="@style/SmallText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginBottom="@dimen/margin_xxshort"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
                                     android:maxLines="1"
@@ -290,16 +438,14 @@
                         <RelativeLayout
                             android:id="@+id/dateHolder"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-
-
-                            >
+                            android:layout_height="150dp">
 
                             <TextView
                                 android:id="@+id/txtOk"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="ok" />
+                                android:text="ok"
+                                android:background="@color/blue"/>
                             <!--    <tools.widget.PersianDatePicker
                                     android:id="@+id/travelDate"
                                     android:layout_width="wrap_content"

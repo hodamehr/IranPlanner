@@ -1,7 +1,9 @@
 package server;
 
+import entity.InterestResult;
 import entity.Login;
 import entity.LoginResult;
+import entity.ResultData;
 import entity.ResultItineraryAttractionList;
 import entity.ResultItineraryList;
 import entity.ResultRegister;
@@ -22,6 +24,15 @@ public interface getJsonInterface {
                                             @Query("offset") String param5,
                                             @Query("to") String param6);
 
+    @GET("api-data.php?action=widget&uid=792147600796866&cid=1&ntype=itinerary&nid=21905&gtype=bookmark&gvalue=1")
+    Call<InterestResult> getInterest(
+            @Query("action") String action,
+            @Query("uid") String uid,
+            @Query("cid") String cid,
+            @Query("ntype") String ntype,
+            @Query("nid") String nid,
+            @Query("gtype") String gtype,
+            @Query("gvalue") String gvalue);
 
     @GET("api-itinerary.php?action=searchattractioncity&lang=fa&from=342&limit=10&offset=0&attraction=id")
     Call<ResultItineraryList> getItinerarysAttraction(@Query("action") String action,

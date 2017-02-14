@@ -139,7 +139,7 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
             return;
         }
 
-        _loginButton.setEnabled(false);
+//        _loginButton.setEnabled(false);
         accountInputHolder.setVisibility(View.INVISIBLE);
 
 
@@ -204,6 +204,8 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
             progressDialog.dismiss();
             loginCommand.setVisibility(View.VISIBLE);
             loginCommand.setText("نام کاربری یا کلمه عبور اشتباه است.");
+            accountInputHolder.setVisibility(View.VISIBLE);
+
         }
     }
 

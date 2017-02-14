@@ -12,6 +12,7 @@
     <dimen name="padding_big">50dp</dimen>
     <dimen name="margin_short">8dp</dimen>
     <dimen name="margin_xshort">4dp</dimen>
+    <dimen name="margin_xxshort">2dp</dimen>
 
     <dimen name="padding_short">8dp</dimen>
 

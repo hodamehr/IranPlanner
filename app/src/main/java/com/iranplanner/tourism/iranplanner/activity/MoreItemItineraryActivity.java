@@ -6,24 +6,27 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +36,6 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.coinpany.core.android.widget.CTouchyWebView;
-import com.coinpany.core.android.widget.Utils;
-import com.coinpany.core.android.widget.calendar.dateutil.CLocale;
 import com.coinpany.core.android.widget.calendar.dateutil.PersianCalendar;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -56,11 +57,12 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import entity.InterestResult;
 import entity.ItineraryLodgingCity;
 import entity.ItineraryPercentage;
+import entity.ResultData;
 import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
 import entity.ResultItineraryAttractionList;
@@ -75,12 +77,10 @@ import tools.MapDirection;
 import tools.Util;
 import tools.widget.PersianDatePicker;
 
-import static com.iranplanner.tourism.iranplanner.R.id.dateHolder;
-
 public class MoreItemItineraryActivity extends StandardActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, Callback<ResultItineraryAttractionList>,Animation.AnimationListener {
+        LocationListener, Callback<ResultItineraryAttractionList>, Animation.AnimationListener {
 
     private GoogleMap mMap;
     ArrayList<LatLng> MarkerPoints;
@@ -112,10 +112,13 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     TextView fromCityName, toCityName;
     TextView showItinerys;
     TextView txtOk;
-    LinearLayout rateHolder;
-    RelativeLayout ratingHolder,GroupHolder,supplierLayoutMore;
-     Animation animation;
+    LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder;
+    RelativeLayout ratingHolder, GroupHolder, supplierLayoutMore, VisitedLayout;
+    Animation animation;
     PersianCalendar persianCurrentDate;
+    ImageView bookmarkImg, doneImg;
+    RotateAnimation rotate;
+    String rotateImage;
 
     private void findView() {
         setContentView(R.layout.fragment_itinerary_item_more);
@@ -137,18 +140,28 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         textPercentage2 = (TextView) findViewById(R.id.textPercentage2);
         textPercentage3 = (TextView) findViewById(R.id.textPercentage3);
         rateHolder = (LinearLayout) findViewById(R.id.rateHolder);
+        doneHolder = (LinearLayout) findViewById(R.id.doneHolder);
+        nowVisitedHolder = (LinearLayout) findViewById(R.id.nowVisitedHolder);
+        beftorVisitedHolder = (LinearLayout) findViewById(R.id.beftorVisitedHolder);
+        bookmarkHolder = (LinearLayout) findViewById(R.id.bookmarkHolder);
         ratingHolder = (RelativeLayout) findViewById(R.id.ratingHolder);
         GroupHolder = (RelativeLayout) findViewById(R.id.GroupHolder);
+        VisitedLayout = (RelativeLayout) findViewById(R.id.VisitedLayout);
         supplierLayoutMore = (RelativeLayout) findViewById(R.id.supplierLayoutMore);
         imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
         contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
         txtOk = (TextView) findViewById(R.id.txtOk);
+        bookmarkImg = (ImageView) findViewById(R.id.bookmarkImg);
+        doneImg = (ImageView) findViewById(R.id.doneImg);
     }
+//wish visited like
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         findView();
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
@@ -173,30 +186,103 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         setWebViewContent();
         SetPercentage();
         setImageView();
-        txtOk.setOnClickListener(new View.OnClickListener() {
+//        txtOk.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                CommentOptionsDialog dialog = new CommentOptionsDialog(getApplicationContext());
+////                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+////                dialog.show();
+////                Dialog dialog = new Dialog(MoreItemItineraryActivity.this, R.style.Theme_Dialog);
+////                dialog.setContentView(R.layout.calender);
+////                dialog.setTitle("j");
+////                dialog.show();
+//                slideUpAnimation();
+//            }
+//        });
+
+        animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
+        animation.setAnimationListener(this);
+        supplierLayoutMore.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
-            public void onClick(View v) {
-//                CommentOptionsDialog dialog = new CommentOptionsDialog(getApplicationContext());
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-//                dialog.show();
-                Dialog dialog = new Dialog(MoreItemItineraryActivity.this,R.style.Theme_Dialog);
-                dialog.setContentView(R.layout.calender);
-                dialog.setTitle("j");
-                dialog.show();
+            public void onGlobalLayout() {
+                int width = supplierLayoutMore.getWidth();
+                int height = supplierLayoutMore.getHeight();
+                if (width > 0 && height > 0) {
+                    slideUpAnimation(0);
+                }
             }
         });
-        animation=AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
-        animation.setAnimationListener(this);
+
         rateHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                ratingHolder.setVisibility(View.VISIBLE);
-                moveViewToScreenCenter();
+                slideDownAnimation();
+
 
             }
         });
+        doneHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VisitedLayout.setVisibility(View.VISIBLE);
+                slideDownAnimation();
+                rotateImage = "doneImg";
+                if (getUseRIdFromShareprefrence() != null) {
+                    animWaiting(doneImg);
+                    String uid = getUseRIdFromShareprefrence();
+                    getInterestResult(uid, itineraryId, "1", "bookmark");
 
+                } else {
+                    Log.e("user is not login", "error");
+
+                }
+            }
+        });
+        nowVisitedHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotateImage = "doneImg";
+                if (getUseRIdFromShareprefrence() != null) {
+                    animWaiting(doneImg);
+                    String uid = getUseRIdFromShareprefrence();
+                    getInterestResult(uid, itineraryId, "1", "visited");
+
+                } else {
+                    Log.e("user is not login", "error");
+
+                }
+            }
+        });
+        beftorVisitedHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotateImage = "doneImg";
+                if (getUseRIdFromShareprefrence() != null) {
+                    animWaiting(doneImg);
+                    String uid = getUseRIdFromShareprefrence();
+                    getInterestResult(uid, itineraryId, "2", "visited");
+                } else {
+                    Log.e("user is not login", "error");
+                }
+            }
+        });
         itineraryId = itineraryData.getItineraryId();
+        bookmarkHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotateImage = "bookmarkImg";
+                if (getUseRIdFromShareprefrence() != null) {
+                    animWaiting(bookmarkImg);
+                    String uid = getUseRIdFromShareprefrence();
+                    getInterestResult(uid, itineraryId, "1", "bookmark");
+
+                } else {
+                    Log.e("user is not login", "error");
+
+                }
+            }
+        });
         showItinerys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,25 +302,98 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+
+    private String getUseRIdFromShareprefrence() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String userId = preferences.getString("userId", "");
+        return userId;
+//        if(ShareprefrenceName!=null){
+//            return true;
+//        }else {
+//            return false;
+//        }
 
     }
-    private void moveViewToScreenCenter()
-    {
-        TranslateAnimation anim = new TranslateAnimation(0,0,0,supplierLayoutMore.getHeight());
+
+    private OkHttpClient setHttpClient() {
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
+        return okHttpClient;
+    }
+
+    public void getInterestResult(String uid, String nid, String gvalue, String gtype) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .client(setHttpClient())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+        Call<InterestResult> call = getJsonInterface.getInterest("widget", uid, "1", "itinerary", nid, gtype, gvalue);
+        call.enqueue(new Callback<InterestResult>() {
+            @Override
+            public void onResponse(Call<InterestResult> call, Response<InterestResult> response) {
+                if (response.body() != null) {
+                    InterestResult jsonResponse = response.body();
+                    ResultData resultData = jsonResponse.getResultData();
+                    rotate.setRepeatCount(0);
+                    checkWhichImageIntrested(rotateImage);
+//                    bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
+                } else {
+                    Log.e("Responce body", "null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<InterestResult> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void checkWhichImageIntrested(String imageView) {
+
+        String im = imageView;
+        switch (im) {
+            case "bookmarkImg":
+                bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
+                break;
+            case "doneImg":
+                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void animWaiting(ImageView image) {
+        rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setRepeatCount(5);
+        rotate.setDuration(5000);
+        rotate.setInterpolator(new LinearInterpolator());
+        image.startAnimation(rotate);
+
+    }
+
+    private void slideDownAnimation() {
+        TranslateAnimation anim = new TranslateAnimation(0, 0, 0, supplierLayoutMore.getHeight());
         anim.setDuration(1000);
-        anim.setFillAfter( true );
+        anim.setFillAfter(true);
         ratingHolder.startAnimation(anim);
         GroupHolder.startAnimation(anim);
     }
-    private void anim(RelativeLayout layout) {
-        Animation slide_down = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.slide_down);
 
-        Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.slide_up);
 
-// Start animation
-        layout.startAnimation(slide_up);
+    private void slideUpAnimation(int duration) {
+        TranslateAnimation anim = new TranslateAnimation(0, 0, 0, -(supplierLayoutMore.getHeight()));
+        anim.setDuration(duration);
+        anim.setFillAfter(true);
+        ratingHolder.startAnimation(anim);
+        GroupHolder.startAnimation(anim);
     }
 
     private void setWebViewContent() {
@@ -252,14 +411,14 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         String myHtmlString = pish + myData + pas;
         contentFullDescription.loadDataWithBaseURL(null, myHtmlString, "text/html", "UTF-8", null);
     }
+
     public class CommentOptionsDialog extends Dialog implements View.OnClickListener {
 
         public Activity c;
         PersianDatePicker childBirthDate;
-
         RelativeLayout container;
         ImageView btnEdit, btnAdd;
-        TextView  popupName;
+        TextView popupName;
         String popupNameText;
 
         public CommentOptionsDialog(Context context) {
@@ -313,6 +472,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
         }
     }
+
     private void setTypeOfTravel() {
         if (itineraryData.getItineraryTransportId().equals("2830")) {
             itinerary_attraction_type_more.setImageDrawable(getResources().getDrawable(R.mipmap.ic_air_gret));
@@ -324,6 +484,11 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             itinerary_attraction_type_more.setImageDrawable(getResources().getDrawable(R.mipmap.ic_road_grey));
             txtItinerary_attraction_type.setText("جاده ای");
         }
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
     }
 
     private void showProgressDialog() {
