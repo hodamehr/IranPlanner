@@ -19,10 +19,8 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.animation.Animation;
-import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -52,6 +50,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -120,6 +120,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     Animation translateAnimation;
     boolean ratingHolderFlag = false;
 
+
+
     private void findView() {
         setContentView(R.layout.fragment_itinerary_item_more);
         txtItinerary_attraction_Difficulty = (TextView) findViewById(R.id.txtItinerary_attraction_Difficulty);
@@ -164,6 +166,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         rateImg = (ImageView) findViewById(R.id.rateImg);
         beftorVisitedImg = (ImageView) findViewById(R.id.beftorVisitedImg);
         nowVisitedImg = (ImageView) findViewById(R.id.nowVisitedImg);
+        wishImg = (ImageView) findViewById(R.id.wishImg);
     }
 //wish visited like
 
@@ -215,7 +218,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 int width = supplierLayoutMore.getWidth();
                 int height = supplierLayoutMore.getHeight();
                 if (width > 0 && height > 0) {
-                    slideUpAnimation(0);
                     VisitedLayout.setVisibility(View.INVISIBLE);
                     LikeLayout.setVisibility(View.INVISIBLE);
                 }
@@ -228,6 +230,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         okImg.setOnClickListener(this);
         dislikeImg.setOnClickListener(this);
         nowVisitedImg.setOnClickListener(this);
+        wishImg.setOnClickListener(this);
         beftorVisitedImg.setOnClickListener(this);
         itineraryId = itineraryData.getItineraryId();
         bookmarkHolder.setOnClickListener(this);
@@ -274,77 +277,78 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
             case R.id.ratingHolder:
                 if (ratingHolderFlag) {
-                    slideUpAnimation(1000);
+                    translateUp();
                 }
                 break;
             case R.id.rateHolder:
                 VisitedLayout.setVisibility(View.INVISIBLE);
                 LikeLayout.setVisibility(View.VISIBLE);
                 rotateImage = "rateImg";
-                slideDownAnimation();
+                translateDown();
                 break;
             case R.id.doneHolder:
                 LikeLayout.setVisibility(View.INVISIBLE);
                 VisitedLayout.setVisibility(View.VISIBLE);
                 rotateImage = "doneImg";
-                slideDownAnimation();
+                translateDown();
                 break;
             case R.id.likeImg:
                 rotateImage = "likeImg";
-                if (getUseRIdFromShareprefrence() != null) {
+                if (!getUseRIdFromShareprefrence().isEmpty()) {
                     animWaiting(likeImg);
                     String uid = getUseRIdFromShareprefrence();
                     getInterestResult(uid, itineraryId, "1", "like");
 
                 } else {
                     Log.e("user is not login", "error");
-
+                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.okImg:
                 rotateImage = "okImg";
-                if (getUseRIdFromShareprefrence() != null) {
+                if (!getUseRIdFromShareprefrence().isEmpty()) {
                     animWaiting(okImg);
                     String uid = getUseRIdFromShareprefrence();
                     getInterestResult(uid, itineraryId, "2", "like");
 
                 } else {
                     Log.e("user is not login", "error");
-
+                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.dislikeImg:
                 rotateImage = "dislikeImg";
-                if (getUseRIdFromShareprefrence() != null) {
+                if (!getUseRIdFromShareprefrence().isEmpty()) {
                     animWaiting(dislikeImg);
                     String uid = getUseRIdFromShareprefrence();
                     getInterestResult(uid, itineraryId, "3", "like");
 
                 } else {
                     Log.e("user is not login", "error");
-
+                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
                 }
                 break;
-            case R.id.nowVisitedImg:
-                rotateImage = "nowVisitedImg";
-                if (getUseRIdFromShareprefrence() != null) {
+
+            case R.id.wishImg:
+                rotateImage = "wishImg";
+                if (!getUseRIdFromShareprefrence().isEmpty()) {
                     animWaiting(nowVisitedImg);
                     String uid = getUseRIdFromShareprefrence();
-                    getInterestResult(uid, itineraryId, "1", "visited");
-
+                    getInterestResult(uid, itineraryId, "1", "wish");
                 } else {
                     Log.e("user is not login", "error");
-
+                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.beftorVisitedImg:
                 rotateImage = "beftorVisitedImg";
-                if (getUseRIdFromShareprefrence() != null) {
+                if (!getUseRIdFromShareprefrence().isEmpty()) {
                     animWaiting(beftorVisitedImg);
                     String uid = getUseRIdFromShareprefrence();
                     getInterestResult(uid, itineraryId, "2", "visited");
                 } else {
                     Log.e("user is not login", "error");
+                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.bookmarkHolder:
@@ -356,7 +360,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
                 } else {
                     Log.e("user is not login", "error");
-
+                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.showItinerys:
@@ -369,13 +373,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         }
     }
 
-
-    public class ReverseInterpolator implements Interpolator {
-        @Override
-        public float getInterpolation(float paramFloat) {
-            return Math.abs(paramFloat - 1f);
-        }
-    }
 
     public void getInterestResult(String uid, String nid, String gvalue, String gtype) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -417,28 +414,31 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 break;
             case "nowVisitedImg":
                 doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-                slideUpAnimation(1000);
+                translateUp();
                 break;
             case "beftorVisitedImg":
                 doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-                slideUpAnimation(1000);
+                translateUp();
                 break;
             case "dislikeImg":
                 dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
-                slideUpAnimation(1000);
+                translateUp();
                 rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
-
                 break;
             case "okImg":
                 okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
-                slideUpAnimation(1000);
                 rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
+                translateUp();
 
                 break;
             case "likeImg":
                 likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_heart_full));
-                slideUpAnimation(1000);
                 rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_heart_full));
+                translateUp();
+
+                break;
+            case "wishImg":
+                wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));
                 break;
             default:
                 break;
@@ -454,27 +454,48 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     }
 
-    private void slideDownAnimation() {
-//        TranslateAnimation anim = new TranslateAnimation(0,0,-(supplierLayoutMore.getHeight()),supplierLayoutMore.getHeight());
-        TranslateAnimation anim1 = new TranslateAnimation(0, 0, -(supplierLayoutMore.getHeight()), 0);
-        anim1.setDuration(1000);
-        anim1.setFillAfter(true);
-        ratingHolder.startAnimation(anim1);
+    private void translateDown() {
+
+        AnimatorSet mAnimatorSet = new AnimatorSet();
+        mAnimatorSet.playTogether(
+                ObjectAnimator.ofFloat(ratingHolder, "translationY", supplierLayoutMore.getHeight()),
+                ObjectAnimator.ofFloat(GroupHolder, "translationY", supplierLayoutMore.getHeight()));
+        mAnimatorSet.setDuration(1000);
+        mAnimatorSet.start();
         ratingHolderFlag = true;
-        GroupHolder.startAnimation(anim1);
+
     }
+
+    private void translateUp() {
+        AnimatorSet mAnimatorSet = new AnimatorSet();
+        mAnimatorSet.playTogether(
+                ObjectAnimator.ofFloat(ratingHolder, "translationY", 0),
+                ObjectAnimator.ofFloat(GroupHolder, "translationY", 0));
+        mAnimatorSet.setDuration(1000);
+        mAnimatorSet.start();
+        ratingHolderFlag = false;
+    }
+//    private void slideDownAnimation() {
+////        TranslateAnimation anim = new TranslateAnimation(0,0,-(supplierLayoutMore.getHeight()),supplierLayoutMore.getHeight());
+//        TranslateAnimation anim1 = new TranslateAnimation(0, 0, -(supplierLayoutMore.getHeight()), 0);
+//        anim1.setDuration(1000);
+//        anim1.setFillAfter(true);
+//        ratingHolder.startAnimation(anim1);
+//        ratingHolderFlag = true;
+//        GroupHolder.startAnimation(anim1);
+//    }
 
     //
 //
-    private Animation slideUpAnimation(int duration) {
-        TranslateAnimation anim = new TranslateAnimation(0, 0, 0, -(supplierLayoutMore.getHeight()));
-        anim.setDuration(duration);
-        anim.setFillAfter(true);
-        ratingHolder.startAnimation(anim);
-        ratingHolderFlag = false;
-        GroupHolder.startAnimation(anim);
-        return anim;
-    }
+//    private Animation slideUpAnimation(int duration) {
+//        TranslateAnimation anim = new TranslateAnimation(0, 0, 0, -(supplierLayoutMore.getHeight()));
+//        anim.setDuration(duration);
+//        anim.setFillAfter(true);
+//        ratingHolder.startAnimation(anim);
+//        ratingHolderFlag = false;
+//        GroupHolder.startAnimation(anim);
+//        return anim;
+//    }
 
     private void setWebViewContent() {
         contentFullDescription.setOnLongClickListener(new View.OnLongClickListener() {
