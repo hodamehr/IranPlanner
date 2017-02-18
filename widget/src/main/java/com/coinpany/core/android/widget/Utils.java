@@ -99,11 +99,14 @@ public class Utils {
         return persianNumbers(String.format("%02d:%02d", h, m));
     }
 
-    public static String getSimpleDate(CLocale locale, Date date) {
+    public static String getSimpleDate( Date date) {
         PersianCalendar calendar = new PersianCalendar(date.getTime());
         return persianNumbers(calendar.getPersianLongDate());
     }
-
+    public static String getSimpleDateMilli( Long date) {
+        PersianCalendar calendar = new PersianCalendar(date);
+        return persianNumbers(calendar.getPersianLongDate());
+    }
     public static String getShortSimpleDate(Date date) {
         PersianCalendar calendar = new PersianCalendar(date.getTime());
         return persianNumbers(calendar.getPersianShortDate());

@@ -1,12 +1,17 @@
 package tools.widget;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -16,6 +21,7 @@ import com.coinpany.core.android.widget.calendar.dateutil.PersianCalendarConstan
 import com.coinpany.core.android.widget.calendar.dateutil.PersianCalendarUtils;
 import com.iranplanner.tourism.iranplanner.R;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 
 
@@ -44,7 +50,53 @@ public class PersianDatePicker extends LinearLayout {
         yearNumberPicker.setMinValue(minYear);
         yearNumberPicker.setMaxValue(maxYear);
     }
+    public static boolean setNumberPickerTextColor(NumberPicker numberPicker, int color)
+    {
+        final int count = numberPicker.getChildCount();
+        for(int i = 0; i < count; i++){
+            View child = numberPicker.getChildAt(i);
+            if(child instanceof EditText){
+                try{
+                    Field selectorWheelPaintField = numberPicker.getClass()
+                            .getDeclaredField("mSelectorWheelPaint");
+                    selectorWheelPaintField.setAccessible(true);
+                    ((Paint)selectorWheelPaintField.get(numberPicker)).setColor(color);
+                    ((EditText)child).setTextColor(color);
+                    numberPicker.invalidate();
+                    return true;
+                }
+                catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+    private void setDividerColor(NumberPicker picker, int color) {
 
+        java.lang.reflect.Field[] pickerFields = NumberPicker.class.getDeclaredFields();
+        for (java.lang.reflect.Field pf : pickerFields) {
+            if (pf.getName().equals("mSelectionDivider")) {
+                pf.setAccessible(true);
+                try {
+                    ColorDrawable colorDrawable = new ColorDrawable(color);
+                    pf.set(picker, colorDrawable);
+
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                }
+                catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+    }
     public PersianDatePicker(Context context) {
         this(context, null, -1);
     }
@@ -140,6 +192,12 @@ public class PersianDatePicker extends LinearLayout {
         if (displayDescription) {
             descriptionTextView.setVisibility(View.VISIBLE);
         }
+        setDividerColor(yearNumberPicker , getContext().getColor(R.color.greyLight));
+        setDividerColor(monthNumberPicker  , getContext().getColor(R.color.greyLight));
+        setDividerColor(dayNumberPicker , getContext().getColor(R.color.greyLight));
+        setNumberPickerTextColor(yearNumberPicker , getContext().getColor(R.color.grey));
+        setNumberPickerTextColor(monthNumberPicker  , getContext().getColor(R.color.grey));
+        setNumberPickerTextColor(dayNumberPicker , getContext().getColor(R.color.grey));
 
         a.recycle();
     }

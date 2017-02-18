@@ -295,8 +295,37 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:weightSum="4">
+                            android:weightSum="5">
+                            <LinearLayout
+                                android:id="@+id/commentHolder"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingTop="@dimen/padding_short">
 
+                                <ImageView
+                                    android:id="@+id/commentImg"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:padding="@dimen/margin_xxshort"
+                                    android:scaleType="centerCrop"
+                                    android:src="@mipmap/ic_wish_grey" />
+
+                                <TextView
+                                    android:id="@+id/commentTxt"
+                                    style="@style/SmallText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/margin_xshort"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:maxLines="1"
+                                    android:text="ثبت نظر" />
+
+
+                            </LinearLayout>
                             <LinearLayout
                                 android:id="@+id/wish"
                                 android:layout_width="wrap_content"
@@ -344,7 +373,7 @@
                                     android:layout_height="30dp"
                                     android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_check_in" />
+                                    android:src="@mipmap/ic_dislike_grey" />
 
                                 <TextView
                                     android:id="@+id/doneTxt"
@@ -559,10 +588,10 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_below="@+id/supplierLayoutTravelType"
+                            android:paddingBottom="@dimen/padding_standard"
                             android:paddingLeft="@dimen/padding_big"
                             android:paddingRight="@dimen/padding_big"
-                            android:paddingBottom="@dimen/padding_standard"
-                            >
+                            android:paddingTop="@dimen/margin_standard">
 
                             <ImageView
                                 android:id="@+id/triangle"
@@ -570,7 +599,8 @@
                                 android:layout_height="30dp"
                                 android:layout_centerHorizontal="true"
                                 android:rotation="180"
-                                android:src="@drawable/shape_triangle" />
+                                android:src="@drawable/shape_triangle"
+                                android:visibility="gone"/>
 
 
                             <RelativeLayout
@@ -578,65 +608,50 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/triangle"
-                                android:layout_marginBottom="@dimen/padding_short">
+                                android:layout_marginBottom="@dimen/margin_standard" >
 
-                                <TextView
-                                    android:id="@+id/txtOk"
-                                    style="@style/StandardTextGrey"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginBottom="@dimen/margin_standard"
-                                    android:text="تاریخ شروع سفر"
-                                    android:textColor="@color/grey" />
+
 
                                 <RelativeLayout
-                                    android:id="@+id/test"
+                                    android:id="@+id/changeDateHolder"
                                     android:layout_width="wrap_content"
                                     android:layout_height="30dp"
                                     android:layout_alignParentLeft="true"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginRight="@dimen/padding_short"
-                                    android:layout_toLeftOf="@id/txtOk"
-                                    android:background="@drawable/rectangle">
 
+                                    android:background="@drawable/rectangle">
+                                    <TextView
+                                        android:id="@+id/txtOk"
+                                        style="@style/StandardTextGrey"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:text="تاریخ شروع سفر"
+                                        android:textColor="@color/grey"
+                                        android:layout_marginRight="@dimen/margin_short"/>
                                     <ImageView
                                         android:id="@+id/calendarIcon"
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_toLeftOf="@+id/txtOk"
                                         android:layout_centerVertical="true"
                                         android:layout_marginRight="@dimen/padding_short"
-                                        android:background="@mipmap/ic_calendar_grey" />
+                                        android:background="@mipmap/ic_dislike_grey" />
 
                                     <TextView
                                         android:id="@+id/txtDate"
-                                        android:layout_width="100dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
-                                        android:layout_centerInParent="true"
-
-                                        android:background="@color/blue"
-                                        android:text="تاریخ آغاز سفر" />
+                                        android:layout_toLeftOf="@+id/calendarIcon"
+                                        android:layout_marginRight="@dimen/margin_short"
+                                        android:text="شنبه اول بهمن 1395"
+                                        style="@style/StandardTextGrey"/>
                                 </RelativeLayout>
 
                             </RelativeLayout>
 
-                            <Button
-                                android:id="@+id/showItinerys"
-                                style="@style/StandardTitle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/dateRe"
-                                android:layout_centerHorizontal="true"
-                                android:background="@drawable/button_corner"
-                                android:text="نمایش برنامه سفر"
-                                android:textColor="@color/white_"
-                                android:layout_marginBottom="@dimen/padding_short"
-
-
-                                />
                             <Button
                                 android:id="@+id/showItinerysd"
                                 style="@style/StandardTitle"
@@ -646,18 +661,20 @@
                                 android:layout_centerHorizontal="true"
                                 android:background="@drawable/button_corner_green"
                                 android:text="رزرو مراکز اقامتی"
-                                android:textColor="@color/white_"   />
-                            <!--  <tools.widget.PersianDatePicker
-                                      android:id="@+id/travelDate"
-                                      android:layout_width="wrap_content"
-                                      android:layout_height="wrap_content"
-                                      android:layout_gravity="center_horizontal"
-                                      android:gravity="center_horizontal"
-                                      android:layout_alignParentRight="true"
-                                      app:displayMonthNames="true"
-                                      app:minYear="1395"
-                                      app:maxYear="1397"
-                                      />-->
+                                android:textColor="@color/white_" />
+
+                            <Button
+                                android:id="@+id/showItinerys"
+                                style="@style/StandardTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_below="@+id/dateRe"
+                                android:layout_marginBottom="@dimen/margin_standard"
+                                android:background="@drawable/button_corner"
+                                android:text="نمایش برنامه سفر"
+                                android:textColor="@color/white_" />
+
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -679,7 +696,13 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentTop="true">
-
+                            <ImageView
+                                android:id="@+id/triangleShowAttraction"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_centerHorizontal="true"
+                                android:rotation="180"
+                                android:src="@drawable/shape_triangle" />
                             <TextView
                                 android:id="@+id/typeOfItinerary"
                                 style="@style/StandardTitle"

@@ -4,12 +4,9 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.ColorDrawable;
-import android.icu.util.Calendar;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +32,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.coinpany.core.android.widget.CTouchyWebView;
+import com.coinpany.core.android.widget.Utils;
 import com.coinpany.core.android.widget.calendar.dateutil.PersianCalendar;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -56,9 +54,6 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -105,7 +100,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     TextView textPercentage1;
     TextView textPercentage2;
     TextView textPercentage3;
-    TextView txtItinerary_attraction_type,txtDate;
+    TextView txtItinerary_attraction_type, txtDate;
     ProgressDialog progressDialog;
     ImageView itinerary_attraction_type_more;
     protected CTouchyWebView contentFullDescription;
@@ -117,9 +112,9 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     TextView showItinerys;
     TextView txtOk;
     LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder;
-    RelativeLayout ratingHolder, GroupHolder, supplierLayoutMore, VisitedLayout, LikeLayout;
+    RelativeLayout ratingHolder, GroupHolder, supplierLayoutMore, VisitedLayout, LikeLayout, changeDateHolder;
     PersianCalendar persianCurrentDate;
-    ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg;
+    ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg, triangleShowAttraction;
     RotateAnimation rotate;
     String rotateImage;
     Animation translateAnimation;
@@ -146,7 +141,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         textPercentage1 = (TextView) findViewById(R.id.textPercentage1);
         textPercentage2 = (TextView) findViewById(R.id.textPercentage2);
         textPercentage3 = (TextView) findViewById(R.id.textPercentage3);
-//        txtDate = (TextView) findViewById(R.id.txtDate);
+        txtDate = (TextView) findViewById(R.id.txtDate);
         rateHolder = (LinearLayout) findViewById(R.id.rateHolder);
         doneHolder = (LinearLayout) findViewById(R.id.doneHolder);
         nowVisitedHolder = (LinearLayout) findViewById(R.id.nowVisitedHolder);
@@ -159,6 +154,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         GroupHolder = (RelativeLayout) findViewById(R.id.GroupHolder);
         VisitedLayout = (RelativeLayout) findViewById(R.id.VisitedLayout);
         LikeLayout = (RelativeLayout) findViewById(R.id.LikeLayout);
+        changeDateHolder = (RelativeLayout) findViewById(R.id.changeDateHolder);
         supplierLayoutMore = (RelativeLayout) findViewById(R.id.supplierLayoutMore);
         imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
         contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
@@ -173,6 +169,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         beftorVisitedImg = (ImageView) findViewById(R.id.beftorVisitedImg);
         nowVisitedImg = (ImageView) findViewById(R.id.nowVisitedImg);
         wishImg = (ImageView) findViewById(R.id.wishImg);
+        triangleShowAttraction = (ImageView) findViewById(R.id.triangleShowAttraction);
     }
 //wish visited like
 
@@ -191,10 +188,9 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         setWebViewContent();
         SetPercentage();
         setImageView();
-//----------------
-//      txtDate.setOnClickListener(this);
-
-        //--------------
+//---------------- set current date
+        long time = System.currentTimeMillis();
+        txtDate.setText(Utils.getSimpleDateMilli(time));
 
 
         txtItinerary_attraction_Difficulty.setText(itineraryData.getItineraryDifficulty().getItineraryDifficultyGroup());
@@ -209,19 +205,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         }
 
 
-//        txtOk.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                CommentOptionsDialog dialog = new CommentOptionsDialog(getApplicationContext());
-////                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-////                dialog.show();
-////                Dialog dialog = new Dialog(MoreItemItineraryActivity.this, R.style.Theme_Dialog);
-////                dialog.setContentView(R.layout.calender);
-////                dialog.setTitle("j");
-////                dialog.show();
-//                slideUpAnimation();
-//            }
-//        });
 
         //listener bara inke vaghti maghadir width , height set shod
         supplierLayoutMore.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -236,6 +219,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             }
         });
         ratingHolder.setOnClickListener(this);
+        changeDateHolder.setOnClickListener(this);
         rateHolder.setOnClickListener(this);
         doneHolder.setOnClickListener(this);
         likeImg.setOnClickListener(this);
@@ -284,18 +268,10 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     public void onClick(View v) {
         switch (v.getId()) {
 
-
-//            case R.id.txtDate:
-//                CommentOptionsDialog dialog = new CommentOptionsDialog(getApplicationContext());
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-//                dialog.show();
-//                Dialog dialog1=new Dialog(getApplicationContext(),R.style.Theme_Dialog);
-////                Dialog dialog = new Dialog(MoreItemItineraryActivity.this, R.style.Theme_Dialog);
-//                dialog1.setContentView(R.layout.calender);
-//                dialog1.setTitle("j");
-//                dialog1.show();
-//
-//                break;
+            case R.id.changeDateHolder:
+                CustomDialogTravel cdd = new CustomDialogTravel(this);
+                cdd.show();
+                break;
             case R.id.ratingHolder:
                 if (ratingHolderFlag) {
                     translateUp();
@@ -453,8 +429,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
                 break;
             case "likeImg":
-                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_heart_full_pink));
-                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_heart_full_pink));
+                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
                 translateUp();
 
                 break;
@@ -480,7 +456,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         AnimatorSet mAnimatorSet = new AnimatorSet();
         mAnimatorSet.playTogether(
                 ObjectAnimator.ofFloat(ratingHolder, "translationY", supplierLayoutMore.getHeight()),
-                ObjectAnimator.ofFloat(GroupHolder, "translationY", supplierLayoutMore.getHeight()));
+                ObjectAnimator.ofFloat(GroupHolder, "translationY", supplierLayoutMore.getHeight()),
+                ObjectAnimator.ofFloat(triangleShowAttraction, "translationY", -55));
         mAnimatorSet.setDuration(1000);
         mAnimatorSet.start();
         ratingHolderFlag = true;
@@ -491,7 +468,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         AnimatorSet mAnimatorSet = new AnimatorSet();
         mAnimatorSet.playTogether(
                 ObjectAnimator.ofFloat(ratingHolder, "translationY", 0),
-                ObjectAnimator.ofFloat(GroupHolder, "translationY", 0));
+                ObjectAnimator.ofFloat(GroupHolder, "translationY", 0),
+                ObjectAnimator.ofFloat(triangleShowAttraction, "translationY", 0));
         mAnimatorSet.setDuration(1000);
         mAnimatorSet.start();
         ratingHolderFlag = false;
@@ -534,66 +512,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         contentFullDescription.loadDataWithBaseURL(null, myHtmlString, "text/html", "UTF-8", null);
     }
 
-    public class CommentOptionsDialog extends Dialog implements View.OnClickListener {
-
-        public Activity c;
-        PersianDatePicker childBirthDate;
-        RelativeLayout container;
-        ImageView btnEdit, btnAdd;
-        TextView popupName;
-        String popupNameText;
-
-        public CommentOptionsDialog(Context context) {
-            super(context);
-        }
-
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            setContentView(R.layout.calender);
-//            findViewById(R.id.optionHeader).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    dismiss();
-//                }
-//            });
-//            childBirthDate = (PersianDatePicker) findViewById(R.id.travelDate);
-//            childBirthDate.setMaxYear(persianCurrentDate.getPersianYear());
-//            childBirthDate.setMinYear(persianCurrentDate.getPersianYear() - 50);
-//            childBirthDate.setDisplayDate(persianCurrentDate.getTime());
-//            final TextView dateTxt = (TextView) findViewById(R.id.dateTxt);
-//            ImageView cancelDialog = (ImageView) findViewById(R.id.cancelDialog);
-//            cancelDialog.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    cancel();
-//                }
-//            });
-//
-//            btnEdit = (ImageView) findViewById(R.id.btnEdit);
-//            btnAdd = (ImageView) findViewById(R.id.btnAdd);
-//
-//            popupName.setText(popupNameText);
-////            btnEdit.setOnClickListener(this);
-////            btnAdd.setOnClickListener(this);
-//             final CLocale locale = new CLocale("fa_IR@calendar=persian");
-//            dateTxt.setText(Utils.getSimpleDate(locale, childBirthDate.getDisplayDate()));
-//            childBirthDate.setOnDateChangedListener(new PersianDatePicker.OnDateChangedListener() {
-//                @Override
-//                public void onDateChanged(int newYear, int newMonth, int newDay) {
-//                    dateTxt.setText(Utils.getSimpleDate(locale, childBirthDate.getDisplayDate()));
-//                }
-//            });
-        }
-
-
-        @Override
-        public void onClick(View v) {
-
-        }
-    }
 
     private void setTypeOfTravel() {
         if (itineraryData.getItineraryTransportId().equals("2830")) {
@@ -1025,5 +943,57 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     }
 
+    public class CustomDialogTravel extends Dialog implements
+            android.view.View.OnClickListener {
 
+        public Activity c;
+        public Dialog d;
+        public TextView yes, no;
+        PersianDatePicker persianDatePickr;
+
+        public CustomDialogTravel(Activity a) {
+            super(a);
+            // TODO Auto-generated constructor stub
+            this.c = a;
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            setContentView(R.layout.dialog_date_travel);
+            persianDatePickr= (PersianDatePicker) findViewById(R.id.travelDate);
+            yes = (TextView) findViewById(R.id.txtOk);
+            no = (TextView) findViewById(R.id.txtNo);
+            yes.setOnClickListener(this);
+            no.setOnClickListener(this);
+            persianDatePickr.setOnDateChangedListener(new PersianDatePicker.OnDateChangedListener() {
+                @Override
+                public void onDateChanged(int newYear, int newMonth, int newDay) {
+                    txtDate.setText(Utils.getSimpleDate(persianDatePickr.getDisplayDate()));
+                }
+            });
+
+
+            }
+
+
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.txtOk:
+                    persianDatePickr.getDisplayDate();
+                    dismiss();
+//                break;
+                    break;
+                case R.id.txtNo:
+                    dismiss();
+                    break;
+                default:
+                    break;
+            }
+            dismiss();
+        }
+    }
 }

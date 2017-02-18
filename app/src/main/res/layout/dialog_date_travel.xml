@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/padding_short"
+    android:paddingRight="@dimen/padding_short">
+
+    <TextView
+        style="@style/StandardText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="center"
+        android:paddingBottom="@dimen/margin_short"
+        android:paddingRight="@dimen/margin_standard"
+        android:paddingTop="@dimen/padding_standard"
+        android:id="@+id/txtAlertTitle"
+        android:text="تاریخ شروع سفر"
+        android:textColor="@color/grey" />
+    <com.coinpany.core.android.widget.CDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+
+    <LinearLayout
+        android:id="@+id/alertDescription"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal">
+        <tools.widget.PersianDatePicker
+            android:id="@+id/travelDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:displayMonthNames="true"
+            app:minYear="1395"
+            app:maxYear="1397"
+            />
+    </LinearLayout>
+
+    <com.coinpany.core.android.widget.CDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/txtNo"
+            style="@style/StandardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:padding="@dimen/padding_standard"
+            android:text="بستن"
+            android:textColor="@color/pink" />
+
+        <com.coinpany.core.android.widget.CDivider
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/txtOk"
+            style="@style/StandardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/txtNo"
+            android:layout_weight="0.98"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:padding="@dimen/padding_standard"
+            android:text="تایید"
+            android:textColor="@color/pink" />
+    </LinearLayout>
+
+
+</LinearLayout>
