@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
+import android.icu.util.Calendar;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,6 +56,9 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -100,7 +105,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     TextView textPercentage1;
     TextView textPercentage2;
     TextView textPercentage3;
-    TextView txtItinerary_attraction_type;
+    TextView txtItinerary_attraction_type,txtDate;
     ProgressDialog progressDialog;
     ImageView itinerary_attraction_type_more;
     protected CTouchyWebView contentFullDescription;
@@ -141,6 +146,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         textPercentage1 = (TextView) findViewById(R.id.textPercentage1);
         textPercentage2 = (TextView) findViewById(R.id.textPercentage2);
         textPercentage3 = (TextView) findViewById(R.id.textPercentage3);
+//        txtDate = (TextView) findViewById(R.id.txtDate);
         rateHolder = (LinearLayout) findViewById(R.id.rateHolder);
         doneHolder = (LinearLayout) findViewById(R.id.doneHolder);
         nowVisitedHolder = (LinearLayout) findViewById(R.id.nowVisitedHolder);
@@ -185,6 +191,12 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         setWebViewContent();
         SetPercentage();
         setImageView();
+//----------------
+//      txtDate.setOnClickListener(this);
+
+        //--------------
+
+
         txtItinerary_attraction_Difficulty.setText(itineraryData.getItineraryDifficulty().getItineraryDifficultyGroup());
         txtItinerary_count_attraction.setText(Util.persianNumbers(itineraryData.getItineraryCountAttraction()) + " مکان دیدنی");
         itineraryDuration.setText(duration);
@@ -273,8 +285,17 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         switch (v.getId()) {
 
 
-//                    nowVisitedImg beftorVisitedImg bookmarkHolder showItinerys
-
+//            case R.id.txtDate:
+//                CommentOptionsDialog dialog = new CommentOptionsDialog(getApplicationContext());
+//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//                dialog.show();
+//                Dialog dialog1=new Dialog(getApplicationContext(),R.style.Theme_Dialog);
+////                Dialog dialog = new Dialog(MoreItemItineraryActivity.this, R.style.Theme_Dialog);
+//                dialog1.setContentView(R.layout.calender);
+//                dialog1.setTitle("j");
+//                dialog1.show();
+//
+//                break;
             case R.id.ratingHolder:
                 if (ratingHolderFlag) {
                     translateUp();
@@ -353,7 +374,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 break;
             case R.id.bookmarkHolder:
                 rotateImage = "bookmarkImg";
-                if (getUseRIdFromShareprefrence() != null) {
+                if (!getUseRIdFromShareprefrence().isEmpty()) {
                     animWaiting(bookmarkImg);
                     String uid = getUseRIdFromShareprefrence();
                     getInterestResult(uid, itineraryId, "1", "bookmark");
@@ -432,8 +453,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
                 break;
             case "likeImg":
-                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_heart_full));
-                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_heart_full));
+                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_heart_full_pink));
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_heart_full_pink));
                 translateUp();
 
                 break;
