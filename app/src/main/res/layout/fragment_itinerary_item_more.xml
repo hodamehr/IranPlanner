@@ -26,9 +26,33 @@
                     android:layout_height="match_parent">
 
                     <RelativeLayout
+                        android:id="@+id/viewPagerMore"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp">
+
+
+                            <android.support.v4.view.ViewPager
+                                android:id="@+id/toolsPager"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:paddingLeft="24dp"
+                                android:paddingRight="12dp"></android.support.v4.view.ViewPager>
+
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="dfdsffs" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
                         android:id="@+id/imageHolder"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/viewPagerMore">
 
                         <ImageView
                             android:id="@+id/imgItineraryListMore"
@@ -37,6 +61,7 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
+                            android:background="@color/blue"
                             android:scaleType="centerCrop" />
 
 
@@ -296,6 +321,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:weightSum="5">
+
                             <LinearLayout
                                 android:id="@+id/commentHolder"
                                 android:layout_width="wrap_content"
@@ -326,6 +352,7 @@
 
 
                             </LinearLayout>
+
                             <LinearLayout
                                 android:id="@+id/wish"
                                 android:layout_width="wrap_content"
@@ -590,18 +617,16 @@
                             android:layout_below="@+id/supplierLayoutTravelType"
                             android:paddingBottom="@dimen/padding_standard"
                             android:paddingLeft="@dimen/padding_big"
-                            android:paddingRight="@dimen/padding_big"
-                            >
+                            android:paddingRight="@dimen/padding_big">
 
                             <ImageView
                                 android:id="@+id/triangle"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
+                                android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
                                 android:rotation="180"
-                                android:src="@drawable/shape_triangle"
-                                android:layout_alignParentTop="true"
-                                 />
+                                android:src="@drawable/shape_triangle" />
 
 
                             <RelativeLayout
@@ -681,7 +706,6 @@
                         </RelativeLayout>
 
 
-
                         <RelativeLayout
                             android:id="@+id/ShowAttractionHolder"
                             android:layout_width="match_parent"
@@ -689,6 +713,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentTop="true">
+
                             <ImageView
                                 android:id="@+id/triangleShowAttraction"
                                 android:layout_width="30dp"
@@ -696,6 +721,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:rotation="180"
                                 android:src="@drawable/shape_triangle" />
+
                             <TextView
                                 android:id="@+id/typeOfItinerary"
                                 style="@style/StandardTitle"
@@ -918,28 +944,28 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_below="@id/mapHolder"
-                            android:padding="@dimen/padding_short"
-                            android:layout_centerVertical="true">
+                            android:layout_centerVertical="true"
+                            android:padding="@dimen/padding_short">
 
                             <TextView
                                 android:id="@+id/titleBody"
                                 style="@style/StandardTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingBottom="@dimen/padding_short"
-                                android:text="درباره این سفر"
-                                android:gravity="right"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="@dimen/padding_short"
+                                android:gravity="right"
+                                android:paddingBottom="@dimen/padding_short"
+                                android:text="درباره این سفر"
 
                                 />
 
                             <RelativeLayout
+                                android:id="@+id/webBody"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/titleBody"
-                                android:gravity="right"
-                                android:id="@+id/webBody">
+                                android:gravity="right">
 
                                 <com.coinpany.core.android.widget.CTouchyWebView
                                     android:id="@+id/contentFullDescription"
@@ -960,12 +986,6 @@
                                 android:gravity="left"
                                 android:text="بیشتر بخوانید"
                                 android:textColor="@color/blue" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp">
-
                         </RelativeLayout>
 
 

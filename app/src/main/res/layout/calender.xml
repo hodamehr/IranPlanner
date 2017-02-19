@@ -64,9 +64,7 @@
                             style="@style/CSelectableItemBackground"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:layout_alignLeft="@+id/btnEdit"
                             android:layout_alignParentTop="true"
-                            android:layout_alignStart="@+id/btnEdit"
                             android:clickable="true"
                             android:src="@mipmap/ic_air"
                             android:tint="@color/appMainColor" />

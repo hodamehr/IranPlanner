@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -48,6 +49,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.adapter.ShowTavelToolsAdapter;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.nineoldandroids.animation.AnimatorSet;
@@ -121,11 +123,13 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     boolean ratingHolderFlag = false;
     String myData;
     Boolean showMore = true;
+    ViewPager toolsPager;
 
 
     private void findView() {
         setContentView(R.layout.fragment_itinerary_item_more);
         txtItinerary_attraction_Difficulty = (TextView) findViewById(R.id.txtItinerary_attraction_Difficulty);
+        toolsPager = (ViewPager) findViewById(R.id.toolsPager);
         txtItinerary_attraction_type = (TextView) findViewById(R.id.txtItinerary_attraction_type);
         txtItinerary_count_attraction = (TextView) findViewById(R.id.txtItinerary_count_attraction);
         itineraryDuration = (TextView) findViewById(R.id.itineraryDuration);
@@ -180,8 +184,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         super.onCreate(savedInstanceState);
 
         findView();
-
-
+        ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getSupportFragmentManager());
+        toolsPager.setAdapter(showTavelToolsAdapter);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
@@ -276,14 +280,14 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 cdd.show();
                 break;
             case R.id.MoreInoText:
-                if(showMore){
+                if (showMore) {
                     setWebViewContent(myData);
                     MoreInoText.setText("کمتر بخوانید");
-                    showMore=false;
-                }else {
+                    showMore = false;
+                } else {
                     setWebViewContent(getShowMoreString(myData));
                     MoreInoText.setText("بیشتر بخوانید");
-                    showMore=true;
+                    showMore = true;
                 }
 
                 break;
