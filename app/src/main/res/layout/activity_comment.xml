@@ -23,7 +23,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_dislike_grey" />
+            android:src="@mipmap/ic_dislike_grey_" />
 
         <TextView
             style="@style/StandardTitle"

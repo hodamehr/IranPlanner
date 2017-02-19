@@ -110,7 +110,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     TextView itineraryDuration;
     TextView fromCityName, toCityName;
     TextView showItinerys;
-    TextView txtOk;
+    TextView txtOk, MoreInoText;
     LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder;
     RelativeLayout ratingHolder, GroupHolder, supplierLayoutMore, VisitedLayout, LikeLayout, changeDateHolder;
     PersianCalendar persianCurrentDate;
@@ -119,7 +119,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     String rotateImage;
     Animation translateAnimation;
     boolean ratingHolderFlag = false;
-
+    String myData;
+    Boolean showMore = true;
 
 
     private void findView() {
@@ -159,6 +160,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
         contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
         txtOk = (TextView) findViewById(R.id.txtOk);
+        MoreInoText = (TextView) findViewById(R.id.MoreInoText);
         bookmarkImg = (ImageView) findViewById(R.id.bookmarkImg);
         doneImg = (ImageView) findViewById(R.id.doneImg);
 
@@ -185,7 +187,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
         String duration = bundle.getString("duration");
         setTypeOfTravel();
-        setWebViewContent();
+        myData = itineraryData.getItineraryBody();
+        setWebViewContent(getShowMoreString(myData));
         SetPercentage();
         setImageView();
 //---------------- set current date
@@ -203,7 +206,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             fromCityName.setText(itineraryData.getItineraryFromCityName());
             toCityName.setText(itineraryData.getItineraryToCityName());
         }
-
 
 
         //listener bara inke vaghti maghadir width , height set shod
@@ -231,6 +233,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         itineraryId = itineraryData.getItineraryId();
         bookmarkHolder.setOnClickListener(this);
         showItinerys.setOnClickListener(this);
+        MoreInoText.setOnClickListener(this);
         //-------------------map
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -271,6 +274,18 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             case R.id.changeDateHolder:
                 CustomDialogTravel cdd = new CustomDialogTravel(this);
                 cdd.show();
+                break;
+            case R.id.MoreInoText:
+                if(showMore){
+                    setWebViewContent(myData);
+                    MoreInoText.setText("کمتر بخوانید");
+                    showMore=false;
+                }else {
+                    setWebViewContent(getShowMoreString(myData));
+                    MoreInoText.setText("بیشتر بخوانید");
+                    showMore=true;
+                }
+
                 break;
             case R.id.ratingHolder:
                 if (ratingHolderFlag) {
@@ -496,7 +511,16 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 //        return anim;
 //    }
 
-    private void setWebViewContent() {
+    private String getShowMoreString(String myData) {
+        int count = 0;
+        int position = 0;
+        for (count = 0; count < 40; count++) {
+            position = myData.indexOf(" ", position + 1);
+        }
+        return myData.substring(0, position);
+    }
+
+    private void setWebViewContent(String myData) {
         contentFullDescription.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -505,13 +529,13 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         });
         contentFullDescription.setLongClickable(false);
         contentFullDescription.setHapticFeedbackEnabled(false);
-        String myData = itineraryData.getItineraryBody();
-        String pish = "<html><head><style type=\"text/css\">@font-face {font-family: MyFont;src: url(\"file:///android_asset/fonts/IRANSansMobile.ttf\")}body {font-family: MyFont;font-size: medium;text-align: justify;}</style></head><body>";
+
+
+        String pish = "<html><head><style type=\"text/css\">@font-face {color:#737373;font-family: MyFont;src: url(\"file:///android_asset/fonts/IRANSansMobile.ttf\")}body {font-family: MyFont;font-size: small;text-align: justify;direction:rtl}</style></head><body>";
         String pas = "</body></html>";
         String myHtmlString = pish + myData + pas;
         contentFullDescription.loadDataWithBaseURL(null, myHtmlString, "text/html", "UTF-8", null);
     }
-
 
     private void setTypeOfTravel() {
         if (itineraryData.getItineraryTransportId().equals("2830")) {
@@ -962,7 +986,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             super.onCreate(savedInstanceState);
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             setContentView(R.layout.dialog_date_travel);
-            persianDatePickr= (PersianDatePicker) findViewById(R.id.travelDate);
+            persianDatePickr = (PersianDatePicker) findViewById(R.id.travelDate);
             yes = (TextView) findViewById(R.id.txtOk);
             no = (TextView) findViewById(R.id.txtNo);
             yes.setOnClickListener(this);
@@ -975,8 +999,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             });
 
 
-            }
-
+        }
 
 
         @Override

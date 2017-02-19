@@ -129,7 +129,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_checkin_befor" />
+                                        android:src="@mipmap/ic_checkin_before_grey_" />
 
                                     <TextView
                                         android:id="@+id/beftorVisitedTxt"
@@ -159,7 +159,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_checkin_now_grey" />
+                                        android:src="@mipmap/ic_checkin_now_grey_1" />
 
                                     <TextView
                                         android:id="@+id/nowVisitedTxt"
@@ -203,7 +203,7 @@
                                         android:layout_height="30dp"
                                         android:padding="@dimen/margin_xxshort"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_dislike_grey" />
+                                        android:src="@mipmap/ic_dislike_grey_" />
 
                                     <TextView
                                         android:id="@+id/dislikeTxt"
@@ -265,7 +265,7 @@
                                         android:layout_height="30dp"
                                         android:padding="@dimen/margin_xxshort"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_like_empty_prey" />
+                                        android:src="@mipmap/ic_like_grey" />
 
                                     <TextView
                                         android:id="@+id/likeTxt"
@@ -373,7 +373,7 @@
                                     android:layout_height="30dp"
                                     android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_dislike_grey" />
+                                    android:src="@mipmap/ic_dislike_grey_" />
 
                                 <TextView
                                     android:id="@+id/doneTxt"
@@ -591,7 +591,7 @@
                             android:paddingBottom="@dimen/padding_standard"
                             android:paddingLeft="@dimen/padding_big"
                             android:paddingRight="@dimen/padding_big"
-                            android:paddingTop="@dimen/margin_standard">
+                            >
 
                             <ImageView
                                 android:id="@+id/triangle"
@@ -600,7 +600,8 @@
                                 android:layout_centerHorizontal="true"
                                 android:rotation="180"
                                 android:src="@drawable/shape_triangle"
-                                android:visibility="gone"/>
+                                android:layout_alignParentTop="true"
+                                 />
 
 
                             <RelativeLayout
@@ -608,18 +609,19 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/triangle"
-                                android:layout_marginBottom="@dimen/margin_standard" >
-
+                                android:layout_marginBottom="@dimen/margin_standard">
 
 
                                 <RelativeLayout
                                     android:id="@+id/changeDateHolder"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="30dp"
+                                    android:layout_height="35dp"
                                     android:layout_alignParentLeft="true"
                                     android:layout_centerVertical="true"
 
+
                                     android:background="@drawable/rectangle">
+
                                     <TextView
                                         android:id="@+id/txtOk"
                                         style="@style/StandardTextGrey"
@@ -627,27 +629,28 @@
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentRight="true"
                                         android:layout_centerVertical="true"
-                                        android:text="تاریخ شروع سفر"
-                                        android:textColor="@color/grey"
-                                        android:layout_marginRight="@dimen/margin_short"/>
+                                        android:layout_marginRight="@dimen/margin_short"
+                                        android:text="تاریخ شروع"
+                                        android:textColor="@color/grey" />
+
                                     <ImageView
                                         android:id="@+id/calendarIcon"
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
-                                        android:layout_toLeftOf="@+id/txtOk"
                                         android:layout_centerVertical="true"
                                         android:layout_marginRight="@dimen/padding_short"
-                                        android:background="@mipmap/ic_dislike_grey" />
+                                        android:layout_toLeftOf="@+id/txtOk"
+                                        android:background="@mipmap/ic_calendar_grey" />
 
                                     <TextView
                                         android:id="@+id/txtDate"
+                                        style="@style/StandardTextGrey"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
-                                        android:layout_toLeftOf="@+id/calendarIcon"
                                         android:layout_marginRight="@dimen/margin_short"
-                                        android:text="شنبه اول بهمن 1395"
-                                        style="@style/StandardTextGrey"/>
+                                        android:layout_toLeftOf="@+id/calendarIcon"
+                                        android:text="شنبه اول بهمن 1395" />
                                 </RelativeLayout>
 
                             </RelativeLayout>
@@ -677,17 +680,7 @@
 
                         </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/mapHolder">
 
-                            <com.coinpany.core.android.widget.CTouchyWebView
-                                android:id="@+id/contentFullDescription"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="@style/StandardTextGrey" />
-                        </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/ShowAttractionHolder"
@@ -918,6 +911,60 @@
                                 android:textColor="@color/white_"
                                 android:visibility="gone" />
 
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/mapHolder"
+                            android:padding="@dimen/padding_short"
+                            android:layout_centerVertical="true">
+
+                            <TextView
+                                android:id="@+id/titleBody"
+                                style="@style/StandardTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="@dimen/padding_short"
+                                android:text="درباره این سفر"
+                                android:gravity="right"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="@dimen/padding_short"
+
+                                />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/titleBody"
+                                android:gravity="right"
+                                android:id="@+id/webBody">
+
+                                <com.coinpany.core.android.widget.CTouchyWebView
+                                    android:id="@+id/contentFullDescription"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/StandardTextGrey"
+
+                                    />
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/MoreInoText"
+                                style="@style/StandardText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/webBody"
+                                android:layout_marginLeft="@dimen/margin_standard"
+                                android:gravity="left"
+                                android:text="بیشتر بخوانید"
+                                android:textColor="@color/blue" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp">
 
                         </RelativeLayout>
 

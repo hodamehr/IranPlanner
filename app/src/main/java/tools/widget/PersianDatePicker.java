@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -192,13 +193,14 @@ public class PersianDatePicker extends LinearLayout {
         if (displayDescription) {
             descriptionTextView.setVisibility(View.VISIBLE);
         }
-        setDividerColor(yearNumberPicker , getContext().getColor(R.color.greyLight));
-        setDividerColor(monthNumberPicker  , getContext().getColor(R.color.greyLight));
-        setDividerColor(dayNumberPicker , getContext().getColor(R.color.greyLight));
-        setNumberPickerTextColor(yearNumberPicker , getContext().getColor(R.color.grey));
-        setNumberPickerTextColor(monthNumberPicker  , getContext().getColor(R.color.grey));
-        setNumberPickerTextColor(dayNumberPicker , getContext().getColor(R.color.grey));
+//        ResourcesCompat.getColor(getResources(), R.color.greyLight, null); //without theme
 
+        setDividerColor(yearNumberPicker , ResourcesCompat.getColor(getResources(), R.color.greyLight, null));
+        setDividerColor(monthNumberPicker  , ResourcesCompat.getColor(getResources(), R.color.greyLight, null));
+        setDividerColor(dayNumberPicker , ResourcesCompat.getColor(getResources(), R.color.greyLight, null));
+        setNumberPickerTextColor(yearNumberPicker ,  ResourcesCompat.getColor(getResources(), R.color.grey, null));
+        setNumberPickerTextColor(monthNumberPicker  ,  ResourcesCompat.getColor(getResources(), R.color.grey, null));
+        setNumberPickerTextColor(dayNumberPicker ,  ResourcesCompat.getColor(getResources(), R.color.grey, null));
         a.recycle();
     }
 
