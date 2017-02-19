@@ -25,34 +25,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <RelativeLayout
-                        android:id="@+id/viewPagerMore"
-                        android:layout_width="match_parent"
-                        android:layout_height="400dp">
 
-
-                            <android.support.v4.view.ViewPager
-                                android:id="@+id/toolsPager"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:paddingLeft="24dp"
-                                android:paddingRight="12dp"></android.support.v4.view.ViewPager>
-
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="dfdsffs" />
-                    </RelativeLayout>
-
+                    <!--imageHolder-->
                     <RelativeLayout
                         android:id="@+id/imageHolder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewPagerMore">
+
+                        >
 
                         <ImageView
                             android:id="@+id/imgItineraryListMore"
@@ -61,8 +41,16 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:background="@color/blue"
-                            android:scaleType="centerCrop" />
+                            android:scaleType="centerCrop"
+                         />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/dark_shadow"
+                            ></RelativeLayout>
 
 
                         <RelativeLayout
@@ -122,7 +110,7 @@
                             android:text="destintion"
                             android:textColor="@color/white_" />
                     </RelativeLayout>
-
+                    <!--rating Holder-->
                     <RelativeLayout
                         android:id="@+id/ratingHolder"
                         android:layout_width="match_parent"
@@ -154,7 +142,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_checkin_before_grey_" />
+                                        android:src="@mipmap/ic_launcher" />
 
                                     <TextView
                                         android:id="@+id/beftorVisitedTxt"
@@ -184,7 +172,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_checkin_now_grey_1" />
+                                        android:src="@mipmap/ic_visitclock" />
 
                                     <TextView
                                         android:id="@+id/nowVisitedTxt"
@@ -309,7 +297,7 @@
                         </RelativeLayout>
 
                     </RelativeLayout>
-
+                    <!--<CommentHolder-->
                     <RelativeLayout
                         android:id="@+id/supplierLayoutMore"
                         android:layout_width="match_parent"
@@ -480,13 +468,13 @@
                         </LinearLayout>
                     </RelativeLayout>
 
-
+                    <!--GroupHolder-->
                     <RelativeLayout
                         android:id="@+id/GroupHolder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/ratingHolder">
-
+                        <!--travel type-->
                         <RelativeLayout
                             android:id="@+id/supplierLayoutTravelType"
                             android:layout_width="match_parent"
@@ -588,7 +576,7 @@
 
 
                         </RelativeLayout>
-
+                        <!--mapHolder-->
                         <RelativeLayout
                             android:id="@+id/mapHolder"
                             android:layout_width="match_parent"
@@ -608,7 +596,7 @@
                                 android:focusableInTouchMode="true"
                                 tools:context="com.iranplanner.tourism.iranplanner.activity.MoreItemItineraryActivity" />
                         </RelativeLayout>
-
+                        <!--dateHolder-->
                         <RelativeLayout
                             android:id="@+id/dateHolder"
                             android:layout_width="match_parent"
@@ -705,7 +693,7 @@
 
                         </RelativeLayout>
 
-
+                        <!--showAttractionHolder- safar dar yek negah-->
                         <RelativeLayout
                             android:id="@+id/ShowAttractionHolder"
                             android:layout_width="match_parent"
@@ -939,12 +927,14 @@
 
 
                         </RelativeLayout>
-
+                        <!--showMore   bishtar bekhanid  -->
                         <RelativeLayout
+                            android:id="@+id/ShowMoreInfoHolder"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_below="@id/mapHolder"
                             android:layout_centerVertical="true"
+                            android:background="@color/white_"
                             android:padding="@dimen/padding_short">
 
                             <TextView
@@ -988,6 +978,28 @@
                                 android:textColor="@color/blue" />
                         </RelativeLayout>
 
+                        <RelativeLayout
+                            android:id="@+id/viewPagerMore"
+                            android:layout_width="match_parent"
+                            android:layout_height="240dp"
+                            android:layout_below="@+id/ShowMoreInfoHolder"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/margin_xshort">
+
+
+                            <android.support.v4.view.ViewPager
+                                android:id="@+id/toolsPager"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:paddingLeft="@dimen/margin_short"
+                                android:paddingTop="@dimen/padding_standard">
+
+                            </android.support.v4.view.ViewPager>
+
+
+                        </RelativeLayout>
 
                     </RelativeLayout>
                 </RelativeLayout>

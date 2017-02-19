@@ -22,7 +22,27 @@ public class ShowTravelToolsFragment extends StandardFragment {
         View view = inflater.inflate(R.layout.fragmen_tools_travel_show, container, false);
         ImageView toolsImg= (ImageView) view.findViewById(R.id.toolsImg);
         TextView toolsText= (TextView) view.findViewById(R.id.toolsText);
-        toolsText.setText("jhjbjhhhh");
+        String type = getArguments().getString("type");
+        switch (type) {
+            case "food":
+                toolsText.setText("خوراک محلی");
+                toolsImg.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.food));
+
+                break;
+
+            case "suggestion":
+                toolsText.setText("پیشنهادات ");
+                toolsImg.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.suggestion));
+
+
+                break;
+            case "handcraft":
+                toolsText.setText("صنایع دستی");
+                toolsImg.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.handcraft));
+
+
+                break;
+        }
         return view;
     }
 }

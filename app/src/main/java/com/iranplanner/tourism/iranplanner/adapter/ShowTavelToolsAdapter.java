@@ -24,8 +24,12 @@ import static android.R.id.list;
  */
 
 public class ShowTavelToolsAdapter  extends FragmentPagerAdapter {
+    @Override
+    public float getPageWidth(int position) {
+        return (0.65f);
+    }
 
-    public final int PAGE_COUNT = 2;
+    public final int PAGE_COUNT = 3;
 
     public ShowTavelToolsAdapter(FragmentManager fm) {
         super(fm);
@@ -34,17 +38,26 @@ public class ShowTavelToolsAdapter  extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-
             case 0:
-
-                return  new ShowTravelToolsFragment();
-
+                Bundle bundleHandcraft = new Bundle();
+                bundleHandcraft.putString("type", "handcraft");
+                ShowTravelToolsFragment shohandcraft=  new ShowTravelToolsFragment();
+                shohandcraft.setArguments(bundleHandcraft);
+                return shohandcraft;
             case 1:
-                return  new ShowTravelToolsFragment();
-//
-//
-//            case 3:
-//                return  new ShowTravelToolsFragment();
+                Bundle bundleFood = new Bundle();
+                bundleFood.putString("type", "food");
+                ShowTravelToolsFragment showfood=  new ShowTravelToolsFragment();
+                showfood.setArguments(bundleFood);
+                return showfood;
+            case 2:
+                Bundle bundleSuggestion = new Bundle();
+                bundleSuggestion.putString("type", "suggestion");
+                ShowTravelToolsFragment showsuggestion=  new ShowTravelToolsFragment();
+                showsuggestion.setArguments(bundleSuggestion);
+                return showsuggestion;
+
+
 
         }
         return null;

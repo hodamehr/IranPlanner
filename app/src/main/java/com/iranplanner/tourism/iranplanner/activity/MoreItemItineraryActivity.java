@@ -184,8 +184,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         super.onCreate(savedInstanceState);
 
         findView();
-        ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getSupportFragmentManager());
-        toolsPager.setAdapter(showTavelToolsAdapter);
+    showToolViewPager();
+//     toolsPager.setPageMargin(1);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
@@ -250,6 +250,13 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         mapFragment.getMapAsync(this);
     }
 
+    private void showToolViewPager() {
+        ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getSupportFragmentManager());
+        toolsPager.setAdapter(showTavelToolsAdapter);
+        toolsPager.setCurrentItem(0);
+        toolsPager.setClipToPadding(false);
+    }
+
     private String getUseRIdFromShareprefrence() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String userId = preferences.getString("userId", "");
@@ -282,7 +289,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             case R.id.MoreInoText:
                 if (showMore) {
                     setWebViewContent(myData);
-                    MoreInoText.setText("کمتر بخوانید");
+                    MoreInoText.setText("مطلب کوتاه");
                     showMore = false;
                 } else {
                     setWebViewContent(getShowMoreString(myData));
@@ -521,7 +528,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         for (count = 0; count < 40; count++) {
             position = myData.indexOf(" ", position + 1);
         }
-        return myData.substring(0, position);
+        return myData.substring(0, position)+"...";
     }
 
     private void setWebViewContent(String myData) {
