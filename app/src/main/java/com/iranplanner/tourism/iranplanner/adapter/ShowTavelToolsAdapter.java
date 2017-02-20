@@ -38,7 +38,7 @@ public class ShowTavelToolsAdapter  extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0:
+            case 2:
                 Bundle bundleHandcraft = new Bundle();
                 bundleHandcraft.putString("type", "handcraft");
                 ShowTravelToolsFragment shohandcraft=  new ShowTravelToolsFragment();
@@ -50,7 +50,7 @@ public class ShowTavelToolsAdapter  extends FragmentPagerAdapter {
                 ShowTravelToolsFragment showfood=  new ShowTravelToolsFragment();
                 showfood.setArguments(bundleFood);
                 return showfood;
-            case 2:
+            case 0:
                 Bundle bundleSuggestion = new Bundle();
                 bundleSuggestion.putString("type", "suggestion");
                 ShowTravelToolsFragment showsuggestion=  new ShowTravelToolsFragment();

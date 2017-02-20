@@ -8,15 +8,40 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@drawable/food" />
-    <TextView
-        android:id="@+id/toolsText"
-        style="@style/StandardTitle"
+
+    <RelativeLayout
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/dark_shadow_top">
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="خوراک محلی"
-        android:textColor="@color/white_"
-        android:translationZ="1dp"
-        android:layout_marginBottom="@dimen/margin_standard"
-        android:layout_alignBottom="@+id/toolsImg"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/toolsImg"
+        android:layout_marginTop="@dimen/padding_24">
+
+        <ImageView
+            android:id="@+id/iconTools"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="@dimen/padding_larg"
+            android:src="@mipmap/ic_circle_white"
+            android:translationZ="1dp" />
+
+        <TextView
+            android:id="@+id/toolsText"
+            style="@style/StandardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/iconTools"
+            android:text="خوراک محلی"
+            android:textColor="@color/white_"
+            android:translationZ="1dp" />
+    </RelativeLayout>
+
 </RelativeLayout>

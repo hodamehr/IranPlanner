@@ -124,6 +124,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     String myData;
     Boolean showMore = true;
     ViewPager toolsPager;
+    List<ItineraryLodgingCity> lodgingReservation;
 
 
     private void findView() {
@@ -178,18 +179,27 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         triangleShowAttraction = (ImageView) findViewById(R.id.triangleShowAttraction);
     }
 //wish visited like
-
+protected void resultLodging(){
+    List<ItineraryLodgingCity> lodgingCities=itineraryData.getItineraryLodgingCity();
+    lodgingReservation=new ArrayList<ItineraryLodgingCity>();
+    for (ItineraryLodgingCity lodgingCity : lodgingCities) {
+        if(!lodgingCity.getLodgingLenght().equals("0")){
+            lodgingReservation.add(lodgingCity);
+        }
+    }
+}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         findView();
-    showToolViewPager();
+        showToolViewPager();
 //     toolsPager.setPageMargin(1);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
         String duration = bundle.getString("duration");
+        resultLodging();
+
         setTypeOfTravel();
         myData = itineraryData.getItineraryBody();
         setWebViewContent(getShowMoreString(myData));
@@ -253,7 +263,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     private void showToolViewPager() {
         ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getSupportFragmentManager());
         toolsPager.setAdapter(showTavelToolsAdapter);
-        toolsPager.setCurrentItem(0);
+        toolsPager.setCurrentItem(2);
         toolsPager.setClipToPadding(false);
     }
 

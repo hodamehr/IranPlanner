@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ScrollView
@@ -42,8 +43,8 @@
 
                         <ImageView
                             android:id="@+id/imgItineraryListMore"
-                            android:layout_width="300dp"
-                            android:layout_height="100dp"
+                            android:layout_width="95dp"
+                            android:layout_height="95dp"
                             android:background="@drawable/food"
                             android:scaleType="centerCrop" />
 
@@ -53,7 +54,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginRight="@dimen/margin_standard"
+                        android:layout_marginRight="@dimen/margin_short"
                         android:layout_toLeftOf="@+id/imageHolder"
                         android:gravity="right">
 
@@ -62,14 +63,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:layout_alignRight="@id/itinerary_attraction_name"
                             android:orientation="horizontal"
-                            android:paddingBottom="@dimen/margin_xshort">
+                            android:paddingBottom="@dimen/margin_short"
+                            >
 
 
                             <TextView
                                 android:id="@+id/itinerary_duration"
-                                style="@style/StandardText"
+                                style="@style/StandardTextGrey"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/margin_xshort"
@@ -78,20 +79,21 @@
 
                             <ImageView
                                 android:id="@+id/imageCityName"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_calender_black" />
+                                android:src="@mipmap/ic_hotel" />
 
 
                         </LinearLayout>
+
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/cityNameHolder"
                             android:id="@+id/infoReserveHolder"
-                            android:layout_marginBottom="@dimen/margin_standard">
+                            android:layout_marginBottom="@dimen/margin_short">
 
                             <ImageView
                                 android:id="@+id/infoDuration"
@@ -101,7 +103,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="توضیحاااااااااااااااااااااات"
+                                android:text="به مدت یک شب در تاریخ 3/12/95"
                                 android:layout_centerVertical="true"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="@dimen/margin_short"/>
@@ -126,6 +128,39 @@
 
                             </TextView>
                         </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/cityNameHolder1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_alignParentTop="true"                            >
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="شیراز"
+                                style="@style/SmallText"
+                                android:textColor="@color/blue"
+                                android:id="@+id/txtCityName"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="فارس"
+                                style="@style/SmallText"
+                                android:textColor="@color/blue"
+                                android:id="@+id/txtProvinceName"
+                                />
+                            <ImageView
+                                android:id="@+id/imageCityName1"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_circle_blue" />
+                        </LinearLayout>
+
 
                     </RelativeLayout>
 

@@ -154,7 +154,6 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
             bundle.putSerializable("resuliItineraryList", (Serializable) data);
             bundle.putString("fromWhere", "fromCityToCity");
             bundle.putString("endCity", cityEnd);
-
             bundle.putString("nextOffset", response.body().getStatistics().getOffsetNext().toString());
             itineraryListFragment.setArguments(bundle);
             FragmentTransaction ft = getFragmentManager().beginTransaction();

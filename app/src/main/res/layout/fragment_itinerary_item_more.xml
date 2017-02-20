@@ -979,12 +979,19 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:id="@+id/borderLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_below="@+id/ShowMoreInfoHolder"
+                            android:background="@color/greyLight"></RelativeLayout>
+                        <!--pageMore-->
+                        <RelativeLayout
                             android:id="@+id/viewPagerMore"
                             android:layout_width="match_parent"
                             android:layout_height="240dp"
-                            android:layout_below="@+id/ShowMoreInfoHolder"
+                            android:layout_below="@+id/borderLayout"
                             android:gravity="center"
-                            android:paddingLeft="@dimen/margin_xshort">
+                            android:paddingLeft="@dimen/margin_short">
 
 
                             <android.support.v4.view.ViewPager
@@ -993,7 +1000,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:paddingLeft="@dimen/margin_short"
+                                android:paddingLeft="@dimen/margin_standard"
+                                android:paddingRight="@dimen/margin_short"
                                 android:paddingTop="@dimen/padding_standard">
 
                             </android.support.v4.view.ViewPager>

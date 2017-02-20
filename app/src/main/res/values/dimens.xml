@@ -5,6 +5,7 @@
     <dimen name="actionBarSize">55dp</dimen>
     <dimen name="margin_standard">16dp</dimen>
     <dimen name="padding_standard">16dp</dimen>
+
     <dimen name="padding_24">24dp</dimen>
 
     <dimen name="padding_larg">32dp</dimen>

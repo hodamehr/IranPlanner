@@ -1,7 +1,9 @@
 package tools;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.widget.TextView;
 
 import java.security.MessageDigest;
@@ -11,6 +13,12 @@ import java.security.NoSuchAlgorithmException;
  * Created by Hoda on 10/01/2017.
  */
 public class Util {
+
+    public static final String getUseRIdFromShareprefrence(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String userId = preferences.getString("userId", "");
+        return userId;
+    }
     public static final String md5(final String s) {
         final String MD5 = "MD5";
         try {
