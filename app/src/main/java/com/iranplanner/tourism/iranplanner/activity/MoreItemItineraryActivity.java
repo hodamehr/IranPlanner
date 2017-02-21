@@ -21,6 +21,7 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -57,7 +58,11 @@ import com.nineoldandroids.animation.ObjectAnimator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import entity.InterestResult;
@@ -125,6 +130,11 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     Boolean showMore = true;
     ViewPager toolsPager;
     List<ItineraryLodgingCity> lodgingReservation;
+    Date startOfTravel;
+    List<Date> stayNights;
+    Map<String, Integer> dateCity;
+    Button showReservation;
+//    List<Map<String,Integer>> ss;
 
 
     private void findView() {
@@ -136,6 +146,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         itineraryDuration = (TextView) findViewById(R.id.itineraryDuration);
         fromCityName = (TextView) findViewById(R.id.fromCityName);
         toCityName = (TextView) findViewById(R.id.toCityName);
+        showReservation = (Button) findViewById(R.id.showReservation);
         itinerary_attraction_type_more = (ImageView) findViewById(R.id.itinerary_attraction_type_more);
         showItinerys = (TextView) findViewById(R.id.showItinerys);
         textTpeTravel1 = (TextView) findViewById(R.id.textTpeTravel1);
@@ -178,16 +189,26 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         wishImg = (ImageView) findViewById(R.id.wishImg);
         triangleShowAttraction = (ImageView) findViewById(R.id.triangleShowAttraction);
     }
-//wish visited like
-protected void resultLodging(){
-    List<ItineraryLodgingCity> lodgingCities=itineraryData.getItineraryLodgingCity();
-    lodgingReservation=new ArrayList<ItineraryLodgingCity>();
-    for (ItineraryLodgingCity lodgingCity : lodgingCities) {
-        if(!lodgingCity.getLodgingLenght().equals("0")){
-            lodgingReservation.add(lodgingCity);
+
+    protected void resultLodging() {
+        List<ItineraryLodgingCity> lodgingCities = itineraryData.getItineraryLodgingCity();
+        stayNights = new ArrayList<Date>();
+        dateCity = new HashMap<String, Integer>();
+        int index = 0;
+        for (ItineraryLodgingCity lodgingCity : lodgingCities) {
+            if (!lodgingCity.getLodgingLenght().equals("0")) {
+                dateCity.put(lodgingCity.getCityTitle(), Integer.valueOf(lodgingCity.getLodgingLenght()));
+            }
         }
+        stayNights.add(startOfTravel);
+        for (Integer integer : dateCity.values()) {
+            System.out.println(integer);
+            stayNights.add(Util.addDays(stayNights.get(index), integer));
+            index++;
+        }
+        stayNights.remove(index);
     }
-}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -208,8 +229,8 @@ protected void resultLodging(){
 //---------------- set current date
         long time = System.currentTimeMillis();
         txtDate.setText(Utils.getSimpleDateMilli(time));
-
-
+        startOfTravel = new Date(time);
+        resultLodging();
         txtItinerary_attraction_Difficulty.setText(itineraryData.getItineraryDifficulty().getItineraryDifficultyGroup());
         txtItinerary_count_attraction.setText(Util.persianNumbers(itineraryData.getItineraryCountAttraction()) + " مکان دیدنی");
         itineraryDuration.setText(duration);
@@ -248,6 +269,7 @@ protected void resultLodging(){
         bookmarkHolder.setOnClickListener(this);
         showItinerys.setOnClickListener(this);
         MoreInoText.setOnClickListener(this);
+        showReservation.setOnClickListener(this);
         //-------------------map
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -291,7 +313,12 @@ protected void resultLodging(){
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
+            case R.id.showReservation:
+                Intent intent = new Intent(this, ReservationListActivity.class);
+                intent.putExtra("itineraryData", (Serializable) itineraryData);
+                intent.putExtra("startOfTravel", startOfTravel);
+                startActivity(intent);
+                break;
             case R.id.changeDateHolder:
                 CustomDialogTravel cdd = new CustomDialogTravel(this);
                 cdd.show();
@@ -538,7 +565,7 @@ protected void resultLodging(){
         for (count = 0; count < 40; count++) {
             position = myData.indexOf(" ", position + 1);
         }
-        return myData.substring(0, position)+"...";
+        return myData.substring(0, position) + "...";
     }
 
     private void setWebViewContent(String myData) {
@@ -1012,16 +1039,15 @@ protected void resultLodging(){
             no = (TextView) findViewById(R.id.txtNo);
             yes.setOnClickListener(this);
             no.setOnClickListener(this);
+            startOfTravel = persianDatePickr.getDisplayDate();
             persianDatePickr.setOnDateChangedListener(new PersianDatePicker.OnDateChangedListener() {
                 @Override
                 public void onDateChanged(int newYear, int newMonth, int newDay) {
                     txtDate.setText(Utils.getSimpleDate(persianDatePickr.getDisplayDate()));
+                    startOfTravel = persianDatePickr.getDisplayDate();
                 }
             });
-
-
         }
-
 
         @Override
         public void onClick(View v) {

@@ -42,7 +42,7 @@
                             android:translationZ="1dp" />
 
                         <ImageView
-                            android:id="@+id/imgItineraryListMore"
+                            android:id="@+id/imgHotelList"
                             android:layout_width="95dp"
                             android:layout_height="95dp"
                             android:background="@drawable/food"
@@ -69,7 +69,7 @@
 
 
                             <TextView
-                                android:id="@+id/itinerary_duration"
+                                android:id="@+id/lodgingCityName"
                                 style="@style/StandardTextGrey"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -106,7 +106,8 @@
                                 android:text="به مدت یک شب در تاریخ 3/12/95"
                                 android:layout_centerVertical="true"
                                 android:layout_alignParentRight="true"
-                                android:layout_marginRight="@dimen/margin_short"/>
+                                android:layout_marginRight="@dimen/margin_short"
+                                android:id="@+id/txtDurationLodgingCity"/>
                         </RelativeLayout>
                         <RelativeLayout
                             android:layout_width="wrap_content"

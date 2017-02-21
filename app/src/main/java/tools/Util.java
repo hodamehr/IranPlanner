@@ -8,17 +8,27 @@ import android.widget.TextView;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Hoda on 10/01/2017.
  */
 public class Util {
 
+    public static final Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
+    }
+
     public static final String getUseRIdFromShareprefrence(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String userId = preferences.getString("userId", "");
         return userId;
     }
+
     public static final String md5(final String s) {
         final String MD5 = "MD5";
         try {

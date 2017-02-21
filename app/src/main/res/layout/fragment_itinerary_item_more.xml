@@ -669,7 +669,7 @@
                             </RelativeLayout>
 
                             <Button
-                                android:id="@+id/showItinerysd"
+                                android:id="@+id/showReservation"
                                 style="@style/StandardTitle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
