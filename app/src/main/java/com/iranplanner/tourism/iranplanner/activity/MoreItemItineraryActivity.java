@@ -190,24 +190,24 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         triangleShowAttraction = (ImageView) findViewById(R.id.triangleShowAttraction);
     }
 
-    protected void resultLodging() {
-        List<ItineraryLodgingCity> lodgingCities = itineraryData.getItineraryLodgingCity();
-        stayNights = new ArrayList<Date>();
-        dateCity = new HashMap<String, Integer>();
-        int index = 0;
-        for (ItineraryLodgingCity lodgingCity : lodgingCities) {
-            if (!lodgingCity.getLodgingLenght().equals("0")) {
-                dateCity.put(lodgingCity.getCityTitle(), Integer.valueOf(lodgingCity.getLodgingLenght()));
-            }
-        }
-        stayNights.add(startOfTravel);
-        for (Integer integer : dateCity.values()) {
-            System.out.println(integer);
-            stayNights.add(Util.addDays(stayNights.get(index), integer));
-            index++;
-        }
-        stayNights.remove(index);
-    }
+//    protected void resultLodging() {
+//        List<ItineraryLodgingCity> lodgingCities = itineraryData.getItineraryLodgingCity();
+//        stayNights = new ArrayList<Date>();
+//        dateCity = new HashMap<String, Integer>();
+//        int index = 0;
+//        for (ItineraryLodgingCity lodgingCity : lodgingCities) {
+//            if (!lodgingCity.getLodgingLenght().equals("0")) {
+//                dateCity.put(lodgingCity.getCityTitle(), Integer.valueOf(lodgingCity.getLodgingLenght()));
+//            }
+//        }
+//        stayNights.add(startOfTravel);
+//        for (Integer integer : dateCity.values()) {
+//            System.out.println(integer);
+//            stayNights.add(Util.addDays(stayNights.get(index), integer));
+//            index++;
+//        }
+//        stayNights.remove(index);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,7 +219,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         Bundle bundle = intent.getExtras();
         itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
         String duration = bundle.getString("duration");
-        resultLodging();
+//        resultLodging();
 
         setTypeOfTravel();
         myData = itineraryData.getItineraryBody();
@@ -230,7 +230,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         long time = System.currentTimeMillis();
         txtDate.setText(Utils.getSimpleDateMilli(time));
         startOfTravel = new Date(time);
-        resultLodging();
+//        resultLodging();
         txtItinerary_attraction_Difficulty.setText(itineraryData.getItineraryDifficulty().getItineraryDifficultyGroup());
         txtItinerary_count_attraction.setText(Util.persianNumbers(itineraryData.getItineraryCountAttraction()) + " مکان دیدنی");
         itineraryDuration.setText(duration);

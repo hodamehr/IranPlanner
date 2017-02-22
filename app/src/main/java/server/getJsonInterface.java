@@ -6,8 +6,7 @@ import entity.ResultItineraryAttractionList;
 import entity.ResultItineraryList;
 import entity.ResultRegister;
 import entity.ResultWidget;
-import entity.ResultWidgetFull;
-import entity.Ttt;
+import entity.WidgerResultFull;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -72,9 +71,10 @@ public interface getJsonInterface {
                                                         @Query("offset") String param3);
 
     //api.parsdid.com/iranplanner/app/api-data.php?action=nodeuser&id=30394&uid=792147600796866&ntype=itinerary
-    @GET("/api-data.php")
-    Call<Ttt> getResultWidgetFull(@Query("action") String action,
-                                  @Query("id") String id,
-                                  @Query("uid") String uid,
-                                  @Query("ntype") String ntype);
+//    api.parsdid.com/iranplanner/app/api-data.php?action=nodeuser&id=30394&uid=792147600796866&ntype=itinerary
+    @GET("/app/api-data.php?action=nodeuser&id=30394&uid=792147600796866&ntype=itinerary")
+    Call<WidgerResultFull> getResultWidgetFull(@Query("action") String action,
+                                           @Query("id") String id,
+                                           @Query("uid") String uid,
+                                           @Query("ntype") String ntype);
 }

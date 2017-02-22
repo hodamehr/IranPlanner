@@ -12,10 +12,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.disklrucache.DiskLruCache;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.StreamBitmapDataLoadProvider;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.coinpany.core.android.widget.Utils;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -34,7 +37,6 @@ import tools.Util;
  * Created by Hoda on 10/01/2017.
  */
 public class ReseveDateListAdapter extends RecyclerView.Adapter<ReseveDateListAdapter.ViewHolder> {
-    private List<Integer> ii;
 
     Context context;
     int rowLayout;
@@ -45,27 +47,32 @@ public class ReseveDateListAdapter extends RecyclerView.Adapter<ReseveDateListAd
     List<Date> stayNights;
     Map<String, Integer> dateCity;
     Date startOfTravel;
+    List<ItineraryLodgingCity> listCitys;
+    List<String> duration;
 
 
-    public ReseveDateListAdapter(Activity a, DataTransferInterface dtInterface,ResultItinerary resultItinerary, Context context, int rowLayout,Date startOfTravel) {
+    public ReseveDateListAdapter(Activity a, DataTransferInterface dtInterface, ResultItinerary resultItinerary, Context context, int rowLayout, Date startOfTravel) {
         this.itineraryData = resultItinerary;
-//        ii.add(12);
-//        ii.add(13);
         this.context = context;
         this.rowLayout = rowLayout;
         Activity activity = a;
         this.dtInterface = dtInterface;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.startOfTravel=startOfTravel;
+        this.startOfTravel = startOfTravel;
         resultLodging();
     }
+
     protected void resultLodging() {
         List<ItineraryLodgingCity> lodgingCities = itineraryData.getItineraryLodgingCity();
         stayNights = new ArrayList<Date>();
+        listCitys = new ArrayList<ItineraryLodgingCity>();
+        duration = new ArrayList<String>();
         dateCity = new HashMap<String, Integer>();
+
         int index = 0;
         for (ItineraryLodgingCity lodgingCity : lodgingCities) {
             if (!lodgingCity.getLodgingLenght().equals("0")) {
+                listCitys.add(lodgingCity);
                 dateCity.put(lodgingCity.getCityTitle(), Integer.valueOf(lodgingCity.getLodgingLenght()));
             }
         }
@@ -73,10 +80,12 @@ public class ReseveDateListAdapter extends RecyclerView.Adapter<ReseveDateListAd
         for (Integer integer : dateCity.values()) {
             System.out.println(integer);
             stayNights.add(Util.addDays(stayNights.get(index), integer));
+            duration.add(String.valueOf(integer));
             index++;
         }
         stayNights.remove(index);
     }
+
     @Override
     public ReseveDateListAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = inflater.from(viewGroup.getContext()).inflate(R.layout.activity_reservation_hotel_items, viewGroup, false);
@@ -86,17 +95,16 @@ public class ReseveDateListAdapter extends RecyclerView.Adapter<ReseveDateListAd
     @Override
     public void onBindViewHolder(final ReseveDateListAdapter.ViewHolder viewHolder, int i) {
 
-            viewHolder.txtDurationLodgingCity.setText(String.valueOf(stayNights.get(i)));
-            viewHolder.txtProvinceName.setText("hghg");
-            viewHolder.txtCityName.setText("hghg");
-            viewHolder.lodgingCityName.setText("hghg");
+        viewHolder.txtDurationLodgingCity.setText(String.valueOf("به مدت " + duration.get(i) + " روز از تاریخ " + Utils.getShortSimpleDate(stayNights.get(i))));
+        viewHolder.txtProvinceName.setText(listCitys.get(i).getCityProvinceName());
+        viewHolder.txtCityName.setText(listCitys.get(i).getCityTitle());
+        viewHolder.lodgingCityName.setText(listCitys.get(i).getCityTitle());
 
-//        viewHolder.imgHotelList.setImageDrawable(context.getResources().getDrawable(R.mipmap.ic_air_gret));
-
-//        if (itineraries.get(i).getItineraryImgUrl() != null) {
-//            String url = itineraries.get(i).getItineraryImgUrl();
+//        if (itineraryData.getItineraryImgUrl() != null) {
+//            String url = itineraryData.getItineraryImgUrl();
 ////            Glide.with(context).load(url)   .into(viewHolder.imgItineraryList);
 //
+//            viewHolder.imageLoading.setVisibility(View.VISIBLE);
 //            Glide.with(context)
 //                    .load(url)
 //                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -122,7 +130,6 @@ public class ReseveDateListAdapter extends RecyclerView.Adapter<ReseveDateListAd
 //
 //        }
 
-
     }
 
 
@@ -133,19 +140,22 @@ public class ReseveDateListAdapter extends RecyclerView.Adapter<ReseveDateListAd
 
     public class ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener */ {
 
-        private ImageView imgHotelList;
+        private ImageView imgItineraryListMore;
         private ImageView ReservationBtn;
-        private TextView txtDurationLodgingCity,txtProvinceName,txtCityName,lodgingCityName;
+        private TextView txtDurationLodgingCity, txtProvinceName, txtCityName, lodgingCityName;
         private ProgressBar imageLoading;
+
 
         public ViewHolder(View view) {
             super(view);
-            lodgingCityName= (TextView) view.findViewById(R.id.lodgingCityName);
-            imgHotelList = (ImageView) view.findViewById(R.id.imgHotelList);
+            lodgingCityName = (TextView) view.findViewById(R.id.lodgingCityName);
+            imgItineraryListMore = (ImageView) view.findViewById(R.id.imgItineraryListMore);
             txtDurationLodgingCity = (TextView) view.findViewById(R.id.txtDurationLodgingCity);
             txtProvinceName = (TextView) view.findViewById(R.id.txtProvinceName);
             ReservationBtn = (ImageView) view.findViewById(R.id.ReservationBtn);
             txtCityName = (TextView) view.findViewById(R.id.txtCityName);
+            imageLoading = (ProgressBar) view.findViewById(R.id.imageLoading);
+            imageLoading.setVisibility(View.VISIBLE);
         }
     }
 

@@ -32,8 +32,7 @@ import java.util.concurrent.TimeUnit;
 import entity.ResultItinerary;
 import entity.ResultItineraryList;
 import entity.ResultWidget;
-import entity.ResultWidgetFull;
-import entity.Ttt;
+import entity.WidgerResultFull;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -214,10 +213,10 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(getJsonInterface.class);
 //        api.parsdid.com/iranplanner/app/api-data.php?action=nodeuser&id=30394&uid=792147600796866&ntype=itinerary
-        Call<Ttt> call = getJsonInterface.getResultWidgetFull("nodeuser", "30394", "792147600796866", "itinerary");
-        call.enqueue(new Callback<Ttt>() {
+        Call<WidgerResultFull> call = getJsonInterface.getResultWidgetFull("nodeuser", id, uid, "itinerary");
+        call.enqueue(new Callback<WidgerResultFull>() {
             @Override
-            public void onResponse(Call<Ttt> call, Response<Ttt> response) {
+            public void onResponse(Call<WidgerResultFull> call, Response<WidgerResultFull> response) {
                 if (response.body() != null) {
                     loading = false;
 
@@ -229,7 +228,7 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
             }
 
             @Override
-            public void onFailure(Call<Ttt> call, Throwable t) {
+            public void onFailure(Call<WidgerResultFull> call, Throwable t) {
                 Log.e("Responce body", "null");
             }
         });

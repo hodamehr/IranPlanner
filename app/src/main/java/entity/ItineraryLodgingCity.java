@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class ItineraryLodgingCity  implements Serializable {
+public class ItineraryLodgingCity implements Serializable {
 
     @SerializedName("itinerary_id")
     @Expose
@@ -32,6 +32,10 @@ public class ItineraryLodgingCity  implements Serializable {
     @SerializedName("province_id")
     @Expose
     private String provinceId;
+
+    @SerializedName("city_img_url")
+    @Expose
+    private String cityImgUrl;
 
     public String getItineraryId() {
         return itineraryId;
@@ -96,5 +100,11 @@ public class ItineraryLodgingCity  implements Serializable {
     public void setProvinceId(String provinceId) {
         this.provinceId = provinceId;
     }
+    public String getCityImgUrl() {
+        return cityImgUrl;
+    }
 
+    public void setCityImgUrl(String cityImgUrl) {
+        this.cityImgUrl = cityImgUrl;
+    }
 }
