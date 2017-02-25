@@ -15,8 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.coinpany.core.android.widget.loading.RotateLoading;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.iranplanner.tourism.iranplanner.activity.MoreItemItineraryActivity;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
@@ -32,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 import entity.ResultItinerary;
 import entity.ResultItineraryList;
 import entity.ResultWidget;
-import entity.WidgerResultFull;
+import entity.ResultWidgetFull;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -122,6 +120,7 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
                 ImageView imageView = (ImageView) view.findViewById(R.id.imgItineraryListMore);
                 TextView textView = (TextView) view.findViewById(R.id.itinerary_duration);
                 textView.getText();
+
                 MyThread m = new MyThread(imageView, position, textView.getText().toString());
                 m.run();
             }
@@ -161,7 +160,52 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
 
         return view;
     }
+    public void getIntrestResponce(ImageView img, final int position, final String duration) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(setHttpClient())
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+        //api-data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary
+//    28439&uid=792147600796866
+        String cityid = data.get(position).getItineraryId();
+        String name = Util.getUseRIdFromShareprefrence(getContext());
+        Call<ResultWidgetFull> callc = getJsonInterface.getWidgetResult("nodeuser", cityid, name, "itinerary");
+        callc.enqueue(new Callback<ResultWidgetFull>() {
+            @Override
+            public void onResponse(Call<ResultWidgetFull> call, Response<ResultWidgetFull> response) {
+                Log.e("result of intresting", "true");
 
+                if (response.body() != null) {
+                    ResultWidgetFull res = response.body();
+                    List<ResultWidget> resultUserLogin = res.getResultWidget();
+                    Log.e("string", "item clicked");
+                    Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
+                    intent.putExtra("itineraryData", (Serializable) data.get(position));
+                    intent.putExtra("duration", duration);
+                    intent.putExtra("resultUserLogin",(Serializable) resultUserLogin);
+                    startActivity(intent);
+
+                }else {
+                    Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
+                    intent.putExtra("itineraryData", (Serializable) data.get(position));
+                    intent.putExtra("duration", duration);
+                    startActivity(intent);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResultWidgetFull> call, Throwable t) {
+                 Log.e("result of intresting", "false");
+                Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
+                intent.putExtra("itineraryData", (Serializable) data.get(position));
+                intent.putExtra("duration", duration);
+                startActivity(intent);
+            }
+        });
+    }
     class MyThread extends Thread {
 
         private ImageView img;
@@ -176,15 +220,8 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
 
         @Override
         public void run() {
-            String uid = Util.getUseRIdFromShareprefrence(getContext());
-            getItineraryLikeResulf(data.get(position).getItineraryId(), uid);
-            //--------------------
-            Log.e("string", "item clicked");
-            Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
-            intent.putExtra("itineraryData", (Serializable) data.get(position));
-            intent.putExtra("duration", duration);
-//            intent.putExtra("BMP", bytes);
-            startActivity(intent);
+            getIntrestResponce( img,  position,  duration);
+
         }
     }
 
@@ -201,38 +238,9 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
         return okHttpClient;
     }
 
-        Gson gson = new GsonBuilder()
-            .setLenient()
-            .create();
-
-    public void getItineraryLikeResulf(String id, String uid) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.parsdid.com/iranplanner/app/")
-                .client(setHttpClient())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        getJsonInterface getJsonInterface = retrofit.create(getJsonInterface.class);
-//        api.parsdid.com/iranplanner/app/api-data.php?action=nodeuser&id=30394&uid=792147600796866&ntype=itinerary
-        Call<WidgerResultFull> call = getJsonInterface.getResultWidgetFull("nodeuser", id, uid, "itinerary");
-        call.enqueue(new Callback<WidgerResultFull>() {
-            @Override
-            public void onResponse(Call<WidgerResultFull> call, Response<WidgerResultFull> response) {
-                if (response.body() != null) {
-                    loading = false;
 
 
-                } else {
-                    Log.e("Responce body", "null");
-                    waitingLoading.setVisibility(View.INVISIBLE);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<WidgerResultFull> call, Throwable t) {
-                Log.e("Responce body", "null");
-            }
-        });
-    }
 
     public void getItineraryCityToCity(String cityId, String offset, String toCity) {
         Retrofit retrofit = new Retrofit.Builder()

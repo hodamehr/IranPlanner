@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,7 +53,14 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
+               ImageView reservationBtn= (ImageView) view.findViewById(R.id.ReservationBtn);
+                reservationBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.e("reserve","click");
 
+                    }
+                });
 
             }
         }));

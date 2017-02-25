@@ -1,11 +1,13 @@
 
 package entity;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Ttt {
+import java.io.Serializable;
+import java.util.List;
+
+public class ResultWidgetFull implements Serializable{
 
     @SerializedName("Status")
     @Expose

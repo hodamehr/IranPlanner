@@ -87,7 +87,7 @@ public class LoginActivity extends StandardActivity implements Callback<LoginRes
         email = "faridsaniee@gmail.com";
         String password = _passwordText.getText().toString();
         password = "090afe0d4abb5dfdccb84641fe115680";
-        getLoginResponce("a", "b");
+        getLoginResponce(email, password);
         // TODO: Implement your own authentication logic here.
 
         new android.os.Handler().postDelayed(
@@ -149,13 +149,13 @@ public class LoginActivity extends StandardActivity implements Callback<LoginRes
         return valid;
     }
 
-    public void getLoginResponce(String cityId, String offset) {
+    public void getLoginResponce(String email, String password) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.parsdid.com/iranplanner/app/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(getJsonInterface.class);
-        Call<LoginResult> callc = getJsonInterface.getLoginResult("login", "faridsaniee@gmail.com", "090afe0d4abb5dfdccb84641fe115680");
+        Call<LoginResult> callc = getJsonInterface.getLoginResult("login", email, password);
         callc.enqueue(this);
     }
 

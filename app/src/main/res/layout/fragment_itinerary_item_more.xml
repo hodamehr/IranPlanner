@@ -142,7 +142,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_launcher" />
+                                        android:src="@mipmap/ic_done_grey" />
 
                                     <TextView
                                         android:id="@+id/beftorVisitedTxt"
@@ -172,7 +172,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_visitclock" />
+                                        android:src="@mipmap/ic_done_grey" />
 
                                     <TextView
                                         android:id="@+id/nowVisitedTxt"
@@ -388,7 +388,7 @@
                                     android:layout_height="30dp"
                                     android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_dislike_grey_" />
+                                    android:src="@mipmap/ic_done_grey" />
 
                                 <TextView
                                     android:id="@+id/doneTxt"

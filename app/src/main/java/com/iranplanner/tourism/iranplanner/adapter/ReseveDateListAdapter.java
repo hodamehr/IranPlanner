@@ -6,22 +6,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.disklrucache.DiskLruCache;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.StreamBitmapDataLoadProvider;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.coinpany.core.android.widget.Utils;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
-import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,10 +41,10 @@ public class ReseveDateListAdapter extends RecyclerView.Adapter<ReseveDateListAd
     LayoutInflater inflater;
     ResultItinerary itineraryData;
     List<Date> stayNights;
-    Map<String, Integer> dateCity;
     Date startOfTravel;
     List<ItineraryLodgingCity> listCitys;
     List<String> duration;
+    List<String> urls;
 
 
     public ReseveDateListAdapter(Activity a, DataTransferInterface dtInterface, ResultItinerary resultItinerary, Context context, int rowLayout, Date startOfTravel) {
@@ -67,21 +63,17 @@ public class ReseveDateListAdapter extends RecyclerView.Adapter<ReseveDateListAd
         stayNights = new ArrayList<Date>();
         listCitys = new ArrayList<ItineraryLodgingCity>();
         duration = new ArrayList<String>();
-        dateCity = new HashMap<String, Integer>();
-
+        urls = new ArrayList<String>();
         int index = 0;
+        stayNights.add(startOfTravel);
         for (ItineraryLodgingCity lodgingCity : lodgingCities) {
             if (!lodgingCity.getLodgingLenght().equals("0")) {
                 listCitys.add(lodgingCity);
-                dateCity.put(lodgingCity.getCityTitle(), Integer.valueOf(lodgingCity.getLodgingLenght()));
+                stayNights.add(Util.addDays(stayNights.get(index), Integer.valueOf(lodgingCity.getLodgingLenght())));
+                duration.add(lodgingCity.getLodgingLenght());
+                urls.add(lodgingCity.getCityImgUrl());
+                index++;
             }
-        }
-        stayNights.add(startOfTravel);
-        for (Integer integer : dateCity.values()) {
-            System.out.println(integer);
-            stayNights.add(Util.addDays(stayNights.get(index), integer));
-            duration.add(String.valueOf(integer));
-            index++;
         }
         stayNights.remove(index);
     }
@@ -100,35 +92,35 @@ public class ReseveDateListAdapter extends RecyclerView.Adapter<ReseveDateListAd
         viewHolder.txtCityName.setText(listCitys.get(i).getCityTitle());
         viewHolder.lodgingCityName.setText(listCitys.get(i).getCityTitle());
 
-//        if (itineraryData.getItineraryImgUrl() != null) {
-//            String url = itineraryData.getItineraryImgUrl();
-////            Glide.with(context).load(url)   .into(viewHolder.imgItineraryList);
-//
-//            viewHolder.imageLoading.setVisibility(View.VISIBLE);
-//            Glide.with(context)
-//                    .load(url)
-//                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                    .listener(new RequestListener<String, GlideDrawable>() {
-//
-//                        @Override
-//                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-//                            //// TODO: 22/01/2017  get defeult picture
-//                            return false;
-//                        }
-//
-//                        @Override
-//                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-//                            viewHolder.imageLoading.setVisibility(View.GONE);
-//                            return false;
-//                        }
-//                    })
-//                    .into(viewHolder.imgItineraryList)
-//            ;
-//        } else {
-//            Glide.clear(viewHolder.imgItineraryList);
-//            viewHolder.imgItineraryList.setImageDrawable(null);
-//
-//        }
+        if (urls != null) {
+            String url = urls.get(i);
+//            Glide.with(context).load(url)   .into(viewHolder.imgItineraryList);
+
+            viewHolder.imageLoading.setVisibility(View.VISIBLE);
+            Glide.with(context)
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .listener(new RequestListener<String, GlideDrawable>() {
+
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            //// TODO: 22/01/2017  get defeult picture
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            viewHolder.imageLoading.setVisibility(View.GONE);
+                            return false;
+                        }
+                    })
+                    .into(viewHolder.imgItineraryListMore)
+            ;
+        } else {
+            Glide.clear(viewHolder.imgItineraryListMore);
+            viewHolder.imgItineraryListMore.setImageDrawable(null);
+
+        }
 
     }
 

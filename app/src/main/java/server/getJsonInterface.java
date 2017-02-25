@@ -5,8 +5,8 @@ import entity.LoginResult;
 import entity.ResultItineraryAttractionList;
 import entity.ResultItineraryList;
 import entity.ResultRegister;
-import entity.ResultWidget;
-import entity.WidgerResultFull;
+import entity.ResultWidgetFull;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -47,6 +47,13 @@ public interface getJsonInterface {
                                      @Query("email") String param2,
                                      @Query("password") String param3);
 
+    @GET("api-data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary")
+    Call<ResultWidgetFull> getWidgetResult(@Query("action") String param1,
+                                           @Query("id") String param2,
+                                           @Query("uid") String param3,
+                                           @Query("ntype") String param4
+                               );
+
     @GET("api-user.php")
 //    api.parsdid.com/iranplanner/app/api-user.php?action=register&email=z@zhoda.com&password=hhhhh&fname=hoda&lname=vahidi&gender=1&cid=1
     Call<ResultRegister> getRegisterResult(@Query("action") String action,
@@ -70,11 +77,4 @@ public interface getJsonInterface {
                                                         @Query("province") String param2,
                                                         @Query("offset") String param3);
 
-    //api.parsdid.com/iranplanner/app/api-data.php?action=nodeuser&id=30394&uid=792147600796866&ntype=itinerary
-//    api.parsdid.com/iranplanner/app/api-data.php?action=nodeuser&id=30394&uid=792147600796866&ntype=itinerary
-    @GET("/app/api-data.php?action=nodeuser&id=30394&uid=792147600796866&ntype=itinerary")
-    Call<WidgerResultFull> getResultWidgetFull(@Query("action") String action,
-                                           @Query("id") String id,
-                                           @Query("uid") String uid,
-                                           @Query("ntype") String ntype);
 }

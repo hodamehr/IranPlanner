@@ -45,7 +45,8 @@
                             android:id="@+id/imgItineraryListMore"
                             android:layout_width="95dp"
                             android:layout_height="95dp"
-                            android:scaleType="centerCrop" />
+                            android:scaleType="centerCrop"
+                            android:background="@color/greyLight"/>
 
                     </RelativeLayout>
 
@@ -74,7 +75,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/margin_xshort"
                                 android:maxLines="1"
-                                android:text="اقامت در شیراز" />
+                                android:text="هتل شیراز" />
 
                             <ImageView
                                 android:id="@+id/imageCityName"
@@ -102,7 +103,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="به مدت یک شب در تاریخ 3/12/95"
+                                android:text="نوع هتل - ۵ ستاره"
                                 android:layout_centerVertical="true"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="@dimen/margin_short"
