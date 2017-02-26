@@ -166,7 +166,6 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
             Toast.makeText(getContext(), "برنامه سفری یافت نشد", Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
         }
-        progressDialog.dismiss();
     }
 
     @Override
@@ -175,6 +174,12 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
         Log.e(" error from server", "error");
         progressDialog.dismiss();
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
+        super.onSaveInstanceState(outState);
     }
 
 }

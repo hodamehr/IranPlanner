@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
+import entity.ResultLodging;
 import entity.ResultLodgingFull;
 import entity.ResultWidget;
 import entity.ResultWidgetFull;
@@ -107,10 +108,11 @@ public class ReservationListActivity extends StandardActivity implements DataTra
                 Log.e("result of intresting", "true");
 
                 if (response.body() != null) {
-//                    ResultWidgetFull res = response.body();
-
-                } else {
-
+                    ResultLodgingFull res = response.body();
+                    List<ResultLodging> resultLodgings=res.getResultLodging();
+                    Intent intent = new Intent(getApplicationContext(), ReservationHotelListActivity.class);
+                    intent.putExtra("resultLodgings", (Serializable) resultLodgings);
+                    startActivity(intent);
                 }
 
             }

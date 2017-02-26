@@ -47,6 +47,7 @@
             android:label="@string/title_activity_attraction_detail" />
         <activity android:name=".activity.SignupActivity"/>
         <activity android:name=".activity.GridActivity"/>
+        <activity android:name=".activity.ReservationHotelListActivity"/>
     </application>
 
 </manifest>
