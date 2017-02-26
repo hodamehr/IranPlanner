@@ -6,6 +6,7 @@
     <color name="appMainColor">#f0137d</color>
     <color name="textColorWhite">#ffffff</color>
     <color name="pink">#f0137d</color>
+    <color name="pink_shadow">#a6f0137d</color>
     <color name="blue">#00b1dd</color>
     <color name="greyDark">#181818</color>
     <color name="white_">#ffffff</color>

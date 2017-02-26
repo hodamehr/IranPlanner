@@ -1,5 +1,6 @@
 package com.iranplanner.tourism.iranplanner.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,13 +19,25 @@ import com.iranplanner.tourism.iranplanner.fragment.ItineraryListFragment;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
+import entity.ResultLodgingFull;
+import entity.ResultWidget;
+import entity.ResultWidgetFull;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import server.getJsonInterface;
 
 /**
  * Created by h.vahidimehr on 21/02/2017.
@@ -43,21 +56,23 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         Bundle extras = getIntent().getExtras();
-        ResultItinerary itineraryData= (ResultItinerary) extras.getSerializable("itineraryData");
-        Date startOfTravel= (Date) extras.getSerializable("startOfTravel");
+        ResultItinerary itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
+        Date startOfTravel = (Date) extras.getSerializable("startOfTravel");
 
-        adapter = new ReseveDateListAdapter(ReservationListActivity.this, this,itineraryData, getApplicationContext(), R.layout.fragment_itinerary_item,startOfTravel);
+        adapter = new ReseveDateListAdapter(ReservationListActivity.this, this, itineraryData, getApplicationContext(), R.layout.fragment_itinerary_item, startOfTravel);
         recyclerView.setAdapter(adapter);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-               ImageView reservationBtn= (ImageView) view.findViewById(R.id.ReservationBtn);
+                ImageView reservationBtn = (ImageView) view.findViewById(R.id.ReservationBtn);
                 reservationBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.e("reserve","click");
+                        Log.e("reserve", "click");
+                        getLodgingReservation("342");
+
 
                     }
                 });
@@ -66,6 +81,46 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         }));
 
 
+    }
+
+    private OkHttpClient setHttpClient() {
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
+        return okHttpClient;
+    }
+
+    public void getLodgingReservation(String cityId) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(setHttpClient())
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+
+        Call<ResultLodgingFull> callc = getJsonInterface.getLodgingReserve("list", cityId);
+        callc.enqueue(new Callback<ResultLodgingFull>() {
+            @Override
+            public void onResponse(Call<ResultLodgingFull> call, Response<ResultLodgingFull> response) {
+                Log.e("result of intresting", "true");
+
+                if (response.body() != null) {
+//                    ResultWidgetFull res = response.body();
+
+                } else {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResultLodgingFull> call, Throwable t) {
+                Log.e("result of intresting", "false");
+
+            }
+        });
     }
 
     @Override

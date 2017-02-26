@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.activity.MapFullActivity;
+import com.iranplanner.tourism.iranplanner.activity.MoreItemItineraryActivity;
 import com.iranplanner.tourism.iranplanner.adapter.AttractionsListAdapter;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
@@ -28,9 +30,19 @@ import com.iranplanner.tourism.iranplanner.activity.attractionDetailActivity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import entity.ItineraryLodgingCity;
 import entity.ResultItineraryAttraction;
+import entity.ResultWidget;
+import entity.ResultWidgetFull;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import server.getJsonInterface;
 import tools.Util;
 
 
@@ -67,12 +79,12 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
                 navigateBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final LocationManager manager = (LocationManager) getContext().getSystemService( Context.LOCATION_SERVICE );
+                        final LocationManager manager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
 
-                        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+                        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                             // Call your Alert message
-                             buildAlertMessageNoGps(position);
-                        }else {
+                            buildAlertMessageNoGps(position);
+                        } else {
                             openMapFull(position);
                         }
 
@@ -84,20 +96,14 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
                 imageTextAttractionHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
-                        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
-                        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
-                        startActivity(intent);
+                        getIntrestResponce(position,itineraryActionList.get(position).getAttractionId(),Util.getUseRIdFromShareprefrence(getContext()));
                     }
                 });
                 LinearLayout moreInfoHolder = (LinearLayout) view.findViewById(R.id.moreInfoHolder);
                 moreInfoHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
-                        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
-                        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
-                        startActivity(intent);
+                        getIntrestResponce(position,itineraryActionList.get(position).getAttractionId(),Util.getUseRIdFromShareprefrence(getContext()));
                     }
                 });
 //                ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
@@ -124,13 +130,9 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
                     visibleItemCount = mLayoutManager.getChildCount();
                     totalItemCount = mLayoutManager.getItemCount();
                     pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-
-//                    if (loading) {
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-//                            loading = false;
                         Log.v("...", "Last Item Wow !");
-//                        getItinerary(data.get(0).getItineraryFromCityId().toString(), String.valueOf(data.size() + 20));
-//                        waiting.setVisibility(View.VISIBLE);
+
                     }
                 }
             }
@@ -138,6 +140,61 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
         });
         return view;
     }
+
+    private OkHttpClient setHttpClient() {
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
+        return okHttpClient;
+    }
+
+    public void getIntrestResponce(final int position, String attractionId, String uid) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(setHttpClient())
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+
+//        api.parsdid.com/iranplanner/app/api-data.php?action=nodeuser&id=29839&uid=792147600796866&ntype=attraction
+        Call<ResultWidgetFull> callc = getJsonInterface.getWidgetResult("nodeuser", attractionId, uid, "attraction");
+        callc.enqueue(new Callback<ResultWidgetFull>() {
+            @Override
+            public void onResponse(Call<ResultWidgetFull> call, Response<ResultWidgetFull> response) {
+                Log.e("result of intresting", "true");
+
+                if (response.body() != null) {
+                    ResultWidgetFull res = response.body();
+                    List<ResultWidget> resultWidget = res.getResultWidget();
+                    Log.e("string", "item clicked");
+                    ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+                    Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+                    intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+                    intent.putExtra("resultWidget", (Serializable) resultWidget);
+                    startActivity(intent);
+
+                } else {
+                    ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+                    Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+                    intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+                    startActivity(intent);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResultWidgetFull> call, Throwable t) {
+                Log.e("result of intresting", "false");
+                ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+                Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+                intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+                startActivity(intent);
+            }
+        });
+    }
+
     private void buildAlertMessageNoGps(final int position) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("GPS شما فعال نیست. آیا تمایل به روشن کردن آن دارید")
@@ -159,10 +216,11 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
         alert.show();
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-                                Log.e("map is ckicked", "true");
+        Log.e("map is ckicked", "true");
         openMapFull(requestCode);
 //        if (resultCode == 1) {
 //            switch (requestCode) {
@@ -173,7 +231,7 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
 //        }
     }
 
-    private void openMapFull(int position){
+    private void openMapFull(int position) {
         Intent intent = new Intent(getContext(), MapFullActivity.class);
         ItineraryLodgingCity i = new ItineraryLodgingCity();
         i.setCityPositionLat(itineraryActionList.get(position).getAttractionPositionLat());
@@ -183,6 +241,7 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
         intent.putExtra("lodgingCities", (Serializable) lodgingCities);
         startActivity(intent);
     }
+
     private boolean loading = true;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
 

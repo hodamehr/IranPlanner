@@ -93,7 +93,7 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
     private void showProgress() {
         progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Account...");
+        progressDialog.setMessage("ساخت حساب کاربری");
         progressDialog.show();
     }
 

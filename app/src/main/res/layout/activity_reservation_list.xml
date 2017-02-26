@@ -5,7 +5,13 @@
     android:layout_height="match_parent"
     tools:context="com.iranplanner.tourism.iranplanner.fragment.ShowAttractionListFragment">
 
-
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/StandardTitle"
+    android:text="مراکز اقامتی این برنامه سفر"
+    android:layout_margin="@dimen/padding_standard"
+    android:id="@+id/textHotel"/>
     <!--<RelativeLayout-->
         <!--android:id="@+id/viewDayNumber"-->
         <!--android:layout_width="match_parent"-->
@@ -46,6 +52,7 @@
         android:id="@+id/reservationListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/viewDayNumber"></android.support.v7.widget.RecyclerView>
+        android:layout_below="@+id/textHotel"
+        ></android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

@@ -160,7 +160,7 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
 
         return view;
     }
-    public void getIntrestResponce(ImageView img, final int position, final String duration) {
+    public void getIntrestResponce(ImageView img, final int position, final String duration,String cityid,String name) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(setHttpClient())
                 .baseUrl("http://api.parsdid.com/iranplanner/app/")
@@ -169,8 +169,7 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
         //api-data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary
 //    28439&uid=792147600796866
-        String cityid = data.get(position).getItineraryId();
-        String name = Util.getUseRIdFromShareprefrence(getContext());
+
         Call<ResultWidgetFull> callc = getJsonInterface.getWidgetResult("nodeuser", cityid, name, "itinerary");
         callc.enqueue(new Callback<ResultWidgetFull>() {
             @Override
@@ -179,14 +178,13 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
 
                 if (response.body() != null) {
                     ResultWidgetFull res = response.body();
-                    List<ResultWidget> resultUserLogin = res.getResultWidget();
+                    List<ResultWidget> resultWidget = res.getResultWidget();
                     Log.e("string", "item clicked");
                     Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
                     intent.putExtra("itineraryData", (Serializable) data.get(position));
                     intent.putExtra("duration", duration);
-                    intent.putExtra("resultUserLogin",(Serializable) resultUserLogin);
+                    intent.putExtra("resultUserLogin",(Serializable) resultWidget);
                     startActivity(intent);
-
                 }else {
                     Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
                     intent.putExtra("itineraryData", (Serializable) data.get(position));
@@ -220,7 +218,9 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
 
         @Override
         public void run() {
-            getIntrestResponce( img,  position,  duration);
+            String cityid = data.get(position).getItineraryId();
+            String name = Util.getUseRIdFromShareprefrence(getContext());
+            getIntrestResponce( img,  position,  duration,cityid,name);
 
         }
     }

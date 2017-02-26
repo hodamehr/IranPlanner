@@ -51,6 +51,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.adapter.ShowTavelToolsAdapter;
+import com.iranplanner.tourism.iranplanner.standard.ClickableViewPager;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.nineoldandroids.animation.AnimatorSet;
@@ -189,34 +190,34 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         triangleShowAttraction = (ImageView) findViewById(R.id.triangleShowAttraction);
     }
 
-    private void setInterestResponce( List<ResultWidget> resultUserLogin){
-        if (resultUserLogin.get(0).getWidgetBookmarkValue() != null && resultUserLogin.get(0).getWidgetBookmarkValue() == 1) {
+    private void setInterestResponce(List<ResultWidget> resultWidget) {
+        if (resultWidget.get(0).getWidgetBookmarkValue() != null && resultWidget.get(0).getWidgetBookmarkValue() == 1) {
             bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
         }
-        if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 1) {
+        if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 1) {
             likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
             rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
 
         }
-        if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 2) {
+        if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 2) {
             okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
             rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
 
 
         }
-        if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 3) {
+        if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 3) {
             dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
             rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
         }
-        if (resultUserLogin.get(0).getWidgetVisitedValue() != null && resultUserLogin.get(0).getWidgetVisitedValue() == 1) {
+        if (resultWidget.get(0).getWidgetVisitedValue() != null && resultWidget.get(0).getWidgetVisitedValue() == 1) {
             nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
             doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
         }
-        if (resultUserLogin.get(0).getWidgetVisitedValue() != null && resultUserLogin.get(0).getWidgetVisitedValue() == 2) {
+        if (resultWidget.get(0).getWidgetVisitedValue() != null && resultWidget.get(0).getWidgetVisitedValue() == 2) {
             beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
             doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
         }
-        if (resultUserLogin.get(0).getWidgetWishValue() != null && resultUserLogin.get(0).getWidgetWishValue() == 1) {
+        if (resultWidget.get(0).getWidgetWishValue() != null && resultWidget.get(0).getWidgetWishValue() == 1) {
             wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));
         }
 
@@ -292,10 +293,10 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         Bundle bundle = intent.getExtras();
         itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
         String duration = bundle.getString("duration");
-        List<ResultWidget> resultUserLogin= (List<ResultWidget>) bundle.getSerializable("resultUserLogin");
-if(resultUserLogin!=null){
-    setInterestResponce(resultUserLogin);
-}
+        List<ResultWidget> resultWidget = (List<ResultWidget>) bundle.getSerializable("resultWidget");
+        if (resultWidget != null) {
+            setInterestResponce(resultWidget);
+        }
         setTypeOfTravel();
         myData = itineraryData.getItineraryBody();
         setWebViewContent(getShowMoreString(myData));
@@ -362,6 +363,7 @@ if(resultUserLogin!=null){
         toolsPager.setAdapter(showTavelToolsAdapter);
         toolsPager.setCurrentItem(2);
         toolsPager.setClipToPadding(false);
+
     }
 
     private String getUseRIdFromShareprefrence() {
@@ -393,6 +395,8 @@ if(resultUserLogin!=null){
                 intent.putExtra("itineraryData", (Serializable) itineraryData);
                 intent.putExtra("startOfTravel", startOfTravel);
                 startActivity(intent);
+//                Intent intent = new Intent(this, GridActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.changeDateHolder:
                 CustomDialogTravel cdd = new CustomDialogTravel(this);

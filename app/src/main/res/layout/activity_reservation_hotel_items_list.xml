@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ScrollView
@@ -17,11 +17,11 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_itinerary"
-                app:cardCornerRadius="10dp"
-                app:cardUseCompatPadding="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_short">
+                android:layout_marginTop="@dimen/margin_short"
+                app:cardCornerRadius="10dp"
+                app:cardUseCompatPadding="true">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -42,11 +42,31 @@
                             android:translationZ="1dp" />
 
                         <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
+                            android:src="@color/pink_shadow"
+                            android:translationZ="1dp"
+                            android:layout_alignRight="@+id/imgItineraryListMore"
+                            android:layout_marginTop="@dimen/padding_standard"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" 20%"
+                            android:translationZ="2dp"
+                            style="@style/SmallText"
+                            android:layout_alignRight="@+id/imgItineraryListMore"
+                            android:layout_marginTop="@dimen/padding_standard"
+                            android:textColor="@color/white_"
+                            />
+
+                        <ImageView
                             android:id="@+id/imgItineraryListMore"
                             android:layout_width="95dp"
                             android:layout_height="95dp"
                             android:background="@drawable/food"
-                            android:scaleType="centerCrop" />
+                            android:scaleType="center"
+                            />
 
                     </RelativeLayout>
 
@@ -58,108 +78,154 @@
                         android:layout_toLeftOf="@+id/imageHolder"
                         android:gravity="right">
 
-                        <LinearLayout
-                            android:id="@+id/cityNameHolder"
+
+                        <TextView
+                            android:id="@+id/txtHotelName"
+                            style="@style/StandardTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:orientation="horizontal"
-                            android:paddingBottom="@dimen/margin_short"
-                            >
+                            android:layout_marginRight="@dimen/margin_xshort"
+                            android:maxLines="1"
+                            android:text="هتل آپارتمان رازی" />
 
 
-                            <TextView
-                                android:id="@+id/lodgingCityName"
-                                style="@style/StandardTextGrey"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="@dimen/margin_xshort"
-                                android:maxLines="1"
-                                android:text="اقامت در شیراز" />
+                        <RelativeLayout
+                            android:id="@+id/infoReserveHolder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtHotelName"
+                            android:layout_margin="@dimen/margin_short">
 
                             <ImageView
-                                android:id="@+id/imageCityName"
+                                android:id="@+id/imgType"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
+                                android:layout_alignParentRight="true"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_hotel" />
 
-
-                        </LinearLayout>
-
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/cityNameHolder"
-                            android:id="@+id/infoReserveHolder"
-                            android:layout_marginBottom="@dimen/margin_short">
-
-                            <ImageView
-                                android:id="@+id/infoDuration"
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp"
-                                android:background="@drawable/rectangle" />
                             <TextView
+                                android:id="@+id/txtType"
+                                style="@style/SmallText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="به مدت یک شب در تاریخ 3/12/95"
-                                android:layout_centerVertical="true"
                                 android:layout_alignParentRight="true"
-                                android:layout_marginRight="@dimen/margin_short"
-                                android:id="@+id/txtDurationLodgingCity"/>
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="@dimen/margin_standard"
+                                android:layout_toLeftOf="@+id/imgType"
+                                android:text="نوع مرکز اقامت" />
                         </RelativeLayout>
+
                         <RelativeLayout
+                            android:id="@+id/starHolder"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/infoReserveHolder">
+                            android:layout_below="@+id/infoReserveHolder"
+                            android:layout_marginRight="@dimen/margin_short">
 
                             <ImageView
-                                android:id="@+id/ReservationBtn"
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp"
-                                android:background="@drawable/button_corner" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="رزرو"
-                                android:layout_centerInParent="true"
-                                android:textColor="@color/white_"
-                                style="@style/StandardText">
+                                android:id="@+id/imgStar1"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginLeft="@dimen/margin_xshort"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_stars" />
 
-                            </TextView>
+                            <ImageView
+                                android:id="@+id/imgStar2"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_marginLeft="@dimen/margin_xshort"
+                                android:layout_toLeftOf="@+id/imgStar1"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_stars" />
+
+                            <ImageView
+                                android:id="@+id/imgStar3"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_marginLeft="@dimen/margin_xshort"
+                                android:layout_toLeftOf="@+id/imgStar2"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_stars" />
+
+                            <ImageView
+                                android:id="@+id/imgStar4"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_marginLeft="@dimen/margin_xshort"
+                                android:layout_toLeftOf="@+id/imgStar3"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_stars" />
+
+                            <ImageView
+                                android:id="@+id/imgStar5"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_marginLeft="@dimen/padding_short"
+                                android:layout_toLeftOf="@+id/imgStar4"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/ic_stars" />
                         </RelativeLayout>
 
+                        <RelativeLayout
+                            android:id="@+id/infoReserveHolders"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/starHolder"
+                            android:layout_margin="@dimen/margin_short">
 
+                            <TextView
+                                android:id="@+id/txtPrice"
+                                style="@style/SmallText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:text="شروع قیمت از" />
+
+                            <TextView
+                                android:id="@+id/txtStartPrice"
+                                style="@style/SmallText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_toLeftOf="@+id/txtPrice"
+                                android:layout_toStartOf="@+id/txtPrice"
+                                android:text="3000" />
+                        </RelativeLayout>
 
 
                     </RelativeLayout>
+
                     <LinearLayout
                         android:id="@+id/cityNameHolder1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_below="@+id/imageHolder"
                         android:layout_alignParentRight="true"
-                        android:layout_alignRight="@+id/imageHolder">
+                        android:layout_alignRight="@+id/imageHolder"
+                        android:layout_below="@+id/imageHolder"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
 
                         <TextView
+                            android:id="@+id/txtCityName"
+                            style="@style/SmallText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="شیراز"
-                            style="@style/SmallText"
-                            android:textColor="@color/blue"
-                            android:id="@+id/txtCityName"
-                            />
+                            android:textColor="@color/blue" />
+
                         <TextView
+                            android:id="@+id/txtProvinceName"
+                            style="@style/SmallText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="فارس"
-                            style="@style/SmallText"
-                            android:textColor="@color/blue"
-                            android:id="@+id/txtProvinceName"
-                            />
+                            android:textColor="@color/blue" />
+
                         <ImageView
                             android:id="@+id/imageCityName1"
                             android:layout_width="15dp"

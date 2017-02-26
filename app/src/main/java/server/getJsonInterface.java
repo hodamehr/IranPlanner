@@ -4,6 +4,7 @@ import entity.InterestResult;
 import entity.LoginResult;
 import entity.ResultItineraryAttractionList;
 import entity.ResultItineraryList;
+import entity.ResultLodgingFull;
 import entity.ResultRegister;
 import entity.ResultWidgetFull;
 
@@ -47,12 +48,17 @@ public interface getJsonInterface {
                                      @Query("email") String param2,
                                      @Query("password") String param3);
 
+    //    http://api.parsdid.com/iranplanner/app/api-lodging.php?action=list&city=342
+    @GET("api-lodging.php?action=list&city=342")
+    Call<ResultLodgingFull> getLodgingReserve(
+            @Query("action") String action,
+            @Query("city") String city);
+
     @GET("api-data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary")
     Call<ResultWidgetFull> getWidgetResult(@Query("action") String param1,
                                            @Query("id") String param2,
                                            @Query("uid") String param3,
-                                           @Query("ntype") String param4
-                               );
+                                           @Query("ntype") String param4);
 
     @GET("api-user.php")
 //    api.parsdid.com/iranplanner/app/api-user.php?action=register&email=z@zhoda.com&password=hhhhh&fname=hoda&lname=vahidi&gender=1&cid=1

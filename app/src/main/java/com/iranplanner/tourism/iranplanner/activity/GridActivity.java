@@ -1,0 +1,73 @@
+package com.iranplanner.tourism.iranplanner.activity;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.Toast;
+
+import com.iranplanner.tourism.iranplanner.MainActivity;
+import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.adapter.CustomGridAdapter;
+
+/**
+ * Created by h.vahidimehr on 25/02/2017.
+ */
+
+public class GridActivity extends Activity {
+    GridView grid;
+    String[] web = {
+            "Google",
+            "Github",
+            "Instagram",
+            "Facebook",
+            "Flickr",
+            "Pinterest",
+            "Quora",
+            "Twitter",
+            "Vimeo",
+            "WordPress",
+            "Youtube",
+            "Stumbleupon",
+            "SoundCloud",
+            "Reddit",
+            "Blogger"
+
+    } ;
+    int[] imageId = {
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2,
+            R.drawable.emam2
+
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_grid);
+
+        CustomGridAdapter adapter = new CustomGridAdapter(GridActivity.this, web, imageId);
+        grid=(GridView)findViewById(R.id.gridView);
+        grid.setAdapter(adapter);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+}

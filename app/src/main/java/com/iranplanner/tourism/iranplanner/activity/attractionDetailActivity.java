@@ -43,6 +43,8 @@ import entity.InterestResult;
 import entity.ItineraryLodgingCity;
 import entity.ResultData;
 import entity.ResultItineraryAttraction;
+import entity.ResultWidget;
+import entity.ResultWidgetFull;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,6 +75,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     boolean ratingHolderFlag = false;
     String rotateImage;
     RotateAnimation rotate;
+    List<ResultWidget> resultWidget;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -190,6 +193,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         }
         return myData.substring(0, position) + "...";
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -199,6 +203,10 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         attraction = (entity.ResultItineraryAttraction) bundle.getSerializable("ResultItineraryAttraction");
+        resultWidget = (List<ResultWidget>) bundle.getSerializable("resultWidget");
+        if(resultWidget!=null){
+            setInterestResponce(resultWidget);
+        }
         attractionName.setText(attraction.getAttractionTitle());
         attractionPlace.setText(attraction.getProvinceTitle() + " - " + attraction.getCityTitle());
         int totalMinute = Integer.parseInt(attraction.getAttarctionEstimatedTime());
@@ -237,11 +245,46 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         nowVisitedImg.setOnClickListener(this);
         wishImg.setOnClickListener(this);
         beftorVisitedImg.setOnClickListener(this);
-
         bookmarkHolder.setOnClickListener(this);
 
     }
+    private void setInterestResponce( List<ResultWidget> resultWidget){
+        if (resultWidget.get(0).getWidgetBookmarkValue() != null && resultWidget.get(0).getWidgetBookmarkValue() == 1) {
+            bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
+        }
+        if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 1) {
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_grey_));
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_grey_));
+        }
+        if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 2) {
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_grey_));
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_grey));
+        }
+        if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 3) {
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_grey));
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_grey_));
+        }
+        if (resultWidget.get(0).getWidgetVisitedValue() != null && resultWidget.get(0).getWidgetVisitedValue() == 1) {
+            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_grey));
+        }
+        if (resultWidget.get(0).getWidgetVisitedValue() != null && resultWidget.get(0).getWidgetVisitedValue() == 2) {
+            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_grey));
+        }
+        if (resultWidget.get(0).getWidgetWishValue() != null && resultWidget.get(0).getWidgetWishValue() == 1) {
+            wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));
+        }
 
+    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -329,7 +372,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(likeImg);
                     String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-//                    getInterestResult(uid, itineraryId, "1", "like");
+                    getInterestResult(uid, attraction.getAttractionId(), "1", "like");
 
                 } else {
                     Log.e("user is not login", "error");
@@ -341,7 +384,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(okImg);
                     String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-//                    getInterestResult(uid, itineraryId, "2", "like");
+                    getInterestResult(uid, attraction.getAttractionId(), "2", "like");
 
                 } else {
                     Log.e("user is not login", "error");
@@ -353,7 +396,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(dislikeImg);
                     String uid =Util.getUseRIdFromShareprefrence(getApplicationContext());
-//                    getInterestResult(uid, itineraryId, "3", "like");
+                    getInterestResult(uid, attraction.getAttractionId(), "3", "like");
 
                 } else {
                     Log.e("user is not login", "error");
@@ -366,7 +409,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(wishImg);
                     String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-//                    getInterestResult(uid, itineraryId, "1", "wish");
+                    getInterestResult(uid, attraction.getAttractionId(), "1", "wish");
                 } else {
                     Log.e("user is not login", "error");
                     Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
@@ -377,7 +420,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(beftorVisitedImg);
                     String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-//                    getInterestResult(uid, itineraryId, "2", "visited");
+                    getInterestResult(uid, attraction.getAttractionId(), "2", "visited");
                 } else {
                     Log.e("user is not login", "error");
                     Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
@@ -388,7 +431,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(bookmarkImg);
                     String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-//                    getInterestResult(uid, itineraryId, "1", "bookmark");
+                    getInterestResult(uid, attraction.getAttractionId(), "1", "bookmark");
 
                 } else {
                     Log.e("user is not login", "error");
@@ -455,7 +498,8 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-        Call<InterestResult> call = getJsonInterface.getInterest("widget", uid, "1", "itinerary", nid, gtype, gvalue);
+//        "api-data.php?action=widget&uid=792147600796866&cid=1&ntype=itinerary&nid=21905&gtype=bookmark&gvalue=1"
+        Call<InterestResult> call = getJsonInterface.getInterest("widget", uid, "1", "attraction", nid, gtype, gvalue);
         call.enqueue(new Callback<InterestResult>() {
             @Override
             public void onResponse(Call<InterestResult> call, Response<InterestResult> response) {
