@@ -356,10 +356,43 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        toolsPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.e("position", position + "");
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+//                if (position == 2) {
+//                    Intent intent = new Intent(MoreItemItineraryActivity.this, GridActivity.class);
+//                    startActivity(intent);
+//                }
+//                if (position == 0) {
+//                    Intent intent = new Intent(MoreItemItineraryActivity.this, GridActivity.class);
+//                    startActivity(intent);
+//                }
+//                if (position == 1) {
+//                    Intent intent = new Intent(MoreItemItineraryActivity.this, GridActivity.class);
+//                    startActivity(intent);
+//                }
+                Log.e("position", position + "");
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                Log.e("position", state + "");
+            }
+
+        });
+
     }
 
     private void showToolViewPager() {
-        ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getSupportFragmentManager());
+//        ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getSupportFragmentManager());
+        ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getApplicationContext(),MoreItemItineraryActivity.this);
         toolsPager.setAdapter(showTavelToolsAdapter);
         toolsPager.setCurrentItem(2);
         toolsPager.setClipToPadding(false);

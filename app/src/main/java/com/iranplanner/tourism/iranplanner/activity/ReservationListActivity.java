@@ -57,7 +57,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         Bundle extras = getIntent().getExtras();
-        ResultItinerary itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
+        final ResultItinerary itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
         Date startOfTravel = (Date) extras.getSerializable("startOfTravel");
 
         adapter = new ReseveDateListAdapter(ReservationListActivity.this, this, itineraryData, getApplicationContext(), R.layout.fragment_itinerary_item, startOfTravel);
@@ -72,7 +72,8 @@ public class ReservationListActivity extends StandardActivity implements DataTra
                     @Override
                     public void onClick(View v) {
                         Log.e("reserve", "click");
-                        getLodgingReservation("342");
+
+                        getLodgingReservation(itineraryData.getItineraryLodgingCity().get(position+1).getCityId());
 
 
                     }
@@ -107,7 +108,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
             public void onResponse(Call<ResultLodgingFull> call, Response<ResultLodgingFull> response) {
                 Log.e("result of intresting", "true");
 
-                if (response.body() != null) {
+                if (response.body() != null && response.body().getResultLodging().size()!=0) {
                     ResultLodgingFull res = response.body();
                     List<ResultLodging> resultLodgings=res.getResultLodging();
                     Intent intent = new Intent(getApplicationContext(), ReservationHotelListActivity.class);
