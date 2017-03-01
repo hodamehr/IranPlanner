@@ -14,18 +14,12 @@ public class ResultLodging implements Serializable {
     @SerializedName("lodging_name")
     @Expose
     private String lodgingName;
-    @SerializedName("lodging_address")
-    @Expose
-    private String lodgingAddress;
     @SerializedName("lodgin_type_id")
     @Expose
     private Integer lodginTypeId;
     @SerializedName("lodging_type_title")
     @Expose
     private String lodgingTypeTitle;
-    @SerializedName("lodging_rate_id")
-    @Expose
-    private Integer lodgingRateId;
     @SerializedName("lodging_rate_title")
     @Expose
     private String lodgingRateTitle;
@@ -41,12 +35,12 @@ public class ResultLodging implements Serializable {
     @SerializedName("lodging_img_url")
     @Expose
     private String lodgingImgUrl;
-    @SerializedName("lodging_city_id")
-    @Expose
-    private Integer lodgingCityId;
     @SerializedName("lodging_city_name")
     @Expose
     private String lodgingCityName;
+    @SerializedName("lodging_city_id")
+    @Expose
+    private Integer lodgingCityId;
     @SerializedName("lodging_province_name")
     @Expose
     private String lodgingProvinceName;
@@ -56,12 +50,12 @@ public class ResultLodging implements Serializable {
     @SerializedName("lodging_rate_int")
     @Expose
     private Integer lodgingRateInt;
-    @SerializedName("lodging_phone")
+    @SerializedName("lodging_room_price_detail")
     @Expose
-    private List<LodgingPhone> lodgingPhone = null;
-    @SerializedName("lodging_facility")
+    private List<LodgingRoomPriceDetail> lodgingRoomPriceDetail = null;
+    @SerializedName("lodging_room_price_rule_detail")
     @Expose
-    private List<LodgingFacility> lodgingFacility = null;
+    private LodgingRoomPriceRuleDetail lodgingRoomPriceRuleDetail;
 
     public Integer getLodgingId() {
         return lodgingId;
@@ -79,14 +73,6 @@ public class ResultLodging implements Serializable {
         this.lodgingName = lodgingName;
     }
 
-    public String getLodgingAddress() {
-        return lodgingAddress;
-    }
-
-    public void setLodgingAddress(String lodgingAddress) {
-        this.lodgingAddress = lodgingAddress;
-    }
-
     public Integer getLodginTypeId() {
         return lodginTypeId;
     }
@@ -101,14 +87,6 @@ public class ResultLodging implements Serializable {
 
     public void setLodgingTypeTitle(String lodgingTypeTitle) {
         this.lodgingTypeTitle = lodgingTypeTitle;
-    }
-
-    public Integer getLodgingRateId() {
-        return lodgingRateId;
-    }
-
-    public void setLodgingRateId(Integer lodgingRateId) {
-        this.lodgingRateId = lodgingRateId;
     }
 
     public String getLodgingRateTitle() {
@@ -151,20 +129,20 @@ public class ResultLodging implements Serializable {
         this.lodgingImgUrl = lodgingImgUrl;
     }
 
-    public Integer getLodgingCityId() {
-        return lodgingCityId;
-    }
-
-    public void setLodgingCityId(Integer lodgingCityId) {
-        this.lodgingCityId = lodgingCityId;
-    }
-
     public String getLodgingCityName() {
         return lodgingCityName;
     }
 
     public void setLodgingCityName(String lodgingCityName) {
         this.lodgingCityName = lodgingCityName;
+    }
+
+    public Integer getLodgingCityId() {
+        return lodgingCityId;
+    }
+
+    public void setLodgingCityId(Integer lodgingCityId) {
+        this.lodgingCityId = lodgingCityId;
     }
 
     public String getLodgingProvinceName() {
@@ -191,20 +169,20 @@ public class ResultLodging implements Serializable {
         this.lodgingRateInt = lodgingRateInt;
     }
 
-    public List<LodgingPhone> getLodgingPhone() {
-        return lodgingPhone;
+    public List<LodgingRoomPriceDetail> getLodgingRoomPriceDetail() {
+        return lodgingRoomPriceDetail;
     }
 
-    public void setLodgingPhone(List<LodgingPhone> lodgingPhone) {
-        this.lodgingPhone = lodgingPhone;
+    public void setLodgingRoomPriceDetail(List<LodgingRoomPriceDetail> lodgingRoomPriceDetail) {
+        this.lodgingRoomPriceDetail = lodgingRoomPriceDetail;
     }
 
-    public List<LodgingFacility> getLodgingFacility() {
-        return lodgingFacility;
+    public LodgingRoomPriceRuleDetail getLodgingRoomPriceRuleDetail() {
+        return lodgingRoomPriceRuleDetail;
     }
 
-    public void setLodgingFacility(List<LodgingFacility> lodgingFacility) {
-        this.lodgingFacility = lodgingFacility;
+    public void setLodgingRoomPriceRuleDetail(LodgingRoomPriceRuleDetail lodgingRoomPriceRuleDetail) {
+        this.lodgingRoomPriceRuleDetail = lodgingRoomPriceRuleDetail;
     }
 
 }

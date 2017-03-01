@@ -31,6 +31,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
@@ -55,10 +56,14 @@ import tools.Util;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class attractionDetailActivity extends FragmentActivity implements OnMapReadyCallback , View.OnClickListener{
+/**
+ * Created by h.vahidimehr on 28/02/2017.
+ */
+
+public class ReservationHotelDetailActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener{
 
     private GoogleMap mMap;
-    ResultItineraryAttraction attraction;
+//    ResultItineraryAttraction attraction;
     TextView attractionName, attractionPlace, textTimeDuration, textEntranceFee, attractionType, textBody;
     Marker marker;
     protected CTouchyWebView contentFullDescription;
@@ -67,25 +72,28 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     SupportMapFragment mapFragment;
     Boolean showMore = true;
     String myData;
-    TextView txtOk, MoreInoText;
+    TextView txtOk, MoreInoText,txtHotelType,txtHotelName,txtAddress;
     RelativeLayout ratingHolder, GroupHolder, interestingLayout, VisitedLayout, LikeLayout, changeDateHolder;
     LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder;
     ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg, triangleShowAttraction;
     boolean ratingHolderFlag = false;
     String rotateImage;
     RotateAnimation rotate;
-    List<ResultWidget> resultWidget;
+//    List<ResultWidget> resultWidget;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
     private void findView() {
-        setContentView(R.layout.activity_attraction_detail);
+        setContentView(R.layout.activity_reservation_hotel_detail);
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
         MoreInoText = (TextView) findViewById(R.id.MoreInoText);
+        txtHotelType = (TextView) findViewById(R.id.txtHotelType);
+        txtHotelName = (TextView) findViewById(R.id.txtHotelName);
+        txtAddress = (TextView) findViewById(R.id.txtAddress);
         attractionName = (TextView) findViewById(R.id.attractionName);
         attractionPlace = (TextView) findViewById(R.id.attractionPlace);
         textTimeDuration = (TextView) findViewById(R.id.textTimeDuration);
@@ -131,43 +139,43 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 .build()
         );
     }
-    private void setImageHolder(){
-        if (attraction.getItineraryImgUrl() != null) {
-            String url = attraction.getItineraryImgUrl();
-            Glide.with(getApplicationContext())
-                    .load(url)
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .listener(new RequestListener<String, GlideDrawable>() {
-
-                        @Override
-                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            //// TODO: 22/01/2017  get defeult picture
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                            return false;
-                        }
-                    })
-                    .into(imageAttraction);
-
-        } else {
-            Glide.clear(imageAttraction);
-            imageAttraction.setImageDrawable(null);
-        }
-    }
-    private void setAttractionTypeImage(){
-        if (attraction.getAttarctionItineraryTypeId().equals("2930")) {
-            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_religious));
-        } else if (attraction.getAttarctionItineraryTypeId().equals("2931")) {
-            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_nature));
-        } else if (attraction.getAttarctionItineraryTypeId().equals("2932")) {
-            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_history));
-        } else if (attraction.getAttarctionItineraryTypeId().equals("2933")) {
-            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_entertainment));
-        }
-    }
+//    private void setImageHolder(){
+//        if (attraction.getItineraryImgUrl() != null) {
+//            String url = attraction.getItineraryImgUrl();
+//            Glide.with(getApplicationContext())
+//                    .load(url)
+//                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+//                    .listener(new RequestListener<String, GlideDrawable>() {
+//
+//                        @Override
+//                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+//                            //// TODO: 22/01/2017  get defeult picture
+//                            return false;
+//                        }
+//
+//                        @Override
+//                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+//                            return false;
+//                        }
+//                    })
+//                    .into(imageAttraction);
+//
+//        } else {
+//            Glide.clear(imageAttraction);
+//            imageAttraction.setImageDrawable(null);
+//        }
+//    }
+//    private void setAttractionTypeImage(){
+//        if (attraction.getAttarctionItineraryTypeId().equals("2930")) {
+//            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_religious));
+//        } else if (attraction.getAttarctionItineraryTypeId().equals("2931")) {
+//            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_nature));
+//        } else if (attraction.getAttarctionItineraryTypeId().equals("2932")) {
+//            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_history));
+//        } else if (attraction.getAttarctionItineraryTypeId().equals("2933")) {
+//            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_entertainment));
+//        }
+//    }
     private void setWebViewContent(String myData) {
         contentFullDescription.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -201,50 +209,39 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         overrideFont();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        attraction = (entity.ResultItineraryAttraction) bundle.getSerializable("ResultItineraryAttraction");
-        resultWidget = (List<ResultWidget>) bundle.getSerializable("resultWidget");
-        if(resultWidget!=null){
-            setInterestResponce(resultWidget);
-        }
-        attractionName.setText(attraction.getAttractionTitle());
-        attractionPlace.setText(attraction.getProvinceTitle() + " - " + attraction.getCityTitle());
-        int totalMinute = Integer.parseInt(attraction.getAttarctionEstimatedTime());
-        Util.convertMinuteToHour(totalMinute, textTimeDuration);
-        setImageHolder();
-         myData = attraction.getAttarctionBody();
-        setWebViewContent(getShowMoreString(myData));
+//        resultWidget = (List<ResultWidget>) bundle.getSerializable("resultWidget");
+//        if(resultWidget!=null){
+//            setInterestResponce(resultWidget);
+//        }
 
-        if (attraction.getAttractionPrice() == null) {
-            textEntranceFee.setText("رایگان");
-        } else {
-            textEntranceFee.setText(Util.persianNumbers(attraction.getAttractionPrice().toString()) + "تومان");
-        }
-        attractionType.setText(attraction.getAttarctionItineraryTypeTitle());
-        setAttractionTypeImage();
+//        setImageHolder();
+//        setWebViewContent(getShowMoreString(myData));
 
-        interestingLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int width = interestingLayout.getWidth();
-                int height = interestingLayout.getHeight();
-                if (width > 0 && height > 0) {
-                    VisitedLayout.setVisibility(View.INVISIBLE);
-                    LikeLayout.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-        mapFragment.getMapAsync(this);
-        MoreInoText.setOnClickListener(this);
-        ratingHolder.setOnClickListener(this);
-        rateHolder.setOnClickListener(this);
-        doneHolder.setOnClickListener(this);
-        likeImg.setOnClickListener(this);
-        okImg.setOnClickListener(this);
-        dislikeImg.setOnClickListener(this);
-        nowVisitedImg.setOnClickListener(this);
-        wishImg.setOnClickListener(this);
-        beftorVisitedImg.setOnClickListener(this);
-        bookmarkHolder.setOnClickListener(this);
+
+
+//        interestingLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                int width = interestingLayout.getWidth();
+//                int height = interestingLayout.getHeight();
+//                if (width > 0 && height > 0) {
+//                    VisitedLayout.setVisibility(View.INVISIBLE);
+//                    LikeLayout.setVisibility(View.INVISIBLE);
+//                }
+//            }
+//        });
+//        mapFragment.getMapAsync(this);
+//        MoreInoText.setOnClickListener(this);
+//        ratingHolder.setOnClickListener(this);
+//        rateHolder.setOnClickListener(this);
+//        doneHolder.setOnClickListener(this);
+//        likeImg.setOnClickListener(this);
+//        okImg.setOnClickListener(this);
+//        dislikeImg.setOnClickListener(this);
+//        nowVisitedImg.setOnClickListener(this);
+//        wishImg.setOnClickListener(this);
+//        beftorVisitedImg.setOnClickListener(this);
+//        bookmarkHolder.setOnClickListener(this);
 
     }
     private void setInterestResponce( List<ResultWidget> resultWidget){
@@ -290,17 +287,14 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         mMap.getUiSettings().setAllGesturesEnabled(false);
         mMap.getUiSettings().setMapToolbarEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(false);
-        attraction.getAttractionPositionLat();
-        attraction.getAttractionPositionOn();
-        float lan = Float.valueOf(attraction.getAttractionPositionLat());
-        float lon = Float.valueOf(attraction.getAttractionPositionOn());
+
         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker));
 
-        marker = mMap.addMarker(markerOptions
-                .position(new LatLng(lan, lon))
-                .title(attraction.getCityTitle())
-                .snippet(":)"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lan, lon), 15.0f));
+//        marker = mMap.addMarker(markerOptions
+//                .position(new LatLng(lan, lon))
+//                .title(attraction.getCityTitle())
+//                .snippet(":)"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lan, lon), 15.0f));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -308,12 +302,10 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 Log.e("map is ckicked", "true");
                 Intent intent = new Intent(getApplicationContext(), MapFullActivity.class);
                 ItineraryLodgingCity i = new ItineraryLodgingCity();
-                i.setCityPositionLat(attraction.getAttractionPositionLat());
-                i.setCityPositionLon(attraction.getAttractionPositionOn());
+
                 List<ItineraryLodgingCity> lodgingCities = new ArrayList<ItineraryLodgingCity>();
                 lodgingCities.add(i);
                 intent.putExtra("lodgingCities", (Serializable) lodgingCities);
-                intent.putExtra("attraction", (Serializable) attraction);
                 startActivity(intent);
             }
         });
@@ -331,7 +323,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                     MoreInoText.setText("مطلب کوتاه");
                     showMore = false;
                 } else {
-                    setWebViewContent(getShowMoreString(myData));
+//                    setWebViewContent(getShowMoreString(myData));
                     MoreInoText.setText("بیشتر بخوانید");
                     showMore = true;
                 }
@@ -371,7 +363,6 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(likeImg);
                     String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-                    getInterestResult(uid, attraction.getAttractionId(), "1", "like");
 
                 } else {
                     Log.e("user is not login", "error");
@@ -383,7 +374,6 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(okImg);
                     String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-                    getInterestResult(uid, attraction.getAttractionId(), "2", "like");
 
                 } else {
                     Log.e("user is not login", "error");
@@ -395,7 +385,6 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(dislikeImg);
                     String uid =Util.getUseRIdFromShareprefrence(getApplicationContext());
-                    getInterestResult(uid, attraction.getAttractionId(), "3", "like");
 
                 } else {
                     Log.e("user is not login", "error");
@@ -408,7 +397,6 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(wishImg);
                     String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-                    getInterestResult(uid, attraction.getAttractionId(), "1", "wish");
                 } else {
                     Log.e("user is not login", "error");
                     Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
@@ -419,7 +407,6 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(beftorVisitedImg);
                     String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-                    getInterestResult(uid, attraction.getAttractionId(), "2", "visited");
                 } else {
                     Log.e("user is not login", "error");
                     Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
@@ -430,7 +417,6 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(bookmarkImg);
                     String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-                    getInterestResult(uid, attraction.getAttractionId(), "1", "bookmark");
 
                 } else {
                     Log.e("user is not login", "error");

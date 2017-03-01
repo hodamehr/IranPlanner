@@ -424,12 +424,15 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.showReservation:
-                Intent intent = new Intent(this, ReservationListActivity.class);
-                intent.putExtra("itineraryData", (Serializable) itineraryData);
-                intent.putExtra("startOfTravel", startOfTravel);
-                startActivity(intent);
+//                Intent intent = new Intent(this, ReservationListActivity.class);
+//                intent.putExtra("itineraryData", (Serializable) itineraryData);
+//                intent.putExtra("startOfTravel", startOfTravel);
+//                startActivity(intent);
 //                Intent intent = new Intent(this, GridActivity.class);
 //                startActivity(intent);
+                Intent intent = new Intent(this, ReservationHotelDetailActivity.class);
+                startActivity(intent);
+
                 break;
             case R.id.changeDateHolder:
                 CustomDialogTravel cdd = new CustomDialogTravel(this);

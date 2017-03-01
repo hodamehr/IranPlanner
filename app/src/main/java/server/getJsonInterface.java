@@ -5,6 +5,8 @@ import entity.LoginResult;
 import entity.ResultItineraryAttractionList;
 import entity.ResultItineraryList;
 import entity.ResultLodgingFull;
+import entity.ResultLodgingList;
+import entity.ResultLodgingRoomList;
 import entity.ResultRegister;
 import entity.ResultWidgetFull;
 
@@ -50,9 +52,17 @@ public interface getJsonInterface {
 
     //    http://api.parsdid.com/iranplanner/app/api-lodging.php?action=list&city=342
     @GET("api-lodging.php?action=list&city=342")
-    Call<ResultLodgingFull> getLodgingReserve(
+    Call<ResultLodgingList> getLodgingReserve(
             @Query("action") String action,
             @Query("city") String city);
+
+    //    http://api.parsdid.com/iranplanner/app/api-lodging.php?action=room&id=22649&fromdate=1488289475&todate=1488489475
+    @GET("api-lodging.php?action=room&id=22649&fromdate=1488289475&todate=1488489475")
+    Call<ResultLodgingRoomList> getResultLodgingRoomList(
+            @Query("action") String action,
+            @Query("id") String id,
+            @Query("fromdate") String fromdate,
+            @Query("todate") String todate);
 
     @GET("api-data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary")
     Call<ResultWidgetFull> getWidgetResult(@Query("action") String param1,

@@ -30,6 +30,9 @@ import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
 import entity.ResultLodging;
 import entity.ResultLodgingFull;
+import entity.ResultLodgingList;
+import entity.ResultLodgingRoomList;
+import entity.ResultRoom;
 import entity.ResultWidget;
 import entity.ResultWidgetFull;
 import okhttp3.OkHttpClient;
@@ -72,9 +75,8 @@ public class ReservationListActivity extends StandardActivity implements DataTra
                     @Override
                     public void onClick(View v) {
                         Log.e("reserve", "click");
-
                         getLodgingReservation(itineraryData.getItineraryLodgingCity().get(position+1).getCityId());
-
+//getLodgingResevationRoom(itineraryData.getItineraryLodgingCity().get(position+1).getCityId());
 
                     }
                 });
@@ -102,14 +104,14 @@ public class ReservationListActivity extends StandardActivity implements DataTra
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
 
-        Call<ResultLodgingFull> callc = getJsonInterface.getLodgingReserve("list", cityId);
-        callc.enqueue(new Callback<ResultLodgingFull>() {
+        Call<ResultLodgingList> callc = getJsonInterface.getLodgingReserve("list", cityId);
+        callc.enqueue(new Callback<ResultLodgingList>() {
             @Override
-            public void onResponse(Call<ResultLodgingFull> call, Response<ResultLodgingFull> response) {
+            public void onResponse(Call<ResultLodgingList> call, Response<ResultLodgingList> response) {
                 Log.e("result of intresting", "true");
 
                 if (response.body() != null && response.body().getResultLodging().size()!=0) {
-                    ResultLodgingFull res = response.body();
+                    ResultLodgingList res = response.body();
                     List<ResultLodging> resultLodgings=res.getResultLodging();
                     Intent intent = new Intent(getApplicationContext(), ReservationHotelListActivity.class);
                     intent.putExtra("resultLodgings", (Serializable) resultLodgings);
@@ -119,13 +121,46 @@ public class ReservationListActivity extends StandardActivity implements DataTra
             }
 
             @Override
-            public void onFailure(Call<ResultLodgingFull> call, Throwable t) {
+            public void onFailure(Call<ResultLodgingList> call, Throwable t) {
                 Log.e("result of intresting", "false");
 
             }
         });
     }
 
+    public void getLodgingResevationRoom(String cityID){
+//        getResultLodgingRoomList
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(setHttpClient())
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+cityID="22649";
+        Call<ResultLodgingRoomList> callc = getJsonInterface.getResultLodgingRoomList("room", cityID,"","");
+        callc.enqueue(new Callback<ResultLodgingRoomList>() {
+            @Override
+            public void onResponse(Call<ResultLodgingRoomList> call, Response<ResultLodgingRoomList> response) {
+                Log.e("result of intresting", "true");
+
+
+                if (response.body() != null && response.body().getResultRoom().size()!=0) {
+                    ResultLodgingRoomList res = response.body();
+                    List<ResultRoom> resultLodgings=res.getResultRoom();
+                    Intent intent = new Intent(getApplicationContext(), ReservationHotelListActivity.class);
+                    intent.putExtra("resultLodgings", (Serializable) resultLodgings);
+                    startActivity(intent);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResultLodgingRoomList> call, Throwable t) {
+                Log.e("result of intresting", "false");
+
+            }
+        });
+    }
     @Override
     public void setValues(ArrayList<String> al) {
         al.get(0);

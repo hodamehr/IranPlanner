@@ -48,6 +48,7 @@
         <activity android:name=".activity.SignupActivity"/>
         <activity android:name=".activity.GridActivity"/>
         <activity android:name=".activity.ReservationHotelListActivity"/>
+        <activity android:name=".activity.ReservationHotelDetailActivity"/>
     </application>
 
 </manifest>

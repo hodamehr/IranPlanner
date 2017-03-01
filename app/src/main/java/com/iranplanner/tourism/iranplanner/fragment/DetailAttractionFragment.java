@@ -25,7 +25,7 @@ public class DetailAttractionFragment extends StandardFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_attraction_detail, container, false);
+        View view = inflater.inflate(R.layout.activity_attraction_detail, container, false);
         attractionName = (TextView) view.findViewById(R.id.attractionName);
         attractionPlace = (TextView) view.findViewById(R.id.attractionPlace);
         textTimeDuration = (TextView) view.findViewById(R.id.textTimeDuration);

@@ -31,6 +31,11 @@ public class Statistics implements Serializable {
     @Expose
     private Integer size;
 
+    @SerializedName("Date_Now")
+    @Expose
+    private Integer dateNow;
+
+
     public Integer getOffsetLast() {
         return offsetLast;
     }
@@ -85,6 +90,13 @@ public class Statistics implements Serializable {
 
     public void setSize(Integer size) {
         this.size = size;
+    }
+    public Integer getDateNow() {
+        return dateNow;
+    }
+
+    public void setDateNow(Integer dateNow) {
+        this.dateNow = dateNow;
     }
 
 }
