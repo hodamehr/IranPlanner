@@ -51,7 +51,6 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.adapter.ShowTavelToolsAdapter;
-import com.iranplanner.tourism.iranplanner.standard.ClickableViewPager;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.nineoldandroids.animation.AnimatorSet;
@@ -67,11 +66,14 @@ import java.util.concurrent.TimeUnit;
 import entity.InterestResult;
 import entity.ItineraryLodgingCity;
 import entity.ItineraryPercentage;
+import entity.ResultComment;
+import entity.ResultCommentList;
 import entity.ResultData;
 import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
 import entity.ResultItineraryAttractionList;
 import entity.ResultWidget;
+import entity.request;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -118,7 +120,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     TextView fromCityName, toCityName;
     TextView showItinerys;
     TextView txtOk, MoreInoText;
-    LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder;
+    LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder,commentHolder;
     RelativeLayout ratingHolder, GroupHolder, supplierLayoutMore, VisitedLayout, LikeLayout, changeDateHolder;
     PersianCalendar persianCurrentDate;
     ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg, triangleShowAttraction;
@@ -136,7 +138,75 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     Button showReservation;
 //    List<Map<String,Integer>> ss;
 
+    public void getResultOfCommentInsert() {
+//        getResultLodgingRoomList
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(setHttpClient())
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+//        {"uid":"1","cid":"1","ntype":"attraction","nid":"1","gtype":"comment","gvalue":"khobi"}
+//        Call<ResultCommentList> callc = getJsonInterface.insertComment( "1", "1", "attraction", "1", "comment", "test1111");
+        Call<ResultCommentList> callc = getJsonInterface.callInsertComment(new request("1", "1", "attraction", "1", "comment", "test1111"));
+        callc.enqueue(new Callback<ResultCommentList>() {
+            @Override
+            public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
 
+                if (response.body() != null) {
+                    ResultCommentList jsonResponse = response.body();
+                    entity.Status status = jsonResponse.getStatus();
+                    if(status.getStatus()==200){
+                        rotate.setRepeatCount(0);
+                        checkWhichImageIntrested(rotateImage);
+                    }
+                 } else {
+                    Log.e("comment body", "null");
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResultCommentList> call, Throwable t) {
+                Log.e("result of intresting", "false");
+
+            }
+        });
+    }
+    public void getResultOfCommentList() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(setHttpClient())
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+        Call<ResultCommentList> callc = getJsonInterface.getCommentList("pagecomments","1","attraction");
+        callc.enqueue(new Callback<ResultCommentList>() {
+            @Override
+            public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
+
+                if (response.body() != null) {
+                    ResultCommentList jsonResponse = response.body();
+                    List<ResultComment> resultComments= jsonResponse.getResultComment();
+                    Intent intent = new Intent(MoreItemItineraryActivity.this, CommentListActivity.class);
+                    intent.putExtra("resultComments", (Serializable) resultComments);
+                    startActivity(intent);
+
+                } else {
+                    Log.e("comment body", "null");
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResultCommentList> call, Throwable t) {
+                Log.e("result of intresting", "false");
+
+            }
+        });
+    }
     private void findView() {
         setContentView(R.layout.fragment_itinerary_item_more);
         txtItinerary_attraction_Difficulty = (TextView) findViewById(R.id.txtItinerary_attraction_Difficulty);
@@ -164,6 +234,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         nowVisitedHolder = (LinearLayout) findViewById(R.id.nowVisitedHolder);
         beftorVisitedHolder = (LinearLayout) findViewById(R.id.beftorVisitedHolder);
         dislikeHolder = (LinearLayout) findViewById(R.id.dislikeHolder);
+        commentHolder = (LinearLayout) findViewById(R.id.commentHolder);
         okHolder = (LinearLayout) findViewById(R.id.okHolder);
         likeHolder = (LinearLayout) findViewById(R.id.likeHolder);
         bookmarkHolder = (LinearLayout) findViewById(R.id.bookmarkHolder);
@@ -346,6 +417,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         showItinerys.setOnClickListener(this);
         MoreInoText.setOnClickListener(this);
         showReservation.setOnClickListener(this);
+        commentHolder.setOnClickListener(this);
+
         //-------------------map
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -392,7 +465,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     private void showToolViewPager() {
 //        ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getSupportFragmentManager());
-        ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getApplicationContext(),MoreItemItineraryActivity.this);
+        ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getApplicationContext(), MoreItemItineraryActivity.this);
         toolsPager.setAdapter(showTavelToolsAdapter);
         toolsPager.setCurrentItem(2);
         toolsPager.setClipToPadding(false);
@@ -423,15 +496,32 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            case R.id.commentHolder:
+                getResultOfCommentList();
+
+//                rotateImage = "commentImg";
+//                if (!getUseRIdFromShareprefrence().isEmpty()) {
+//                    animWaiting(likeImg);
+//                    String uid = getUseRIdFromShareprefrence();
+//                    getInterestResult(uid, itineraryId, "1", "like");
+//                    getResultOfCommentInsert();
+//
+//                } else {
+//                    Log.e("user is not login", "error");
+//                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
+//                }
+                break;
+
             case R.id.showReservation:
-//                Intent intent = new Intent(this, ReservationListActivity.class);
-//                intent.putExtra("itineraryData", (Serializable) itineraryData);
-//                intent.putExtra("startOfTravel", startOfTravel);
-//                startActivity(intent);
+                Intent intent = new Intent(this, ReservationListActivity.class);
+                intent.putExtra("itineraryData", (Serializable) itineraryData);
+                intent.putExtra("startOfTravel", startOfTravel);
+                startActivity(intent);
 //                Intent intent = new Intent(this, GridActivity.class);
 //                startActivity(intent);
-                Intent intent = new Intent(this, ReservationHotelDetailActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(this, ReservationHotelDetailActivity.class);
+//                startActivity(intent);
 
                 break;
             case R.id.changeDateHolder:

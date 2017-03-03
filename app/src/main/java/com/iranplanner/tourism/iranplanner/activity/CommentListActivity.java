@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
+import com.iranplanner.tourism.iranplanner.adapter.CommentListAdapter;
 import com.iranplanner.tourism.iranplanner.adapter.ReseveDateListAdapter;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
@@ -20,13 +21,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import entity.ResultCommentList;
+import entity.ResultComment;
 import entity.ResultItinerary;
 import entity.ResultLodging;
 import entity.ResultLodgingList;
 import entity.ResultLodgingRoomList;
 import entity.ResultRoom;
-import entity.request;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,8 +39,8 @@ import server.getJsonInterface;
  * Created by h.vahidimehr on 21/02/2017.
  */
 
-public class ReservationListActivity extends StandardActivity implements DataTransferInterface {
-    private ReseveDateListAdapter adapter;
+public class CommentListActivity extends StandardActivity implements DataTransferInterface {
+    private CommentListAdapter adapter;
     LinearLayoutManager mLayoutManager;
 
     @Override
@@ -52,25 +52,21 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         Bundle extras = getIntent().getExtras();
-        final ResultItinerary itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
-        Date startOfTravel = (Date) extras.getSerializable("startOfTravel");
-
-        adapter = new ReseveDateListAdapter(ReservationListActivity.this, this, itineraryData, getApplicationContext(), R.layout.fragment_itinerary_item, startOfTravel);
+        List<ResultComment> resultComments = (List<ResultComment>) extras.getSerializable("resultComments");
+        adapter = new CommentListAdapter(CommentListActivity.this, this, resultComments, getApplicationContext(), R.layout.fragment_comment_item );
         recyclerView.setAdapter(adapter);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-                ImageView reservationBtn = (ImageView) view.findViewById(R.id.ReservationBtn);
-                reservationBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.e("reserve", "click");
-                        getLodgingReservation(itineraryData.getItineraryLodgingCity().get(position + 1).getCityId());
-//getLodgingResevationRoom(itineraryData.getItineraryLodgingCity().get(position+1).getCityId());
-                    }
-                });
+//                ImageView reservationBtn = (ImageView) view.findViewById(R.id.ReservationBtn);
+//                reservationBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Log.e("reserve", "click");
+//                    }
+//                });
 
             }
         }));
@@ -127,17 +123,17 @@ public class ReservationListActivity extends StandardActivity implements DataTra
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-cityID="22649";
-        Call<ResultLodgingRoomList> callc = getJsonInterface.getResultLodgingRoomList("room", cityID,"","");
+        cityID = "22649";
+        Call<ResultLodgingRoomList> callc = getJsonInterface.getResultLodgingRoomList("room", cityID, "", "");
         callc.enqueue(new Callback<ResultLodgingRoomList>() {
             @Override
             public void onResponse(Call<ResultLodgingRoomList> call, Response<ResultLodgingRoomList> response) {
                 Log.e("result of intresting", "true");
 
 
-                if (response.body() != null && response.body().getResultRoom().size()!=0) {
+                if (response.body() != null && response.body().getResultRoom().size() != 0) {
                     ResultLodgingRoomList res = response.body();
-                    List<ResultRoom> resultLodgings=res.getResultRoom();
+                    List<ResultRoom> resultLodgings = res.getResultRoom();
                     Intent intent = new Intent(getApplicationContext(), ReservationHotelListActivity.class);
                     intent.putExtra("resultLodgings", (Serializable) resultLodgings);
                     startActivity(intent);
@@ -152,6 +148,9 @@ cityID="22649";
             }
         });
     }
+
+
+
     @Override
     public void setValues(ArrayList<String> al) {
         al.get(0);

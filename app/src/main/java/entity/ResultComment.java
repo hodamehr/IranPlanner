@@ -5,12 +5,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 public class ResultComment implements Serializable {
 
     @SerializedName("uid")
     @Expose
-    private Integer uid;
+    private BigInteger uid;
     @SerializedName("ntype")
     @Expose
     private String ntype;
@@ -25,13 +26,13 @@ public class ResultComment implements Serializable {
     private String gvalue;
     @SerializedName("commentid")
     @Expose
-    private Integer commentid;
+    private BigInteger commentid;
 
-    public Integer getUid() {
+    public BigInteger getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(BigInteger uid) {
         this.uid = uid;
     }
 
@@ -67,12 +68,11 @@ public class ResultComment implements Serializable {
         this.gvalue = gvalue;
     }
 
-    public Integer getCommentid() {
+    public BigInteger getCommentid() {
         return commentid;
     }
 
-    public void setCommentid(Integer commentid) {
+    public void setCommentid(BigInteger commentid) {
         this.commentid = commentid;
     }
-
 }

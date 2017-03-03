@@ -2,16 +2,20 @@ package server;
 
 import entity.InterestResult;
 import entity.LoginResult;
+import entity.ResultCommentList;
 import entity.ResultItineraryAttractionList;
 import entity.ResultItineraryList;
-import entity.ResultLodgingFull;
 import entity.ResultLodgingList;
 import entity.ResultLodgingRoomList;
 import entity.ResultRegister;
 import entity.ResultWidgetFull;
-
+import entity.request;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -49,6 +53,31 @@ public interface getJsonInterface {
     Call<LoginResult> getLoginResult(@Query("action") String param1,
                                      @Query("email") String param2,
                                      @Query("password") String param3);
+
+    //    api.parsdid.com/iranplanner/app/api-data.php?action=comment
+//{"uid":"1","cid":"1","ntype":"attraction","nid":"1","gtype":"comment","gvalue":"khobi"}
+    @FormUrlEncoded
+    @POST("api-data.php?action=comment")
+    Call<ResultCommentList> insertComment(
+            @Field("uid") String uid,
+            @Field("cid") String cid,
+            @Field("ntype") String ntype,
+            @Field("nid") String nid,
+            @Field("gtype") String gtype,
+            @Field("gvalue") String gvalue
+
+    );
+
+
+    @POST("api-data.php?action=comment")
+    Call<ResultCommentList> callInsertComment(@Body request request);
+
+    //    api.parsdid.com/iranplanner/app/api-data.php?action=pagecomments&nid=1&ntype=attraction
+    @GET("api-data.php?action=pagecomments&nid=1&ntype=attraction")
+    Call<ResultCommentList> getCommentList(
+            @Query("action") String action,
+            @Query("nid") String nid,
+            @Query("ntype") String ntype    );
 
     //    http://api.parsdid.com/iranplanner/app/api-lodging.php?action=list&city=342
     @GET("api-lodging.php?action=list&city=342")
