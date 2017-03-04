@@ -14,24 +14,27 @@ public class ResultLodging implements Serializable {
     @SerializedName("lodging_name")
     @Expose
     private String lodgingName;
-    @SerializedName("lodgin_type_id")
+    @SerializedName("lodging_address")
     @Expose
-    private Integer lodginTypeId;
-    @SerializedName("lodging_type_title")
-    @Expose
-    private String lodgingTypeTitle;
-    @SerializedName("lodging_rate_title")
-    @Expose
-    private String lodgingRateTitle;
-    @SerializedName("lodging_lang")
-    @Expose
-    private String lodgingLang;
+    private String lodgingAddress;
     @SerializedName("lodging_pos_lat")
     @Expose
     private Double lodgingPosLat;
     @SerializedName("lodging_pos_long")
     @Expose
     private Double lodgingPosLong;
+    @SerializedName("lodging_rate_title")
+    @Expose
+    private String lodgingRateTitle;
+    @SerializedName("lodgin_type_id")
+    @Expose
+    private Integer lodginTypeId;
+    @SerializedName("lodging_type_title")
+    @Expose
+    private String lodgingTypeTitle;
+    @SerializedName("lodging_lang")
+    @Expose
+    private String lodgingLang;
     @SerializedName("lodging_img_url")
     @Expose
     private String lodgingImgUrl;
@@ -50,6 +53,12 @@ public class ResultLodging implements Serializable {
     @SerializedName("lodging_rate_int")
     @Expose
     private Integer lodgingRateInt;
+    @SerializedName("lodging_facility")
+    @Expose
+    private List<LodgingFacility> lodgingFacility = null;
+    @SerializedName("lodging_body")
+    @Expose
+    private Object lodgingBody;
     @SerializedName("lodging_room_price_detail")
     @Expose
     private List<LodgingRoomPriceDetail> lodgingRoomPriceDetail = null;
@@ -73,36 +82,12 @@ public class ResultLodging implements Serializable {
         this.lodgingName = lodgingName;
     }
 
-    public Integer getLodginTypeId() {
-        return lodginTypeId;
+    public String getLodgingAddress() {
+        return lodgingAddress;
     }
 
-    public void setLodginTypeId(Integer lodginTypeId) {
-        this.lodginTypeId = lodginTypeId;
-    }
-
-    public String getLodgingTypeTitle() {
-        return lodgingTypeTitle;
-    }
-
-    public void setLodgingTypeTitle(String lodgingTypeTitle) {
-        this.lodgingTypeTitle = lodgingTypeTitle;
-    }
-
-    public String getLodgingRateTitle() {
-        return lodgingRateTitle;
-    }
-
-    public void setLodgingRateTitle(String lodgingRateTitle) {
-        this.lodgingRateTitle = lodgingRateTitle;
-    }
-
-    public String getLodgingLang() {
-        return lodgingLang;
-    }
-
-    public void setLodgingLang(String lodgingLang) {
-        this.lodgingLang = lodgingLang;
+    public void setLodgingAddress(String lodgingAddress) {
+        this.lodgingAddress = lodgingAddress;
     }
 
     public Double getLodgingPosLat() {
@@ -119,6 +104,38 @@ public class ResultLodging implements Serializable {
 
     public void setLodgingPosLong(Double lodgingPosLong) {
         this.lodgingPosLong = lodgingPosLong;
+    }
+
+    public String getLodgingRateTitle() {
+        return lodgingRateTitle;
+    }
+
+    public void setLodgingRateTitle(String lodgingRateTitle) {
+        this.lodgingRateTitle = lodgingRateTitle;
+    }
+
+    public Integer getLodginTypeId() {
+        return lodginTypeId;
+    }
+
+    public void setLodginTypeId(Integer lodginTypeId) {
+        this.lodginTypeId = lodginTypeId;
+    }
+
+    public String getLodgingTypeTitle() {
+        return lodgingTypeTitle;
+    }
+
+    public void setLodgingTypeTitle(String lodgingTypeTitle) {
+        this.lodgingTypeTitle = lodgingTypeTitle;
+    }
+
+    public String getLodgingLang() {
+        return lodgingLang;
+    }
+
+    public void setLodgingLang(String lodgingLang) {
+        this.lodgingLang = lodgingLang;
     }
 
     public String getLodgingImgUrl() {
@@ -167,6 +184,22 @@ public class ResultLodging implements Serializable {
 
     public void setLodgingRateInt(Integer lodgingRateInt) {
         this.lodgingRateInt = lodgingRateInt;
+    }
+
+    public List<LodgingFacility> getLodgingFacility() {
+        return lodgingFacility;
+    }
+
+    public void setLodgingFacility(List<LodgingFacility> lodgingFacility) {
+        this.lodgingFacility = lodgingFacility;
+    }
+
+    public Object getLodgingBody() {
+        return lodgingBody;
+    }
+
+    public void setLodgingBody(Object lodgingBody) {
+        this.lodgingBody = lodgingBody;
     }
 
     public List<LodgingRoomPriceDetail> getLodgingRoomPriceDetail() {

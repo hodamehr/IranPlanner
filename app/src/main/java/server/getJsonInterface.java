@@ -1,15 +1,19 @@
 package server;
 
+import entity.CommentSend;
 import entity.InterestResult;
 import entity.LoginResult;
+import entity.ResultComment;
 import entity.ResultCommentList;
 import entity.ResultItineraryAttractionList;
 import entity.ResultItineraryList;
+import entity.ResultLodging;
+import entity.ResultLodgingFull;
+import entity.ResultLodgingHotel;
 import entity.ResultLodgingList;
 import entity.ResultLodgingRoomList;
 import entity.ResultRegister;
 import entity.ResultWidgetFull;
-import entity.request;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -54,36 +58,28 @@ public interface getJsonInterface {
                                      @Query("email") String param2,
                                      @Query("password") String param3);
 
-    //    api.parsdid.com/iranplanner/app/api-data.php?action=comment
-//{"uid":"1","cid":"1","ntype":"attraction","nid":"1","gtype":"comment","gvalue":"khobi"}
-    @FormUrlEncoded
-    @POST("api-data.php?action=comment")
-    Call<ResultCommentList> insertComment(
-            @Field("uid") String uid,
-            @Field("cid") String cid,
-            @Field("ntype") String ntype,
-            @Field("nid") String nid,
-            @Field("gtype") String gtype,
-            @Field("gvalue") String gvalue
-
-    );
-
 
     @POST("api-data.php?action=comment")
-    Call<ResultCommentList> callInsertComment(@Body request request);
+    Call<ResultCommentList> callInsertComment(@Body CommentSend request);
 
     //    api.parsdid.com/iranplanner/app/api-data.php?action=pagecomments&nid=1&ntype=attraction
     @GET("api-data.php?action=pagecomments&nid=1&ntype=attraction")
     Call<ResultCommentList> getCommentList(
             @Query("action") String action,
             @Query("nid") String nid,
-            @Query("ntype") String ntype    );
+            @Query("ntype") String ntype);
 
     //    http://api.parsdid.com/iranplanner/app/api-lodging.php?action=list&city=342
     @GET("api-lodging.php?action=list&city=342")
     Call<ResultLodgingList> getLodgingReserve(
             @Query("action") String action,
             @Query("city") String city);
+//    api.parsdid.com/iranplanner/app/api-lodging.php?action=full&id=23107
+
+    @GET("api-lodging.php?action=full&id=23107")
+    Call<ResultLodgingHotel> getHotelReserve(
+            @Query("action") String action,
+            @Query("id") String idHotel);
 
     //    http://api.parsdid.com/iranplanner/app/api-lodging.php?action=room&id=22649&fromdate=1488289475&todate=1488489475
     @GET("api-lodging.php?action=room&id=22649&fromdate=1488289475&todate=1488489475")

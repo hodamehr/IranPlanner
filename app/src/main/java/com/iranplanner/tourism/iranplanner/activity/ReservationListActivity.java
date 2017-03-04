@@ -26,7 +26,7 @@ import entity.ResultLodging;
 import entity.ResultLodgingList;
 import entity.ResultLodgingRoomList;
 import entity.ResultRoom;
-import entity.request;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;

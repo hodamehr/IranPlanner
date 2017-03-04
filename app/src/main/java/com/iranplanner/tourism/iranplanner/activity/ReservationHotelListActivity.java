@@ -1,5 +1,6 @@
 package com.iranplanner.tourism.iranplanner.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import com.iranplanner.tourism.iranplanner.adapter.ReseveHotelListAdapter;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +24,8 @@ import java.util.concurrent.TimeUnit;
 import entity.ResultItinerary;
 import entity.ResultLodging;
 import entity.ResultLodgingFull;
+import entity.ResultLodgingHotel;
+import entity.ResultLodgingList;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,7 +52,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
         recyclerView.setLayoutManager(layoutManager);
         Bundle extras = getIntent().getExtras();
 
-        List<ResultLodging> resultLodgings = (List<ResultLodging>) extras.getSerializable("resultLodgings");
+        final List<ResultLodging> resultLodgings = (List<ResultLodging>) extras.getSerializable("resultLodgings");
 
         adapter = new ReseveHotelListAdapter(ReservationHotelListActivity.this, this, resultLodgings, getApplicationContext(), R.layout.fragment_itinerary_item);
         recyclerView.setAdapter(adapter);
@@ -57,14 +61,41 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-
+                getResultOfHotelReservation("23107");
 
             }
         }));
 
 
     }
+    public void getResultOfHotelReservation(String hotelId) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(setHttpClient())
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+//        api.parsdid.com/iranplanner/app/api-lodging.php?action=full&id=23107
+        Call<ResultLodgingHotel> callc = getJsonInterface.getHotelReserve("full", hotelId);
+        callc.enqueue(new Callback<ResultLodgingHotel>() {
+            @Override
+            public void onResponse(Call<ResultLodgingHotel> call, Response<ResultLodgingHotel> response) {
+                Log.e("result of intresting", "true");
+                if (response.body() != null ) {
+                   ResultLodgingHotel  res = response.body();
+                   ResultLodging  resultLodgingHotelDetail = res.getResultLodging();
+                    Intent intent = new Intent(getApplicationContext(), ReservationHotelDetailActivity.class);
+                    intent.putExtra("resultLodgingHotelDetail", (Serializable) resultLodgingHotelDetail);
+                    startActivity(intent);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResultLodgingHotel> call, Throwable t) {
+                Log.e("result of intresting", "false");
+            }
+        });
+    }
     private OkHttpClient setHttpClient() {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(60, TimeUnit.SECONDS)

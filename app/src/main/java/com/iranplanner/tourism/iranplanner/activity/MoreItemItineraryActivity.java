@@ -57,12 +57,14 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import entity.CommentSend;
 import entity.InterestResult;
 import entity.ItineraryLodgingCity;
 import entity.ItineraryPercentage;
@@ -73,7 +75,7 @@ import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
 import entity.ResultItineraryAttractionList;
 import entity.ResultWidget;
-import entity.request;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -147,8 +149,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
 //        {"uid":"1","cid":"1","ntype":"attraction","nid":"1","gtype":"comment","gvalue":"khobi"}
-//        Call<ResultCommentList> callc = getJsonInterface.insertComment( "1", "1", "attraction", "1", "comment", "test1111");
-        Call<ResultCommentList> callc = getJsonInterface.callInsertComment(new request("1", "1", "attraction", "1", "comment", "test1111"));
+        Call<ResultCommentList> callc = getJsonInterface.callInsertComment(new CommentSend("1", "1", "attraction", "1", "comment", "the best!"));
         callc.enqueue(new Callback<ResultCommentList>() {
             @Override
             public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
@@ -156,21 +157,18 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 if (response.body() != null) {
                     ResultCommentList jsonResponse = response.body();
                     entity.Status status = jsonResponse.getStatus();
-                    if(status.getStatus()==200){
-                        rotate.setRepeatCount(0);
-                        checkWhichImageIntrested(rotateImage);
-                    }
+//                    if(status.getStatus()==200){
+//                        rotate.setRepeatCount(0);
+//                        checkWhichImageIntrested(rotateImage);
+//                    }
                  } else {
                     Log.e("comment body", "null");
                 }
-
-
             }
 
             @Override
             public void onFailure(Call<ResultCommentList> call, Throwable t) {
                 Log.e("result of intresting", "false");
-
             }
         });
     }
@@ -498,6 +496,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         switch (v.getId()) {
 
             case R.id.commentHolder:
+                getResultOfCommentInsert();
                 getResultOfCommentList();
 
 //                rotateImage = "commentImg";

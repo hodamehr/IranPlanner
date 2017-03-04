@@ -16,6 +16,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.util.Util;
+import com.coinpany.core.android.widget.Utils;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 
@@ -59,6 +61,12 @@ public class ReseveHotelListAdapter extends RecyclerView.Adapter<ReseveHotelList
 
         viewHolder.txtHotelName.setText(resultLodgings.get(i).getLodgingName());
         viewHolder.txtType.setText(resultLodgings.get(i).getLodgingTypeTitle());
+
+        viewHolder.txtPrice.setText("شروع قیمت از"+ Utils.persianNumbers(String.valueOf(resultLodgings.get(i).getLodgingRoomPriceDetail().get(0).getLodgingRoomMinPrice()/10))+" تومان");
+        if(resultLodgings.get(i).getLodgingRoomPriceRuleDetail().getLodgingRoomPriceDetailType().equals("percent")){
+            viewHolder.txtShowPercent.setVisibility(View.VISIBLE);
+            viewHolder.txtShowPercent.setText(Utils.persianNumbers( resultLodgings.get(i).getLodgingRoomPriceRuleDetail().getLodgingRoomPriceDetailValue()));
+        }
         if (resultLodgings.get(i).getLodgingRateInt()==1) {
             viewHolder.starHolder.setVisibility(View.VISIBLE);
             viewHolder.imgStar1.setVisibility(View.VISIBLE);
@@ -128,7 +136,7 @@ public class ReseveHotelListAdapter extends RecyclerView.Adapter<ReseveHotelList
         private ImageView imgItineraryListMore;
         private ImageView imgStar1, imgStar2, imgStar3, imgStar4, imgStar5;
         RelativeLayout starHolder;
-        private TextView txtHotelName, txtType;
+        private TextView txtHotelName, txtType,txtShowPercent,txtPrice;
         private ProgressBar imageLoading;
 
 
@@ -143,6 +151,8 @@ public class ReseveHotelListAdapter extends RecyclerView.Adapter<ReseveHotelList
             imgStar5 = (ImageView) view.findViewById(R.id.imgStar5);
             txtHotelName = (TextView) view.findViewById(R.id.txtHotelName);
             txtType = (TextView) view.findViewById(R.id.txtType);
+            txtPrice = (TextView) view.findViewById(R.id.txtPrice);
+            txtShowPercent = (TextView) view.findViewById(R.id.txtShowPercent);
             imageLoading = (ProgressBar) view.findViewById(R.id.imageLoading);
             imageLoading.setVisibility(View.VISIBLE);
         }

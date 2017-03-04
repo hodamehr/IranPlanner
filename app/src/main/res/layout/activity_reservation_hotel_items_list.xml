@@ -24,15 +24,21 @@
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout
+                    android:id="@+id/holder"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/padding_short">
+
+                    >
 
                     <RelativeLayout
                         android:id="@+id/imageHolder"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_alignParentRight="true">
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_alignParentRight="true"
+                        android:paddingTop="@dimen/padding_standard"
+                        android:paddingRight="@dimen/padding_standard"
+                        android:paddingBottom="@dimen/padding_standard"
+                        >
 
                         <ProgressBar
                             android:id="@+id/imageLoading"
@@ -44,27 +50,30 @@
                         <ImageView
                             android:layout_width="50dp"
                             android:layout_height="25dp"
-                            android:src="@color/pink_shadow"
-                            android:translationZ="1dp"
                             android:layout_alignRight="@+id/imgItineraryListMore"
                             android:layout_marginTop="@dimen/padding_standard"
-                            />
+                            android:src="@color/pink_shadow"
+                            android:translationZ="1dp" />
+
                         <TextView
+                            android:id="@+id/txtShowPercent"
+                            style="@style/SmallText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" 20%"
-                            android:translationZ="2dp"
-                            style="@style/SmallText"
                             android:layout_alignRight="@+id/imgItineraryListMore"
                             android:layout_marginTop="@dimen/padding_standard"
                             android:textColor="@color/white_"
-                            />
+                            android:translationZ="2dp"
+                            android:visibility="invisible"
+                            android:paddingRight="@dimen/padding_standard"
+                            android:text="30%"/>
 
                         <ImageView
                             android:id="@+id/imgItineraryListMore"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="center"
+
                             />
 
                     </RelativeLayout>
@@ -75,7 +84,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_marginRight="@dimen/margin_short"
                         android:layout_toLeftOf="@+id/imageHolder"
-                        android:gravity="right">
+                        android:gravity="right"
+                        android:layout_marginTop="@dimen/padding_standard">
 
 
                         <TextView
@@ -132,7 +142,7 @@
                                 android:layout_marginLeft="@dimen/margin_xshort"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_stars"
-                                android:visibility="invisible"/>
+                                android:visibility="invisible" />
 
                             <ImageView
                                 android:id="@+id/imgStar2"
@@ -142,7 +152,7 @@
                                 android:layout_toLeftOf="@+id/imgStar1"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_stars"
-                                android:visibility="invisible"/>
+                                android:visibility="invisible" />
 
                             <ImageView
                                 android:id="@+id/imgStar3"
@@ -152,7 +162,7 @@
                                 android:layout_toLeftOf="@+id/imgStar2"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_stars"
-                                android:visibility="invisible"/>
+                                android:visibility="invisible" />
 
                             <ImageView
                                 android:id="@+id/imgStar4"
@@ -162,7 +172,7 @@
                                 android:layout_toLeftOf="@+id/imgStar3"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_stars"
-                                android:visibility="invisible"/>
+                                android:visibility="invisible" />
 
                             <ImageView
                                 android:id="@+id/imgStar5"
@@ -172,7 +182,7 @@
                                 android:layout_toLeftOf="@+id/imgStar4"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_stars"
-                                android:visibility="invisible"/>
+                                android:visibility="invisible" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -182,23 +192,17 @@
                             android:layout_below="@+id/starHolder"
                             android:layout_margin="@dimen/margin_short">
 
-                            <TextView
-                                android:id="@+id/txtPrice"
-                                style="@style/SmallText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:text="شروع قیمت از" />
 
-                            <TextView
-                                android:id="@+id/txtStartPrice"
-                                style="@style/SmallText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:layout_toLeftOf="@+id/txtPrice"
-                                android:layout_toStartOf="@+id/txtPrice"
-                                android:text="3000" />
+
+                            <!-- <TextView
+                                 android:id="@+id/txtStartPrice"
+                                 style="@style/SmallText"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentTop="true"
+                                 android:layout_toLeftOf="@+id/txtPrice"
+                                 android:layout_toStartOf="@+id/txtPrice"
+                                 android:text="dfd"/>-->
                         </RelativeLayout>
 
 
@@ -206,40 +210,30 @@
 
                     <LinearLayout
                         android:id="@+id/cityNameHolder1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignRight="@+id/imageHolder"
                         android:layout_below="@+id/imageHolder"
                         android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:background="@color/greyLight"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_short"
 
 
+                       >
                         <TextView
-                            android:id="@+id/txtCityName"
+                            android:id="@+id/txtPrice"
                             style="@style/SmallText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="شیراز"
-                            android:textColor="@color/blue" />
+                            android:layout_alignParentRight="true"
+                            android:text="شروع قیمت از"
+                            android:textColor="@color/grey"/>
 
-                        <TextView
-                            android:id="@+id/txtProvinceName"
-                            style="@style/SmallText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="فارس"
-                            android:textColor="@color/blue" />
-
-                        <ImageView
-                            android:id="@+id/imageCityName1"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:scaleType="centerCrop"
-                            android:src="@mipmap/ic_circle_blue" />
                     </LinearLayout>
 
+
                 </RelativeLayout>
+
 
             </android.support.v7.widget.CardView>
 

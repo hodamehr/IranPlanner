@@ -44,6 +44,7 @@ import entity.InterestResult;
 import entity.ItineraryLodgingCity;
 import entity.ResultData;
 import entity.ResultItineraryAttraction;
+import entity.ResultLodging;
 import entity.ResultWidget;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -60,10 +61,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by h.vahidimehr on 28/02/2017.
  */
 
-public class ReservationHotelDetailActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener{
+public class ReservationHotelDetailActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private GoogleMap mMap;
-//    ResultItineraryAttraction attraction;
+    //    ResultItineraryAttraction attraction;
     TextView attractionName, attractionPlace, textTimeDuration, textEntranceFee, attractionType, textBody;
     Marker marker;
     protected CTouchyWebView contentFullDescription;
@@ -72,19 +73,21 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
     SupportMapFragment mapFragment;
     Boolean showMore = true;
     String myData;
-    TextView txtOk, MoreInoText,txtHotelType,txtHotelName,txtAddress;
+    TextView txtOk, MoreInoText, txtHotelType, txtHotelName, txtAddress;
     RelativeLayout ratingHolder, GroupHolder, interestingLayout, VisitedLayout, LikeLayout, changeDateHolder;
     LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder;
     ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg, triangleShowAttraction;
     boolean ratingHolderFlag = false;
     String rotateImage;
     RotateAnimation rotate;
+    ResultLodging resultLodgingHotelDetail;
 //    List<ResultWidget> resultWidget;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
     private void findView() {
         setContentView(R.layout.activity_reservation_hotel_detail);
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -131,6 +134,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         triangleShowAttraction = (ImageView) findViewById(R.id.triangleShowAttraction);
 
     }
+
     private void overrideFont() {
         // for Override font
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
@@ -139,7 +143,8 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
                 .build()
         );
     }
-//    private void setImageHolder(){
+
+    //    private void setImageHolder(){
 //        if (attraction.getItineraryImgUrl() != null) {
 //            String url = attraction.getItineraryImgUrl();
 //            Glide.with(getApplicationContext())
@@ -192,6 +197,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         String myHtmlString = pish + myData + pas;
         contentFullDescription.loadDataWithBaseURL(null, myHtmlString, "text/html", "UTF-8", null);
     }
+
     private String getShowMoreString(String myData) {
         int count = 0;
         int position = 0;
@@ -209,14 +215,14 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         overrideFont();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-//        resultWidget = (List<ResultWidget>) bundle.getSerializable("resultWidget");
+        resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
+        txtHotelName.setText(resultLodgingHotelDetail.getLodgingName());
 //        if(resultWidget!=null){
 //            setInterestResponce(resultWidget);
 //        }
 
 //        setImageHolder();
 //        setWebViewContent(getShowMoreString(myData));
-
 
 
 //        interestingLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -244,7 +250,8 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
 //        bookmarkHolder.setOnClickListener(this);
 
     }
-    private void setInterestResponce( List<ResultWidget> resultWidget){
+
+    private void setInterestResponce(List<ResultWidget> resultWidget) {
         if (resultWidget.get(0).getWidgetBookmarkValue() != null && resultWidget.get(0).getWidgetBookmarkValue() == 1) {
             bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
         }
@@ -281,6 +288,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         }
 
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -384,7 +392,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
                 rotateImage = "dislikeImg";
                 if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
                     animWaiting(dislikeImg);
-                    String uid =Util.getUseRIdFromShareprefrence(getApplicationContext());
+                    String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
 
                 } else {
                     Log.e("user is not login", "error");
@@ -425,9 +433,9 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
                 break;
 
 
-
         }
     }
+
     private void translateDown() {
 
         AnimatorSet mAnimatorSet = new AnimatorSet();
@@ -451,6 +459,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         mAnimatorSet.start();
         ratingHolderFlag = false;
     }
+
     private void animWaiting(ImageView image) {
         rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setRepeatCount(5);
@@ -507,6 +516,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         });
 
     }
+
     private OkHttpClient setHttpClient() {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(60, TimeUnit.SECONDS)
@@ -515,6 +525,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
                 .build();
         return okHttpClient;
     }
+
     private void checkWhichImageIntrested(String imageView) {
 
         String im = imageView;
