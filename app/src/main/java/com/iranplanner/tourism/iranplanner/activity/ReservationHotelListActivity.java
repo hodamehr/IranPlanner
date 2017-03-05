@@ -41,7 +41,9 @@ import server.getJsonInterface;
 public class ReservationHotelListActivity extends StandardActivity implements DataTransferInterface {
     private ReseveHotelListAdapter adapter;
     LinearLayoutManager mLayoutManager;
-
+    Date startOfTravel;
+    List<ResultLodging> resultLodgings;
+    int durationTravel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,9 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
         recyclerView.setLayoutManager(layoutManager);
         Bundle extras = getIntent().getExtras();
 
-        final List<ResultLodging> resultLodgings = (List<ResultLodging>) extras.getSerializable("resultLodgings");
+         resultLodgings = (List<ResultLodging>) extras.getSerializable("resultLodgings");
+        startOfTravel = (Date) extras.getSerializable("startOfTravel");
+         durationTravel = (int) extras.getSerializable("durationTravel");
 
         adapter = new ReseveHotelListAdapter(ReservationHotelListActivity.this, this, resultLodgings, getApplicationContext(), R.layout.fragment_itinerary_item);
         recyclerView.setAdapter(adapter);
@@ -62,12 +66,10 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
             @Override
             public void onItemClick(View view, final int position) {
                 getResultOfHotelReservation("23107");
-
             }
         }));
-
-
     }
+
     public void getResultOfHotelReservation(String hotelId) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(setHttpClient())
@@ -81,11 +83,13 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
             @Override
             public void onResponse(Call<ResultLodgingHotel> call, Response<ResultLodgingHotel> response) {
                 Log.e("result of intresting", "true");
-                if (response.body() != null ) {
-                   ResultLodgingHotel  res = response.body();
-                   ResultLodging  resultLodgingHotelDetail = res.getResultLodging();
+                if (response.body() != null) {
+                    ResultLodgingHotel res = response.body();
+                    ResultLodging resultLodgingHotelDetail = res.getResultLodging();
                     Intent intent = new Intent(getApplicationContext(), ReservationHotelDetailActivity.class);
                     intent.putExtra("resultLodgingHotelDetail", (Serializable) resultLodgingHotelDetail);
+                    intent.putExtra("startOfTravel", startOfTravel);
+                    intent.putExtra("durationTravel", durationTravel);
                     startActivity(intent);
                 }
             }
@@ -96,6 +100,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
             }
         });
     }
+
     private OkHttpClient setHttpClient() {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(60, TimeUnit.SECONDS)
@@ -104,7 +109,6 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
                 .build();
         return okHttpClient;
     }
-
 
 
     @Override

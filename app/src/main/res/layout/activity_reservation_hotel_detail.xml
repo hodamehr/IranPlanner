@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,7 +31,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/imgItineraryListMore"
+                            android:id="@+id/imgHotel"
                             android:layout_width="match_parent"
                             android:layout_height="250dp"
                             android:layout_alignParentTop="true"
@@ -41,6 +40,13 @@
                             android:background="@color/blue"
                             android:scaleType="centerCrop" />
 
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/dark_shadow"></RelativeLayout>
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
@@ -55,7 +61,7 @@
                                 android:layout_below="@+id/txtHotelName"
                                 android:layout_centerHorizontal="true"
                                 android:layout_marginTop="@dimen/margin_short"
-                                android:text="destintion"
+                                android:text="type"
                                 android:textColor="@color/white_"
                                 android:translationZ="1dp"
 
@@ -73,7 +79,7 @@
 
                             <RelativeLayout
                                 android:id="@+id/starHolder"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/txtHotelType">
 
@@ -81,8 +87,8 @@
                                     android:id="@+id/imgStar1"
                                     android:layout_width="15dp"
                                     android:layout_height="15dp"
-                                    android:layout_alignParentRight="true"
                                     android:layout_marginLeft="@dimen/margin_xshort"
+                                    android:layout_toRightOf="@+id/imgStar2"
                                     android:scaleType="centerCrop"
                                     android:src="@mipmap/ic_stars" />
 
@@ -91,7 +97,7 @@
                                     android:layout_width="15dp"
                                     android:layout_height="15dp"
                                     android:layout_marginLeft="@dimen/margin_xshort"
-                                    android:layout_toLeftOf="@+id/imgStar1"
+                                    android:layout_toRightOf="@+id/imgStar3"
                                     android:scaleType="centerCrop"
                                     android:src="@mipmap/ic_stars" />
 
@@ -99,8 +105,8 @@
                                     android:id="@+id/imgStar3"
                                     android:layout_width="15dp"
                                     android:layout_height="15dp"
+                                    android:layout_centerInParent="true"
                                     android:layout_marginLeft="@dimen/margin_xshort"
-                                    android:layout_toLeftOf="@+id/imgStar2"
                                     android:scaleType="centerCrop"
                                     android:src="@mipmap/ic_stars" />
 
@@ -477,7 +483,6 @@
                                     android:maxLines="1"
                                     android:text="ذخیره" />
 
-
                             </LinearLayout>
                         </LinearLayout>
                     </RelativeLayout>
@@ -488,128 +493,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/ratingHolder">
-                        <!--travel type-->
-                        <RelativeLayout
-                            android:id="@+id/supplierLayoutAboutHotel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/dateHolder"
-                            android:background="@color/greyLight"
-                            android:paddingLeft="@dimen/padding_standard"
-                            android:paddingRight="@dimen/padding_standard">
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentTop="true"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:paddingTop="@dimen/padding_short">
-
-                                <ImageView
-                                    android:id="@+id/imgAboutHotel"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_level_grey" />
-
-                                <TextView
-                                    android:id="@+id/txtAboutHotel"
-                                    style="@style/SmallText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:maxLines="1"
-                                    android:text="درباره هتل" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:layout_centerInParent="true"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:paddingTop="@dimen/padding_short">
-
-                                <ImageView
-                                    android:id="@+id/imgHotelsHotel"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_road_grey" />
-
-                                <TextView
-                                    android:id="@+id/txtHotelsHotel"
-                                    style="@style/SmallText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:maxLines="1"
-                                    android:text="قوانین هتل" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentTop="true"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:paddingTop="@dimen/padding_short">
-
-                                <ImageView
-                                    android:id="@+id/imgfacility"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_eye_grey" />
-
-                                <TextView
-                                    android:id="@+id/txtfacility"
-                                    style="@style/SmallText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:maxLines="1"
-                                    android:text="امکانات هتل" />
-
-
-                            </LinearLayout>
-
-
-                        </RelativeLayout>
-                        <!--mapHolder-->
-                        <RelativeLayout
-                            android:id="@+id/mapHolder"
-                            android:layout_width="match_parent"
-                            android:layout_height="250dp"
-                            android:layout_below="@+id/supplierAddress"
-                            android:background="@color/greyLight"
-                            android:focusableInTouchMode="true">
-
-                            <fragment
-                                android:id="@+id/map"
-                                android:name="com.google.android.gms.maps.SupportMapFragment"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:focusableInTouchMode="true"
-                                tools:context="com.iranplanner.tourism.iranplanner.activity.MoreItemItineraryActivity" />
-                        </RelativeLayout>
                         <!--dateHolder-->
                         <RelativeLayout
                             android:id="@+id/dateHolder"
@@ -708,10 +592,11 @@
                                     android:layout_centerVertical="true"
                                     android:layout_marginRight="@dimen/padding_short"
                                     android:layout_toLeftOf="@+id/txtOk1"
-                                    android:background="@mipmap/ic_calendar_grey" />
+                                    android:background="@mipmap/ic_calendar_grey"
+                                    android:visibility="gone" />
 
                                 <TextView
-                                    android:id="@+id/txtDate1"
+                                    android:id="@+id/txtDuration"
                                     style="@style/StandardTextGrey"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -723,12 +608,27 @@
 
 
                         </RelativeLayout>
+                        <!--address-->
+                        <RelativeLayout
+                            android:id="@+id/dividerPink"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/dateHolder"
+                            android:background="@color/pink"></RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/dividerGrey"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_below="@+id/dividerPink"
+                            android:background="@color/greyLight"></RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/supplierAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/supplierLayoutAboutHotel">
+                            android:layout_below="@+id/dividerGrey"
+                            android:padding="@dimen/padding_short">
 
                             <TextView
                                 android:id="@+id/txtAddressTitle"
@@ -745,10 +645,132 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_below="@+id/txtAddressTitle"
+                                android:paddingTop="@dimen/padding_short"
                                 android:text="ادرس " />
                         </RelativeLayout>
+                        <!--mapHolder-->
+                        <RelativeLayout
+                            android:id="@+id/mapHolder"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:layout_below="@+id/supplierAddress"
+                            android:background="@color/greyLight"
+                            android:focusableInTouchMode="true">
+
+                            <fragment
+                                android:id="@+id/map"
+                                android:name="com.google.android.gms.maps.SupportMapFragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:focusableInTouchMode="true"
+                                tools:context="com.iranplanner.tourism.iranplanner.activity.MoreItemItineraryActivity" />
+                        </RelativeLayout>
+                        <!--facility and about Hotel-->
+                        <RelativeLayout
+                            android:id="@+id/supplierLayoutAboutHotel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/mapHolder"
+                            android:background="@color/greyLight"
+                            android:paddingLeft="@dimen/padding_standard"
+                            android:paddingRight="@dimen/padding_standard"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingTop="@dimen/padding_short">
+
+                                <ImageView
+                                    android:id="@+id/imgAboutHotel"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:scaleType="centerCrop"
+                                    android:src="@mipmap/ic_level_grey" />
+
+                                <TextView
+                                    android:id="@+id/txtAboutHotel"
+                                    style="@style/SmallText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:maxLines="1"
+                                    android:text="درباره هتل" />
 
 
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerInParent="true"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingTop="@dimen/padding_short">
+
+                                <ImageView
+                                    android:id="@+id/imgHotelsHotel"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:scaleType="centerCrop"
+                                    android:src="@mipmap/ic_road_grey" />
+
+                                <TextView
+                                    android:id="@+id/txtHotelsHotel"
+                                    style="@style/SmallText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:maxLines="1"
+                                    android:text="قوانین هتل" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentTop="true"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingTop="@dimen/padding_short">
+
+                                <ImageView
+                                    android:id="@+id/imgfacility"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:scaleType="centerCrop"
+                                    android:src="@mipmap/ic_eye_grey" />
+
+                                <TextView
+                                    android:id="@+id/txtfacility"
+                                    style="@style/SmallText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:maxLines="1"
+                                    android:text="امکانات هتل" />
+
+
+                            </LinearLayout>
+
+
+                        </RelativeLayout>
                     </RelativeLayout>
                 </RelativeLayout>
 
@@ -758,4 +780,29 @@
 
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/padding_standard"
+        android:layout_marginLeft="@dimen/padding_standard"
+        android:layout_marginRight="@dimen/padding_standard">
+
+        <ImageView
+            android:id="@+id/roomReservationBtn"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/button_corner_green" />
+
+        <TextView
+            style="@style/StandardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="مشاهده مرکز اقامتی"
+            android:textColor="@color/white_" />
+    </RelativeLayout>
+
+</RelativeLayout>

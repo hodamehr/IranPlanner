@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
@@ -42,6 +43,9 @@ import server.getJsonInterface;
 public class ReservationListActivity extends StandardActivity implements DataTransferInterface {
     private ReseveDateListAdapter adapter;
     LinearLayoutManager mLayoutManager;
+    Date startOfTravel;
+    ResultItinerary itineraryData;
+    int durationTravel=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +56,8 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         Bundle extras = getIntent().getExtras();
-        final ResultItinerary itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
-        Date startOfTravel = (Date) extras.getSerializable("startOfTravel");
+        itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
+        startOfTravel = (Date) extras.getSerializable("startOfTravel");
 
         adapter = new ReseveDateListAdapter(ReservationListActivity.this, this, itineraryData, getApplicationContext(), R.layout.fragment_itinerary_item, startOfTravel);
         recyclerView.setAdapter(adapter);
@@ -63,6 +67,8 @@ public class ReservationListActivity extends StandardActivity implements DataTra
             @Override
             public void onItemClick(View view, final int position) {
                 ImageView reservationBtn = (ImageView) view.findViewById(R.id.ReservationBtn);
+                TextView txtDurationLodgingCity = (TextView) view.findViewById(R.id.txtDurationLodgingCity);
+                durationTravel=Integer.valueOf((String) txtDurationLodgingCity.getText());
                 reservationBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -106,6 +112,8 @@ public class ReservationListActivity extends StandardActivity implements DataTra
                     List<ResultLodging> resultLodgings = res.getResultLodging();
                     Intent intent = new Intent(getApplicationContext(), ReservationHotelListActivity.class);
                     intent.putExtra("resultLodgings", (Serializable) resultLodgings);
+                    intent.putExtra("startOfTravel", startOfTravel);
+                    intent.putExtra("durationTravel", durationTravel);
                     startActivity(intent);
                 }
 
@@ -127,21 +135,20 @@ public class ReservationListActivity extends StandardActivity implements DataTra
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-cityID="22649";
-        Call<ResultLodgingRoomList> callc = getJsonInterface.getResultLodgingRoomList("room", cityID,"","");
+        cityID = "22649";
+        Call<ResultLodgingRoomList> callc = getJsonInterface.getResultLodgingRoomList("room", cityID, "", "");
         callc.enqueue(new Callback<ResultLodgingRoomList>() {
             @Override
             public void onResponse(Call<ResultLodgingRoomList> call, Response<ResultLodgingRoomList> response) {
                 Log.e("result of intresting", "true");
 
-
-                if (response.body() != null && response.body().getResultRoom().size()!=0) {
-                    ResultLodgingRoomList res = response.body();
-                    List<ResultRoom> resultLodgings=res.getResultRoom();
-                    Intent intent = new Intent(getApplicationContext(), ReservationHotelListActivity.class);
-                    intent.putExtra("resultLodgings", (Serializable) resultLodgings);
-                    startActivity(intent);
-                }
+//                if (response.body() != null && response.body().getResultRoom().size()!=0) {
+//                    ResultLodgingRoomList res = response.body();
+//                    List<ResultRoom> resultLodgings=res.getResultRoom();
+//                    Intent intent = new Intent(getApplicationContext(), ReservationHotelListActivity.class);
+//                    intent.putExtra("resultLodgings", (Serializable) resultLodgings);
+//                    startActivity(intent);
+//                }
 
             }
 
@@ -152,6 +159,7 @@ cityID="22649";
             }
         });
     }
+
     @Override
     public void setValues(ArrayList<String> al) {
         al.get(0);

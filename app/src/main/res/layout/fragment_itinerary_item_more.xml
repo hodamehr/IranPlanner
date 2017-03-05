@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -483,12 +483,12 @@
                         <!--travel type-->
                         <RelativeLayout
                             android:id="@+id/supplierLayoutTravelType"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/ShowAttractionHolder"
+                            android:layout_below="@+id/ShowMoreInfoHolder"
                             android:background="@color/greyLight"
                             android:paddingLeft="@dimen/padding_standard"
-                            android:paddingRight="@dimen/padding_standard">
+                            android:paddingRight="@dimen/padding_standard" >
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -587,7 +587,7 @@
                             android:id="@+id/mapHolder"
                             android:layout_width="match_parent"
                             android:layout_height="250dp"
-                            android:layout_below="@+id/dateHolder"
+                            android:layout_below="@+id/supplierLayoutTravelType"
                             android:background="@color/greyLight"
                             android:focusableInTouchMode="true">
 
@@ -608,10 +608,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
-                            android:layout_below="@+id/supplierLayoutTravelType"
                             android:paddingBottom="@dimen/padding_standard"
                             android:paddingLeft="@dimen/padding_big"
-                            android:paddingRight="@dimen/padding_big">
+                            android:paddingRight="@dimen/padding_big"
+                          >
 
                             <ImageView
                                 android:id="@+id/triangle"
@@ -620,7 +620,8 @@
                                 android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
                                 android:rotation="180"
-                                android:src="@drawable/shape_triangle" />
+                                android:src="@drawable/shape_triangle"
+                                                   />
 
 
                             <RelativeLayout
@@ -628,7 +629,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/triangle"
-                                android:layout_marginBottom="@dimen/margin_standard">
+                                android:layout_marginBottom="@dimen/margin_standard"
+                                android:visibility="gone">
 
 
                                 <RelativeLayout
@@ -679,14 +681,14 @@
                                 style="@style/StandardTitle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/showItinerys"
                                 android:layout_centerHorizontal="true"
                                 android:background="@drawable/button_corner_green"
                                 android:text="رزرو مراکز اقامتی"
-                                android:textColor="@color/white_" />
+                                android:textColor="@color/white_"
+                                android:visibility="gone"/>
 
                             <Button
-                                android:id="@+id/showItinerys"
+                                android:id="@+id/showItinerys1"
                                 style="@style/StandardTitle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -695,7 +697,8 @@
                                 android:layout_marginBottom="@dimen/margin_standard"
                                 android:background="@drawable/button_corner"
                                 android:text="نمایش برنامه سفر"
-                                android:textColor="@color/white_" />
+                                android:textColor="@color/white_"
+                                android:visibility="gone"/>
 
                         </RelativeLayout>
 
@@ -706,7 +709,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true">
+                            android:layout_below="@id/dateHolder">
 
                             <ImageView
                                 android:id="@+id/triangleShowAttraction"
@@ -935,10 +938,16 @@
                         </RelativeLayout>
                         <!--showMore   bishtar bekhanid  -->
                         <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:background="@color/greyLight"
+                            android:id="@+id/deviderShowMoreInfoHolder"
+                            android:layout_below="@+id/ShowAttractionHolder"></RelativeLayout>
+                        <RelativeLayout
                             android:id="@+id/ShowMoreInfoHolder"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_below="@id/mapHolder"
+                            android:layout_below="@id/deviderShowMoreInfoHolder"
                             android:layout_centerVertical="true"
                             android:background="@color/white_"
                             android:padding="@dimen/padding_short">
@@ -953,6 +962,7 @@
                                 android:gravity="right"
                                 android:paddingBottom="@dimen/padding_short"
                                 android:text="درباره این سفر"
+                                android:visibility="gone"
 
                                 />
 
@@ -995,7 +1005,7 @@
                             android:id="@+id/viewPagerMore"
                             android:layout_width="match_parent"
                             android:layout_height="240dp"
-                            android:layout_below="@+id/borderLayout"
+                            android:layout_below="@+id/mapHolder"
                             android:gravity="center"
                             android:paddingLeft="@dimen/margin_short">
 
@@ -1024,4 +1034,31 @@
 
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/padding_standard"
+        android:layout_marginLeft="@dimen/padding_standard"
+        android:layout_marginRight="@dimen/padding_standard">
+
+        <Button
+        android:id="@+id/showItinerys"
+        style="@style/StandardTitle"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/button_corner"
+        android:text="نمایش برنامه سفر"
+        android:textColor="@color/white_" />
+
+        <Button
+            android:id="@+id/showItinerys1"
+            style="@style/StandardTitle"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/button_corner"
+            android:text="نمایش برنامه سفر"
+            android:textColor="@color/white_" />
+    </LinearLayout>
+</RelativeLayout>

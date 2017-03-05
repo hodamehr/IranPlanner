@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -22,6 +21,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.coinpany.core.android.widget.CTouchyWebView;
+import com.coinpany.core.android.widget.Utils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,19 +31,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import entity.InterestResult;
 import entity.ItineraryLodgingCity;
 import entity.ResultData;
-import entity.ResultItineraryAttraction;
 import entity.ResultLodging;
 import entity.ResultWidget;
 import okhttp3.OkHttpClient;
@@ -69,11 +68,11 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
     Marker marker;
     protected CTouchyWebView contentFullDescription;
     ImageView imageTypeAttraction;
-    ImageView imageAttraction;
+    ImageView imgHotel;
     SupportMapFragment mapFragment;
     Boolean showMore = true;
     String myData;
-    TextView txtOk, MoreInoText, txtHotelType, txtHotelName, txtAddress;
+    TextView txtOk, MoreInoText, txtHotelType, txtHotelName, txtAddress,txtDate,txtDuration;
     RelativeLayout ratingHolder, GroupHolder, interestingLayout, VisitedLayout, LikeLayout, changeDateHolder;
     LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder;
     ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg, triangleShowAttraction;
@@ -81,6 +80,8 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
     String rotateImage;
     RotateAnimation rotate;
     ResultLodging resultLodgingHotelDetail;
+    Date startOfTravel;
+    int durationTravel;
 //    List<ResultWidget> resultWidget;
 
     @Override
@@ -96,6 +97,8 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         MoreInoText = (TextView) findViewById(R.id.MoreInoText);
         txtHotelType = (TextView) findViewById(R.id.txtHotelType);
         txtHotelName = (TextView) findViewById(R.id.txtHotelName);
+        txtDate = (TextView) findViewById(R.id.txtDate);
+        txtDuration = (TextView) findViewById(R.id.txtDuration);
         txtAddress = (TextView) findViewById(R.id.txtAddress);
         attractionName = (TextView) findViewById(R.id.attractionName);
         attractionPlace = (TextView) findViewById(R.id.attractionPlace);
@@ -103,7 +106,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         textEntranceFee = (TextView) findViewById(R.id.textEntranceFee);
         attractionType = (TextView) findViewById(R.id.attractionType);
         imageTypeAttraction = (ImageView) findViewById(R.id.imageTypeAttraction);
-        imageAttraction = (ImageView) findViewById(R.id.imageAttraction);
+        imgHotel = (ImageView) findViewById(R.id.imgHotel);
 
         rateHolder = (LinearLayout) findViewById(R.id.rateHolder);
         doneHolder = (LinearLayout) findViewById(R.id.doneHolder);
@@ -123,7 +126,6 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         MoreInoText = (TextView) findViewById(R.id.MoreInoText);
         bookmarkImg = (ImageView) findViewById(R.id.bookmarkImg);
         doneImg = (ImageView) findViewById(R.id.doneImg);
-
         dislikeImg = (ImageView) findViewById(R.id.dislikeImg);
         okImg = (ImageView) findViewById(R.id.okImg);
         likeImg = (ImageView) findViewById(R.id.likeImg);
@@ -144,32 +146,32 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         );
     }
 
-    //    private void setImageHolder(){
-//        if (attraction.getItineraryImgUrl() != null) {
-//            String url = attraction.getItineraryImgUrl();
-//            Glide.with(getApplicationContext())
-//                    .load(url)
-//                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                    .listener(new RequestListener<String, GlideDrawable>() {
-//
-//                        @Override
-//                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-//                            //// TODO: 22/01/2017  get defeult picture
-//                            return false;
-//                        }
-//
-//                        @Override
-//                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-//                            return false;
-//                        }
-//                    })
-//                    .into(imageAttraction);
-//
-//        } else {
-//            Glide.clear(imageAttraction);
-//            imageAttraction.setImageDrawable(null);
-//        }
-//    }
+        private void setImageHolder(){
+        if (resultLodgingHotelDetail.getLodgingImgUrl() != null) {
+            String url = resultLodgingHotelDetail.getLodgingImgUrl();
+            Glide.with(getApplicationContext())
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .listener(new RequestListener<String, GlideDrawable>() {
+
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            //// TODO: 22/01/2017  get defeult picture
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
+                    .into(imgHotel);
+
+        } else {
+            Glide.clear(imgHotel);
+            imgHotel.setImageDrawable(null);
+        }
+    }
 //    private void setAttractionTypeImage(){
 //        if (attraction.getAttarctionItineraryTypeId().equals("2930")) {
 //            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_religious));
@@ -216,12 +218,20 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
+        startOfTravel = (Date) bundle.getSerializable("startOfTravel");
+        durationTravel = (int) bundle.getSerializable("durationTravel");
         txtHotelName.setText(resultLodgingHotelDetail.getLodgingName());
+        txtHotelType.setText(resultLodgingHotelDetail.getLodgingTypeTitle());
+        txtAddress.setText(resultLodgingHotelDetail.getLodgingAddress());
+        txtDate.setText(Utils.getSimpleDate(startOfTravel));
+        txtDuration.setText(Utils.persianNumbers(String.valueOf(durationTravel))+" شب");
+
+
 //        if(resultWidget!=null){
 //            setInterestResponce(resultWidget);
 //        }
 
-//        setImageHolder();
+        setImageHolder();
 //        setWebViewContent(getShowMoreString(myData));
 
 
@@ -236,7 +246,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
 //                }
 //            }
 //        });
-//        mapFragment.getMapAsync(this);
+        mapFragment.getMapAsync(this);
 //        MoreInoText.setOnClickListener(this);
 //        ratingHolder.setOnClickListener(this);
 //        rateHolder.setOnClickListener(this);
@@ -297,12 +307,14 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         mMap.getUiSettings().setZoomControlsEnabled(false);
 
         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker));
+        Double lan=resultLodgingHotelDetail.getLodgingPosLat();
+        Double lon=resultLodgingHotelDetail.getLodgingPosLong();
 
-//        marker = mMap.addMarker(markerOptions
-//                .position(new LatLng(lan, lon))
-//                .title(attraction.getCityTitle())
-//                .snippet(":)"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lan, lon), 15.0f));
+        marker = mMap.addMarker(markerOptions
+                .position(new LatLng(lan, lon))
+                .title(resultLodgingHotelDetail.getLodgingName())
+                );
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lan, lon), 15.0f));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override

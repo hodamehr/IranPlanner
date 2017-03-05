@@ -87,7 +87,8 @@ public class ReseveDateListAdapter extends RecyclerView.Adapter<ReseveDateListAd
     @Override
     public void onBindViewHolder(final ReseveDateListAdapter.ViewHolder viewHolder, int i) {
 
-        viewHolder.txtDurationLodgingCity.setText(String.valueOf("به مدت " + duration.get(i) + " روز از تاریخ " + Utils.getShortSimpleDate(stayNights.get(i))));
+        viewHolder.txtDurationLodgingCity.setText(String.valueOf(duration.get(i) ));
+        viewHolder.txtDurationDateLodgingCity.setText(String.valueOf( " شب از تاریخ " + Utils.getShortSimpleDate(stayNights.get(i))));
         viewHolder.txtProvinceName.setText(listCitys.get(i).getCityProvinceName());
         viewHolder.txtCityName.setText(listCitys.get(i).getCityTitle());
         viewHolder.lodgingCityName.setText(listCitys.get(i).getCityTitle());
@@ -134,7 +135,7 @@ public class ReseveDateListAdapter extends RecyclerView.Adapter<ReseveDateListAd
 
         private ImageView imgItineraryListMore;
         private ImageView ReservationBtn;
-        private TextView txtDurationLodgingCity, txtProvinceName, txtCityName, lodgingCityName;
+        private TextView txtDurationLodgingCity, txtProvinceName, txtCityName, lodgingCityName,txtDurationDateLodgingCity;
         private ProgressBar imageLoading;
 
 
@@ -143,6 +144,7 @@ public class ReseveDateListAdapter extends RecyclerView.Adapter<ReseveDateListAd
             lodgingCityName = (TextView) view.findViewById(R.id.lodgingCityName);
             imgItineraryListMore = (ImageView) view.findViewById(R.id.imgItineraryListMore);
             txtDurationLodgingCity = (TextView) view.findViewById(R.id.txtDurationLodgingCity);
+            txtDurationDateLodgingCity = (TextView) view.findViewById(R.id.txtDurationDateLodgingCity);
             txtProvinceName = (TextView) view.findViewById(R.id.txtProvinceName);
             ReservationBtn = (ImageView) view.findViewById(R.id.ReservationBtn);
             txtCityName = (TextView) view.findViewById(R.id.txtCityName);
