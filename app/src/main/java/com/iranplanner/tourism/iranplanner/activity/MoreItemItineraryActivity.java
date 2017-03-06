@@ -137,7 +137,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     Date startOfTravel;
     List<Date> stayNights;
     Map<String, Integer> dateCity;
-    Button showReservation;
+    Button showReservation,showItinerary;
 //    List<Map<String,Integer>> ss;
 
     public void getResultOfCommentInsert() {
@@ -216,7 +216,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         toCityName = (TextView) findViewById(R.id.toCityName);
         showReservation = (Button) findViewById(R.id.showReservation);
         itinerary_attraction_type_more = (ImageView) findViewById(R.id.itinerary_attraction_type_more);
-        showItinerys = (TextView) findViewById(R.id.showItinerys);
+//        showItinerys = (TextView) findViewById(R.id.showItinerys);
+        showItinerary = (Button) findViewById(R.id.showItinerary);
         textTpeTravel1 = (TextView) findViewById(R.id.textTpeTravel1);
         textTpeTravel2 = (TextView) findViewById(R.id.textTpeTravel2);
         textTpeTravel3 = (TextView) findViewById(R.id.textTpeTravel3);
@@ -412,7 +413,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         beftorVisitedImg.setOnClickListener(this);
         itineraryId = itineraryData.getItineraryId();
         bookmarkHolder.setOnClickListener(this);
-        showItinerys.setOnClickListener(this);
+        showItinerary.setOnClickListener(this);
         MoreInoText.setOnClickListener(this);
         showReservation.setOnClickListener(this);
         commentHolder.setOnClickListener(this);
@@ -639,7 +640,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                     Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
                 }
                 break;
-            case R.id.showItinerys:
+            case R.id.showItinerary:
                 Log.e("open itinerarylist", "open");
                 getAttraction(itineraryId);
                 showProgressDialog();

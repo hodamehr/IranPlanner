@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -41,8 +40,7 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:scaleType="centerCrop"
-                         />
+                            android:scaleType="centerCrop" />
 
 
                         <RelativeLayout
@@ -58,7 +56,7 @@
                                 android:layout_margin="5dp"
                                 android:text="text"
                                 android:textColor="@color/white_"
-                                android:translationZ="1dp"/>
+                                android:translationZ="1dp" />
 
                             <ImageView
                                 android:id="@+id/itineraryMoreLike"
@@ -69,7 +67,7 @@
                                 android:layout_toRightOf="@+id/itineraryDuration"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_calenderwhite"
-                                android:translationZ="1dp"/>
+                                android:translationZ="1dp" />
                         </RelativeLayout>
 
                         <ImageView
@@ -80,7 +78,7 @@
                             android:layout_centerVertical="true"
                             android:scaleType="centerCrop"
                             android:src="@drawable/circle_tohi"
-                            android:translationZ="1dp"/>
+                            android:translationZ="1dp" />
 
                         <TextView
                             android:id="@+id/fromCityName"
@@ -93,7 +91,7 @@
                             android:paddingLeft="@dimen/padding_short"
                             android:text="from"
                             android:textColor="@color/white_"
-                            android:translationZ="1dp"/>
+                            android:translationZ="1dp" />
 
                         <TextView
                             android:id="@+id/toCityName"
@@ -106,15 +104,15 @@
                             android:paddingRight="@dimen/padding_short"
                             android:text="destintion"
                             android:textColor="@color/white_"
-                            android:translationZ="1dp"/>
+                            android:translationZ="1dp" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="250dp"
-                            android:background="@drawable/dark_shadow"
-                            android:layout_alignParentTop="true"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"></RelativeLayout>
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/dark_shadow"></RelativeLayout>
                     </RelativeLayout>
                     <!--rating Holder-->
                     <RelativeLayout
@@ -486,9 +484,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ShowMoreInfoHolder"
-                            android:background="@color/greyLight"
                             android:paddingLeft="@dimen/padding_standard"
-                            android:paddingRight="@dimen/padding_standard" >
+                            android:paddingRight="@dimen/padding_standard">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -608,10 +605,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
-                            android:paddingBottom="@dimen/padding_standard"
+
                             android:paddingLeft="@dimen/padding_big"
-                            android:paddingRight="@dimen/padding_big"
-                          >
+                            android:paddingRight="@dimen/padding_big">
 
                             <ImageView
                                 android:id="@+id/triangle"
@@ -620,8 +616,7 @@
                                 android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
                                 android:rotation="180"
-                                android:src="@drawable/shape_triangle"
-                                                   />
+                                android:src="@drawable/shape_triangle" />
 
 
                             <RelativeLayout
@@ -630,7 +625,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/triangle"
                                 android:layout_marginBottom="@dimen/margin_standard"
-                                android:visibility="gone">
+                               >
 
 
                                 <RelativeLayout
@@ -677,7 +672,7 @@
                             </RelativeLayout>
 
                             <Button
-                                android:id="@+id/showReservation"
+                                android:id="@+id/showReservations"
                                 style="@style/StandardTitle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -685,7 +680,7 @@
                                 android:background="@drawable/button_corner_green"
                                 android:text="رزرو مراکز اقامتی"
                                 android:textColor="@color/white_"
-                                android:visibility="gone"/>
+                                android:visibility="gone" />
 
                             <Button
                                 android:id="@+id/showItinerys1"
@@ -698,7 +693,7 @@
                                 android:background="@drawable/button_corner"
                                 android:text="نمایش برنامه سفر"
                                 android:textColor="@color/white_"
-                                android:visibility="gone"/>
+                                android:visibility="gone" />
 
                         </RelativeLayout>
 
@@ -717,7 +712,8 @@
                                 android:layout_height="30dp"
                                 android:layout_centerHorizontal="true"
                                 android:rotation="180"
-                                android:src="@drawable/shape_triangle" />
+                                android:src="@drawable/shape_triangle"
+                                android:visibility="gone" />
 
                             <LinearLayout
                                 android:id="@+id/typeOfItineraryDetail"
@@ -925,24 +921,24 @@
                                 style="@style/StandardTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true"
                                 android:paddingBottom="@dimen/padding_short"
                                 android:paddingLeft="@dimen/padding_standard"
                                 android:paddingRight="@dimen/padding_standard"
-                                android:paddingTop="@dimen/padding_standard"
                                 android:text="سفر در یک نگاه"
-                                android:textColor="@color/grey"
-                                android:layout_alignParentTop="true"
-                                android:layout_centerHorizontal="true" />
+                                android:textColor="@color/grey" />
 
 
                         </RelativeLayout>
                         <!--showMore   bishtar bekhanid  -->
                         <RelativeLayout
+                            android:id="@+id/deviderShowMoreInfoHolder"
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
-                            android:background="@color/greyLight"
-                            android:id="@+id/deviderShowMoreInfoHolder"
-                            android:layout_below="@+id/ShowAttractionHolder"></RelativeLayout>
+                            android:layout_below="@+id/ShowAttractionHolder"
+                            android:background="@color/greyLight"></RelativeLayout>
+
                         <RelativeLayout
                             android:id="@+id/ShowMoreInfoHolder"
                             android:layout_width="wrap_content"
@@ -1018,7 +1014,8 @@
                                 android:gravity="center"
                                 android:paddingLeft="@dimen/margin_standard"
                                 android:paddingRight="@dimen/margin_short"
-                                android:paddingTop="@dimen/padding_standard">
+                                android:paddingTop="@dimen/padding_standard"
+                                android:paddingBottom="@dimen/padding_standard">
 
                             </android.support.v4.view.ViewPager>
 
@@ -1035,30 +1032,58 @@
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/padding_standard"
-        android:layout_marginLeft="@dimen/padding_standard"
-        android:layout_marginRight="@dimen/padding_standard">
 
-        <Button
-        android:id="@+id/showItinerys"
-        style="@style/StandardTitle"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/button_corner"
-        android:text="نمایش برنامه سفر"
-        android:textColor="@color/white_" />
 
-        <Button
-            android:id="@+id/showItinerys1"
-            style="@style/StandardTitle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@drawable/button_corner"
-            android:text="نمایش برنامه سفر"
-            android:textColor="@color/white_" />
-    </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/padding_standard"
+            android:layout_marginLeft="@dimen/padding_standard"
+            android:layout_marginRight="@dimen/padding_standard"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/showReservation"
+                style="@style/StandardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginRight="@dimen/padding_short"
+                android:layout_weight="1"
+                android:background="@drawable/button_corner_green"
+                android:text="رزرو مراکز اقامتی"
+                android:textColor="@color/white_" />
+
+            <Button
+                android:id="@+id/showItinerary"
+                style="@style/StandardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="@dimen/padding_short"
+                android:layout_weight="1"
+                android:background="@drawable/button_corner"
+                android:text="نمایش برنامه سفر"
+                android:textColor="@color/white_" />
+        </LinearLayout>
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="45dp"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_marginBottom="@dimen/padding_standard"-->
+    <!--android:layout_marginLeft="@dimen/padding_standard"-->
+    <!--android:layout_marginRight="@dimen/padding_standard">-->
+
+    <!--<Button-->
+    <!--android:id="@+id/showItinerys"-->
+    <!--style="@style/StandardTitle"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="45dp"-->
+    <!--android:background="@drawable/button_corner"-->
+    <!--android:text="نمایش برنامه سفر"-->
+    <!--android:textColor="@color/white_" />-->
+
+
+    <!--</LinearLayout>-->
 </RelativeLayout>

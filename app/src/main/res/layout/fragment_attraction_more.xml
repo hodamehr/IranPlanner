@@ -396,19 +396,19 @@
                             </LinearLayout>
                         </LinearLayout>
 
-                        <Button
-                            android:id="@+id/showItinerys"
-                            style="@style/StandardTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/typeOfItineraryDetail"
-                            android:layout_centerInParent="true"
-                            android:layout_margin="@dimen/padding_larg"
-                            android:background="@drawable/button_corner"
-                            android:paddingLeft="@dimen/padding_larg"
-                            android:paddingRight="@dimen/padding_larg"
-                            android:text="نمایش برنامه سفر"
-                            android:textColor="@color/white_" />
+                        <!--<Button-->
+                            <!--android:id="@+id/showItinerys"-->
+                            <!--style="@style/StandardTitle"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_below="@id/typeOfItineraryDetail"-->
+                            <!--android:layout_centerInParent="true"-->
+                            <!--android:layout_margin="@dimen/padding_larg"-->
+                            <!--android:background="@drawable/button_corner"-->
+                            <!--android:paddingLeft="@dimen/padding_larg"-->
+                            <!--android:paddingRight="@dimen/padding_larg"-->
+                            <!--android:text="نمایش برنامه سفر"-->
+                            <!--android:textColor="@color/white_" />-->
                     </RelativeLayout>
 
                     <RelativeLayout

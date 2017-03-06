@@ -614,14 +614,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_below="@+id/dateHolder"
-                            android:background="@color/pink"></RelativeLayout>
+                            android:background="@color/greyLight"></RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/dividerGrey"
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
                             android:layout_below="@+id/dividerPink"
-                            android:background="@color/greyLight"></RelativeLayout>
+                            android:background="@color/greyLight"
+                            android:visibility="gone"></RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/supplierAddress"
@@ -789,20 +790,23 @@
         android:layout_marginLeft="@dimen/padding_standard"
         android:layout_marginRight="@dimen/padding_standard">
 
-        <ImageView
+        <Button
             android:id="@+id/roomReservationBtn"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/button_corner_green" />
-
+            android:background="@drawable/button_corner_green"
+            android:text="مشاهده اتاق های هتل"
+            style="@style/StandardTitle"
+            android:textColor="@color/white_"/>
+<!--
         <TextView
             style="@style/StandardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="مشاهده مرکز اقامتی"
-            android:textColor="@color/white_" />
+            android:text="مشاهده اتاق های هتل"
+            android:textColor="@color/white_" />-->
     </RelativeLayout>
 
 </RelativeLayout>

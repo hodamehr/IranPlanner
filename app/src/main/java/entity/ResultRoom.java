@@ -1,11 +1,12 @@
 
 package entity;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResultRoom {
+public class ResultRoom implements Serializable{
 
     @SerializedName("room_title")
     @Expose
@@ -40,6 +41,12 @@ public class ResultRoom {
     @SerializedName("room_price")
     @Expose
     private Integer roomPrice;
+    @SerializedName("room_price_foreign")
+    @Expose
+    private Integer roomPriceForeign;
+    @SerializedName("room_price_quantity")
+    @Expose
+    private Integer roomPriceQuantity;
     @SerializedName("lodging_room_bed")
     @Expose
     private List<LodgingRoomBed> lodgingRoomBed = null;
@@ -48,7 +55,7 @@ public class ResultRoom {
     private List<LodgingRoomFacility> lodgingRoomFacility = null;
     @SerializedName("lodging_room_availability")
     @Expose
-    private List<LodgingRoomAvailability> lodgingRoomAvailability = null;
+    private List<Object> lodgingRoomAvailability = null;
     @SerializedName("lodging_room_price")
     @Expose
     private String lodgingRoomPrice;
@@ -141,6 +148,22 @@ public class ResultRoom {
         this.roomPrice = roomPrice;
     }
 
+    public Integer getRoomPriceForeign() {
+        return roomPriceForeign;
+    }
+
+    public void setRoomPriceForeign(Integer roomPriceForeign) {
+        this.roomPriceForeign = roomPriceForeign;
+    }
+
+    public Integer getRoomPriceQuantity() {
+        return roomPriceQuantity;
+    }
+
+    public void setRoomPriceQuantity(Integer roomPriceQuantity) {
+        this.roomPriceQuantity = roomPriceQuantity;
+    }
+
     public List<LodgingRoomBed> getLodgingRoomBed() {
         return lodgingRoomBed;
     }
@@ -157,11 +180,11 @@ public class ResultRoom {
         this.lodgingRoomFacility = lodgingRoomFacility;
     }
 
-    public List<LodgingRoomAvailability> getLodgingRoomAvailability() {
+    public List<Object> getLodgingRoomAvailability() {
         return lodgingRoomAvailability;
     }
 
-    public void setLodgingRoomAvailability(List<LodgingRoomAvailability> lodgingRoomAvailability) {
+    public void setLodgingRoomAvailability(List<Object> lodgingRoomAvailability) {
         this.lodgingRoomAvailability = lodgingRoomAvailability;
     }
 

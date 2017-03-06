@@ -127,6 +127,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         });
     }
 
+/*
     public void getLodgingResevationRoom(String cityID) {
 //        getResultLodgingRoomList
         Retrofit retrofit = new Retrofit.Builder()
@@ -141,24 +142,15 @@ public class ReservationListActivity extends StandardActivity implements DataTra
             @Override
             public void onResponse(Call<ResultLodgingRoomList> call, Response<ResultLodgingRoomList> response) {
                 Log.e("result of intresting", "true");
-
-//                if (response.body() != null && response.body().getResultRoom().size()!=0) {
-//                    ResultLodgingRoomList res = response.body();
-//                    List<ResultRoom> resultLodgings=res.getResultRoom();
-//                    Intent intent = new Intent(getApplicationContext(), ReservationHotelListActivity.class);
-//                    intent.putExtra("resultLodgings", (Serializable) resultLodgings);
-//                    startActivity(intent);
-//                }
-
             }
 
             @Override
             public void onFailure(Call<ResultLodgingRoomList> call, Throwable t) {
                 Log.e("result of intresting", "false");
-
             }
         });
     }
+*/
 
     @Override
     public void setValues(ArrayList<String> al) {

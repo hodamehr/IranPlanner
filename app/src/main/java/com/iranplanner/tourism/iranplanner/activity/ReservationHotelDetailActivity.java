@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -44,6 +45,7 @@ import entity.InterestResult;
 import entity.ItineraryLodgingCity;
 import entity.ResultData;
 import entity.ResultLodging;
+import entity.ResultLodgingRoomList;
 import entity.ResultWidget;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -82,6 +84,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
     ResultLodging resultLodgingHotelDetail;
     Date startOfTravel;
     int durationTravel;
+    Button roomReservationBtn;
 //    List<ResultWidget> resultWidget;
 
     @Override
@@ -107,6 +110,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         attractionType = (TextView) findViewById(R.id.attractionType);
         imageTypeAttraction = (ImageView) findViewById(R.id.imageTypeAttraction);
         imgHotel = (ImageView) findViewById(R.id.imgHotel);
+        roomReservationBtn = (Button) findViewById(R.id.roomReservationBtn);
 
         rateHolder = (LinearLayout) findViewById(R.id.rateHolder);
         doneHolder = (LinearLayout) findViewById(R.id.doneHolder);
@@ -225,7 +229,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         txtAddress.setText(resultLodgingHotelDetail.getLodgingAddress());
         txtDate.setText(Utils.getSimpleDate(startOfTravel));
         txtDuration.setText(Utils.persianNumbers(String.valueOf(durationTravel))+" شب");
-
+        roomReservationBtn.setOnClickListener(this);
 
 //        if(resultWidget!=null){
 //            setInterestResponce(resultWidget);
@@ -443,11 +447,34 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
                     Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
                 }
                 break;
-
-
+            case R.id.roomReservationBtn:
+                getLodgingResevationRoom("342");
+                break;
         }
     }
 
+    public void getLodgingResevationRoom(String cityID) {
+//        getResultLodgingRoomList
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(setHttpClient())
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+        cityID = "22649";
+        Call<ResultLodgingRoomList> callc = getJsonInterface.getResultLodgingRoomList("room", cityID, "", "");
+        callc.enqueue(new Callback<ResultLodgingRoomList>() {
+            @Override
+            public void onResponse(Call<ResultLodgingRoomList> call, Response<ResultLodgingRoomList> response) {
+                Log.e("result of intresting", "true");
+            }
+
+            @Override
+            public void onFailure(Call<ResultLodgingRoomList> call, Throwable t) {
+                Log.e("result of intresting", "false");
+            }
+        });
+    }
     private void translateDown() {
 
         AnimatorSet mAnimatorSet = new AnimatorSet();
