@@ -477,7 +477,8 @@
                         android:id="@+id/GroupHolder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/ratingHolder">
+                        android:layout_below="@id/ratingHolder"
+                        android:layout_marginBottom="50dp">
                         <!--travel type-->
                         <RelativeLayout
                             android:id="@+id/supplierLayoutTravelType"
@@ -1003,7 +1004,8 @@
                             android:layout_height="240dp"
                             android:layout_below="@+id/mapHolder"
                             android:gravity="center"
-                            android:paddingLeft="@dimen/margin_short">
+                            android:paddingLeft="@dimen/margin_short"
+                            >
 
 
                             <android.support.v4.view.ViewPager
@@ -1015,7 +1017,7 @@
                                 android:paddingLeft="@dimen/margin_standard"
                                 android:paddingRight="@dimen/margin_short"
                                 android:paddingTop="@dimen/padding_standard"
-                                android:paddingBottom="@dimen/padding_standard">
+                            >
 
                             </android.support.v4.view.ViewPager>
 

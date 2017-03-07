@@ -31,7 +31,7 @@ public class ResultRoom implements Serializable{
     private Object roomCapacityChildren;
     @SerializedName("room_capacity_extra")
     @Expose
-    private Object roomCapacityExtra;
+    private int roomCapacityExtra;
     @SerializedName("room_type_id")
     @Expose
     private Integer roomTypeId;
@@ -120,7 +120,7 @@ public class ResultRoom implements Serializable{
         return roomCapacityExtra;
     }
 
-    public void setRoomCapacityExtra(Object roomCapacityExtra) {
+    public void setRoomCapacityExtra(int roomCapacityExtra) {
         this.roomCapacityExtra = roomCapacityExtra;
     }
 

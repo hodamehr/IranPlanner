@@ -44,6 +44,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
     Date startOfTravel;
     List<ResultLodging> resultLodgings;
     int durationTravel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +55,9 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
         recyclerView.setLayoutManager(layoutManager);
         Bundle extras = getIntent().getExtras();
 
-         resultLodgings = (List<ResultLodging>) extras.getSerializable("resultLodgings");
+        resultLodgings = (List<ResultLodging>) extras.getSerializable("resultLodgings");
         startOfTravel = (Date) extras.getSerializable("startOfTravel");
-         durationTravel = (int) extras.getSerializable("durationTravel");
+        durationTravel = (int) extras.getSerializable("durationTravel");
 
         adapter = new ReseveHotelListAdapter(ReservationHotelListActivity.this, this, resultLodgings, getApplicationContext(), R.layout.fragment_itinerary_item);
         recyclerView.setAdapter(adapter);
@@ -65,7 +66,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-                getResultOfHotelReservation("23107");
+                getResultOfHotelReservation(String.valueOf(resultLodgings.get(position).getLodgingId()));
             }
         }));
     }
@@ -77,7 +78,6 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-//        api.parsdid.com/iranplanner/app/api-lodging.php?action=full&id=23107
         Call<ResultLodgingHotel> callc = getJsonInterface.getHotelReserve("full", hotelId);
         callc.enqueue(new Callback<ResultLodgingHotel>() {
             @Override

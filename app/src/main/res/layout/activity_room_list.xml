@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Holder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.iranplanner.tourism.iranplanner.fragment.ShowAttractionListFragment">
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/StandardTitle"
+    android:text="لیست اتاق ها"
+    android:layout_margin="@dimen/padding_standard"
+    android:id="@+id/textHotel"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/reservationListRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textHotel"
+        ></android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

@@ -94,16 +94,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/CapacityHolder"
-                            android:layout_marginRight="@dimen/padding_24"
-                       >
+                            android:layout_marginRight="@dimen/padding_24">
 
                             <RelativeLayout
                                 android:id="@+id/capacityRoomHolderDetail1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-
-                                android:layout_marginTop="@dimen/margin_short">
+                                android:layout_marginTop="@dimen/margin_short"
+                                android:visibility="gone">
 
 
                                 <TextView
@@ -135,7 +134,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_below="@+id/capacityRoomHolderDetail1"
-                                android:layout_marginTop="@dimen/margin_short">
+                                android:layout_marginTop="@dimen/margin_short"
+                                android:visibility="gone">
 
 
                                 <TextView
@@ -167,7 +167,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_below="@+id/capacityRoomHolderDetail2"
-                                android:layout_marginTop="@dimen/margin_short">
+                                android:layout_marginTop="@dimen/margin_short"
+                                android:visibility="gone">
 
 
                                 <TextView
@@ -199,7 +200,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_below="@+id/capacityRoomHolderDetail3"
-                                android:layout_marginTop="@dimen/margin_short">
+                                android:layout_marginTop="@dimen/margin_short"
+                                android:visibility="gone">
 
 
                                 <TextView
@@ -259,19 +261,101 @@
 
 
                         </RelativeLayout>
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/capacityHolderDetail">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <RelativeLayout
+                                    android:id="@+id/WifiHolder"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginTop="@dimen/margin_short"
+                                    android:layout_weight="1">
+
+                                    <TextView
+                                        android:id="@+id/txtWifi"
+                                        style="@style/SmallText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginRight="@dimen/margin_xshort"
+                                        android:layout_toLeftOf="@+id/imgWifi"
+                                        android:maxLines="1"
+                                        android:text="وای فای رایگان" />
+
+                                    <ImageView
+                                        android:id="@+id/imgWifi"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:scaleType="centerCrop"
+                                        android:src="@mipmap/ic_hotel" />
+
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/BreakfastHolder"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/margin_short"
+
+                                    android:layout_weight="1">
+
+                                    <TextView
+                                        android:id="@+id/txtBreakfast"
+                                        style="@style/SmallText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginRight="@dimen/margin_xshort"
+                                        android:layout_toLeftOf="@+id/imgBreakfast"
+                                        android:maxLines="1"
+                                        android:text="صبحانه رایگان" />
+
+                                    <ImageView
+                                        android:id="@+id/imgBreakfast"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:layout_alignParentRight="true"
+                                        android:scaleType="centerCrop"
+                                        android:src="@mipmap/ic_hotel" />
+
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/priceContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/container"
+                        android:background="@color/greyLight">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
                             android:orientation="horizontal"
                             android:weightSum="2">
 
                             <RelativeLayout
-                                android:id="@+id/WifiHolder"
+                                android:id="@+id/newPriceHolder"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
@@ -279,18 +363,18 @@
                                 android:layout_weight="1">
 
                                 <TextView
-                                    android:id="@+id/txtWifi"
+                                    android:id="@+id/txtnewPrice"
                                     style="@style/SmallText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:layout_marginRight="@dimen/margin_xshort"
-                                    android:layout_toLeftOf="@+id/imgWifi"
+                                    android:layout_toLeftOf="@+id/imgnewPrice"
                                     android:maxLines="1"
-                                    android:text="وای فای رایگان" />
+                                    android:text="قیمت جدید" />
 
                                 <ImageView
-                                    android:id="@+id/imgWifi"
+                                    android:id="@+id/imgnewPrice"
                                     android:layout_width="15dp"
                                     android:layout_height="15dp"
                                     android:layout_alignParentRight="true"
@@ -300,123 +384,60 @@
 
 
                             </RelativeLayout>
-                             <RelativeLayout
-                                           android:id="@+id/BreakfastHolder"
-                                           android:layout_width="wrap_content"
-                                           android:layout_height="wrap_content"
-                                           android:layout_marginTop="@dimen/margin_short"
 
-                                 android:layout_weight="1">
+                            <RelativeLayout
+                                android:id="@+id/priceHolder"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_short"
 
-                                           <TextView
-                                               android:id="@+id/txtBreakfast"
-                                               style="@style/SmallText"
-                                               android:layout_width="wrap_content"
-                                               android:layout_height="wrap_content"
-                                               android:layout_centerVertical="true"
-                                               android:layout_marginRight="@dimen/margin_xshort"
-                                               android:layout_toLeftOf="@+id/imgBreakfast"
-                                               android:maxLines="1"
-                                               android:text="صبحانه رایگان" />
+                                android:layout_weight="1">
 
-                                           <ImageView
-                                               android:id="@+id/imgBreakfast"
-                                               android:layout_width="15dp"
-                                               android:layout_height="15dp"
-                                               android:layout_alignParentRight="true"
-                                               android:scaleType="centerCrop"
-                                               android:src="@mipmap/ic_hotel" />
+                                <TextView
+                                    android:id="@+id/txtPrice"
+                                    style="@style/SmallText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="@dimen/margin_xshort"
+                                    android:layout_toLeftOf="@+id/imgPrice"
+                                    android:maxLines="1"
+                                    android:text="قیمت اتاق" />
+
+                                <ImageView
+                                    android:id="@+id/imgPrice"
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_alignParentRight="true"
+                                    android:scaleType="centerCrop"
+                                    android:src="@mipmap/ic_hotel" />
 
 
-                                       </RelativeLayout>
+                            </RelativeLayout>
 
                         </LinearLayout>
-                        </RelativeLayout>
 
 
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/roomNumberHolder"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:layout_below="@+id/priceContainer"
+                        android:background="@color/blue"></RelativeLayout>
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/container"
-                        android:background="@color/grey">
+                        android:layout_below="@id/roomNumberHolder">
 
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:background="@color/blue" />
-
-                        <RelativeLayout
-                            android:id="@+id/priceHolder"
-                            android:layout_width="wrap_content"
+                        <Button
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="@dimen/margin_short">
-
-
-                            <TextView
-                                android:id="@+id/txtPrice"
-                                style="@style/StandardTextGrey"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="@dimen/margin_xshort"
-                                android:layout_toLeftOf="@+id/imgPrice"
-                                android:maxLines="1"
-                                android:text="قیمت اتاق" />
-
-                            <ImageView
-                                android:id="@+id/imgPrice"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_hotel" />
-
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/NewPriceHolder"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_below="@id/priceHolder"
-                            android:layout_marginTop="@dimen/margin_short">
-
-
-                            <TextView
-                                android:id="@+id/txtNewPrice"
-                                style="@style/StandardTextGrey"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="@dimen/margin_xshort"
-                                android:layout_toLeftOf="@+id/imgNewPrice"
-                                android:maxLines="1"
-                                android:text="قیمت جدید اتاق" />
-
-                            <ImageView
-                                android:id="@+id/imgNewPrice"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_hotel" />
-
-
-                        </RelativeLayout>
+                            android:text="انتخاب اتاق" />
                     </RelativeLayout>
-
-
                 </RelativeLayout>
-
-
             </android.support.v7.widget.CardView>
 
 

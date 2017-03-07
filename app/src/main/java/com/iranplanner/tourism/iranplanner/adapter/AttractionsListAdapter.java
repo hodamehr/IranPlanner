@@ -40,9 +40,9 @@ public class AttractionsListAdapter extends RecyclerView.Adapter<AttractionsList
     DataTransferInterface dtInterface;
     LayoutInflater inflater;
 
-    public AttractionsListAdapter(Activity a, DataTransferInterface dtInterface, List<ResultItineraryAttraction> android, Context context, int rowLayout) {
+    public AttractionsListAdapter(Activity a, DataTransferInterface dtInterface, List<ResultItineraryAttraction> ResultItineraryAttraction, Context context, int rowLayout) {
         // TODO Auto-generated constructor stub
-        this.attractions = android;
+        this.attractions = ResultItineraryAttraction;
         this.context = context;
         this.rowLayout = rowLayout;
         Activity activity = a;

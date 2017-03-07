@@ -45,7 +45,9 @@ import entity.InterestResult;
 import entity.ItineraryLodgingCity;
 import entity.ResultData;
 import entity.ResultLodging;
+import entity.ResultLodgingHotel;
 import entity.ResultLodgingRoomList;
+import entity.ResultRoom;
 import entity.ResultWidget;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -74,7 +76,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
     SupportMapFragment mapFragment;
     Boolean showMore = true;
     String myData;
-    TextView txtOk, MoreInoText, txtHotelType, txtHotelName, txtAddress,txtDate,txtDuration;
+    TextView txtOk, MoreInoText, txtHotelType, txtHotelName, txtAddress, txtDate, txtDuration;
     RelativeLayout ratingHolder, GroupHolder, interestingLayout, VisitedLayout, LikeLayout, changeDateHolder;
     LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder;
     ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg, triangleShowAttraction;
@@ -150,7 +152,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         );
     }
 
-        private void setImageHolder(){
+    private void setImageHolder() {
         if (resultLodgingHotelDetail.getLodgingImgUrl() != null) {
             String url = resultLodgingHotelDetail.getLodgingImgUrl();
             Glide.with(getApplicationContext())
@@ -176,7 +178,8 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
             imgHotel.setImageDrawable(null);
         }
     }
-//    private void setAttractionTypeImage(){
+
+    //    private void setAttractionTypeImage(){
 //        if (attraction.getAttarctionItineraryTypeId().equals("2930")) {
 //            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_religious));
 //        } else if (attraction.getAttarctionItineraryTypeId().equals("2931")) {
@@ -228,7 +231,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         txtHotelType.setText(resultLodgingHotelDetail.getLodgingTypeTitle());
         txtAddress.setText(resultLodgingHotelDetail.getLodgingAddress());
         txtDate.setText(Utils.getSimpleDate(startOfTravel));
-        txtDuration.setText(Utils.persianNumbers(String.valueOf(durationTravel))+" شب");
+        txtDuration.setText(Utils.persianNumbers(String.valueOf(durationTravel)) + " شب");
         roomReservationBtn.setOnClickListener(this);
 
 //        if(resultWidget!=null){
@@ -311,13 +314,13 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         mMap.getUiSettings().setZoomControlsEnabled(false);
 
         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker));
-        Double lan=resultLodgingHotelDetail.getLodgingPosLat();
-        Double lon=resultLodgingHotelDetail.getLodgingPosLong();
+        Double lan = resultLodgingHotelDetail.getLodgingPosLat();
+        Double lon = resultLodgingHotelDetail.getLodgingPosLong();
 
         marker = mMap.addMarker(markerOptions
                 .position(new LatLng(lan, lon))
                 .title(resultLodgingHotelDetail.getLodgingName())
-                );
+        );
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lan, lon), 15.0f));
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -448,12 +451,12 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
                 }
                 break;
             case R.id.roomReservationBtn:
-                getLodgingResevationRoom("342");
+                getLodgingResevationRoom(String.valueOf(resultLodgingHotelDetail.getLodgingId()));
                 break;
         }
     }
 
-    public void getLodgingResevationRoom(String cityID) {
+    public void getLodgingResevationRoom(String hotelID) {
 //        getResultLodgingRoomList
         Retrofit retrofit = new Retrofit.Builder()
                 .client(setHttpClient())
@@ -461,12 +464,20 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-        cityID = "22649";
-        Call<ResultLodgingRoomList> callc = getJsonInterface.getResultLodgingRoomList("room", cityID, "", "");
+        Call<ResultLodgingRoomList> callc = getJsonInterface.getResultLodgingRoomList("room", hotelID, "", "");
         callc.enqueue(new Callback<ResultLodgingRoomList>() {
             @Override
             public void onResponse(Call<ResultLodgingRoomList> call, Response<ResultLodgingRoomList> response) {
-                Log.e("result of intresting", "true");
+                Log.e("result of ResultRooms", "true");
+                if (response.body() != null) {
+                    ResultLodgingRoomList res = response.body();
+                    List<ResultRoom> ResultRooms = res.getResultRoom();
+                    Intent intent = new Intent(getApplicationContext(), ShowRoomActivity.class);
+                    intent.putExtra("ResultRooms", (Serializable) ResultRooms);
+                    intent.putExtra("startOfTravel", startOfTravel);
+                    intent.putExtra("durationTravel", durationTravel);
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -475,6 +486,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
             }
         });
     }
+
     private void translateDown() {
 
         AnimatorSet mAnimatorSet = new AnimatorSet();

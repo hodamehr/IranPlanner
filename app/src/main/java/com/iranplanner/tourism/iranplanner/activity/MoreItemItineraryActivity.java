@@ -76,6 +76,7 @@ import entity.ResultItineraryAttraction;
 import entity.ResultItineraryAttractionList;
 import entity.ResultWidget;
 
+import entity.ResultWidgetFull;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -292,66 +293,66 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         }
 
     }
-//    public void getIntrestResponce() {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .client(setHttpClient())
-//                .baseUrl("http://api.parsdid.com/iranplanner/app/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-//        //api-data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary
-////    28439&uid=792147600796866
-//        String cityid = itineraryData.getItineraryId();
-//        String name = Util.getUseRIdFromShareprefrence(getApplicationContext());
-//        Call<ResultWidgetFull> callc = getJsonInterface.getWidgetResult("nodeuser", cityid, name, "itinerary");
-//        callc.enqueue(new Callback<ResultWidgetFull>() {
-//            @Override
-//            public void onResponse(Call<ResultWidgetFull> call, Response<ResultWidgetFull> response) {
-//                Log.e("result of intresting", "true");
-//
-//                if (response.body() != null) {
-//                    ResultWidgetFull res = response.body();
-//                    List<ResultWidget> resultUserLogin = res.getResultWidget();
-//                    if (resultUserLogin.get(0).getWidgetBookmarkValue() != null && resultUserLogin.get(0).getWidgetBookmarkValue() == 1) {
-//                        bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
-//                    }
-//                    if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 1) {
-//                        likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
-//                        rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
-//
-//                    }
-//                    if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 2) {
-//                        okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
-//                        rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
-//
-//
-//                    }
-//                    if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 3) {
-//                        dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
-//                        rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
-//                    }
-//                    if (resultUserLogin.get(0).getWidgetVisitedValue() != null && resultUserLogin.get(0).getWidgetVisitedValue() == 1) {
-//                        nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-//                        doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-//                    }
-//                    if (resultUserLogin.get(0).getWidgetVisitedValue() != null && resultUserLogin.get(0).getWidgetVisitedValue() == 2) {
-//                        beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-//                        doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-//                    }
-//                    if (resultUserLogin.get(0).getWidgetWishValue() != null && resultUserLogin.get(0).getWidgetWishValue() == 1) {
-//                        wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));
-//                    }
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResultWidgetFull> call, Throwable t) {
-//                Log.e("result of intresting", "false");
-//            }
-//        });
-//    }
+    public void getIntrestResponce() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(setHttpClient())
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+        //api-data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary
+//    28439&uid=792147600796866
+        String cityid = itineraryData.getItineraryId();
+        String name = Util.getUseRIdFromShareprefrence(getApplicationContext());
+        Call<ResultWidgetFull> callc = getJsonInterface.getWidgetResult("nodeuser", cityid, name, "itinerary");
+        callc.enqueue(new Callback<ResultWidgetFull>() {
+            @Override
+            public void onResponse(Call<ResultWidgetFull> call, Response<ResultWidgetFull> response) {
+                Log.e("result of intresting", "true");
+
+                if (response.body() != null) {
+                    ResultWidgetFull res = response.body();
+                    List<ResultWidget> resultUserLogin = res.getResultWidget();
+                    if (resultUserLogin.get(0).getWidgetBookmarkValue() != null && resultUserLogin.get(0).getWidgetBookmarkValue() == 1) {
+                        bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
+                    }
+                    if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 1) {
+                        likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
+                        rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
+
+                    }
+                    if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 2) {
+                        okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
+                        rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
+
+
+                    }
+                    if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 3) {
+                        dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
+                        rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
+                    }
+                    if (resultUserLogin.get(0).getWidgetVisitedValue() != null && resultUserLogin.get(0).getWidgetVisitedValue() == 1) {
+                        nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+                        doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+                    }
+                    if (resultUserLogin.get(0).getWidgetVisitedValue() != null && resultUserLogin.get(0).getWidgetVisitedValue() == 2) {
+                        beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+                        doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+                    }
+                    if (resultUserLogin.get(0).getWidgetWishValue() != null && resultUserLogin.get(0).getWidgetWishValue() == 1) {
+                        wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResultWidgetFull> call, Throwable t) {
+                Log.e("result of intresting", "false");
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -401,6 +402,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 }
             }
         });
+        getIntrestResponce();
         ratingHolder.setOnClickListener(this);
         changeDateHolder.setOnClickListener(this);
         rateHolder.setOnClickListener(this);

@@ -52,7 +52,6 @@ public interface getJsonInterface {
                                                       @Query("offset") String offset,
                                                       @Query("attraction") String attraction);
 
-
     @GET("api-user.php?action=login&email=faridsaniee@gmail.com&password=090afe0d4abb5dfdccb84641fe115680")
     Call<LoginResult> getLoginResult(@Query("action") String param1,
                                      @Query("email") String param2,
@@ -62,26 +61,22 @@ public interface getJsonInterface {
     @POST("api-data.php?action=comment")
     Call<ResultCommentList> callInsertComment(@Body CommentSend request);
 
-    //    api.parsdid.com/iranplanner/app/api-data.php?action=pagecomments&nid=1&ntype=attraction
     @GET("api-data.php?action=pagecomments&nid=1&ntype=attraction")
     Call<ResultCommentList> getCommentList(
             @Query("action") String action,
             @Query("nid") String nid,
             @Query("ntype") String ntype);
 
-    //    http://api.parsdid.com/iranplanner/app/api-lodging.php?action=list&city=342
     @GET("api-lodging.php?action=list&city=342")
     Call<ResultLodgingList> getLodgingReserve(
             @Query("action") String action,
             @Query("city") String city);
-//    api.parsdid.com/iranplanner/app/api-lodging.php?action=full&id=23107
 
     @GET("api-lodging.php?action=full&id=23107")
     Call<ResultLodgingHotel> getHotelReserve(
             @Query("action") String action,
             @Query("id") String idHotel);
 
-    //    http://api.parsdid.com/iranplanner/app/api-lodging.php?action=room&id=22649&fromdate=1488289475&todate=1488489475
     @GET("api-lodging.php?action=room&id=22649&fromdate=1488289475&todate=1488489475")
     Call<ResultLodgingRoomList> getResultLodgingRoomList(
             @Query("action") String action,
@@ -96,7 +91,6 @@ public interface getJsonInterface {
                                            @Query("ntype") String param4);
 
     @GET("api-user.php")
-//    api.parsdid.com/iranplanner/app/api-user.php?action=register&email=z@zhoda.com&password=hhhhh&fname=hoda&lname=vahidi&gender=1&cid=1
     Call<ResultRegister> getRegisterResult(@Query("action") String action,
                                            @Query("email") String email,
                                            @Query("password") String password,
@@ -112,7 +106,6 @@ public interface getJsonInterface {
             @Query("id") String param3
     );
 
-    //    http://api.parsdid.com/iranplanner/app/api-itinerary.php?action=searchprovince&province=302
     @GET("api-itinerary.php")
     Call<ResultItineraryList> getItinerarysFromProvince(@Query("action") String param1,
                                                         @Query("province") String param2,
