@@ -140,79 +140,90 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignTop="@+id/itinerary_attraction_name"
-                            android:layout_marginLeft="@dimen/margin_standard" />
-
-                        <TextView
-                            android:id="@+id/itinerary_attraction_name"
-                            style="@style/StandardTitle"
+                            android:layout_marginLeft="@dimen/margin_standard"
+                         />
+                        <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:layout_margin="@dimen/margin_standard"
-                            android:gravity="right"
-                            android:text="پارسه" />
-
-                        <LinearLayout
-                            android:id="@+id/cityNameHolder"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignRight="@+id/itinerary_attraction_name"
-                            android:layout_below="@+id/itinerary_attraction_name"
-
-                            android:gravity="right"
-                            android:orientation="horizontal"
-                            android:paddingBottom="@dimen/margin_xshort">
-
-
+                            android:layout_toRightOf="@+id/ImageAttraction"
+                            >
                             <TextView
-                                android:id="@+id/textCityName"
-                                style="@style/StandardText"
+                                android:id="@+id/itinerary_attraction_name"
+                                style="@style/StandardTitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:maxLines="1"
-                                android:text="textCityName" />
+                                android:layout_alignParentRight="true"
+                                android:layout_margin="@dimen/margin_standard"
+                                android:gravity="right"
+                                android:text="پارسه" />
 
-                            <ImageView
-                                android:id="@+id/imageCityName"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_margin="5dp"
-                                android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_pinblack" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignRight="@+id/itinerary_attraction_name"
-                            android:layout_below="@+id/cityNameHolder"
-                            android:gravity="right"
-                            android:orientation="horizontal"
-                            android:paddingBottom="@dimen/padding_short">
-
-
-                            <TextView
-                                android:id="@+id/textTimeDuration"
-                                style="@style/StandardText"
+                            <LinearLayout
+                                android:id="@+id/cityNameHolder"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:maxLines="1"
-                                android:text="textTimeDuration" />
+                                android:layout_alignRight="@+id/itinerary_attraction_name"
+                                android:layout_below="@+id/itinerary_attraction_name"
 
-                            <ImageView
-                                android:id="@+id/imageTimeDuration"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_margin="5dp"
-                                android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_duration_time_grey" />
+                                android:gravity="right"
+                                android:orientation="horizontal"
+                                android:paddingBottom="@dimen/margin_xshort"
+                                android:layout_toRightOf="@+id/ImageAttraction"
+                                android:layout_toEndOf="@+id/ImageAttraction">
 
-                        </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/textCityName"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:maxLines="1"
+                                    android:text="textCityName" />
+
+                                <ImageView
+                                    android:id="@+id/imageCityName"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_margin="5dp"
+                                    android:scaleType="centerCrop"
+                                    android:src="@mipmap/ic_pinblack" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignRight="@+id/itinerary_attraction_name"
+                                android:layout_below="@+id/cityNameHolder"
+                                android:gravity="right"
+                                android:orientation="horizontal"
+                                android:paddingBottom="@dimen/padding_short"
+                                android:layout_toRightOf="@+id/ImageAttraction"
+                                android:layout_toEndOf="@+id/ImageAttraction">
+
+
+                                <TextView
+                                    android:id="@+id/textTimeDuration"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:maxLines="1"
+                                    android:text="textTimeDuration" />
+
+                                <ImageView
+                                    android:id="@+id/imageTimeDuration"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_margin="5dp"
+                                    android:scaleType="centerCrop"
+                                    android:src="@mipmap/ic_duration_time_grey" />
+
+                            </LinearLayout>
+                            </RelativeLayout>
+
                     </RelativeLayout>
 
                 </RelativeLayout>

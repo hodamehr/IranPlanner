@@ -1,5 +1,6 @@
 package com.iranplanner.tourism.iranplanner.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
@@ -46,6 +48,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
     Date startOfTravel;
     ResultItinerary itineraryData;
     int durationTravel=1;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +76,11 @@ public class ReservationListActivity extends StandardActivity implements DataTra
                     @Override
                     public void onClick(View v) {
                         Log.e("reserve", "click");
+//                        progressDialog = new ProgressDialog(getApplicationContext());
+                        showProgressDialog();
+//                        Util.showProgressDialog(getApplicationContext(),progressDialog);
                         getLodgingReservation(itineraryData.getItineraryLodgingCity().get(position + 1).getCityId());
-//getLodgingResevationRoom(itineraryData.getItineraryLodgingCity().get(position+1).getCityId());
+                        //getLodgingResevationRoom(itineraryData.getItineraryLodgingCity().get(position+1).getCityId());
                     }
                 });
 
@@ -83,7 +89,14 @@ public class ReservationListActivity extends StandardActivity implements DataTra
 
 
     }
-
+    private void showProgressDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("لطفا منتظر بمانید");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+    }
     private OkHttpClient setHttpClient() {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(60, TimeUnit.SECONDS)
@@ -109,12 +122,16 @@ public class ReservationListActivity extends StandardActivity implements DataTra
 
                 if (response.body() != null && response.body().getResultLodging().size() != 0) {
                     ResultLodgingList res = response.body();
+                    progressDialog.dismiss();
                     List<ResultLodging> resultLodgings = res.getResultLodging();
                     Intent intent = new Intent(getApplicationContext(), ReservationHotelListActivity.class);
                     intent.putExtra("resultLodgings", (Serializable) resultLodgings);
                     intent.putExtra("startOfTravel", startOfTravel);
                     intent.putExtra("durationTravel", durationTravel);
                     startActivity(intent);
+                }else {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(),"مرکز اقامتی وجود ندارد",Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -122,6 +139,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
             @Override
             public void onFailure(Call<ResultLodgingList> call, Throwable t) {
                 Log.e("result of intresting", "false");
+                progressDialog.dismiss();
 
             }
         });
