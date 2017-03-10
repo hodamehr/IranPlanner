@@ -218,7 +218,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         showReservation = (Button) findViewById(R.id.showReservation);
         itinerary_attraction_type_more = (ImageView) findViewById(R.id.itinerary_attraction_type_more);
 //        showItinerys = (TextView) findViewById(R.id.showItinerys);
-        showItinerary = (Button) findViewById(R.id.showItinerary);
+        showItinerary = (Button) findViewById(R.id.showItinerary1);
         textTpeTravel1 = (TextView) findViewById(R.id.textTpeTravel1);
         textTpeTravel2 = (TextView) findViewById(R.id.textTpeTravel2);
         textTpeTravel3 = (TextView) findViewById(R.id.textTpeTravel3);
@@ -499,7 +499,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         switch (v.getId()) {
 
             case R.id.commentHolder:
-                getResultOfCommentInsert();
+//                getResultOfCommentInsert();
                 getResultOfCommentList();
 
 //                rotateImage = "commentImg";
@@ -642,7 +642,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                     Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
                 }
                 break;
-            case R.id.showItinerary:
+            case R.id.showItinerary1:
                 Log.e("open itinerarylist", "open");
                 getAttraction(itineraryId);
                 showProgressDialog();

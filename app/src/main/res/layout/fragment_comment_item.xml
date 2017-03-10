@@ -117,7 +117,8 @@
                     android:gravity="left"
                     android:padding="@dimen/margin_short"
                     android:text="پاسخ"
-                    android:textColor="#09E" />
+                    android:textColor="#09E"
+                    android:visibility="gone"/>
 
             </LinearLayout>
         </RelativeLayout>
@@ -129,7 +130,8 @@
             android:layout_margin="5dp"
             android:background="#5ddd"
             android:orientation="vertical"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:visibility="gone"/>
 
         <ViewSwitcher
             android:id="@+id/viewSwitcher"

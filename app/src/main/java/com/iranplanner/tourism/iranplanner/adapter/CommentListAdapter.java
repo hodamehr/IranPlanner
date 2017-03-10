@@ -6,27 +6,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.coinpany.core.android.widget.Utils;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import entity.ItineraryLodgingCity;
 import entity.ResultComment;
-import entity.ResultItinerary;
-import tools.Util;
 
 /**
  * Created by Hoda on 10/01/2017.
@@ -53,7 +44,6 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
     }
 
 
-
     @Override
     public CommentListAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = inflater.from(viewGroup.getContext()).inflate(R.layout.fragment_comment_item, viewGroup, false);
@@ -63,23 +53,38 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
     @Override
     public void onBindViewHolder(final CommentListAdapter.ViewHolder viewHolder, int i) {
 
-        viewHolder.commentText.setText(resultComments.get(i).getGvalue());
-
-
+        viewHolder.commentText.setText(resultComments.get(i).getCommentBody());
+        viewHolder.commentSenderName.setText(resultComments.get(i).getUserFname());
+        viewHolder.commentSentTime.setText( Utils.timeElapsedFromDate(getDate(resultComments.get(i).getCommentDate()))+" پیش");
     }
 
+private Long getDate(String commentTimeString){
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    formatter.setLenient(false);
 
+    Date commentDate = null;
+    try {
+        commentDate = formatter.parse(commentTimeString);
+    } catch (ParseException e) {
+        e.printStackTrace();
+    }
+    long oldMillis = commentDate.getTime();
+    return oldMillis;
+}
     @Override
     public int getItemCount() {
         return resultComments.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder  {
-        private TextView commentText;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView commentText, commentSenderName,commentSentTime;
+
         public ViewHolder(View view) {
             super(view);
 
             commentText = (TextView) view.findViewById(R.id.commentText);
+            commentSenderName = (TextView) view.findViewById(R.id.commentSenderName);
+            commentSentTime = (TextView) view.findViewById(R.id.commentSentTime);
 
         }
     }

@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/StandardTitle"
-    android:text="مراکز اقامتی این برنامه سفر"
+    android:text="کامنت"
     android:layout_margin="@dimen/padding_standard"
     android:id="@+id/textHotel"/>
     <!--<RelativeLayout-->
@@ -54,5 +54,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/textHotel"
         ></android.support.v7.widget.RecyclerView>
+
 
 </RelativeLayout>

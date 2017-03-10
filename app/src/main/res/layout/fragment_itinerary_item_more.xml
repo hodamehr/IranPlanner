@@ -1058,7 +1058,7 @@
                 android:textColor="@color/white_" />
 
             <Button
-                android:id="@+id/showItinerary"
+                android:id="@+id/showItinerary1"
                 style="@style/StandardTitle"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
