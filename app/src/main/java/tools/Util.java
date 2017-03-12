@@ -1,5 +1,6 @@
 package tools;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -15,7 +16,13 @@ import java.util.Date;
  * Created by Hoda on 10/01/2017.
  */
 public class Util {
-
+    public static final void showProgressDialog(Context context, ProgressDialog progressDialog) {
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("لطفا منتظر بمانید");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+    }
     public static final Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);

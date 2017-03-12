@@ -30,7 +30,5 @@ public class ConfirmAlertDialogBuilder extends AlertDialog.Builder {
         setView(dialogView);
         noBtn = (TextView) dialogView.findViewById(R.id.txtNo);
         yesBtn = (TextView) dialogView.findViewById(R.id.txtOk);
-
-
     }
 }

@@ -57,14 +57,12 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import entity.CommentSend;
 import entity.InterestResult;
 import entity.ItineraryLodgingCity;
 import entity.ItineraryPercentage;
@@ -123,10 +121,10 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     TextView fromCityName, toCityName;
     TextView showItinerys;
     TextView txtOk, MoreInoText;
-    LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder,commentHolder;
+    LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder, commentHolder;
     RelativeLayout ratingHolder, GroupHolder, supplierLayoutMore, VisitedLayout, LikeLayout, changeDateHolder;
     PersianCalendar persianCurrentDate;
-    ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg, triangleShowAttraction;
+    ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, triangleShowAttraction;
     RotateAnimation rotate;
     String rotateImage;
     Animation translateAnimation;
@@ -138,41 +136,10 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     Date startOfTravel;
     List<Date> stayNights;
     Map<String, Integer> dateCity;
-    Button showReservation,showItinerary;
+    Button showReservation, showItinerary;
 //    List<Map<String,Integer>> ss;
 
-    public void getResultOfCommentInsert() {
-//        getResultLodgingRoomList
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(setHttpClient())
-                .baseUrl("http://api.parsdid.com/iranplanner/app/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-//        {"uid":"1","cid":"1","ntype":"attraction","nid":"1","gtype":"comment","gvalue":"khobi"}
-        Call<ResultCommentList> callc = getJsonInterface.callInsertComment(new CommentSend("1", "1", "attraction", "1", "comment", "the best!"));
-        callc.enqueue(new Callback<ResultCommentList>() {
-            @Override
-            public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
 
-                if (response.body() != null) {
-                    ResultCommentList jsonResponse = response.body();
-                    entity.Status status = jsonResponse.getStatus();
-//                    if(status.getStatus()==200){
-//                        rotate.setRepeatCount(0);
-//                        checkWhichImageIntrested(rotateImage);
-//                    }
-                 } else {
-                    Log.e("comment body", "null");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultCommentList> call, Throwable t) {
-                Log.e("result of intresting", "false");
-            }
-        });
-    }
     public void getResultOfCommentList() {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(setHttpClient())
@@ -180,32 +147,37 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-        Call<ResultCommentList> callc = getJsonInterface.getCommentList("pagecomments","1","attraction");
+//        api-data.php?action=pagecomments&nid=1&ntype=attraction
+        Call<ResultCommentList> callc = getJsonInterface.getCommentList("pagecomments", itineraryId, "itinerary");
         callc.enqueue(new Callback<ResultCommentList>() {
             @Override
             public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
 
                 if (response.body() != null) {
                     ResultCommentList jsonResponse = response.body();
-                    List<ResultComment> resultComments= jsonResponse.getResultComment();
+                    List<ResultComment> resultComments = jsonResponse.getResultComment();
                     Intent intent = new Intent(MoreItemItineraryActivity.this, CommentListActivity.class);
                     intent.putExtra("resultComments", (Serializable) resultComments);
+                    intent.putExtra("itineraryData", (Serializable) itineraryData);
                     startActivity(intent);
+                    progressDialog.dismiss();
 
                 } else {
                     Log.e("comment body", "null");
+                    progressDialog.dismiss();
                 }
-
 
             }
 
             @Override
             public void onFailure(Call<ResultCommentList> call, Throwable t) {
                 Log.e("result of intresting", "false");
+                progressDialog.dismiss();
 
             }
         });
     }
+
     private void findView() {
         setContentView(R.layout.fragment_itinerary_item_more);
         txtItinerary_attraction_Difficulty = (TextView) findViewById(R.id.txtItinerary_attraction_Difficulty);
@@ -257,42 +229,41 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         rateImg = (ImageView) findViewById(R.id.rateImg);
         beftorVisitedImg = (ImageView) findViewById(R.id.beftorVisitedImg);
         nowVisitedImg = (ImageView) findViewById(R.id.nowVisitedImg);
-        wishImg = (ImageView) findViewById(R.id.wishImg);
         triangleShowAttraction = (ImageView) findViewById(R.id.triangleShowAttraction);
+        nowVisitedImg = (ImageView) findViewById(R.id.nowVisitedImg);
     }
 
     private void setInterestResponce(List<ResultWidget> resultWidget) {
         if (resultWidget.get(0).getWidgetBookmarkValue() != null && resultWidget.get(0).getWidgetBookmarkValue() == 1) {
-            bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
+            bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgreen));
         }
         if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 1) {
-            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
-            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
 
         }
         if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 2) {
-            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
-            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
 
 
         }
         if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 3) {
-            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
-            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislikegrey));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislikegrey));
         }
         if (resultWidget.get(0).getWidgetVisitedValue() != null && resultWidget.get(0).getWidgetVisitedValue() == 1) {
-            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreennow));
+            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreennow));
         }
         if (resultWidget.get(0).getWidgetVisitedValue() != null && resultWidget.get(0).getWidgetVisitedValue() == 2) {
-            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-        }
-        if (resultWidget.get(0).getWidgetWishValue() != null && resultWidget.get(0).getWidgetWishValue() == 1) {
-            wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));
+            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreen));
+            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreen));
         }
 
+
     }
+
     public void getIntrestResponce() {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(setHttpClient())
@@ -314,34 +285,32 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                     ResultWidgetFull res = response.body();
                     List<ResultWidget> resultUserLogin = res.getResultWidget();
                     if (resultUserLogin.get(0).getWidgetBookmarkValue() != null && resultUserLogin.get(0).getWidgetBookmarkValue() == 1) {
-                        bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
+                        bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgreen));
                     }
                     if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 1) {
-                        likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
-                        rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
+                        likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
+                        rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
 
                     }
                     if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 2) {
-                        okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
-                        rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
+                        okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
+                        rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
 
 
                     }
                     if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 3) {
-                        dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
-                        rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
+                        dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislikegrey));
+                        rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislikegrey));
                     }
                     if (resultUserLogin.get(0).getWidgetVisitedValue() != null && resultUserLogin.get(0).getWidgetVisitedValue() == 1) {
-                        nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-                        doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+                        nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreennow));
+                        doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreennow));
                     }
                     if (resultUserLogin.get(0).getWidgetVisitedValue() != null && resultUserLogin.get(0).getWidgetVisitedValue() == 2) {
-                        beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-                        doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+                        beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreen));
+                        doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreennow));
                     }
-                    if (resultUserLogin.get(0).getWidgetWishValue() != null && resultUserLogin.get(0).getWidgetWishValue() == 1) {
-                        wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));
-                    }
+
 
                 }
 
@@ -411,7 +380,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         okImg.setOnClickListener(this);
         dislikeImg.setOnClickListener(this);
         nowVisitedImg.setOnClickListener(this);
-        wishImg.setOnClickListener(this);
+
         beftorVisitedImg.setOnClickListener(this);
         itineraryId = itineraryData.getItineraryId();
         bookmarkHolder.setOnClickListener(this);
@@ -499,20 +468,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         switch (v.getId()) {
 
             case R.id.commentHolder:
-//                getResultOfCommentInsert();
+                showProgressDialog();
                 getResultOfCommentList();
-
-//                rotateImage = "commentImg";
-//                if (!getUseRIdFromShareprefrence().isEmpty()) {
-//                    animWaiting(likeImg);
-//                    String uid = getUseRIdFromShareprefrence();
-//                    getInterestResult(uid, itineraryId, "1", "like");
-//                    getResultOfCommentInsert();
-//
-//                } else {
-//                    Log.e("user is not login", "error");
-//                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
-//                }
                 break;
 
             case R.id.showReservation:
@@ -608,12 +565,12 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 }
                 break;
 
-            case R.id.wishImg:
-                rotateImage = "wishImg";
+            case R.id.nowVisitedImg:
+                rotateImage = "nowVisitedImg";
                 if (!getUseRIdFromShareprefrence().isEmpty()) {
-                    animWaiting(wishImg);
+                    animWaiting(nowVisitedImg);
                     String uid = getUseRIdFromShareprefrence();
-                    getInterestResult(uid, itineraryId, "1", "wish");
+                    getInterestResult(uid, itineraryId, "1", "visited");
                 } else {
                     Log.e("user is not login", "error");
                     Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
@@ -689,32 +646,40 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         String im = imageView;
         switch (im) {
             case "bookmarkImg":
-                bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
+                bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgreen));
                 break;
             case "nowVisitedImg":
-                nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+                nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreennow));
+                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreennow));
+                beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogrey));
+
                 break;
             case "beftorVisitedImg":
-                beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
-                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_done_pink));
+                beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreen));
+                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreen));
+                nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogrey));
+
                 break;
             case "dislikeImg":
-                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
-                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_pink));
+                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislikegrey));
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislikegrey));
+                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
+                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_likegrey));
+
                 break;
             case "okImg":
-                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
-                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_pink));
+                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
+                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_likegrey));
+                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislikegrey));
                 break;
             case "likeImg":
-                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
-                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_air));
+                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
+                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislikegrey));
+                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
                 break;
-            case "wishImg":
-                wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));
-                break;
-            default:
+                     default:
                 break;
         }
     }
@@ -1217,6 +1182,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 //            }
         } else {
             Log.e("Responce body", "null");
+            progressDialog.dismiss();
         }
 
     }

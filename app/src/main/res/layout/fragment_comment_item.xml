@@ -12,7 +12,6 @@
         android:id="@+id/commentUserLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#DDD"
         android:paddingBottom="3dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -20,8 +19,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/commentSenderPic"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="2dp"
@@ -69,7 +68,8 @@
                 android:gravity="right"
                 android:maxLines="1"
                 android:text="کاربر"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone"/>
         </RelativeLayout>
 
 
@@ -85,13 +85,10 @@
         <RelativeLayout
             android:id="@+id/replyUserLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginRight="40dp">
 
-            <RelativeLayout
-                android:id="@+id/commentMainLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/margin_short">
+
 
                 <TextView
                     android:id="@+id/commentText"
@@ -99,14 +96,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:text="Our library is constantly updated with content that is relevant for all kinds of users, from beginner to professional developer."
+                    android:text="از ارومیه، بزرگترین کانون علمی و مذهبی ایران که منسوب به زرتشت است به سمت کرمانشاه، بزرگترین شهر کرد نشین کشور، حرکت می کنیم. مسجد جامع مهاباد با نام مسجد سرخ که نشان از آجرهای قرمز رنگی دارد که در آن به کار رفته، از جاذبه های تاریخی شاخصی خواهد بود"
                     android:textColor="#000" />
-            </RelativeLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/commentMainLayout"
+                android:layout_below="@+id/commentText"
                 android:orientation="horizontal">
 
                 <TextView
@@ -118,7 +115,8 @@
                     android:padding="@dimen/margin_short"
                     android:text="پاسخ"
                     android:textColor="#09E"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    />
 
             </LinearLayout>
         </RelativeLayout>
@@ -130,8 +128,8 @@
             android:layout_margin="5dp"
             android:background="#5ddd"
             android:orientation="vertical"
-            android:padding="10dp"
-            android:visibility="gone"/>
+            android:padding="1dp"
+            />
 
         <ViewSwitcher
             android:id="@+id/viewSwitcher"

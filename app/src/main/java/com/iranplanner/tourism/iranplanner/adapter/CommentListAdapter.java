@@ -3,9 +3,11 @@ package com.iranplanner.tourism.iranplanner.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.coinpany.core.android.widget.Utils;
@@ -40,7 +42,6 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         Activity activity = a;
         this.dtInterface = dtInterface;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
 
 
@@ -52,7 +53,6 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
 
     @Override
     public void onBindViewHolder(final CommentListAdapter.ViewHolder viewHolder, int i) {
-
         viewHolder.commentText.setText(resultComments.get(i).getCommentBody());
         viewHolder.commentSenderName.setText(resultComments.get(i).getUserFname());
         viewHolder.commentSentTime.setText( Utils.timeElapsedFromDate(getDate(resultComments.get(i).getCommentDate()))+" پیش");
@@ -68,8 +68,7 @@ private Long getDate(String commentTimeString){
     } catch (ParseException e) {
         e.printStackTrace();
     }
-    long oldMillis = commentDate.getTime();
-    return oldMillis;
+    return commentDate.getTime();
 }
     @Override
     public int getItemCount() {
@@ -78,14 +77,13 @@ private Long getDate(String commentTimeString){
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView commentText, commentSenderName,commentSentTime;
+        RelativeLayout commentButtonHolder;
 
         public ViewHolder(View view) {
             super(view);
-
             commentText = (TextView) view.findViewById(R.id.commentText);
             commentSenderName = (TextView) view.findViewById(R.id.commentSenderName);
             commentSentTime = (TextView) view.findViewById(R.id.commentSentTime);
-
         }
     }
 
