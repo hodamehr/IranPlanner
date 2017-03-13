@@ -108,7 +108,6 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
         } else {
             Glide.clear(viewHolder.imgItineraryList);
             viewHolder.imgItineraryList.setImageDrawable(null);
-
         }
 
 
@@ -152,6 +151,8 @@ public class ItineraryListAdapter extends RecyclerView.Adapter<ItineraryListAdap
         }
 
     }
+
+
 
 
 }

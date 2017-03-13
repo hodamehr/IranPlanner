@@ -65,12 +65,17 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
     ResultItinerary itineraryData;
     TextView commentTitle;
     boolean sending = false;
+    private boolean loading = true;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+    String nextOffset;
+    List<ResultComment> resultComments;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_itinerary_comment);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.commentRecyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.commentRecyclerView);
         sendCommentBtn = (ImageView) findViewById(R.id.sendCommentBtn);
         txtAddComment = (EditText) findViewById(R.id.txtAddComment);
         commentTitle = (TextView) findViewById(R.id.commentTitle);
@@ -79,13 +84,16 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         Bundle extras = getIntent().getExtras();
-        List<ResultComment> resultComments = (List<ResultComment>) extras.getSerializable("resultComments");
+        resultComments = (List<ResultComment>) extras.getSerializable("resultComments");
         itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
+        nextOffset = (String) extras.getSerializable("nextOffset");
         adapter = new CommentListAdapter(CommentListActivity.this, this, resultComments, getApplicationContext(), R.layout.fragment_comment_item);
         commentTitle.setText(itineraryData.getItineraryFromCityName() + " " + itineraryData.getItineraryToCityName() + " " + Util.persianNumbers(itineraryData.getItineraryDuration()) + " روز");
         recyclerView.setAdapter(adapter);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
+
         recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.smoothScrollToPosition(Integer.valueOf(nextOffset)-1);
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
@@ -96,9 +104,23 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
 //                        Log.e("reserve", "click");
 //                    }
 //                });
-
             }
         }));
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) //check for scroll up
+                {
+                    visibleItemCount = mLayoutManager.getChildCount();
+                    totalItemCount = mLayoutManager.getItemCount();
+                    pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+                    if ((visibleItemCount + pastVisiblesItems) == totalItemCount) {
+                        getResultOfCommentList(itineraryData.getItineraryId(), nextOffset);
+                    }
+                }
+            }
+        });
+
 
         txtAddComment.addTextChangedListener(new TextWatcher() {
             @Override
@@ -108,7 +130,12 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if (start == 0) {
+                    sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
+                }
+                if (start != 0 || (start == 0 && before == 0 && count == 1)) {
+                    sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_pink));
+                }
             }
 
             @Override
@@ -131,6 +158,40 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
                     Log.e("user is not login", "error");
                     Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید ", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+    }
+
+    public void getResultOfCommentList(String itineraryId, String Offset) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(setHttpClient())
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+//        api-data.php?action=pagecomments&nid=1&ntype=attraction
+        Call<ResultCommentList> callc = getJsonInterface.getCommentList("pagecomments", itineraryId, "itinerary", Offset);
+        callc.enqueue(new Callback<ResultCommentList>() {
+            @Override
+            public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
+
+                if (response.body() != null) {
+                    ResultCommentList jsonResponse = response.body();
+                    List<ResultComment> resultComments = jsonResponse.getResultComment();
+                    if (!nextOffset.equals(response.body().getStatistics().getOffsetNext().toString())) {
+                        resultComments.addAll(resultComments);
+                        adapter.notifyDataSetChanged();
+//                        waitingLoading.setVisibility(View.INVISIBLE);
+                        nextOffset = response.body().getStatistics().getOffsetNext().toString();
+                    }
+                } else {
+                    Log.e("comment body", "null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultCommentList> call, Throwable t) {
+                Log.e("result of intresting", "false");
             }
         });
     }

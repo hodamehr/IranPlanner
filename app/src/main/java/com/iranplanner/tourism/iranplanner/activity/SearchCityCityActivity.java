@@ -146,6 +146,4 @@ public class SearchCityCityActivity extends StandardActivity implements Callback
         Toast.makeText(getApplicationContext(), "خطا در برقراری ارتباط با اینترنت", Toast.LENGTH_LONG).show();
         Log.e(" error from server", "error");
     }
-
-
 }

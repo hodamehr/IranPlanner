@@ -160,7 +160,8 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
 
         return view;
     }
-    public void getIntrestResponce(ImageView img, final int position, final String duration,String cityid,String name) {
+
+    public void getIntrestResponce(ImageView img, final int position, final String duration, String cityid, String name) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(setHttpClient())
                 .baseUrl("http://api.parsdid.com/iranplanner/app/")
@@ -183,9 +184,9 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
                     Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
                     intent.putExtra("itineraryData", (Serializable) data.get(position));
                     intent.putExtra("duration", duration);
-                    intent.putExtra("resultUserLogin",(Serializable) resultWidget);
+                    intent.putExtra("resultUserLogin", (Serializable) resultWidget);
                     startActivity(intent);
-                }else {
+                } else {
                     Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
                     intent.putExtra("itineraryData", (Serializable) data.get(position));
                     intent.putExtra("duration", duration);
@@ -196,7 +197,7 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
 
             @Override
             public void onFailure(Call<ResultWidgetFull> call, Throwable t) {
-                 Log.e("result of intresting", "false");
+                Log.e("result of intresting", "false");
                 Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
                 intent.putExtra("itineraryData", (Serializable) data.get(position));
                 intent.putExtra("duration", duration);
@@ -204,6 +205,7 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
             }
         });
     }
+
     class MyThread extends Thread {
 
         private ImageView img;
@@ -220,7 +222,7 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
         public void run() {
             String cityid = data.get(position).getItineraryId();
             String name = Util.getUseRIdFromShareprefrence(getContext());
-            getIntrestResponce( img,  position,  duration,cityid,name);
+            getIntrestResponce(img, position, duration, cityid, name);
 
         }
     }
@@ -237,10 +239,6 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
                 .build();
         return okHttpClient;
     }
-
-
-
-
 
     public void getItineraryCityToCity(String cityId, String offset, String toCity) {
         Retrofit retrofit = new Retrofit.Builder()

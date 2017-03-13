@@ -2,19 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/commentTitle"
         style="@style/StandardTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/greyLight"
+        android:gravity="center"
         android:padding="@dimen/padding_standard"
         android:text="کامنت"
-        android:textColor="@color/pink"
-        android:gravity="center"
-        android:background="@color/greyLight"/>
+        android:textColor="@color/pink" />
 
     <com.coinpany.core.android.widget.loading.RotateLoading
         android:id="@+id/rotateloading"
@@ -22,16 +21,10 @@
         android:layout_height="80dp"
         android:layout_centerInParent="true"
         app:loading_color="@color/colorAccent"
-        app:loading_width="5dp" />
+        app:loading_width="5dp"
 
-    <!--    <com.telerik.widget.list.RadListView
-            android:id="@+id/commentRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/sendCommentLayout"
-            android:layout_alignParentTop="true">
+        />
 
-        </com.telerik.widget.list.RadListView>-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/commentRecyclerView"
         android:layout_width="match_parent"

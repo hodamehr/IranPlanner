@@ -61,11 +61,12 @@ public interface getJsonInterface {
     @POST("api-data.php?action=comment")
     Call<ResultCommentList> callInsertComment(@Body CommentSend request);
 
-    @GET("api-data.php?action=pagecomments&nid=1&ntype=attraction")
+    @GET("api-data.php?action=pagecomments&nid=1&ntype=attraction&offset=10")
     Call<ResultCommentList> getCommentList(
             @Query("action") String action,
             @Query("nid") String nid,
-            @Query("ntype") String ntype);
+            @Query("ntype") String ntype,
+            @Query("offset") String offset);
 
     @GET("api-lodging.php?action=list&city=342")
     Call<ResultLodgingList> getLodgingReserve(

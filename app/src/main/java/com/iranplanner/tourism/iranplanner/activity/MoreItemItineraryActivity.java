@@ -148,7 +148,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
 //        api-data.php?action=pagecomments&nid=1&ntype=attraction
-        Call<ResultCommentList> callc = getJsonInterface.getCommentList("pagecomments", itineraryId, "itinerary");
+        Call<ResultCommentList> callc = getJsonInterface.getCommentList("pagecomments", itineraryId, "itinerary","0");
         callc.enqueue(new Callback<ResultCommentList>() {
             @Override
             public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
@@ -159,6 +159,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                     Intent intent = new Intent(MoreItemItineraryActivity.this, CommentListActivity.class);
                     intent.putExtra("resultComments", (Serializable) resultComments);
                     intent.putExtra("itineraryData", (Serializable) itineraryData);
+                    intent.putExtra("nextOffset", response.body().getStatistics().getOffsetNext().toString());
                     startActivity(intent);
                     progressDialog.dismiss();
 

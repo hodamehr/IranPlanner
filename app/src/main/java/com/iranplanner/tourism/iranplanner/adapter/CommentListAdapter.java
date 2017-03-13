@@ -58,7 +58,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         viewHolder.commentSentTime.setText( Utils.timeElapsedFromDate(getDate(resultComments.get(i).getCommentDate()))+" پیش");
     }
 
-private Long getDate(String commentTimeString){
+    private Long getDate(String commentTimeString){
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     formatter.setLenient(false);
 
