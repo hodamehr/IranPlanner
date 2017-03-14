@@ -18,22 +18,26 @@
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
         >
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"
-                   />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".standard.StandardActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ReservationListActivity"
-            android:screenOrientation="portrait"/>
-       <!-- <activity android:name=".activity.SearchCityCityActivity" />-->
+        <activity android:name=".activity.notifyActivity"/>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".standard.StandardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ReservationListActivity"
+            android:screenOrientation="portrait" />
+        <!-- <activity android:name=".activity.SearchCityCityActivity" />-->
         <!-- App Indexing. See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -42,29 +46,50 @@
         <activity
             android:name=".activity.MoreItemItineraryActivity"
             android:label="@string/title_activity_maps"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MapFullActivity"
             android:label="@string/title_activity_map_full"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ShowAttractionActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ShowAttractionActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.attractionDetailActivity"
             android:label="@string/title_activity_attraction_detail"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.SignupActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.GridActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ReservationHotelListActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ReservationHotelDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.CommentListActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.ShowRoomActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SignupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GridActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ReservationHotelListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ReservationHotelDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CommentListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ShowRoomActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- Firebase Notifications -->
+        <service android:name="server.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name="server.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- ./Firebase Notifications -->
     </application>
 
 </manifest>

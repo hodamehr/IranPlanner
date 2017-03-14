@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "436926546770",
+    "firebase_url": "https://helical-analogy-156916.firebaseio.com",
+    "project_id": "helical-analogy-156916",
+    "storage_bucket": "helical-analogy-156916.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436926546770:android:672c001dde24a8e8",
+        "android_client_info": {
+          "package_name": "com.iranplanner.tourism.iranplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "436926546770-aipcd3kp9aia2u4hn9igo5haj78kac2u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iranplanner.tourism.iranplanner",
+            "certificate_hash": "9e025c2d27d44d2ce91b8373793af3e4407a3a7f"
+          }
+        },
+        {
+          "client_id": "436926546770-3bvu8lg98fd2f3a3n2tm6rjvv1sr4fgf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iranplanner.tourism.iranplanner",
+            "certificate_hash": "3a233678e12e376937d7b6e962ef026c0258380b"
+          }
+        },
+        {
+          "client_id": "436926546770-n93fhubvgkjf4pqr1h3ssou76einkkg6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBubtqc_Bh4LMVzFPuSCTMyBLaD0V2aDVk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "436926546770-n93fhubvgkjf4pqr1h3ssou76einkkg6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
