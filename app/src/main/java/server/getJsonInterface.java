@@ -13,6 +13,7 @@ import entity.ResultLodgingHotel;
 import entity.ResultLodgingList;
 import entity.ResultLodgingRoomList;
 import entity.ResultRegister;
+import entity.ResultSouvenirList;
 import entity.ResultWidgetFull;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -43,6 +44,11 @@ public interface getJsonInterface {
             @Query("nid") String nid,
             @Query("gtype") String gtype,
             @Query("gvalue") String gvalue);
+
+    @GET("api-itinerary.php?action=souvenir&id=28439")
+    Call<ResultSouvenirList> getSouvenirList(
+            @Query("action") String action,
+            @Query("id") String itineraryId);
 
     @GET("api-itinerary.php?action=searchattractioncity&lang=fa&from=342&limit=10&offset=0&attraction=id")
     Call<ResultItineraryList> getItinerarysAttraction(@Query("action") String action,

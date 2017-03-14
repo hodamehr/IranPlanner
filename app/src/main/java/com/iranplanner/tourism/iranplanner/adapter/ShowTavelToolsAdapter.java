@@ -29,8 +29,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import entity.ResultItineraryAttraction;
+import entity.ResultSouvenir;
+import entity.ResultSouvenirList;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import server.getJsonInterface;
 
 import static android.R.id.list;
 
@@ -47,6 +57,7 @@ public class ShowTavelToolsAdapter extends PagerAdapter {
     public final int PAGE_COUNT = 3;
     Context context;
     Activity activity;
+    String itineraryID;
 
     //    public ShowTavelToolsAdapter(FragmentManager fm) {
 //        super(fm);
@@ -56,9 +67,10 @@ public class ShowTavelToolsAdapter extends PagerAdapter {
         ((ViewPager) container).removeView((View) view);
     }
 
-    public ShowTavelToolsAdapter(Context context, Activity activity) {
+    public ShowTavelToolsAdapter(Context context, Activity activity,String itineraryID) {
         this.context = context;
-        this.activity=activity;
+        this.activity = activity;
+        this.itineraryID = itineraryID;
     }
 
     @Override
@@ -90,8 +102,10 @@ public class ShowTavelToolsAdapter extends PagerAdapter {
                     Intent intent = new Intent(activity, GridActivity.class);
                     activity.startActivity(intent);
                 } else if (position == 1) {
-                    Intent intent = new Intent(activity, GridActivity.class);
-                    activity.startActivity(intent);
+//                    Intent intent = new Intent(activity, GridActivity.class);
+//                    activity.startActivity(intent);
+                    getResultOfSurvier(itineraryID);
+
                 } else if (position == 2) {
                     Intent intent = new Intent(activity, GridActivity.class);
                     activity.startActivity(intent);
@@ -140,6 +154,47 @@ public class ShowTavelToolsAdapter extends PagerAdapter {
 //        }
 //        return null;
 //    }
+
+    private OkHttpClient setHttpClient() {
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
+        return okHttpClient;
+    }
+
+    public void getResultOfSurvier(String itineraryId) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(setHttpClient())
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+        //    http://api.parsdid.com/iranplanner/app/api-itinerary.php?action=souvenir&id=28439
+        Call<ResultSouvenirList> callc = getJsonInterface.getSouvenirList("souvenir", itineraryId);
+        callc.enqueue(new Callback<ResultSouvenirList>() {
+            @Override
+            public void onResponse(Call<ResultSouvenirList> call, Response<ResultSouvenirList> response) {
+                if (response.body() != null) {
+                    ResultSouvenirList jsonResponse = response.body();
+                    List<ResultSouvenir> resultSouvenirs = jsonResponse.getResultSouvenir();
+                    Intent intent = new Intent(activity, GridActivity.class);
+                    intent.putExtra("resultSouvenirs", (Serializable) resultSouvenirs);
+                    intent.putExtra("fromOpen", "Souvenirs");
+                    activity.startActivity(intent);
+                } else {
+                    Log.e("comment body", "null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultSouvenirList> call, Throwable t) {
+                Log.e("result of intresting", "false");
+            }
+        });
+    }
+
     @Override
     public int getCount() {
         return PAGE_COUNT;

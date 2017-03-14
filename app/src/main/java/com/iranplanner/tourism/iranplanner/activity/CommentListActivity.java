@@ -37,6 +37,7 @@ import entity.CommentSend;
 import entity.ResultComment;
 import entity.ResultCommentList;
 import entity.ResultItinerary;
+import entity.ResultItineraryAttraction;
 import entity.ResultLodging;
 import entity.ResultLodgingList;
 import entity.ResultLodgingRoomList;
@@ -70,6 +71,9 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
     String nextOffset;
     List<ResultComment> resultComments;
     RecyclerView recyclerView;
+    ResultItineraryAttraction attraction;
+    String fromWhere;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,15 +89,26 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
         recyclerView.setLayoutManager(layoutManager);
         Bundle extras = getIntent().getExtras();
         resultComments = (List<ResultComment>) extras.getSerializable("resultComments");
-        itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
-        nextOffset = (String) extras.getSerializable("nextOffset");
+        fromWhere =  extras.getString("fromWhere");
+        if(fromWhere.equals("Itinerary")){
+            itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
+            nextOffset = (String) extras.getSerializable("nextOffset");
+            commentTitle.setText(itineraryData.getItineraryFromCityName() + " " + itineraryData.getItineraryToCityName() + " " + Util.persianNumbers(itineraryData.getItineraryDuration()) + " روز");
+
+        }else if(fromWhere.equals("attraction")){
+            attraction = (ResultItineraryAttraction) extras.getSerializable("attraction");
+            nextOffset = (String) extras.getSerializable("nextOffset");
+            commentTitle.setText(attraction.getAttractionTitle());
+        }
+
         adapter = new CommentListAdapter(CommentListActivity.this, this, resultComments, getApplicationContext(), R.layout.fragment_comment_item);
-        commentTitle.setText(itineraryData.getItineraryFromCityName() + " " + itineraryData.getItineraryToCityName() + " " + Util.persianNumbers(itineraryData.getItineraryDuration()) + " روز");
         recyclerView.setAdapter(adapter);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
-
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.smoothScrollToPosition(Integer.valueOf(nextOffset)-1);
+        if(nextOffset!=null && Integer.valueOf(nextOffset)>1){
+            recyclerView.smoothScrollToPosition(Integer.valueOf(nextOffset)-1);
+        }
+
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
@@ -152,7 +167,11 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
                 if (!userId.isEmpty() && !txtAddComment.getText().equals("") && !sending) {
                     sending = true;
                     sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
-                    getResultOfCommentInsert(userId, String.valueOf(txtAddComment.getText()), itineraryData.getItineraryId());
+                    if(fromWhere.equals("Itinerary")){
+                        getResultOfCommentInsert(userId, String.valueOf(txtAddComment.getText()), itineraryData.getItineraryId(),"itinerary");
+                    }else if(fromWhere.equals("attraction")){
+                        getResultOfCommentInsert(userId, String.valueOf(txtAddComment.getText()), attraction.getAttractionId(),"attraction");
+                    }
                     txtAddComment.setText("");
                 } else if (userId.isEmpty()) {
                     Log.e("user is not login", "error");
@@ -196,7 +215,7 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
         });
     }
 
-    public void getResultOfCommentInsert(String userId, String comment, String itineraryId) {
+    public void getResultOfCommentInsert(String userId, String comment, String id,String type) {
 //        getResultLodgingRoomList
         Retrofit retrofit = new Retrofit.Builder()
                 .client(setHttpClient())
@@ -205,7 +224,7 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
 //        {"uid":"1","cid":"1","ntype":"attraction","nid":"1","gtype":"comment","gvalue":"khobi"}
-        Call<ResultCommentList> callc = getJsonInterface.callInsertComment(new CommentSend(userId, "1", "itinerary", itineraryId, "comment", comment));
+        Call<ResultCommentList> callc = getJsonInterface.callInsertComment(new CommentSend(userId, "1",type, id, "comment", comment));
         callc.enqueue(new Callback<ResultCommentList>() {
             @Override
             public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {

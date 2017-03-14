@@ -160,6 +160,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                     intent.putExtra("resultComments", (Serializable) resultComments);
                     intent.putExtra("itineraryData", (Serializable) itineraryData);
                     intent.putExtra("nextOffset", response.body().getStatistics().getOffsetNext().toString());
+                    intent.putExtra("fromWhere", "Itinerary");
+
                     startActivity(intent);
                     progressDialog.dismiss();
 
@@ -436,7 +438,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     private void showToolViewPager() {
 //        ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getSupportFragmentManager());
-        ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getApplicationContext(), MoreItemItineraryActivity.this);
+        ShowTavelToolsAdapter showTavelToolsAdapter = new ShowTavelToolsAdapter(getApplicationContext(), MoreItemItineraryActivity.this,itineraryId);
         toolsPager.setAdapter(showTavelToolsAdapter);
         toolsPager.setCurrentItem(2);
         toolsPager.setClipToPadding(false);

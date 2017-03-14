@@ -1,5 +1,6 @@
 package com.iranplanner.tourism.iranplanner.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ import java.util.concurrent.TimeUnit;
 
 import entity.InterestResult;
 import entity.ItineraryLodgingCity;
+import entity.ResultComment;
+import entity.ResultCommentList;
 import entity.ResultData;
 import entity.ResultItineraryAttraction;
 import entity.ResultWidget;
@@ -69,12 +72,13 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     String myData;
     TextView txtOk, MoreInoText;
     RelativeLayout ratingHolder, GroupHolder, interestingLayout, VisitedLayout, LikeLayout, changeDateHolder;
-    LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder;
+    LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder,commentHolder;
     ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg, triangleShowAttraction;
     boolean ratingHolderFlag = false;
     String rotateImage;
     RotateAnimation rotate;
     List<ResultWidget> resultWidget;
+    ProgressDialog progressDialog;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -93,6 +97,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         attractionType = (TextView) findViewById(R.id.attractionType);
         imageTypeAttraction = (ImageView) findViewById(R.id.imageTypeAttraction);
         imageAttraction = (ImageView) findViewById(R.id.imageAttraction);
+        commentHolder = (LinearLayout) findViewById(R.id.commentHolder);
 
         rateHolder = (LinearLayout) findViewById(R.id.rateHolder);
         doneHolder = (LinearLayout) findViewById(R.id.doneHolder);
@@ -245,6 +250,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         wishImg.setOnClickListener(this);
         beftorVisitedImg.setOnClickListener(this);
         bookmarkHolder.setOnClickListener(this);
+        commentHolder.setOnClickListener(this);
 
     }
     private void setInterestResponce( List<ResultWidget> resultWidget){
@@ -319,12 +325,58 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         });
     }
 
+    public void getResultOfCommentList() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(setHttpClient())
+                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+        Call<ResultCommentList> callc = getJsonInterface.getCommentList("pagecomments", attraction.getAttractionId(), "attraction","0");
+        callc.enqueue(new Callback<ResultCommentList>() {
+            @Override
+            public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
+                if (response.body() != null) {
+                    ResultCommentList jsonResponse = response.body();
+                    List<ResultComment> resultComments = jsonResponse.getResultComment();
+                    Intent intent = new Intent(attractionDetailActivity.this, CommentListActivity.class);
+                    intent.putExtra("resultComments", (Serializable) resultComments);
+                    intent.putExtra("attraction", (Serializable) attraction);
+                    intent.putExtra("nextOffset", response.body().getStatistics().getOffsetNext().toString());
+                    intent.putExtra("fromWhere", "attraction");
+                    startActivity(intent);
+                    progressDialog.dismiss();
+                } else {
+                    Log.e("comment body", "null");
+                    progressDialog.dismiss();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResultCommentList> call, Throwable t) {
+                Log.e("result of intresting", "false");
+                progressDialog.dismiss();
+
+            }
+        });
+    }
+    private void showProgressDialog() {
+        progressDialog = new ProgressDialog(attractionDetailActivity.this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("لطفا منتظر بمانید");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
 
+            case R.id.commentHolder:
 
+                getResultOfCommentList();
+                showProgressDialog();
+                break;
             case R.id.MoreInoText:
                 if (showMore) {
                     setWebViewContent(myData);
