@@ -13,8 +13,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.iranplanner.tourism.iranplanner.R;
 
 import java.util.Locale;
@@ -31,6 +33,8 @@ public class StandardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseCrash.logcat(Log.ERROR, "firebaseCrash", "NPE caught");
+        FirebaseCrash.report(new Exception("opss"));
         int[] attrs = {R.attr.fontPath};
         TypedArray a = obtainStyledAttributes(R.style.StandardText, attrs);
         String fontPath = a.getString(0);
