@@ -141,6 +141,7 @@
                             android:layout_height="100dp"
                             android:layout_alignParentLeft="true"
                             android:layout_marginLeft="@dimen/margin_standard"
+                            android:layout_marginTop="@dimen/padding_standard"
                          />
                         <RelativeLayout
                             android:layout_width="wrap_content"
@@ -168,8 +169,7 @@
                                 android:gravity="right"
                                 android:orientation="horizontal"
                                 android:paddingBottom="@dimen/margin_xshort"
-                                android:layout_toRightOf="@+id/ImageAttraction"
-                                android:layout_toEndOf="@+id/ImageAttraction">
+                                >
 
 
                                 <TextView
@@ -200,8 +200,7 @@
                                 android:gravity="right"
                                 android:orientation="horizontal"
                                 android:paddingBottom="@dimen/padding_short"
-                                android:layout_toRightOf="@+id/ImageAttraction"
-                                android:layout_toEndOf="@+id/ImageAttraction">
+                               >
 
 
                                 <TextView

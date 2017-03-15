@@ -13,7 +13,8 @@ import java.util.Date;
  * Created by Mahdi Taherian on 11/16/2015
  */
 public class Utils {
-
+    private static final Object smsLock = new Object();
+    private static boolean waitingForSms = false;
     public static int highlightColor(int originalColor) {
         float hsvColor[] = new float[3];
         Color.colorToHSV(originalColor, hsvColor);
@@ -41,6 +42,18 @@ public class Utils {
         return (int) Math.ceil(density * value);
     }
 
+    public static boolean isWaitingForSms() {
+        boolean value;
+        synchronized (smsLock) {
+            value = waitingForSms;
+        }
+        return value;
+    }
+    public static void setWaitingForSms(boolean value) {
+        synchronized (smsLock) {
+            waitingForSms = value;
+        }
+    }
     public static String persianNumbers(String str) {
         char[] arabicChars = {'٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'};
         String englishNumbers = "0123456789";
@@ -99,14 +112,16 @@ public class Utils {
         return persianNumbers(String.format("%02d:%02d", h, m));
     }
 
-    public static String getSimpleDate( Date date) {
+    public static String getSimpleDate(Date date) {
         PersianCalendar calendar = new PersianCalendar(date.getTime());
         return persianNumbers(calendar.getPersianLongDate());
     }
-    public static String getSimpleDateMilli( Long date) {
+
+    public static String getSimpleDateMilli(Long date) {
         PersianCalendar calendar = new PersianCalendar(date);
         return persianNumbers(calendar.getPersianLongDate());
     }
+
     public static String getShortSimpleDate(Date date) {
         PersianCalendar calendar = new PersianCalendar(date.getTime());
         return persianNumbers(calendar.getPersianShortDate());
