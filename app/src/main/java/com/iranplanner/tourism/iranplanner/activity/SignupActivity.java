@@ -1,9 +1,12 @@
 package com.iranplanner.tourism.iranplanner.activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +42,8 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
     ProgressDialog progressDialog;
     @InjectView(R.id.input_name)
     EditText nameText;
+    @InjectView(R.id.input_tel)
+    EditText input_tel;
     @InjectView(R.id.input_family)
     EditText input_family;
     @InjectView(R.id.input_email)
@@ -108,7 +113,9 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
         String name = nameText.getText().toString();
         String lastName = input_family.getText().toString();
         String email = editText.getText().toString();
+        String phoneNumber = input_tel.getText().toString();
         String password = Util.md5( passwordText.getText().toString());
+
         String gender = "0";
         if (radioMan.isChecked()) {
             gender = "1";
@@ -116,7 +123,7 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
             gender = "0";
         }
         showProgress();
-        getRegisterResponce(email, password, name, lastName, gender, "1");
+        getRegisterResponce(email, password, name, lastName, gender, "1",phoneNumber);
     }
 
     public boolean validate() {
@@ -126,6 +133,7 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
         String email = editText.getText().toString();
         String password = passwordText.getText().toString();
         String passwordRepeat = input_password_repeat.getText().toString();
+        String phoneNumber = input_tel.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
             nameText.setError("حداقل سه حرف وارد شود");
@@ -165,10 +173,21 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
         } else {
             input_password_repeat.setError(null);
         }
+        if (!TextUtils.isEmpty(phoneNumber)) {
+
+            if (phoneNumber.trim().length() < 10
+                    || phoneNumber.trim().length() > 11
+                    || (phoneNumber.trim().length() == 11 && !phoneNumber.trim().startsWith("09"))
+                    || (phoneNumber.trim().length() == 10 && !phoneNumber.trim().startsWith("9"))) {
+                String message = "شماره تلفن همراه وارد شده صحیح نیست.";
+                input_tel.setError(message);
+                valid = false;
+            }
+        }
         return valid;
     }
 
-    public void getRegisterResponce(String email, String password, String fname, String lname, String gender, String cid) {
+    public void getRegisterResponce(String email, String password, String fname, String lname, String gender, String cid,String phone) {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
@@ -180,7 +199,8 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-        Call<ResultRegister> callc = getJsonInterface.getRegisterResult("register", email, password, fname, lname, gender, cid);
+
+        Call<ResultRegister> callc = getJsonInterface.getRegisterResult("register", email, password, fname, lname, gender, cid,phone);
         callc.enqueue(this);
     }
 
@@ -217,6 +237,23 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
         Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
         progressDialog.dismiss();
     }
+    public void attemptLogin(String phonePrefix, String phoneNumber) {
+//        if (userLoginTask != null) {
+//            return;
+//        }
 
+        if (!TextUtils.isEmpty(phoneNumber) && !TextUtils.isEmpty(phonePrefix)) {
+
+            if (phoneNumber.trim().length() < 10
+                    || phoneNumber.trim().length() > 11
+                    || (phoneNumber.trim().length() == 11 && !phoneNumber.trim().startsWith("09"))
+                    || (phoneNumber.trim().length() == 10 && !phoneNumber.trim().startsWith("9"))) {
+                String message = "شماره تلفن همراه وارد شده صحیح نیست.";
+
+            } else {
+
+            }
+        }
+    }
 
 }

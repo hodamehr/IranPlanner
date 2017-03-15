@@ -132,7 +132,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_done_grey" />
+                                        android:src="@mipmap/ic_checkin_before_grey_" />
 
                                     <TextView
                                         android:id="@+id/beftorVisitedTxt"
@@ -162,7 +162,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_done_grey" />
+                                        android:src="@mipmap/ic_checkin_now_grey_1" />
 
                                     <TextView
                                         android:id="@+id/nowVisitedTxt"
@@ -237,7 +237,7 @@
                                         android:layout_height="30dp"
                                         android:padding="@dimen/margin_xxshort"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_ok_grey" />
+                                        android:src="@mipmap/ic_soso" />
 
                                     <TextView
                                         android:id="@+id/okTxt"
@@ -316,7 +316,7 @@
                                     android:layout_height="30dp"
                                     android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_wish_grey" />
+                                    android:src="@mipmap/ic_reviewgreen" />
 
                                 <TextView
                                     android:id="@+id/commentTxt"
@@ -379,7 +379,7 @@
                                     android:layout_height="30dp"
                                     android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_done_grey" />
+                                    android:src="@mipmap/ic_checkin_now_grey_1" />
 
                                 <TextView
                                     android:id="@+id/doneTxt"
@@ -390,7 +390,7 @@
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
                                     android:maxLines="1"
-                                    android:text="ندیده ام" />
+                                    android:text="دیدن جاذبه" />
 
 
                             </LinearLayout>
@@ -442,7 +442,6 @@
                                     android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
                                     android:src="@mipmap/ic_bookmark_grey" />
-
                                 <TextView
                                     android:id="@+id/saveTxt"
                                     style="@style/SmallText"
@@ -662,7 +661,8 @@
                             android:layout_height="240dp"
                             android:layout_below="@+id/borderLayout"
                             android:gravity="center"
-                            android:paddingLeft="@dimen/margin_short">
+                            android:paddingLeft="@dimen/margin_short"
+                            android:visibility="gone">
 
                             <TextView
                                 style="@style/StandardTitle"

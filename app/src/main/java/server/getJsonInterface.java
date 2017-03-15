@@ -104,7 +104,8 @@ public interface getJsonInterface {
                                            @Query("fname") String fname,
                                            @Query("lname") String lname,
                                            @Query("gender") String gender,
-                                           @Query("cid") String cid);
+                                           @Query("cid") String cid,
+                                           @Query("phone") String phone);
 
     @GET("api-itinerary.php")
     Call<ResultItineraryAttractionList> getItineraryAttractionList(

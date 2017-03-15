@@ -134,7 +134,7 @@
                                 android:id="@+id/ReservationBtn"
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
-                                android:background="@drawable/button_corner_green" />
+                                android:background="@drawable/button_corner_greend" />
 
                             <TextView
                                 style="@style/StandardText"

@@ -21,8 +21,9 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     private Context context;
     public final int PAGE_COUNT = 2;
     private int[] mTabsIcons = {
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher};
+            R.mipmap.ic_search_pink_,
+            R.mipmap.ic_user_pink
+    };
 
     private final String[] mTabsTitle = {"جستجو", "حساب من" };
     public TabPagerAdapter(FragmentManager fm, Context context) {

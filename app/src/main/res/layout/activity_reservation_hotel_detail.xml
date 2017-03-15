@@ -795,7 +795,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/button_corner_green"
+            android:background="@drawable/button_corner_greend"
             android:text="مشاهده اتاق های هتل"
             style="@style/StandardTitle"
             android:textColor="@color/white_"/>

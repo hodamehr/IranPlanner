@@ -146,7 +146,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_gogrey" />
+                                        android:src="@mipmap/ic_go_grey_" />
 
                                     <TextView
                                         android:id="@+id/beftorVisitedTxt"
@@ -176,7 +176,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_gogrey" />
+                                        android:src="@mipmap/ic_go_now_gre" />
 
                                     <TextView
                                         android:id="@+id/nowVisitedTxt"
@@ -329,7 +329,7 @@
                                     android:layout_height="30dp"
                                     android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_wish_grey" />
+                                    android:src="@mipmap/ic_reviewgreen" />
 
                                 <TextView
                                     android:id="@+id/commentTxt"
@@ -362,7 +362,7 @@
                                     android:layout_height="30dp"
                                     android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_done_grey" />
+                                    android:src="@mipmap/ic_go_grey_" />
 
                                 <TextView
                                     android:id="@+id/doneTxt"
@@ -966,7 +966,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
                             android:layout_below="@+id/ShowMoreInfoHolder"
-                            android:background="@color/greyLight"></RelativeLayout>
+                            android:background="@color/greyLight"
+                            android:visibility="gone"></RelativeLayout>
                         <!--pageMore-->
                         <RelativeLayout
                             android:id="@+id/viewPagerMore"
@@ -975,6 +976,7 @@
                             android:layout_below="@+id/mapHolder"
                             android:gravity="center"
                             android:paddingLeft="@dimen/margin_short"
+                            android:visibility="gone"
                             >
 
 
@@ -987,6 +989,7 @@
                                 android:paddingLeft="@dimen/margin_standard"
                                 android:paddingRight="@dimen/margin_short"
                                 android:paddingTop="@dimen/padding_standard"
+                                android:visibility="gone"
                             >
 
                             </android.support.v4.view.ViewPager>
