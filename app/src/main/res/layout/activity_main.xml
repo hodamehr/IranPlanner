@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical">
+    <com.digits.sdk.android.DigitsAuthButton
+        android:id="@+id/auth_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="enter"/>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

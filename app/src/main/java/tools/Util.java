@@ -12,10 +12,18 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 
+import server.Config;
+
 /**
  * Created by Hoda on 10/01/2017.
  */
 public class Util {
+
+    public static final String displayFirebaseRegId(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF, 0);
+        String regId = pref.getString("regId", null);
+        return regId;
+    }
     public static final void showProgressDialog(Context context, ProgressDialog progressDialog) {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("لطفا منتظر بمانید");

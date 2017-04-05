@@ -1,7 +1,9 @@
 package server;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -33,7 +35,9 @@ public class MyFirebaseInstanceIDService  extends FirebaseInstanceIdService {
 
     private void sendRegistrationToServer(final String token) {
         // sending gcm token to server
-        Log.e(TAG, "sendRegistrationToServer: " + token);
+        TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        telephonyManager.getDeviceId();
+        Log.e(TAG, "sendRegistrationToServer: " + token +"DeviceId"+telephonyManager.getDeviceId());
     }
 
     private void storeRegIdInPref(String token) {
