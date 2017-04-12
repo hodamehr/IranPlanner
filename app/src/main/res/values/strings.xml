@@ -19,5 +19,6 @@
     <string name="icon_eye">&#xf06e;</string>
     <string name="title_activity_attraction_detail">Map</string>
     <string name="provience_name">استان </string>
+    <string name="authentication">شماره تلفن خود را وارد کنید </string>
 
 </resources>

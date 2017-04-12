@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -17,12 +18,21 @@ import com.digits.sdk.android.DigitsAuthButton;
 import com.digits.sdk.android.DigitsException;
 import com.digits.sdk.android.DigitsSession;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.iranplanner.tourism.iranplanner.activity.LoginActivity;
+import com.iranplanner.tourism.iranplanner.activity.tests;
 import com.iranplanner.tourism.iranplanner.adapter.TabPagerAdapter;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+
 import io.fabric.sdk.android.Fabric;
+import login.DigitsRegisterButton;
 import server.Config;
 import server.NotificationUtils;
 import tools.Util;
@@ -32,20 +42,31 @@ public class MainActivity extends StandardActivity {
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "9ReBYxJ9ldP2AhMJStWyXF94Y";
     private static final String TWITTER_SECRET = "U6t7AUdJcuYKevlwNgCm3QpwWGQKxwOTNTltAbeIQQgkqGcW0C";
-
+    TwitterAuthClient mTwitterAuthClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-        Fabric.with(this, new TwitterCore(authConfig), new Digits.Builder().build());
+        Digits digits = new Digits.Builder()
+                .withTheme(R.style.CustomDigitsTheme).build();
+
+
+        Fabric.with(this, new TwitterCore(authConfig), digits);
         setContentView(R.layout.activity_main);
 
 //        test test=new test();
 //        test.getItinerary("342");
         // Setup the viewPager
-        Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Button btn = (Button) findViewById(R.id.btnss);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),tests.class);
+                startActivity(intent);
+            }
+        });
 
         setSupportActionBar(toolbar);
         View logo = getLayoutInflater().inflate(R.layout.custom_imageview_toolbar, null);
@@ -53,11 +74,11 @@ public class MainActivity extends StandardActivity {
 
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
-        TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(),this);
+        TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this);
         if (viewPager != null)
             viewPager.setAdapter(pagerAdapter);
 
-       TabLayout mainTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        TabLayout mainTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         if (mainTabLayout != null) {
             mainTabLayout.setupWithViewPager(viewPager);
             for (int i = 0; i < mainTabLayout.getTabCount(); i++) {
@@ -66,10 +87,11 @@ public class MainActivity extends StandardActivity {
                     tab.setCustomView(pagerAdapter.getTabView(i));
             }
             mainTabLayout.getTabAt(0).getCustomView().setSelected(true);
-           }
-Util.displayFirebaseRegId(this);
+        }
+        Util.displayFirebaseRegId(this);
+//---------------------------------------------------
 
-        DigitsAuthButton digitsButton = (DigitsAuthButton) findViewById(R.id.auth_button);
+        DigitsRegisterButton digitsButton = (DigitsRegisterButton) findViewById(R.id.signup_button);
         digitsButton.setCallback(new AuthCallback() {
             @Override
             public void success(DigitsSession session, String phoneNumber) {

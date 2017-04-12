@@ -104,9 +104,10 @@
                     <RelativeLayout
                         android:id="@+id/ratingHolder"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/interestingLayout"
-                        android:background="@color/greyLight">
+                        android:background="@color/greyLight"
+                        android:paddingBottom="10dp">
 
                         <RelativeLayout
                             android:id="@+id/VisitedLayout"
@@ -291,7 +292,7 @@
                     <RelativeLayout
                         android:id="@+id/interestingLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageHolder"
                         android:background="@color/white_">
 
@@ -320,12 +321,11 @@
 
                                 <TextView
                                     android:id="@+id/commentTxt"
-                                    style="@style/SmallText"
+                                    style="@style/StandardTextGrey"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="@dimen/margin_xshort"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
+
                                     android:maxLines="1"
                                     android:text="ثبت نظر" />
 
@@ -351,12 +351,11 @@
 
                                 <TextView
                                     android:id="@+id/wishTxt"
-                                    style="@style/SmallText"
+                                    style="@style/StandardTextGrey"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="@dimen/margin_xshort"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
+
                                     android:maxLines="1"
                                     android:text="آرزوی دیدن" />
 
@@ -383,12 +382,11 @@
 
                                 <TextView
                                     android:id="@+id/doneTxt"
-                                    style="@style/SmallText"
+                                    style="@style/StandardTextGrey"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="@dimen/margin_xshort"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
+
                                     android:maxLines="1"
                                     android:text="دیدن جاذبه" />
 
@@ -414,12 +412,11 @@
 
                                 <TextView
                                     android:id="@+id/txtInterest"
-                                    style="@style/SmallText"
+                                    style="@style/StandardTextGrey"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="@dimen/margin_xshort"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
+
                                     android:maxLines="1"
                                     android:text="علاقه مندی" />
 
@@ -444,12 +441,11 @@
                                     android:src="@mipmap/ic_bookmark_grey" />
                                 <TextView
                                     android:id="@+id/saveTxt"
-                                    style="@style/SmallText"
+                                    style="@style/StandardTextGrey"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="@dimen/margin_xxshort"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
+
                                     android:maxLines="1"
                                     android:text="ذخیره" />
 

@@ -5,12 +5,59 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical">
-    <com.digits.sdk.android.DigitsAuthButton
-        android:id="@+id/auth_button"
+    <login.DigitsRegisterButton
+        android:id="@+id/signup_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="enter"/>
+        android:background="@drawable/button_twitter_corner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+       />
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:text="dfs"
+        android:id="@+id/btnss"/>
+    <!--<com.digits.sdk.android.DigitsAuthButton-->
+        <!--android:id="@+id/auth_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="enter"/>-->
 
+<!--
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/padding_container"
+        android:paddingRight="@dimen/padding_container">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ggdsgs"
+            android:layout_gravity="center_horizontal"/>
+
+        <EditText
+            android:id="@+id/phone_number_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:hint="gdgdggt"
+            android:imeOptions="actionNext"
+            android:inputType="phone"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <Button
+            android:id="@+id/submit_phone_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fgdgfgdfgfd"/>
+    </LinearLayout>
+-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"

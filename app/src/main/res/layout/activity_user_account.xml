@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/imageHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageAttraction"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/bg_user"
+
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/topHolder"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/pink_shadow">
+
+                        <ImageView
+                            android:id="@+id/user_setting_img"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="15dp"
+                            android:src="@mipmap/ic_heart" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/profile_image"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_above="@+id/profileNameTxt"
+                            android:layout_centerHorizontal="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/girls"
+                            app:civ_border_color="@color/white_"
+                            app:civ_border_width="1dp" />
+
+                        <TextView
+                            android:id="@+id/profileNameTxt"
+                            style="@style/StandardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_above="@+id/scoreHolder"
+                            android:layout_centerHorizontal="true"
+                            android:paddingBottom="@dimen/padding_standard"
+                            android:paddingTop="@dimen/padding_short"
+                            android:text="هدی وحیدی مهر"
+                            android:textColor="@color/white_" />
+
+                        <LinearLayout
+                            android:id="@+id/scoreHolder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginBottom="@dimen/margin_standard"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="30dp"
+                            android:weightSum="3">
+
+                            <LinearLayout
+                                android:id="@+id/bookmarkHolder"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/bookmarkeImg"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/margin_xxshort"
+                                    android:text="15"
+                                    android:textColor="@color/white_" />
+
+                                <TextView
+                                    android:id="@+id/saveTxt"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:maxLines="1"
+                                    android:text="دنبال می کنم"
+                                    android:textColor="@color/white_" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/white_"></LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/bookmarkHolder2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/bookmarcxkeImg"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/margin_xxshort"
+                                    android:text="24"
+                                    android:textColor="@color/white_" />
+
+                                <TextView
+                                    android:id="@+id/reviewTxt"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:maxLines="1"
+                                    android:text="دیدگاه"
+                                    android:textColor="@color/white_" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/white_"></LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/bookmarkHolder1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                                <TextView
+                                    android:id="@+id/bookmarkexcImg"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/margin_xxshort"
+                                    android:text="34"
+                                    android:textColor="@color/white_" />
+
+                                <TextView
+                                    android:id="@+id/pointTxt"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:maxLines="1"
+                                    android:text="امتیاز"
+                                    android:textColor="@color/white_" />
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+                    <!--grid-->
+                    <LinearLayout
+                        android:id="@+id/gridPartHolder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/topHolder"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginTop="@dimen/margin_standard"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="30dp"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="right">
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="@dimen/padding_short"
+                                    android:paddingTop="@dimen/padding_short">
+
+                                    <TextView
+                                        android:id="@+id/txtbuy"
+                                        style="@style/StandardText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="@dimen/margin_xxshort"
+                                        android:text="24"
+                                        android:textColor="@color/grey" />
+
+                                    <TextView
+                                        style="@style/StandardText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxLines="1"
+                                        android:text="خریدهای من"
+                                        android:textColor="@color/grey" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:id="@+id/imgBuy"
+                                    android:layout_width="30dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@mipmap/ic_search_pink" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/dark_shadow"></LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <LinearLayout
+                                    android:id="@+id/bookmarkHolfdfdfdder132"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="right"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="@dimen/padding_short"
+                                    android:paddingTop="@dimen/padding_short">
+
+
+                                    <TextView
+                                        android:id="@+id/txtExprience"
+                                        style="@style/StandardText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="@dimen/margin_xxshort"
+                                        android:text="34"
+                                        android:textColor="@color/grey" />
+
+                                    <TextView
+                                        style="@style/StandardText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxLines="1"
+                                        android:text="تجربه های من"
+                                        android:textColor="@color/grey" />
+
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:id="@+id/imgExprience"
+                                    android:layout_width="30dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@mipmap/ic_search_pink" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@drawable/dark_shadow_right_left"></LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentLeft="true"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="30dp"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="right">
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="@dimen/padding_short"
+                                    android:paddingTop="@dimen/padding_short">
+
+                                    <TextView
+                                        android:id="@+id/txtLike"
+                                        style="@style/StandardText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="@dimen/margin_xxshort"
+                                        android:text="24"
+                                        android:textColor="@color/grey" />
+
+                                    <TextView
+                                        style="@style/StandardText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxLines="1"
+                                        android:text="علاقه مندی های من"
+                                        android:textColor="@color/grey" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:id="@+id/imgLike"
+                                    android:layout_width="30dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@mipmap/ic_search_pink" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/grey"></LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="right"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="@dimen/padding_short"
+                                    android:paddingTop="@dimen/padding_short">
+
+
+                                    <TextView
+                                        android:id="@+id/txtBookmark"
+                                        style="@style/StandardText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="@dimen/margin_xxshort"
+                                        android:text="34"
+                                        android:textColor="@color/grey" />
+
+                                    <TextView
+                                        android:id="@+id/pointTxfsfstfgdg32"
+                                        style="@style/StandardText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxLines="1"
+                                        android:text="ذخیره های من"
+                                        android:textColor="@color/grey" />
+
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:id="@+id/imgBookmark"
+                                    android:layout_width="30dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@mipmap/ic_search_pink" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@drawable/dark_shadow_right_left"></LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginBottom="@dimen/margin_standard"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="30dp"
+                            android:weightSum="2">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="right">
+
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="@dimen/padding_short"
+                                    android:paddingTop="@dimen/padding_short">
+
+                                    <TextView
+                                        android:id="@+id/txtBadgeNumber"
+                                        style="@style/StandardText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="@dimen/margin_xxshort"
+                                        android:text="24"
+                                        android:textColor="@color/grey" />
+
+                                    <TextView
+                                        style="@style/StandardText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxLines="1"
+                                        android:text="نشان های من"
+                                        android:textColor="@color/grey" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:id="@+id/imgBadge"
+                                    android:layout_width="30dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@mipmap/ic_search_pink"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/dark_shadow_top"></LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="right"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="@dimen/padding_short"
+                                    android:paddingTop="@dimen/padding_short">
+
+
+                                    <TextView
+                                        android:id="@+id/txtWish"
+                                        style="@style/StandardText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="@dimen/margin_xxshort"
+                                        android:text="34"
+                                        android:textColor="@color/grey" />
+
+                                    <TextView
+                                        style="@style/StandardText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxLines="1"
+                                        android:text="آرزوهای من"
+                                        android:textColor="@color/grey" />
+
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:id="@+id/imgWish"
+                                    android:layout_width="30dp"
+                                    android:layout_height="match_parent"
+                                    android:src="@mipmap/ic_search_pink" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@+id/gridPartHolder"
+                        android:background="@color/greyLight"></RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

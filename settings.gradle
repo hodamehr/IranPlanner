@@ -1,1 +1,1 @@
-include ':app', ':widget'
+include ':app', ':widget', ':folding-cell-1.1.0.0'

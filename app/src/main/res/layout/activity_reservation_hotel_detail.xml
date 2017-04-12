@@ -134,9 +134,10 @@
                     <RelativeLayout
                         android:id="@+id/ratingHolder"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/supplierLayoutMore"
-                        android:background="@color/greyLight">
+                        android:background="@color/greyLight"
+                        android:layout_marginBottom="10dp">
 
                         <RelativeLayout
                             android:id="@+id/VisitedLayout"
@@ -321,7 +322,7 @@
                     <RelativeLayout
                         android:id="@+id/supplierLayoutMore"
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageHolder"
                         android:background="@color/white_">
 
@@ -524,10 +525,10 @@
                                 <RelativeLayout
                                     android:id="@+id/changeDateHolder"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="35dp"
+                                    android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
                                     android:layout_centerVertical="true"
-
+                                    android:padding="@dimen/margin_xshort"
 
                                     android:background="@drawable/rectangle">
 
@@ -559,7 +560,9 @@
                                         android:layout_centerVertical="true"
                                         android:layout_marginRight="@dimen/margin_short"
                                         android:layout_toLeftOf="@+id/calendarIcon"
-                                        android:text="شنبه اول بهمن 1395" />
+                                        android:text="شنبه اول بهمن 1395"
+                                        android:maxLines="1"
+                                        />
                                 </RelativeLayout>
 
                             </RelativeLayout>

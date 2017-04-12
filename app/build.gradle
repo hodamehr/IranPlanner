@@ -45,14 +45,12 @@ dependencies {
     //noinspection GradleCompatible
     compile project(':widget')
     compile 'com.mikhaellopez:circularprogressbar:1.1.1'
-    compile 'de.hdodenhof:circleimageview:1.2.1'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.mikhaellopez:circularprogressbar:1.1.1'
-    compile 'de.hdodenhof:circleimageview:1.2.1'
     //retrofit
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.google.code.gson:gson:2.7'
-
     //-----------
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:multidex:1.0.1'
@@ -62,29 +60,26 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.jakewharton:butterknife:6.1.0'
-
-//    compile 'com.google.android.gms:play-services-appindexing:9.8.0'
-//    compile 'com.google.android.gms:play-services:10.0.1'
-//    compile('com.google.android.gms:play-services:9.8.0') {
-//        exclude group: 'com.google.guava'
-//    }
-//    compile 'com.google.android.gms:play-services-places:10.0.1'
-    compile ('com.google.android.gms:play-services-places:10.0.1')
+    //    compile 'com.google.android.gms:play-services-appindexing:9.8.0'
+    //    compile 'com.google.android.gms:play-services:10.0.1'
+    //    compile('com.google.android.gms:play-services:9.8.0') {
+    //        exclude group: 'com.google.guava'
+    //    }
+    //    compile 'com.google.android.gms:play-services-places:10.0.1'
+    compile 'com.google.android.gms:play-services-places:10.0.1'
     compile 'com.google.android.gms:play-services-location:10.0.1'
-
     //set default fonts in whole
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
-
     //notification
-    compile "com.google.android.gms:play-services-gcm:10.0.1"
-    compile "com.google.firebase:firebase-messaging:10.0.1"
-    compile "com.google.firebase:firebase-core:10.0.1"
+    compile 'com.google.android.gms:play-services-gcm:10.0.1'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
+    compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.google.firebase:firebase-crash:10.0.1'
     compile('com.digits.sdk.android:digits:2.0.6@aar') {
         transitive = true;
     }
-
-
+    // accordion
+    compile project(':folding-cell-1.1.0.0')
 }
 apply plugin: 'com.google.gms.google-services'
 

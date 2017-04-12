@@ -425,7 +425,8 @@
                         android:layout_width="60dp"
                         android:layout_height="30dp"
                         android:layout_below="@+id/priceContainer"
-                        android:background="@color/blue"></RelativeLayout>
+                        android:background="@color/blue"
+                        android:visibility="gone"></RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
