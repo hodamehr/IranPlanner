@@ -28,12 +28,12 @@ import retrofit2.http.Query;
  */
 public interface getJsonInterface {
     @GET("api-itinerary.php?action=list&lang=fa&from=342&limit=10&offset=0&to")
-    Call<ResultItineraryList> getItinerarys(@Query("action") String param1,
-                                            @Query("lang") String param2,
-                                            @Query("from") String param3,
-                                            @Query("limit") String param4,
-                                            @Query("offset") String param5,
-                                            @Query("to") String param6);
+    Call<ResultItineraryList> getItinerarys(@Query("action") String action,
+                                            @Query("lang")   String lang,
+                                            @Query("from")   String from,
+                                            @Query("limit")  String limit,
+                                            @Query("offset") String offset,
+                                            @Query("to")     String to);
 
     @GET("api-data.php?action=widget&uid=792147600796866&cid=1&ntype=itinerary&nid=21905&gtype=bookmark&gvalue=1")
     Call<InterestResult> getInterest(

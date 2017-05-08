@@ -8,7 +8,7 @@ import com.google.firebase.crash.FirebaseCrash;
 
 import java.io.Serializable;
 
-public abstract class StandardFragment extends Fragment implements Serializable{
+public abstract class StandardFragment extends Fragment implements Serializable {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,5 +23,9 @@ public abstract class StandardFragment extends Fragment implements Serializable{
 
     public void fragmentBecameInvisible() {
 
+    }
+
+    public boolean onBackPressed() {
+        return false;
     }
 }

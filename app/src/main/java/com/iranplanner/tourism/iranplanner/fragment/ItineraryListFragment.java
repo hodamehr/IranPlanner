@@ -19,6 +19,10 @@ import com.iranplanner.tourism.iranplanner.activity.MoreItemItineraryActivity;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.adapter.ItineraryListAdapter;
+import com.iranplanner.tourism.iranplanner.mainscreen.DaggerMainScreenComponent;
+import com.iranplanner.tourism.iranplanner.mainscreen.MainScreenContract;
+import com.iranplanner.tourism.iranplanner.mainscreen.MainScreenModule;
+import com.iranplanner.tourism.iranplanner.mainscreen.MainScreenPresenter;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 
@@ -27,10 +31,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import entity.ResultItinerary;
 import entity.ResultItineraryList;
 import entity.ResultWidget;
 import entity.ResultWidgetFull;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,19 +46,24 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import server.getJsonInterface;
 import tools.Util;
+import tools.utilMvp.App;
 
 
 /**
  * Created by h.vahidimehr on 10/01/2017.
  */
 
-public class ItineraryListFragment extends StandardFragment implements Callback<ResultItineraryList>, DataTransferInterface {
+public class ItineraryListFragment extends StandardFragment implements MainScreenContract.View, Callback<ResultItineraryList>, DataTransferInterface {
+
+    @Inject
+    MainScreenPresenter mainPresenter;
+
     private Context context;
     private RecyclerView recyclerView;
     private ItineraryListAdapter adapter;
     LinearLayoutManager mLayoutManager;
     List<ResultItinerary> data = null;
-
+    boolean flag;
     RotateLoading rotateloading;
     TextView waiting;
     private boolean fromCityToCity;
@@ -105,7 +117,10 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
         recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
         waitingLoading = (ProgressBar) view.findViewById(R.id.waitingLoading);
         checkFromWhereGetBundle();
-
+        DaggerMainScreenComponent.builder()
+                .netComponent(((App) getActivity().getApplicationContext()).getNetComponent())
+                .mainScreenModule(new MainScreenModule(this))
+                .build().injectItineraryListFragment(this);
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
@@ -120,7 +135,6 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
                 ImageView imageView = (ImageView) view.findViewById(R.id.imgItineraryListMore);
                 TextView textView = (TextView) view.findViewById(R.id.itinerary_duration);
                 textView.getText();
-
                 MyThread m = new MyThread(imageView, position, textView.getText().toString());
                 m.run();
             }
@@ -135,10 +149,15 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
                     visibleItemCount = mLayoutManager.getChildCount();
                     totalItemCount = mLayoutManager.getItemCount();
                     pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                        if (fromCityToCity) {
-                            getItineraryCityToCity(data.get(0).getItineraryFromCityId().toString(), nextOffset, endCity);
+                        if (fromCityToCity && loading) {
+//                            getItineraryCityToCity(data.get(0).getItineraryFromCityId().toString(), nextOffset, endCity);
+//                            String offset = "0";
+//                            "list", "fa", cityId, "", offset, toCity
+                            mainPresenter.loadItinerary("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity);
                             waitingLoading.setVisibility(View.VISIBLE);
+                            loading = false;
                         } else if (fromProvince) {
                             getItineraryProvince(nextOffset, provinceId);
                             waitingLoading.setVisibility(View.VISIBLE);
@@ -206,6 +225,32 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
         });
     }
 
+    @Override
+    public void showItineraries(ResultItineraryList resultItineraryList) {
+        loading = true;
+        List<ResultItinerary> jj = resultItineraryList.getResultItinerary();
+        if (!nextOffset.equals(resultItineraryList.getStatistics().getOffsetNext().toString())) {
+            data.addAll(jj);
+            adapter.notifyDataSetChanged();
+            waitingLoading.setVisibility(View.INVISIBLE);
+            nextOffset = resultItineraryList.getStatistics().getOffsetNext().toString();
+
+        }
+
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+        loading = true;
+    }
+
+    @Override
+    public void showComplete() {
+        Toast.makeText(getContext(), "complete", Toast.LENGTH_LONG).show();
+        loading = true;
+    }
+
     class MyThread extends Thread {
 
         private ImageView img;
@@ -249,6 +294,16 @@ public class ItineraryListFragment extends StandardFragment implements Callback<
         getJsonInterface getJsonInterface = retrofit.create(getJsonInterface.class);
         Call<ResultItineraryList> call = getJsonInterface.getItinerarys("list", "fa", cityId, "", offset, toCity);
         call.enqueue(this);
+
+//        private MainView mainView;
+//        private FindItemsInteractor findItemsInteractor;
+//
+//        public MainPresenterImpl(MainView mainView, FindItemsInteractor findItemsInteractor) {
+//            this.mainView = mainView;
+//        this.findItemsInteractor = findItemsInteractor;
+//    }
+
+
     }
 
     public void getItineraryProvince(String offset, String provinceId) {

@@ -146,26 +146,26 @@ public class SearchCityCityFragment extends StandardFragment implements Callback
     @Override
     public void onResponse(Call<ResultItineraryList> call, Response<ResultItineraryList> response) {
 //        Log.e("get result from server", response.body().toString());
-        if (response.body() != null) {
-            ResultItineraryList jsonResponse = response.body();
-            List<ResultItinerary> data = jsonResponse.getResultItinerary();
-            ItineraryListFragment itineraryListFragment = new ItineraryListFragment();
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("resuliItineraryList", (Serializable) data);
-            bundle.putString("fromWhere", "fromCityToCity");
-            bundle.putString("endCity", cityEnd);
-            bundle.putString("nextOffset", response.body().getStatistics().getOffsetNext().toString());
-            itineraryListFragment.setArguments(bundle);
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.SearchHolder, itineraryListFragment);
-            ft.addToBackStack(null);
-            ft.commit();
-            checkfragment = true;
-            progressDialog.dismiss();
-        } else {
-            Toast.makeText(getContext(), "برنامه سفری یافت نشد", Toast.LENGTH_LONG).show();
-            progressDialog.dismiss();
-        }
+//        if (response.body() != null) {
+//            ResultItineraryList jsonResponse = response.body();
+//            List<ResultItinerary> data = jsonResponse.getResultItinerary();
+//            ItineraryListFragment itineraryListFragment = new ItineraryListFragment();
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("resuliItineraryList", (Serializable) data);
+//            bundle.putString("fromWhere", "fromCityToCity");
+//            bundle.putString("endCity", cityEnd);
+//            bundle.putString("nextOffset", response.body().getStatistics().getOffsetNext().toString());
+//            itineraryListFragment.setArguments(bundle);
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            ft.replace(R.id.SearchHolder, itineraryListFragment);
+//            ft.addToBackStack(null);
+//            ft.commit();
+//            checkfragment = true;
+//            progressDialog.dismiss();
+//        } else {
+//            Toast.makeText(getContext(), "برنامه سفری یافت نشد", Toast.LENGTH_LONG).show();
+//            progressDialog.dismiss();
+//        }
     }
 
     @Override

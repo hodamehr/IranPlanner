@@ -19,10 +19,10 @@ import com.digits.sdk.android.DigitsException;
 import com.digits.sdk.android.DigitsSession;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.iranplanner.tourism.iranplanner.activity.LoginActivity;
-import com.iranplanner.tourism.iranplanner.activity.tests;
 import com.iranplanner.tourism.iranplanner.adapter.TabPagerAdapter;
 import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
 
+import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
@@ -38,7 +38,7 @@ import server.NotificationUtils;
 import tools.Util;
 
 public class MainActivity extends StandardActivity {
-
+    private StandardFragment currentTab;
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "9ReBYxJ9ldP2AhMJStWyXF94Y";
     private static final String TWITTER_SECRET = "U6t7AUdJcuYKevlwNgCm3QpwWGQKxwOTNTltAbeIQQgkqGcW0C";
@@ -58,19 +58,12 @@ public class MainActivity extends StandardActivity {
 //        test test=new test();
 //        test.getItinerary("342");
         // Setup the viewPager
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        Button btn = (Button) findViewById(R.id.btnss);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),tests.class);
-                startActivity(intent);
-            }
-        });
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        Button btn = (Button) findViewById(R.id.btnss);
 
-        setSupportActionBar(toolbar);
-        View logo = getLayoutInflater().inflate(R.layout.custom_imageview_toolbar, null);
-        toolbar.addView(logo);
+//        setSupportActionBar(toolbar);
+//        View logo = getLayoutInflater().inflate(R.layout.custom_imageview_toolbar, null);
+//        toolbar.addView(logo);
 
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
@@ -83,14 +76,18 @@ public class MainActivity extends StandardActivity {
             mainTabLayout.setupWithViewPager(viewPager);
             for (int i = 0; i < mainTabLayout.getTabCount(); i++) {
                 TabLayout.Tab tab = mainTabLayout.getTabAt(i);
-                if (tab != null)
+                if (tab != null){
                     tab.setCustomView(pagerAdapter.getTabView(i));
+                }
             }
-            mainTabLayout.getTabAt(0).getCustomView().setSelected(true);
+
         }
+        mainTabLayout.getTabAt(0).getCustomView().setSelected(true);
+        currentTab= (StandardFragment) pagerAdapter.getItem(0);
+
         Util.displayFirebaseRegId(this);
 //---------------------------------------------------
-
+//
         DigitsRegisterButton digitsButton = (DigitsRegisterButton) findViewById(R.id.signup_button);
         digitsButton.setCallback(new AuthCallback() {
             @Override
@@ -107,6 +104,14 @@ public class MainActivity extends StandardActivity {
         });
 
 
+
+    }
+    @Override
+    public void onBackPressed()
+    {
+        //If the event returned false, then call the super.
+        if(currentTab == null || !currentTab.onBackPressed())
+            super.onBackPressed();
     }
 
 }

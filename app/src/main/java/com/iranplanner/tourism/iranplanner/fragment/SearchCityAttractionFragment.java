@@ -170,7 +170,7 @@ public class SearchCityAttractionFragment extends StandardFragment implements Ca
             bundle.putString("nextOffset", response.body().getStatistics().getOffsetNext().toString());
             itineraryListFragment.setArguments(bundle);
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.SearchHolder, itineraryListFragment);
+            ft.replace(R.id.container, itineraryListFragment);
             ft.addToBackStack(null);
             ft.commit();
             checkfragment = true;

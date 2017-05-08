@@ -19,8 +19,12 @@
     <color name="grey">#737373</color>
     <color name="background">#FFF5F5F5</color>
     <color name="transparent_grey">#74030000</color>
-
-
-
-
+    <color name="pink_1">#f23e93</color>
+    <color name="pink_2">#f0137d</color>
+    <color name="pink_3">#d41568</color>
+    <color name="pink_4">#c3005c</color>
+    <color name="orange_1">#ff8b00</color>
+    <color name="orange_2">#ffa841</color>
+    <color name="purple_1">#9377ec</color>
+    <color name="purple_2">#714fe7</color>
 </resources>

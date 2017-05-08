@@ -13,6 +13,7 @@ import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.fragment.LoginFragment;
 import com.iranplanner.tourism.iranplanner.fragment.MainSearchFragment;
 import com.iranplanner.tourism.iranplanner.fragment.PageFragment;
+import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 
 /**
  * Created by Hoda on 10/01/2017.
@@ -24,8 +25,10 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
             R.mipmap.ic_search_pink_,
             R.mipmap.ic_user_pink
     };
+    private StandardFragment currentTab;
+    //    StandardFragment
+    private final String[] mTabsTitle = {"جستجو", "حساب من"};
 
-    private final String[] mTabsTitle = {"جستجو", "حساب من" };
     public TabPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
@@ -42,14 +45,17 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int pos) {
+        currentTab = null;
         switch (pos) {
 
             case 0:
 
-                return  MainSearchFragment.newInstance();
+                currentTab = MainSearchFragment.newInstance();
+                return currentTab;
 
             case 1:
-                return LoginFragment.newInstance();
+                currentTab = LoginFragment.newInstance();
+                return currentTab;
 
         }
         return null;

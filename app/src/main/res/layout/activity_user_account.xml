@@ -187,12 +187,21 @@
                         </LinearLayout>
                     </RelativeLayout>
                     <!--grid-->
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@+id/gridPartHolder"
+                        android:background="@color/greyLight"></RelativeLayout>
+
                     <LinearLayout
                         android:id="@+id/gridPartHolder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/topHolder"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_below="@+id/imageAttraction"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -502,12 +511,6 @@
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_below="@+id/gridPartHolder"
-                        android:background="@color/greyLight"></RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>

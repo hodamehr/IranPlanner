@@ -24,7 +24,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
+                    <!--imageHolder-->
                     <RelativeLayout
                         android:id="@+id/imageHolder"
                         android:layout_width="match_parent"
@@ -288,7 +288,7 @@
                         </RelativeLayout>
 
                     </RelativeLayout>
-
+                    <!--interestingLayout-->
                     <RelativeLayout
                         android:id="@+id/interestingLayout"
                         android:layout_width="match_parent"
@@ -439,6 +439,7 @@
                                     android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
                                     android:src="@mipmap/ic_bookmark_grey" />
+
                                 <TextView
                                     android:id="@+id/saveTxt"
                                     style="@style/StandardTextGrey"
@@ -453,14 +454,13 @@
                             </LinearLayout>
                         </LinearLayout>
                     </RelativeLayout>
-
-
+                    <!--group holder-->
                     <RelativeLayout
                         android:id="@+id/GroupHolder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/ratingHolder">
-                        <!--supplierlayoutTraveltype                       -->
+                        <!--supplierlayoutTraveltype -->
                         <RelativeLayout
                             android:id="@+id/supplierLayoutTravelType"
                             android:layout_width="match_parent"
@@ -568,7 +568,6 @@
                             </RelativeLayout>
 
                         </RelativeLayout>
-
                         <!--mapholder-->
                         <RelativeLayout
                             android:id="@+id/mapHolder"
@@ -591,9 +590,7 @@
                                 tools:context="com.iranplanner.tourism.iranplanner.activity.MoreItemItineraryActivity" />
 
                         </RelativeLayout>
-
                         <!--showMore   bishtar bekhanid  -->
-
                         <RelativeLayout
                             android:id="@+id/ShowMoreInfoHolder"
                             android:layout_width="wrap_content"
@@ -643,7 +640,6 @@
                                 android:text="بیشتر بخوانید"
                                 android:textColor="@color/blue" />
                         </RelativeLayout>
-
                         <RelativeLayout
                             android:id="@+id/borderLayout"
                             android:layout_width="match_parent"
@@ -680,8 +676,6 @@
 
 
                         </RelativeLayout>
-
-
                     </RelativeLayout>
 
                 </RelativeLayout>

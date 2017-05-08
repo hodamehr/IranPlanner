@@ -19,22 +19,46 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/padding_24"
-            android:paddingRight="@dimen/padding_24"
-            android:paddingTop="@dimen/padding_larg">
+        >
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/button_standard"
-                android:src="@mipmap/ic_attractiongardi" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/pink_2"
+                android:paddingLeft="@dimen/padding_standard"
+                android:paddingRight="@dimen/padding_standard">
+
+                <TextView
+                    android:id="@+id/itinerary_name_city"
+                    style="@style/StandardText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp"
+                    android:layout_toLeftOf="@+id/itinerartMoreShare_city"
+                    android:maxLines="1"
+                    android:text="برنامه سفرهای ایران گردی"
+                    android:textColor="#fdfdfb" />
+
+                <ImageView
+                    android:id="@+id/itinerartMoreShare_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/ic_city_gardi" />
+
+
+            </RelativeLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_short"
-                android:layout_marginTop="@dimen/margin_short">
+                android:layout_marginTop="@dimen/margin_short"
+                android:paddingLeft="@dimen/padding_24"
+                android:paddingRight="@dimen/padding_24">
 
                 <AutoCompleteTextView
                     android:id="@+id/fromCity_attraction"
@@ -44,14 +68,18 @@
                     android:gravity="right"
                     android:hint="از شهر"
                     android:inputType="text"
-                    android:imeOptions="actionNext"/>
+                    android:imeOptions="actionNext"
+
+             />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:paddingLeft="@dimen/padding_24"
+                android:paddingRight="@dimen/padding_24">
 
                 <AutoCompleteTextView
                     android:id="@+id/endAttraction"
@@ -72,9 +100,10 @@
                 android:layout_marginBottom="24dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/button_corner"
-                android:padding="12dp"
                 android:text="جستجو"
                 android:textColor="@color/white_"
+                android:layout_margin="@dimen/padding_24"
+
                 />
 
         </LinearLayout>

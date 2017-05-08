@@ -1,176 +1,738 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/SearchHolder"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_"
-    android:orientation="vertical"
-    android:weightSum="4">
+    android:background="@color/white">
 
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:fitsSystemWindows="true">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view_Iran"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/button_standard"
-            android:layout_marginRight="@dimen/button_standard"
-            android:layout_marginTop="@dimen/margin_standard"
-            android:background="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="@dimen/margin_short">
-
-
-            <RelativeLayout
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="4">
+            <!-- itinerary city to city-->
+            <LinearLayout
+                android:id="@+id/city_city_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/iranGardi"
-                    android:layout_width="wrap_content"
+                <com.ramotion.foldingcell.FoldingCell
+                    android:id="@+id/folding_cell_City_City"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:src="@mipmap/ic_iran_gardi" />
+                    android:background="@color/pink">
 
-                <TextView
-                    android:id="@+id/iranTrip"
-                    style="@style/StandardText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/iranGardi"
-                    android:layout_centerHorizontal="true"
-                    android:paddingBottom="@dimen/margin_standard"
-                    android:text="ایرانگردی"
-                    android:textColor="@color/greyDark" />
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
+                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/cell_content_view_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/background"
+                        android:visibility="gone"
+                        tools:context="com.iranplanner.tourism.iranplanner.fragment.SearchCityCityFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view_city"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/button_standard"
-            android:layout_marginRight="@dimen/button_standard"
-            android:layout_marginTop="@dimen/margin_standard"
-            android:background="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="@dimen/margin_short">
+                            <RelativeLayout
 
-            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/pink_1"
+                                android:paddingLeft="@dimen/padding_standard"
+                                android:paddingRight="@dimen/padding_standard">
+
+                                <TextView
+                                    android:id="@+id/itinerary_name_city_city"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_margin="5dp"
+                                    android:layout_toLeftOf="@+id/itinerartMoreShare_city_city"
+                                    android:maxLines="1"
+                                    android:text="برنامه سفرهای ایران گردی"
+                                    android:textColor="@color/white_" />
+
+                                <ImageView
+                                    android:id="@+id/itinerartMoreShare_city_city"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_margin="5dp"
+                                    android:src="@mipmap/ic_heart" />
+
+
+                            </RelativeLayout>
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/margin_short"
+                                android:layout_marginTop="@dimen/margin_short"
+                                android:paddingLeft="@dimen/padding_standard"
+                                android:paddingRight="@dimen/padding_standard">
+
+                                <AutoCompleteTextView
+                                    android:id="@+id/fromCity_city"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/padding_big"
+                                    android:gravity="right"
+                                    android:hint="از شهر"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="text" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginTop="8dp"
+                                android:paddingLeft="@dimen/padding_standard"
+                                android:paddingRight="@dimen/padding_standard">
+
+                                <AutoCompleteTextView
+                                    android:id="@+id/endCity_city"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:hint="به شهر"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="text"
+
+
+                                    />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <android.support.v7.widget.AppCompatButton
+                                android:id="@+id/searchOk_city_city"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/padding_24"
+                                android:background="@drawable/button_corner"
+                                android:text="جستجو"
+                                android:textColor="@color/white_" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/cell_title_view_city_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/pink_1"
+                            android:paddingLeft="@dimen/padding_standard"
+                            android:paddingRight="@dimen/padding_standard">
+
+                            <TextView
+                                android:id="@+id/txtitinerary_name_city_city"
+                                style="@style/StandardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="5dp"
+                                android:layout_toLeftOf="@+id/imgCityCity"
+                                android:maxLines="1"
+                                android:text="برنامه سفرهای ایران گردی"
+                                android:textColor="@color/white_" />
+
+                            <ImageView
+                                android:id="@+id/imgCityCity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="5dp"
+                                android:src="@mipmap/ic_heart" />
+
+
+                        </RelativeLayout>
+                    </FrameLayout>
+                </com.ramotion.foldingcell.FoldingCell>
+            </LinearLayout>
+            <!-- intinerary city-->
+            <LinearLayout
+                android:id="@+id/city_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/cityGardi"
-                    android:layout_width="wrap_content"
+                <com.ramotion.foldingcell.FoldingCell
+                    android:id="@+id/folding_cell_city"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:src="@mipmap/ic_city_gardi" />
+                    android:background="@color/pink_2">
 
-                <TextView
-                    android:id="@+id/cityTrip"
-                    style="@style/StandardText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/cityGardi"
-                    android:layout_centerHorizontal="true"
-                    android:paddingBottom="@dimen/margin_standard"
-                    android:text="شهرگردی"
-                    android:textColor="@color/greyDark" />
-            </RelativeLayout>
+                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/cell_content_view_citys"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/background"
+                        android:visibility="gone"
+                        tools:context="com.iranplanner.tourism.iranplanner.fragment.SearchCityCityFragment">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/pink_2"
+                                android:paddingLeft="@dimen/padding_standard"
+                                android:paddingRight="@dimen/padding_standard">
+
+                                <TextView
+                                    android:id="@+id/itinerary_name_city"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_margin="5dp"
+                                    android:layout_toLeftOf="@+id/itinerartMoreShare_city"
+                                    android:maxLines="1"
+                                    android:text="برنامه سفرهای شهر گردی"
+                                    android:textColor="#fdfdfb" />
+
+                                <ImageView
+                                    android:id="@+id/itinerartMoreShare_city"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_margin="5dp"
+                                    android:src="@mipmap/ic_city_gardi" />
 
 
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
+                            </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/margin_short"
+                                android:layout_marginTop="@dimen/margin_short"
+                                android:paddingLeft="@dimen/padding_24"
+                                android:paddingRight="@dimen/padding_24">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view_privence"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/button_standard"
-            android:layout_marginRight="@dimen/button_standard"
-            android:layout_marginTop="@dimen/margin_standard"
-            android:background="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="@dimen/margin_short">
+                                <AutoCompleteTextView
+                                    android:id="@+id/fromCity"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/padding_big"
+                                    android:gravity="right"
+                                    android:hint="شهر گردی"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="text" />
+                            </android.support.design.widget.TextInputLayout>
 
 
-            <RelativeLayout
+                            <android.support.v7.widget.AppCompatButton
+                                android:id="@+id/searchOk_city"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/padding_24"
+
+                                android:background="@drawable/button_corner"
+                                android:padding="@dimen/padding_standard"
+                                android:text="جستجو"
+                                android:textColor="@color/white_" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/cell_title_view_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/imgItineraryListMore"
+                            android:background="@color/pink"
+                            android:paddingLeft="@dimen/padding_standard"
+                            android:paddingRight="@dimen/padding_standard">
+
+                            <TextView
+                                android:id="@+id/city_name"
+                                style="@style/StandardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="5dp"
+                                android:layout_toLeftOf="@+id/city_gardi"
+                                android:maxLines="1"
+                                android:text="برنامه سفرهای شهر گردی"
+                                android:textColor="@color/white_" />
+
+                            <ImageView
+                                android:id="@+id/city_gardi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="5dp"
+                                android:src="@mipmap/ic_share" />
+
+
+                        </RelativeLayout>
+                    </FrameLayout>
+                </com.ramotion.foldingcell.FoldingCell>
+            </LinearLayout>
+            <!--itinerary province-->
+            <LinearLayout
+                android:id="@+id/province_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/ostanGardi"
-                    android:layout_width="wrap_content"
+                <com.ramotion.foldingcell.FoldingCell
+                    android:id="@+id/folding_cell_province"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:src="@mipmap/ic_ostangardi" />
+                    android:background="@color/pink_3">
 
-                <TextView
-                    android:id="@+id/provinceTrip"
-                    style="@style/StandardText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/ostanGardi"
-                    android:layout_centerHorizontal="true"
-                    android:paddingBottom="@dimen/margin_standard"
-                    android:text="استان گردی"
-                    android:textColor="@color/greyDark" />
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
+                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/cell_content_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/background"
+                        android:visibility="gone"
+                        tools:context="com.iranplanner.tourism.iranplanner.fragment.SearchCityCityFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view_attraction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/button_standard"
-            android:layout_marginRight="@dimen/button_standard"
-            android:layout_marginTop="@dimen/margin_standard"
-            android:background="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="@dimen/margin_short">
+                            <RelativeLayout
+                                android:id="@+id/fgddd"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/pink_3"
+                                android:paddingLeft="@dimen/padding_standard"
+                                android:paddingRight="@dimen/padding_standard">
+
+                                <TextView
+                                    android:id="@+id/txtitinerary_name_city"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_margin="5dp"
+                                    android:layout_toLeftOf="@+id/imgitinerartMoreShare_city_city"
+                                    android:maxLines="1"
+                                    android:text="برنامه سفرهای استان گردی"
+                                    android:textColor="#fdfdfb" />
+
+                                <ImageView
+                                    android:id="@+id/imgitinerartMoreShare_city_city"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_margin="5dp"
+                                    android:src="@mipmap/ic_city_gardi" />
 
 
-            <RelativeLayout
+                            </RelativeLayout>
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/margin_short"
+                                android:layout_marginTop="@dimen/margin_short"
+                                android:paddingLeft="@dimen/padding_standard"
+                                android:paddingRight="@dimen/padding_standard">
+
+                                <AutoCompleteTextView
+                                    android:id="@+id/textProvience"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/padding_big"
+                                    android:gravity="right"
+                                    android:hint="استان"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="text" />
+                            </android.support.design.widget.TextInputLayout>
+
+
+                            <android.support.v7.widget.AppCompatButton
+                                android:id="@+id/searchOk_provience"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/padding_24"
+                                android:background="@drawable/button_corner"
+                                android:padding="12dp"
+                                android:text="جستجو"
+                                android:textColor="@color/white_" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/cell_title_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:id="@+id/fgd"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/imgItineraryListMore"
+                            android:background="@color/pink_3"
+                            android:paddingLeft="@dimen/padding_standard"
+                            android:paddingRight="@dimen/padding_standard">
+
+                            <TextView
+                                android:id="@+id/itinerary_name"
+                                style="@style/StandardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="5dp"
+                                android:layout_toLeftOf="@id/itinerartMoreShare"
+                                android:maxLines="1"
+                                android:text="برنامه سفرهای استان گردی"
+                                android:textColor="#fdfdfb" />
+
+                            <ImageView
+                                android:id="@+id/itinerartMoreShare"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="5dp"
+                                android:src="@mipmap/ic_heart" />
+
+
+                        </RelativeLayout>
+                    </FrameLayout>
+                </com.ramotion.foldingcell.FoldingCell>
+            </LinearLayout>
+            <!--itinerary attraction-->
+            <LinearLayout
+                android:id="@+id/attraction_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/attractinGardi"
-                    android:layout_width="wrap_content"
+                <com.ramotion.foldingcell.FoldingCell
+                    android:id="@+id/folding_cell_attraction"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:src="@mipmap/ic_attractiongardi" />
+                    android:background="@color/pink_4">
 
-                <TextView
-                    android:id="@+id/attractionTrip"
-                    style="@style/StandardText"
-                    android:layout_width="wrap_content"
+                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/cell_content_view_attraction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/background"
+                        android:visibility="gone"
+                        tools:context="com.iranplanner.tourism.iranplanner.fragment.SearchCityCityFragment">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:orientation="vertical"
+                            >
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/pink_2"
+                                android:paddingLeft="@dimen/padding_standard"
+                                android:paddingRight="@dimen/padding_standard">
+
+                                <TextView
+                                    android:id="@+id/itinerary_name_city_attraction"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_margin="5dp"
+                                    android:layout_toLeftOf="@+id/itinerartMoreShare_attraction"
+                                    android:maxLines="1"
+                                    android:text="برنامه سفرهای ایران گردی"
+                                    android:textColor="#fdfdfb" />
+
+                                <ImageView
+                                    android:id="@+id/itinerartMoreShare_attraction"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_margin="5dp"
+                                    android:src="@mipmap/ic_city_gardi" />
+
+
+                            </RelativeLayout>
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/margin_short"
+                                android:layout_marginTop="@dimen/margin_short"
+                                android:paddingLeft="@dimen/padding_24"
+                                android:paddingRight="@dimen/padding_24">
+
+                                <AutoCompleteTextView
+                                    android:id="@+id/fromCity_attraction"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/padding_big"
+                                    android:gravity="right"
+                                    android:hint="از شهر"
+                                    android:inputType="text"
+                                    android:imeOptions="actionNext"
+
+                                    />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginTop="8dp"
+                                android:paddingLeft="@dimen/padding_24"
+                                android:paddingRight="@dimen/padding_24">
+
+                                <AutoCompleteTextView
+                                    android:id="@+id/endAttraction"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:hint="به جاذبه های دیدنی"
+                                    android:inputType="text"
+                                    android:imeOptions="actionDone"
+                                    />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <android.support.v7.widget.AppCompatButton
+                                android:id="@+id/searchOk_attraction"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="24dp"
+                                android:layout_marginTop="24dp"
+                                android:background="@drawable/button_corner"
+                                android:text="جستجو"
+                                android:textColor="@color/white_"
+                                android:layout_margin="@dimen/padding_24"
+
+                                />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/cell_title_view_attraction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/imgItineraryListMore"
+                            android:background="@color/pink_4"
+                            android:paddingLeft="@dimen/padding_standard"
+                            android:paddingRight="@dimen/padding_standard">
+
+                            <TextView
+                                android:id="@+id/itinerary_name_attraction"
+                                style="@style/StandardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="5dp"
+                                android:maxLines="1"
+                                android:text="برنامه سفرهای جاذبه گردی"
+                                android:textColor="#fdfdfb" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="5dp"
+                                android:src="@mipmap/ic_heart" />
+
+
+                        </RelativeLayout>
+                    </FrameLayout>
+                </com.ramotion.foldingcell.FoldingCell>
+            </LinearLayout>
+            <!--events-->
+            <LinearLayout
+                android:id="@+id/events_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <com.ramotion.foldingcell.FoldingCell
+                    android:id="@+id/folding_cell_events"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/attractinGardi"
-                    android:layout_centerHorizontal="true"
-                    android:paddingBottom="@dimen/margin_standard"
-                    android:text="جاذبه گردی"
-                    android:textColor="@color/greyDark" />
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
+                    android:background="@color/pink_2">
 
-</LinearLayout>
+                    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/cell_content_view_events"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/background"
+                        android:visibility="gone"
+                        tools:context="com.iranplanner.tourism.iranplanner.fragment.SearchCityCityFragment">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/orange_1"
+                                android:paddingLeft="@dimen/padding_standard"
+                                android:paddingRight="@dimen/padding_standard">
+
+                                <TextView
+                                    android:id="@+id/txtitinerary_name_events"
+                                    style="@style/StandardText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_margin="5dp"
+                                    android:layout_toLeftOf="@+id/imgitinerartMoreShare_events"
+                                    android:maxLines="1"
+                                    android:text="برنامه سفرهای رویدادی"
+                                    android:textColor="#fdfdfb" />
+
+                                <ImageView
+                                    android:id="@+id/imgitinerartMoreShare_events"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_margin="5dp"
+                                    android:src="@mipmap/ic_city_gardi" />
+
+
+                            </RelativeLayout>
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/margin_short"
+                                android:layout_marginTop="@dimen/margin_short"
+                                android:paddingLeft="@dimen/padding_standard"
+                                android:paddingRight="@dimen/padding_standard">
+
+                                <AutoCompleteTextView
+                                    android:id="@+id/textevents"
+                                    style="@style/StandardText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/padding_big"
+                                    android:gravity="right"
+                                    android:hint="استان"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="text" />
+                            </android.support.design.widget.TextInputLayout>
+
+
+                            <android.support.v7.widget.AppCompatButton
+                                android:id="@+id/searchOk_events"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/padding_24"
+                                android:background="@drawable/button_corner"
+                                android:padding="12dp"
+                                android:text="جستجو"
+                                android:textColor="@color/white_" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/cell_title_view_events"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/imgItineraryListMore"
+                            android:background="@color/orange_1"
+                            android:paddingLeft="@dimen/padding_standard"
+                            android:paddingRight="@dimen/padding_standard">
+
+                            <TextView
+                                android:id="@+id/itinerary_name_events"
+                                style="@style/StandardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="5dp"
+                                android:layout_toLeftOf="@+id/imgEvents"
+                                android:maxLines="1"
+                                android:text="برنامه سفرهای رویدادی"
+                                android:textColor="@color/white_" />
+
+                            <ImageView
+                                android:id="@+id/imgEvents"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="5dp"
+                                android:src="@mipmap/ic_ostangardi" />
+
+
+                        </RelativeLayout>
+                    </FrameLayout>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/mmActivity"
+                        android:layout_below="@+id/cell_title_view_events"
+                        android:text="okkkkkkkkkk"/>
+                </com.ramotion.foldingcell.FoldingCell>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
