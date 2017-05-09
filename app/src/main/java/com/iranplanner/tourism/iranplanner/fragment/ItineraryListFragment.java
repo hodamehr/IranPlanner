@@ -155,11 +155,11 @@ public class ItineraryListFragment extends StandardFragment implements MainScree
 //                            getItineraryCityToCity(data.get(0).getItineraryFromCityId().toString(), nextOffset, endCity);
 //                            String offset = "0";
 //                            "list", "fa", cityId, "", offset, toCity
-                            mainPresenter.loadItinerary("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity);
+                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity);
                             waitingLoading.setVisibility(View.VISIBLE);
                             loading = false;
                         } else if (fromProvince) {
-                            getItineraryProvince(nextOffset, provinceId);
+                            mainPresenter.loadItineraryFromProvince("searchprovince", provinceId, nextOffset);
                             waitingLoading.setVisibility(View.VISIBLE);
 
                         } else if (fromAttraction) {
@@ -225,8 +225,22 @@ public class ItineraryListFragment extends StandardFragment implements MainScree
         });
     }
 
+//    @Override
+//    public void showItineraries(ResultItineraryList resultItineraryList) {
+//        loading = true;
+//        List<ResultItinerary> jj = resultItineraryList.getResultItinerary();
+//        if (!nextOffset.equals(resultItineraryList.getStatistics().getOffsetNext().toString())) {
+//            data.addAll(jj);
+//            adapter.notifyDataSetChanged();
+//            waitingLoading.setVisibility(View.INVISIBLE);
+//            nextOffset = resultItineraryList.getStatistics().getOffsetNext().toString();
+//
+//        }
+//
+//    }
+
     @Override
-    public void showItineraries(ResultItineraryList resultItineraryList) {
+    public void showItineraries(ResultItineraryList resultItineraryList, String typeOfSearch) {
         loading = true;
         List<ResultItinerary> jj = resultItineraryList.getResultItinerary();
         if (!nextOffset.equals(resultItineraryList.getStatistics().getOffsetNext().toString())) {
@@ -236,7 +250,6 @@ public class ItineraryListFragment extends StandardFragment implements MainScree
             nextOffset = resultItineraryList.getStatistics().getOffsetNext().toString();
 
         }
-
     }
 
     @Override

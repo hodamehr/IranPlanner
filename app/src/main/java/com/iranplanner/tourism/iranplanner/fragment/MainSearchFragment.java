@@ -16,11 +16,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -251,11 +249,11 @@ public class MainSearchFragment extends StandardFragment implements MainScreenCo
                 cityFromAttraction = returnCityId(fromCity_attraction, tempAttractionCity);
                 attractionEnd = returnAttractionId(endAttraction, tempAttraction);
                 if (cityFromAttraction != null && attractionEnd != null) {
-                    getItinerary(cityFromAttraction, "0", false, attractionEnd, attractionEnd);
-                    showProgressDialog();
-//                    String offset = "0";
-//                    mainPresenter.loadItinerary("list", "fa", cityCityFrom, "20", offset, cityEnd);
+//                    getItinerary(cityFromAttraction, "0", false, attractionEnd, attractionEnd);
 //                    showProgressDialog();
+                    String offset = "0";
+                    mainPresenter.loadItineraryFromCity("list", "fa", cityCityFrom, "20", offset, cityEnd);
+                    showProgressDialog();
                 } else {
                     Toast.makeText(getActivity(), "نام شهر یا جاذبه ثبت نشده است", Toast.LENGTH_SHORT).show();
                 }
@@ -269,7 +267,7 @@ public class MainSearchFragment extends StandardFragment implements MainScreenCo
 //                    getItinerary(cityFrom, "0", false, cityFrom);
 //                    showProgressDialog();
                     String offset = "0";
-                    mainPresenter.loadItinerary("list", "fa", cityFrom, "20", offset, cityEnd);
+                    mainPresenter.loadItineraryFromCity("list", "fa", cityFrom, "20", offset, cityEnd);
                     showProgressDialog();
                 } else {
                     Toast.makeText(getActivity(), "لطفا نام شهر را اصلاح کنید", Toast.LENGTH_SHORT).show();
@@ -289,7 +287,7 @@ public class MainSearchFragment extends StandardFragment implements MainScreenCo
                 if (cityCityFrom != null) {
 //                  getItinerary(cityCityFrom, "0", false, cityEnd);
                     String offset = "0";
-                    mainPresenter.loadItinerary("list", "fa", cityCityFrom, "20", offset, cityEnd);
+                    mainPresenter.loadItineraryFromCity("list", "fa", cityCityFrom, "20", offset, cityEnd);
                     showProgressDialog();
 
                 } else {
@@ -301,7 +299,9 @@ public class MainSearchFragment extends StandardFragment implements MainScreenCo
                 fcProvince.fold(false);
                 provinceName = returnProvinceId(textProvience, tempProvince);
                 if (provinceName != null) {
-                    getItinerary(provinceName, "0");
+//                    getItinerary(provinceName, "0");
+                    String offset = "0";
+                    mainPresenter.loadItineraryFromProvince("searchprovince", provinceName, offset);
                 } else {
                     Toast.makeText(getActivity(), "لطفا نام استان را اصلاح کنید ", Toast.LENGTH_SHORT).show();
                 }
@@ -341,15 +341,42 @@ public class MainSearchFragment extends StandardFragment implements MainScreenCo
 
     }
 
+//    @Override
+//    public void showItineraries(ResultItineraryList resultItineraryList) {
+//        List<ResultItinerary> data = resultItineraryList.getResultItinerary();
+//        itineraryListFragment = new ItineraryListFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("resuliItineraryList", (Serializable) data);
+//        bundle.putString("fromWhere", "fromCityToCity");
+//        bundle.putString("endCity", cityEnd);
+//        bundle.putString("nextOffset", resultItineraryList.getStatistics().getOffsetNext().toString());
+//        itineraryListFragment.setArguments(bundle);
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.replace(R.id.container, itineraryListFragment);
+//        ft.addToBackStack(null);
+//        ft.commit();
+//        cityEnd = "";
+//        checkfragment = true;
+//        progressDialog.dismiss();
+//    }
+
     @Override
-    public void showItineraries(ResultItineraryList resultItineraryList) {
+    public void showItineraries(ResultItineraryList resultItineraryList, String typeOfSearch) {
         List<ResultItinerary> data = resultItineraryList.getResultItinerary();
         itineraryListFragment = new ItineraryListFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("resuliItineraryList", (Serializable) data);
-        bundle.putString("fromWhere", "fromCityToCity");
-        bundle.putString("endCity", cityEnd);
+        bundle.putString("fromWhere", typeOfSearch);
         bundle.putString("nextOffset", resultItineraryList.getStatistics().getOffsetNext().toString());
+
+        bundle.putString("provinceId", provinceId);
+        if (typeOfSearch.equals("fromCityToCity")) {
+            bundle.putString("endCity", cityEnd);
+        } else {
+            bundle.putString("endCity", "");
+        }
+
+        //--
         itineraryListFragment.setArguments(bundle);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.container, itineraryListFragment);

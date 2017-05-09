@@ -14,7 +14,7 @@ import entity.ResultItineraryList;
 public interface MainScreenContract {
     interface View {
 //        void showItineraries(List<ResultItinerary>  ResultItineraries);
-        void showItineraries(ResultItineraryList resultItineraryList);
+        void showItineraries(ResultItineraryList resultItineraryList , String typeOfSearch);
 
         void showError(String message);
 
@@ -22,11 +22,17 @@ public interface MainScreenContract {
     }
 
     interface Presenter {
-        void loadItinerary(String action,
-                           String lang,
-                           String from,
-                           String limit,
-                           String offset,
-                           String to);
+        void loadItineraryFromCity(String action,
+                                   String lang,
+                                   String from,
+                                   String limit,
+                                   String offset,
+                                   String to);
+
+        void loadItineraryFromProvince(String action,
+                                       String province,
+                                       String offset);
     }
+
+
 }

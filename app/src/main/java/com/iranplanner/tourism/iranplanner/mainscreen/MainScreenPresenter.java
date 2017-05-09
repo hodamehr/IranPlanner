@@ -28,10 +28,10 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 
 
     @Override
-    public void loadItinerary(String action, String lang, String from, String limit, String offset, String to) {
+    public void loadItineraryFromCity(String action, String lang, String from, String limit, String offset, String to) {
 
         retrofit.create(ItineraryService.class)
-                .getItinerarys(action, lang, from, limit, offset, to).subscribeOn(Schedulers.io())
+                .getItinerariesFromCity(action, lang, from, limit, offset, to).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultItineraryList>() {
@@ -48,20 +48,49 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 
                     @Override
                     public void onNext(ResultItineraryList resultItineraryList) {
-//                        mView.showPosts(resultItineraryList.getResultItinerary().get(0));
-                        resultItineraryList.getResultItinerary();
-                        mView.showItineraries(resultItineraryList);
+                        mView.showItineraries(resultItineraryList,"fromCityToCity");
+                    }
+                });
+    }
+
+    @Override
+    public void loadItineraryFromProvince(String action, String province, String offset) {
+        retrofit.create(ItineraryService.class)
+                .getItinerariesFromProvince(action, province, offset).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultItineraryList>() {
+
+                    @Override
+                    public void onCompleted() {
+                        mView.showComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(ResultItineraryList resultItineraryList) {
+                        mView.showItineraries(resultItineraryList,"fromProvince");
                     }
                 });
     }
 
     public interface ItineraryService {
         @GET("api-itinerary.php?action=list&lang=fa&from=342&limit=10&offset=0&to")
-        Observable<ResultItineraryList> getItinerarys(@Query("action") String action,
-                                                      @Query("lang") String lang,
-                                                      @Query("from") String from,
-                                                      @Query("limit") String limit,
-                                                      @Query("offset") String offset,
-                                                      @Query("to") String to);
+        Observable<ResultItineraryList> getItinerariesFromCity(@Query("action") String action,
+                                                       @Query("lang") String lang,
+                                                       @Query("from") String from,
+                                                       @Query("limit") String limit,
+                                                       @Query("offset") String offset,
+                                                       @Query("to") String to);
+
+        @GET("api-itinerary.php")
+        Observable<ResultItineraryList> getItinerariesFromProvince(@Query("action") String action,
+                                                                   @Query("province") String province,
+                                                                   @Query("offset") String offset);
+
     }
 }
