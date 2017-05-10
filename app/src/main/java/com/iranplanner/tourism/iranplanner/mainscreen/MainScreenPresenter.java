@@ -15,17 +15,16 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Hoda on 11-May-16.
  */
-public class MainScreenPresenter implements MainScreenContract.Presenter {
+public class MainScreenPresenter implements MainSearchScreenContract.Presenter {
 
     public Retrofit retrofit;
-    MainScreenContract.View mView;
+    MainSearchScreenContract.View mView;
 
     @Inject
-    public MainScreenPresenter(Retrofit retrofit, MainScreenContract.View mView) {
+    public MainScreenPresenter(Retrofit retrofit, MainSearchScreenContract.View mView) {
         this.retrofit = retrofit;
         this.mView = mView;
     }
-
 
     @Override
     public void loadItineraryFromCity(String action, String lang, String from, String limit, String offset, String to) {
@@ -48,7 +47,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 
                     @Override
                     public void onNext(ResultItineraryList resultItineraryList) {
-                        mView.showItineraries(resultItineraryList,"fromCityToCity");
+                        mView.showItineraries(resultItineraryList, "fromCityToCity");
                     }
                 });
     }
@@ -73,7 +72,34 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 
                     @Override
                     public void onNext(ResultItineraryList resultItineraryList) {
-                        mView.showItineraries(resultItineraryList,"fromProvince");
+                        mView.showItineraries(resultItineraryList, "fromProvince");
+                    }
+                });
+    }
+
+    @Override
+    public void loadItineraryFromAttraction(String action, String lang, String from, String limit, String offset, String attraction) {
+        retrofit.create(ItineraryService.class).getItinerariesAttraction(action, lang, from, limit, offset, attraction)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultItineraryList>() {
+
+                    @Override
+                    public void onCompleted() {
+                        mView.showComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(ResultItineraryList resultItineraryList) {
+                        mView.showItineraries(resultItineraryList, "fromAttraction");
+
+
                     }
                 });
     }
@@ -81,16 +107,24 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
     public interface ItineraryService {
         @GET("api-itinerary.php?action=list&lang=fa&from=342&limit=10&offset=0&to")
         Observable<ResultItineraryList> getItinerariesFromCity(@Query("action") String action,
-                                                       @Query("lang") String lang,
-                                                       @Query("from") String from,
-                                                       @Query("limit") String limit,
-                                                       @Query("offset") String offset,
-                                                       @Query("to") String to);
+                                                               @Query("lang") String lang,
+                                                               @Query("from") String from,
+                                                               @Query("limit") String limit,
+                                                               @Query("offset") String offset,
+                                                               @Query("to") String to);
 
         @GET("api-itinerary.php")
         Observable<ResultItineraryList> getItinerariesFromProvince(@Query("action") String action,
                                                                    @Query("province") String province,
                                                                    @Query("offset") String offset);
+
+        @GET("api-itinerary.php?action=searchattractioncity&lang=fa&from=342&limit=10&offset=0&attraction=id")
+        Observable<ResultItineraryList> getItinerariesAttraction(@Query("action") String action,
+                                                                 @Query("lang") String lang,
+                                                                 @Query("from") String from,
+                                                                 @Query("limit") String limit,
+                                                                 @Query("offset") String offset,
+                                                                 @Query("attraction") String attraction);
 
     }
 }

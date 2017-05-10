@@ -84,6 +84,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import server.getJsonInterface;
 import tools.MapDirection;
 import tools.Util;
+import tools.utilMvp.App;
 import tools.widget.PersianDatePicker;
 
 public class MoreItemItineraryActivity extends StandardActivity implements OnMapReadyCallback,
@@ -1230,6 +1231,11 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+//            DaggerAttractionScreenComponent
+//            .builder()
+//                    .netComponent(((App) getApplicationContext()).getNetComponent())
+//                    .attractionScreenModule(new AttractionScreenModule(this))
+//                    .build().injectionMainSearchFragment(this);
             super.onCreate(savedInstanceState);
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             setContentView(R.layout.dialog_date_travel);

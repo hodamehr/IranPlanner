@@ -1,7 +1,7 @@
 package com.iranplanner.tourism.iranplanner.mainscreen;
 
 
-
+import android.view.View;
 
 import dagger.Module;
 import dagger.Provides;
@@ -12,16 +12,16 @@ import tools.utilMvp.CustomScope;
  */
 @Module
 public class MainScreenModule {
-    private final MainScreenContract.View mView;
+    private final MainSearchScreenContract.View mView;
 
 
-    public MainScreenModule(MainScreenContract.View mView) {
+    public MainScreenModule(MainSearchScreenContract.View mView) {
         this.mView = mView;
     }
 
     @Provides
     @CustomScope
-    MainScreenContract.View providesMainScreenContractView() {
+    MainSearchScreenContract.View providesMainScreenContractView() {
         return mView;
     }
 }
