@@ -16,12 +16,11 @@ import tools.utilMvp.CustomScope;
  * Created by Hoda on 11-May-16.
  */
 @CustomScope
-@Component(dependencies = NetComponent.class, modules = {MainScreenModule.class,AttractionScreenModule.class})
+@Component(dependencies = NetComponent.class, modules = {MainScreenModule.class})
 public interface MainScreenComponent {
     void inject(mm activity);
     void injectionMainSearchFragment(MainSearchFragment fragment);
     void injectItineraryListFragment(ItineraryListFragment fragment);
-    void inject(MoreItemItineraryActivity MoreItemItineraryActivity);
 }
 
 

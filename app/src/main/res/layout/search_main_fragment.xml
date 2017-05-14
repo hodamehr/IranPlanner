@@ -725,12 +725,7 @@
 
                         </RelativeLayout>
                     </FrameLayout>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/mmActivity"
-                        android:layout_below="@+id/cell_title_view_events"
-                        android:text="okkkkkkkkkk"/>
+
                 </com.ramotion.foldingcell.FoldingCell>
             </LinearLayout>
         </LinearLayout>

@@ -134,10 +134,10 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
 
     public void login() {
 
-        if (!validate()) {
-//            onLoginFailed();
-            return;
-        }
+//        if (!validate()) {
+////            onLoginFailed();
+//            return;
+//        }
 
 //        _loginButton.setEnabled(false);
         accountInputHolder.setVisibility(View.INVISIBLE);
@@ -198,7 +198,6 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
             progressDialog.dismiss();
             _loginButton.setEnabled(true);
             accountInputHolder.setVisibility(View.VISIBLE);
-
             setLOginName();
         } else {
             progressDialog.dismiss();

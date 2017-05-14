@@ -5,7 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,7 +24,7 @@ import server.Config;
  */
 public class Util {
 
-    public static final String displayFirebaseRegId(Context context) {
+     public static final String displayFirebaseRegId(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
         return regId;

@@ -62,7 +62,7 @@ public interface getJsonInterface {
     Call<LoginResult> getLoginResult(@Query("action") String param1,
                                      @Query("email") String param2,
                                      @Query("password") String param3);
-
+//    http://api.parsdid.com/iranplanner/app/api-user.php?action=login&email=09358891239&password=6efa240fc47e3f882ae16d163ca26f91
 
     @POST("api-data.php?action=comment")
     Call<ResultCommentList> callInsertComment(@Body CommentSend request);

@@ -30,5 +30,7 @@ public class ResultUserRegister implements Serializable {
     public void setStatuscode(Integer statuscode) {
         this.statuscode = statuscode;
     }
+//
+
 
 }

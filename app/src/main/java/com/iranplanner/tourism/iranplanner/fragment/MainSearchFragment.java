@@ -99,18 +99,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchSc
         city_layout = (LinearLayout) view.findViewById(R.id.city_layout);
         province_layout = (LinearLayout) view.findViewById(R.id.province_layout);
         events_layout = (LinearLayout) view.findViewById(R.id.events_layout);
-        mmActivity = (Button) view.findViewById(R.id.mmActivity);
-        mmActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "chi shod", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getActivity(), mm.class);
-                getActivity().startActivity(intent);
-
-
-            }
-        });
-        //province
+          //province
         textProvience = (AutoCompleteTextView) view.findViewById(R.id.textProvience);
         searchOk_provience = (Button) view.findViewById(R.id.searchOk_provience);
         tempProvince = autoCompleteProvince(textProvience);
