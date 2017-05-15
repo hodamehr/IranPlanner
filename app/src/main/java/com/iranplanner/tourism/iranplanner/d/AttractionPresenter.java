@@ -27,12 +27,13 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tools.Util;
+import ui.Presenter;
 
 /**
  * Created by h.vahidimehr on 12/05/2017.
  */
 
-public class AttractionPresenter implements AttractionContract.Presenter {
+public class AttractionPresenter extends AttractionContract {
 
     public Retrofit retrofit;
     AttractionContract.View mView;
@@ -127,7 +128,7 @@ public class AttractionPresenter implements AttractionContract.Presenter {
     }
 
     @Override
-    public void getInterest(String action, String uid, String cid, String ntype, String nid, String gvalue, String gtype) {
+    public void getInterest(String action, String uid, String cid, String ntype, String nid, String gtype, String gvalue) {
         retrofit.create(AttractionService.class)
                 .getInterest(action, uid, cid, ntype, nid, gtype, gvalue).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -136,18 +137,20 @@ public class AttractionPresenter implements AttractionContract.Presenter {
 
                     @Override
                     public void onCompleted() {
-
+                        rotate.setRepeatCount(0);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.getMessage());
+                        rotate.setRepeatCount(0);
                     }
 
                     @Override
                     public void onNext(InterestResult interestResult) {
                         mView.setIntrestedWidget(interestResult);
                         rotate.setRepeatCount(0);
+
                     }
                 });
     }
@@ -202,6 +205,26 @@ public class AttractionPresenter implements AttractionContract.Presenter {
         mAnimatorSet.setDuration(1000);
         mAnimatorSet.start();
         return true;
+    }
+
+    @Override
+    public void initialize() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void destroy() {
+
     }
 
 

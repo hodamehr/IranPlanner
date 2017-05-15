@@ -98,7 +98,7 @@ import tools.widget.PersianDatePicker;
 public class MoreItemItineraryActivity extends StandardActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener,  View.OnClickListener
+        LocationListener, View.OnClickListener
         , AttractionContract.View {
 
 
@@ -151,7 +151,11 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     List<Date> stayNights;
     Map<String, Integer> dateCity;
     Button showReservation, showItinerary;
-//    List<Map<String,Integer>> ss;
+    //    List<Map<String,Integer>> ss;
+    int BookmarkValue;
+    int LikeValue;
+    int VisitedValue;
+    int WishValue;
 
 
     private void findView() {
@@ -244,6 +248,10 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         findView();
+        BookmarkValue = 0;
+        LikeValue = 0;
+        VisitedValue = 0;
+        WishValue = 0;
         showToolViewPager();
 //     toolsPager.setPageMargin(1);
         Intent intent = getIntent();
@@ -435,8 +443,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                     VisitedLayout.setVisibility(View.VISIBLE);
                     rotateImage = "doneImg";
                     ratingHolderFlag = attractionPresenter.doTranslateAnimationDown(ratingHolder, GroupHolder, triangleShowAttraction, supplierLayoutMore.getHeight());
-
                     break;
+
                 } else {
                     ratingHolderFlag = attractionPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
                     break;
@@ -444,71 +452,55 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
             case R.id.likeImg:
                 rotateImage = "likeImg";
-                if (!getUseRIdFromShareprefrence().isEmpty()) {
-                    attractionPresenter.doWaitingAnimation(likeImg);
-                    attractionPresenter.getInterest("widget", getUseRIdFromShareprefrence(), "1", "itinerary", itineraryId, Constants.likeImg, "like");
-
+//                 BookmarkValue;
+//                 LikeValue;
+//                 VisitedValue;
+//                 WishValue;
+                if (LikeValue == 1) {
+                    OnClickedIntrestedWidget("like", Constants.intrestDefault, likeImg);
                 } else {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
+                    OnClickedIntrestedWidget("like", Constants.likeImg, likeImg);
                 }
                 break;
             case R.id.okImg:
                 rotateImage = "okImg";
-                if (!getUseRIdFromShareprefrence().isEmpty()) {
-                    attractionPresenter.doWaitingAnimation(okImg);
-                    attractionPresenter.getInterest("widget", getUseRIdFromShareprefrence(), "1", "itinerary", itineraryId, "2", "like");
-
-                } else {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
-                }
+                OnClickedIntrestedWidget("like", "2", okImg);
                 break;
+
             case R.id.dislikeImg:
                 rotateImage = "dislikeImg";
-                if (!getUseRIdFromShareprefrence().isEmpty()) {
-                    attractionPresenter.doWaitingAnimation(dislikeImg);
-                    attractionPresenter.getInterest("widget", getUseRIdFromShareprefrence(), "1", "itinerary", itineraryId, "3", "like");
-                } else {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
-                }
+                OnClickedIntrestedWidget("like", "3", dislikeImg);
                 break;
 
             case R.id.nowVisitedImg:
                 rotateImage = "nowVisitedImg";
-                if (!getUseRIdFromShareprefrence().isEmpty()) {
-                    attractionPresenter.doWaitingAnimation(nowVisitedImg);
-                    attractionPresenter.getInterest("widget", getUseRIdFromShareprefrence(), "1", "itinerary", itineraryId, "1", "visited");
-                } else {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
-                }
+                OnClickedIntrestedWidget("visited", "1", nowVisitedImg);
                 break;
+
             case R.id.beftorVisitedImg:
                 rotateImage = "beftorVisitedImg";
-                if (!getUseRIdFromShareprefrence().isEmpty()) {
-                    attractionPresenter.doWaitingAnimation(beftorVisitedImg);
-                    attractionPresenter.getInterest("widget", getUseRIdFromShareprefrence(), "1", "itinerary", itineraryId, "2", "visited");
-                } else {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
-                }
+                OnClickedIntrestedWidget("visited", "2", beftorVisitedImg);
                 break;
+
             case R.id.bookmarkHolder:
                 rotateImage = "bookmarkImg";
-                if (!getUseRIdFromShareprefrence().isEmpty()) {
-                    attractionPresenter.doWaitingAnimation(bookmarkImg);
-                    attractionPresenter.getInterest("widget", getUseRIdFromShareprefrence(), "1", "itinerary", itineraryId, "1", "bookmark");
-                } else {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
-                }
+                OnClickedIntrestedWidget("bookmark", "1", bookmarkImg);
                 break;
+
             case R.id.showItinerary1:
                 showProgressDialog();
                 attractionPresenter.getItineraryAttractionList("attraction", "fa", itineraryId);
                 break;
+        }
+    }
+
+    private void OnClickedIntrestedWidget(String gType, String gValue, ImageView imageView) {
+        if (!getUseRIdFromShareprefrence().isEmpty()) {
+            attractionPresenter.doWaitingAnimation(imageView);
+            attractionPresenter.getInterest("widget", getUseRIdFromShareprefrence(), "1", "itinerary", itineraryId, gType, gValue);
+        } else {
+            Log.e("user is not login", "error");
+            Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -874,7 +866,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     }
 
 
-
     @Override
     public void showAttraction(ResultItineraryAttractionList resultItineraryAttractionList) {
         itineraryActionList = resultItineraryAttractionList.getResultItineraryAttraction();
@@ -896,7 +887,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     public void showComplete() {
         Log.e("complete", "get attraction list");
         progressDialog.dismiss();
-
     }
 
     @Override
@@ -913,21 +903,44 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     @Override
     public void setLoadWidget(ResultWidgetFull resultWidgetFull) {
+        if (resultWidgetFull.getResultWidget().get(0).getWidgetBookmarkValue() != null) {
+            BookmarkValue = resultWidgetFull.getResultWidget().get(0).getWidgetBookmarkValue();
+        }
+        if (resultWidgetFull.getResultWidget().get(0).getWidgetLikeValue() != null) {
+            LikeValue = resultWidgetFull.getResultWidget().get(0).getWidgetLikeValue();
+        }
+        if (resultWidgetFull.getResultWidget().get(0).getWidgetVisitedValue() != null) {
+            VisitedValue = resultWidgetFull.getResultWidget().get(0).getWidgetVisitedValue();
+        }
+        if (resultWidgetFull.getResultWidget().get(0).getWidgetWishValue() != null) {
+            WishValue = resultWidgetFull.getResultWidget().get(0).getWidgetWishValue();
+        }
+
         List<ResultWidget> resultUserLogin = resultWidgetFull.getResultWidget();
         if (resultUserLogin.get(0).getWidgetBookmarkValue() != null && resultUserLogin.get(0).getWidgetBookmarkValue() == 1) {
             bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgreen));
+        } else if (resultUserLogin.get(0).getWidgetBookmarkValue() == null && resultUserLogin.get(0).getWidgetBookmarkValue() == 0) {
+            bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgrey));
         }
         if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 1) {
             likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
             rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
+        } else if (resultUserLogin.get(0).getWidgetLikeValue() == null && resultUserLogin.get(0).getWidgetLikeValue() == 0) {
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_grey));
         }
         if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 2) {
             okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso_purple));
             rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso_purple));
+        } else if (resultUserLogin.get(0).getWidgetLikeValue() == null && resultUserLogin.get(0).getWidgetLikeValue() == 0) {
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
+
         }
         if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 3) {
             dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_peurple));
             rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_peurple));
+        } else if (resultUserLogin.get(0).getWidgetLikeValue() == null && resultUserLogin.get(0).getWidgetLikeValue() == 0) {
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_grey_));
+
         }
         if (resultUserLogin.get(0).getWidgetVisitedValue() != null && resultUserLogin.get(0).getWidgetVisitedValue() == 1) {
             nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_now_orange));
@@ -953,6 +966,22 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     @Override
     public void showAnimationWhenWaiting() {
         ratingHolderFlag = attractionPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
+    }
+
+    @Override
+    public void setIntrestValue(InterestResult InterestResult) {
+//        if (InterestResult.getResultData()..getWidgetBookmarkValue() != null) {
+//            BookmarkValue = resultWidgetFull.getResultWidget().get(0).getWidgetBookmarkValue();
+//        }
+//        if (resultWidgetFull.getResultWidget().get(0).getWidgetLikeValue() != null) {
+//            LikeValue = resultWidgetFull.getResultWidget().get(0).getWidgetLikeValue();
+//        }
+//        if (resultWidgetFull.getResultWidget().get(0).getWidgetVisitedValue() != null) {
+//            VisitedValue = resultWidgetFull.getResultWidget().get(0).getWidgetVisitedValue();
+//        }
+//        if (resultWidgetFull.getResultWidget().get(0).getWidgetWishValue() != null) {
+//            WishValue = resultWidgetFull.getResultWidget().get(0).getWidgetWishValue();
+//        }
     }
 
     public class CustomDialogTravel extends Dialog implements

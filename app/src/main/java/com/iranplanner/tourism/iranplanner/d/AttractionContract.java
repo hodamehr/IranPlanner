@@ -3,17 +3,19 @@ package com.iranplanner.tourism.iranplanner.d;
 
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 import entity.InterestResult;
 import entity.ResultCommentList;
 import entity.ResultItineraryAttractionList;
 import entity.ResultWidgetFull;
+import ui.Presenter;
 
 
 /**
  * Created by Hoda
  */
-public interface AttractionContract {
-    interface View {
+public abstract class AttractionContract extends Presenter<AttractionContract.View> {
+    public interface View {
         void showAttraction(ResultItineraryAttractionList resultItineraryAttractionList);
 
         void showError(String message);
@@ -27,36 +29,37 @@ public interface AttractionContract {
         void setIntrestedWidget(InterestResult InterestResult);
 
         void showAnimationWhenWaiting();
+        void setIntrestValue(InterestResult InterestResult);
     }
 
-    interface Presenter {
 
-        void getItineraryAttractionList(String action,
-                                        String lang,
-                                        String id);
+    public abstract void getItineraryAttractionList(String action,
+                                                    String lang,
+                                                    String id);
 
-        void getItineraryCommentList(String action,
-                                     String nId,
-                                     String nType,
-                                     String offset);
+    public abstract void getItineraryCommentList(String action,
+                                                 String nId,
+                                                 String nType,
+                                                 String offset);
 
-        void getWidgetResult(String action,
-                             String id,
-                             String uid,
-                             String ntype);
+    public abstract void getWidgetResult(String action,
+                                         String id,
+                                         String uid,
+                                         String ntype);
 
-        void getInterest(String action,
-                         String uid,
-                         String cid,
-                         String ntype,
-                         String nid,
-                         String gtype,
-                         String gvalue);
+    public abstract void getInterest(String action,
+                                     String uid,
+                                     String cid,
+                                     String ntype,
+                                     String nid,
+                                     String gtype,
+                                     String gvalue);
 
-        void doWaitingAnimation(ImageView image);
-        boolean doTranslateAnimationUp(RelativeLayout relativeLayout,RelativeLayout relativeLayout2, ImageView imageView);
-        boolean doTranslateAnimationDown(RelativeLayout relativeLayout,RelativeLayout relativeLayout2, ImageView imageView,int height);
-    }
+    public abstract void doWaitingAnimation(ImageView image);
+
+    public abstract boolean doTranslateAnimationUp(RelativeLayout relativeLayout, RelativeLayout relativeLayout2, ImageView imageView);
+
+    public abstract boolean doTranslateAnimationDown(RelativeLayout relativeLayout, RelativeLayout relativeLayout2, ImageView imageView, int height);
 
 
 }

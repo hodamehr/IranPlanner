@@ -7,4 +7,5 @@ public final class Constants {
     public static final String BASE_URL = "http://api.parsdid.com/iranplanner/app/";
 
        public static final String likeImg = "1";
+       public static final String intrestDefault = "0";
 }
