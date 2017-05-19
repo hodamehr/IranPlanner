@@ -569,7 +569,7 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentTop="true"
                                 android:focusableInTouchMode="true"
-                                tools:context="com.iranplanner.tourism.iranplanner.activity.MoreItemItineraryActivity" />
+                                tools:context="com.iranplanner.tourism.iranplanner.ui.activity.MoreItemItineraryActivity" />
                         </RelativeLayout>
                         <!--dateHolder-->
                         <RelativeLayout

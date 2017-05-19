@@ -35,7 +35,7 @@ public interface getJsonInterface {
                                             @Query("offset") String offset,
                                             @Query("to")     String to);
 
-    @GET("api-data.php?action=widget&uid=792147600796866&cid=1&ntype=itinerary&nid=21905&gtype=bookmark&gvalue=1")
+    @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=widget&uid=792147600796866&cid=1&ntype=itinerary&nid=21905&gtype=bookmark&gvalue=1")
     Call<InterestResult> getInterest(
             @Query("action") String action,
             @Query("uid") String uid,
@@ -64,10 +64,10 @@ public interface getJsonInterface {
                                      @Query("password") String param3);
 //    http://api.parsdid.com/iranplanner/app/api-user.php?action=login&email=09358891239&password=6efa240fc47e3f882ae16d163ca26f91
 
-    @POST("api-data.php?action=comment")
+    @POST("api-com.iranplanner.tourism.iranplanner.di.data.php?action=comment")
     Call<ResultCommentList> callInsertComment(@Body CommentSend request);
 
-    @GET("api-data.php?action=pagecomments&nid=1&ntype=attraction&offset=10")
+    @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=pagecomments&nid=1&ntype=attraction&offset=10")
     Call<ResultCommentList> getCommentList(
             @Query("action") String action,
             @Query("nid") String nid,
@@ -91,7 +91,7 @@ public interface getJsonInterface {
             @Query("fromdate") String fromdate,
             @Query("todate") String todate);
 
-    @GET("api-data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary")
+    @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary")
     Call<ResultWidgetFull> getWidgetResult(@Query("action") String param1,
                                            @Query("id") String param2,
                                            @Query("uid") String param3,

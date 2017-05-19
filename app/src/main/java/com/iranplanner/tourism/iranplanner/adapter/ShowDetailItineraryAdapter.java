@@ -5,13 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.iranplanner.tourism.iranplanner.fragment.MainSearchFragment;
-import com.iranplanner.tourism.iranplanner.fragment.PageFragment;
-import com.iranplanner.tourism.iranplanner.fragment.ShowAttractionListFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.MainSearchFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.PageFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.ShowAttractionListFragment;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

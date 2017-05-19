@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.fragment.LoginFragment;
-import com.iranplanner.tourism.iranplanner.fragment.MainSearchFragment;
-import com.iranplanner.tourism.iranplanner.fragment.PageFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.LoginFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.MainSearchFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.PageFragment;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 
 /**

@@ -3,14 +3,9 @@ package com.iranplanner.tourism.iranplanner.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,20 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.activity.GridActivity;
-import com.iranplanner.tourism.iranplanner.activity.MoreItemItineraryActivity;
-import com.iranplanner.tourism.iranplanner.fragment.LoginFragment;
-import com.iranplanner.tourism.iranplanner.fragment.MainSearchFragment;
-import com.iranplanner.tourism.iranplanner.fragment.ShowAttractionListFragment;
-import com.iranplanner.tourism.iranplanner.fragment.ShowTravelToolsFragment;
+import com.iranplanner.tourism.iranplanner.ui.activity.GridActivity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import entity.ResultItineraryAttraction;
 import entity.ResultSouvenir;
 import entity.ResultSouvenirList;
 import okhttp3.OkHttpClient;
@@ -41,8 +28,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import server.getJsonInterface;
-
-import static android.R.id.list;
 
 /**
  * Created by h.vahidimehr on 19/02/2017.

@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
-        android:name="tools.utilMvp.App"
+        android:name=".di.model.App"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,15 +31,15 @@
             </intent-filter>
         </activity>
         <!--<activity android:name=".MainActivity"/>-->
-             <activity android:name=".activity.notifyActivity"/>
+             <activity android:name=".ui.activity.notifyActivity"/>
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".standard.StandardActivity"
+            android:name=".ui.activity.StandardActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ReservationListActivity"
+            android:name=".ui.activity.ReservationListActivity"
             android:screenOrientation="portrait" />
         <!-- <activity android:name=".activity.SearchCityCityActivity" />-->
         <!-- App Indexing. See https://g.co/AppIndexing/AndroidStudio for more information. -->
@@ -52,33 +52,33 @@
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MapFullActivity"
+            android:name=".ui.activity.MapFullActivity"
             android:label="@string/title_activity_map_full"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ShowAttractionActivity"
+            android:name=".ui.activity.ShowAttractionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.attractionDetailActivity"
+            android:name=".ui.activity.attractionDetailActivity"
             android:label="@string/title_activity_attraction_detail"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SignupActivity"
+            android:name=".ui.activity.SignupActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.GridActivity"
+            android:name=".ui.activity.GridActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ReservationHotelListActivity"
+            android:name=".ui.activity.ReservationHotelListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ReservationHotelDetailActivity"
+            android:name=".ui.activity.ReservationHotelDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.CommentListActivity"
+            android:name=".ui.activity.CommentListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ShowRoomActivity"
+            android:name=".ui.activity.ShowRoomActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".mainscreen.mm"/>
 
