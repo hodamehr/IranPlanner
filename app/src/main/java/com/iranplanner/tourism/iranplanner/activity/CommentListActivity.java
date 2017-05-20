@@ -25,7 +25,7 @@ import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.adapter.CommentListAdapter;
 import com.iranplanner.tourism.iranplanner.adapter.ReseveDateListAdapter;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
-import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_itinerary_comment);
+//        setContentView(R.layout.fragment_itinerary_comment);
         recyclerView = (RecyclerView) findViewById(R.id.commentRecyclerView);
         sendCommentBtn = (ImageView) findViewById(R.id.sendCommentBtn);
         txtAddComment = (EditText) findViewById(R.id.txtAddComment);
@@ -199,6 +199,11 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
 
             );
         }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_itinerary_comment;
+    }
 
     public void getResultOfCommentList(String itineraryId, String Offset) {
         Retrofit retrofit = new Retrofit.Builder()

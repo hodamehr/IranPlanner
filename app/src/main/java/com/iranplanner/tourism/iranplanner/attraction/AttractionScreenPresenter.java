@@ -1,7 +1,6 @@
 package com.iranplanner.tourism.iranplanner.attraction;
 
 
-import com.iranplanner.tourism.iranplanner.mainscreen.MainSearchScreenContract;
 
 import javax.inject.Inject;
 

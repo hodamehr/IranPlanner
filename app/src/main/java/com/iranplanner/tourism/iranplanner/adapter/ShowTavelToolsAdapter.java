@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.ui.activity.GridActivity;
+import com.iranplanner.tourism.iranplanner.activity.GridActivity;
 
 import java.io.Serializable;
 import java.util.List;

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.standard.StandardActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -66,6 +66,11 @@ public class LoginActivity extends StandardActivity implements Callback<LoginRes
 //                startActivityForResult(intent, REQUEST_SIGNUP);
             }
         });
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.login;
     }
 
     public void login() {

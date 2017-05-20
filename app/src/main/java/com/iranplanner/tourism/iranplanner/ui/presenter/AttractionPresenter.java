@@ -1,13 +1,25 @@
 package com.iranplanner.tourism.iranplanner.ui.presenter;
 
+import android.graphics.Color;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.ui.presenter.RouteDecode;
+import com.iranplanner.tourism.iranplanner.ui.presenter.abs.AttractionContract;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -15,6 +27,14 @@ import entity.InterestResult;
 import entity.ResultCommentList;
 import entity.ResultItineraryAttractionList;
 import entity.ResultWidgetFull;
+
+
+import entity.map.DestinationResult;
+import entity.map.Leg;
+import entity.map.Route;
+import entity.map.StartLocation_;
+import entity.map.Step;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -22,7 +42,6 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import com.iranplanner.tourism.iranplanner.ui.presenter.abs.AttractionContract;
 
 /**
  * Created by h.vahidimehr on 12/05/2017.
@@ -203,6 +222,64 @@ public class AttractionPresenter extends AttractionContract {
     }
 
     @Override
+    public void getDirection(String origin, String destination) {
+        retrofit.create(AttractionService.class)
+                .getDirection(origin, destination).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<DestinationResult>() {
+
+                    @Override
+                    public void onCompleted() {
+//                        mView.showComplete();
+                        Log.e("direction path","complete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+//                        mView.showError(e.getMessage());
+                        Log.e("e",e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(DestinationResult directionResults) {
+//                        mView.showAttraction(resultCommentList);
+//                        mView.showItineraryComment(resultCommentList, "Itinerary");
+                        ArrayList<LatLng> routelist = new ArrayList<LatLng>();
+                        ArrayList<LatLng> decodelist;
+                        Route routeA = directionResults.getRoutes().get(0);
+                        Leg legs = routeA.getLegs().get(0);
+                        List<Leg> legses = routeA.getLegs();
+                        StartLocation_ location = null;
+                        String polyline;
+                        List<Step> steps = directionResults.getRoutes().get(0).getLegs().get(0).getSteps();
+                        for (Step step : steps) {
+                            location = step.getStartLocation();
+                            routelist.add(new LatLng(location.getLat(), location.getLng()));
+                            Log.i("zacharia", "Start Location :" + location.getLat() + ", " + location.getLng());
+                            polyline = step.getPolyline().getPoints();
+                            decodelist = RouteDecode.decodePoly(polyline);
+                            routelist.addAll(decodelist);
+                            Log.i("zacharia", "routelist size : " + routelist.size());
+                            if (routelist.size() > 0) {
+                                PolylineOptions rectLine = new PolylineOptions().width(10).color(
+                                        Color.RED);
+                                for (int i = 0; i < routelist.size(); i++) {
+                                    rectLine.add(routelist.get(i));
+                                }
+                                // Adding route on the map
+                                MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+                                mView.showDirectionOnMap(rectLine);
+
+                            }
+                        }
+                    }
+                });
+
+    }
+
+
+    @Override
     public void initialize() {
 
     }
@@ -231,7 +308,7 @@ public class AttractionPresenter extends AttractionContract {
                 @Query("id") String id
         );
 
-        @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=pagecomments&nid=1&ntype=attraction&offset=10")
+        @GET("api-data.php?action=pagecomments&nid=1&ntype=attraction&offset=10")
         Observable<ResultCommentList> getItineraryCommentList(
                 @Query("action") String action,
                 @Query("nid") String nId,
@@ -239,13 +316,13 @@ public class AttractionPresenter extends AttractionContract {
                 @Query("offset") String offset);
 
 
-        @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary")
+        @GET("api-data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary")
         Observable<ResultWidgetFull> getWidgetResult(@Query("action") String action,
                                                      @Query("id") String id,
                                                      @Query("uid") String uid,
                                                      @Query("ntype") String ntype);
 
-        @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=widget&uid=792147600796866&cid=1&ntype=itinerary&nid=21905&gtype=bookmark&gvalue=1")
+        @GET("api-data.php?action=widget&uid=792147600796866&cid=1&ntype=itinerary&nid=21905&gtype=bookmark&gvalue=1")
         Observable<InterestResult> getInterest(
                 @Query("action") String action,
                 @Query("uid") String uid,
@@ -254,6 +331,10 @@ public class AttractionPresenter extends AttractionContract {
                 @Query("nid") String nid,
                 @Query("gtype") String gtype,
                 @Query("gvalue") String gvalue);
+        //        https://maps.googleapis.com/maps/api/directions/json?origin=35.6859016418457,51.38629913330078&destination=36.40290069580078,55.01570129394531&sensor=false
+        @GET("/maps/api/directions/json")
+        Observable<DestinationResult> getDirection(@Query("origin") String origin,
+                                                   @Query("destination") String destination);
 
     }
 }

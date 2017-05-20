@@ -14,6 +14,7 @@ import com.iranplanner.tourism.iranplanner.di.data.module.NetModule;
  */
 public class App extends Application {
     private NetComponent mNetComponent;
+    private NetComponent googleNetComponent;
 
     @Override
     public void onCreate() {
@@ -22,9 +23,18 @@ public class App extends Application {
                 .appModule(new AppModule(this))
                 .netModule(new NetModule("http://api.parsdid.com/iranplanner/app/"))
                 .build();
+        googleNetComponent = DaggerNetComponent.builder()
+                .appModule(new AppModule(this))
+                .netModule(new NetModule("http://maps.googleapis.com/"))
+                .build();
+
     }
 
     public NetComponent getNetComponent() {
         return mNetComponent;
+    }
+
+    public NetComponent getGoogleNetComponent() {
+        return googleNetComponent;
     }
 }

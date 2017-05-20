@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.coinpany.core.android.widget.loading.RotateLoading;
-import com.iranplanner.tourism.iranplanner.activity.MoreItemItineraryActivity;
 import com.iranplanner.tourism.iranplanner.adapter.ItineraryListAdapter;
 
 import com.iranplanner.tourism.iranplanner.R;
@@ -24,6 +23,7 @@ import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.di.DaggerMainScreenComponent;
 import com.iranplanner.tourism.iranplanner.di.MainSearchnModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
+import com.iranplanner.tourism.iranplanner.ui.activity.MoreItemItineraryActivity;
 import com.iranplanner.tourism.iranplanner.ui.presenter.MainSearchPresenter;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.MainSearchContract;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;

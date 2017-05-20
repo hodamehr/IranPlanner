@@ -1,4 +1,4 @@
-package com.iranplanner.tourism.iranplanner.activity;
+package com.iranplanner.tourism.iranplanner.ui.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -45,23 +45,22 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.activity.CommentListActivity;
 import com.iranplanner.tourism.iranplanner.adapter.ShowTavelToolsAdapter;
-
 
 import com.iranplanner.tourism.iranplanner.di.AttractionModule;
 import com.iranplanner.tourism.iranplanner.di.DaggerAtractionComponent;
 import com.iranplanner.tourism.iranplanner.di.model.App;
-import com.iranplanner.tourism.iranplanner.ui.activity.CommentListActivity;
-import com.iranplanner.tourism.iranplanner.ui.activity.MapFullActivity;
-import com.iranplanner.tourism.iranplanner.ui.activity.ReservationListActivity;
-import com.iranplanner.tourism.iranplanner.ui.activity.ShowAttractionActivity;
-import com.iranplanner.tourism.iranplanner.ui.presenter.abs.AttractionContract;
 import com.iranplanner.tourism.iranplanner.ui.presenter.AttractionPresenter;
-import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
+import com.iranplanner.tourism.iranplanner.ui.presenter.abs.AttractionContract;
+
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.io.Serializable;
@@ -69,9 +68,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import entity.Attraction;
 import entity.InterestResult;
 import entity.ItineraryLodgingCity;
 import entity.ItineraryPercentage;
@@ -84,8 +85,17 @@ import entity.ResultItineraryAttractionList;
 import entity.ResultWidget;
 
 import entity.ResultWidgetFull;
+
+
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import server.getJsonInterface;
 import tools.Constants;
-import tools.MapDirection;
+
 import tools.Util;
 
 import tools.widget.PersianDatePicker;
@@ -93,8 +103,9 @@ import tools.widget.PersianDatePicker;
 public class MoreItemItineraryActivity extends StandardActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener, View.OnClickListener
-        , AttractionContract.View {
+        LocationListener,
+        View.OnClickListener,
+        AttractionContract.View {
 
 
     @Inject
@@ -151,9 +162,12 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     int LikeValue;
     int VisitedValue;
     int WishValue;
+//    DaggerAtractionComponent.Builder builder;
+    DaggerAtractionComponent.Builder builder;
 
 
     private void findView() {
+//        setContentView(R.layout.fragment_itinerary_item_more);
         txtItinerary_attraction_Difficulty = (TextView) findViewById(R.id.txtItinerary_attraction_Difficulty);
         toolsPager = (ViewPager) findViewById(R.id.toolsPager);
         txtItinerary_attraction_type = (TextView) findViewById(R.id.txtItinerary_attraction_type);
@@ -312,7 +326,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         commentHolder.setOnClickListener(this);
 
         //-------------------map
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
         // Initializing
@@ -353,16 +367,17 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
         });
 
-        DaggerAtractionComponent.builder()
+         builder = DaggerAtractionComponent.builder()
                 .netComponent(((App) getApplicationContext()).getNetComponent())
-                .attractionModule(new AttractionModule(this))
-                .build().inject(this);
+                .attractionModule(new AttractionModule(this));
+        builder.build().inject(this);
         attractionPresenter.getWidgetResult("nodeuser", itineraryData.getItineraryId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "itinerary");
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_itinerary_item_more;
+
     }
 
     private void showToolViewPager() {
@@ -392,6 +407,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
             case R.id.commentHolder:
                 showProgressDialog();
+                builder.build().inject(this);
                 attractionPresenter.getItineraryCommentList("pagecomments", itineraryId, "itinerary", "0");
                 break;
 
@@ -421,6 +437,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 break;
             case R.id.ratingHolder:
                 if (ratingHolderFlag) {
+                    builder.build().inject(this);
                     ratingHolderFlag = attractionPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
                 }
                 break;
@@ -429,9 +446,11 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                     VisitedLayout.setVisibility(View.INVISIBLE);
                     LikeLayout.setVisibility(View.VISIBLE);
                     rotateImage = "rateImg";
+                    builder.build().inject(this);
                     ratingHolderFlag = attractionPresenter.doTranslateAnimationDown(ratingHolder, GroupHolder, triangleShowAttraction, supplierLayoutMore.getHeight());
                     break;
                 } else {
+                    builder.build().inject(this);
                     ratingHolderFlag = attractionPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
                     break;
                 }
@@ -441,20 +460,18 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                     LikeLayout.setVisibility(View.INVISIBLE);
                     VisitedLayout.setVisibility(View.VISIBLE);
                     rotateImage = "doneImg";
+                    builder.build().inject(this);
                     ratingHolderFlag = attractionPresenter.doTranslateAnimationDown(ratingHolder, GroupHolder, triangleShowAttraction, supplierLayoutMore.getHeight());
                     break;
 
                 } else {
+                    builder.build().inject(this);
                     ratingHolderFlag = attractionPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
                     break;
                 }
 
             case R.id.likeImg:
                 rotateImage = "likeImg";
-//                 BookmarkValue;
-//                 LikeValue;
-//                 VisitedValue;
-//                 WishValue;
                 if (LikeValue == 1) {
                     OnClickedIntrestedWidget("like", Constants.intrestDefault, likeImg);
                 } else {
@@ -463,31 +480,54 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 break;
             case R.id.okImg:
                 rotateImage = "okImg";
-                OnClickedIntrestedWidget("like", "2", okImg);
+                if (LikeValue == 2) {
+                    OnClickedIntrestedWidget("like", Constants.intrestDefault, okImg);
+                } else {
+                    OnClickedIntrestedWidget("like", Constants.okImg, okImg);
+                }
                 break;
 
             case R.id.dislikeImg:
                 rotateImage = "dislikeImg";
-                OnClickedIntrestedWidget("like", "3", dislikeImg);
+                if (LikeValue == 2) {
+                    OnClickedIntrestedWidget("like", Constants.intrestDefault, dislikeImg);
+                } else {
+                    OnClickedIntrestedWidget("like", Constants.dislikeImg, dislikeImg);
+                }
                 break;
 
             case R.id.nowVisitedImg:
                 rotateImage = "nowVisitedImg";
-                OnClickedIntrestedWidget("visited", "1", nowVisitedImg);
+
+                if (VisitedValue == 1) {
+                    OnClickedIntrestedWidget("visited", Constants.intrestDefault, nowVisitedImg);
+                } else {
+                    OnClickedIntrestedWidget("visited", Constants.nowVisitedImg, nowVisitedImg);
+                }
                 break;
 
             case R.id.beftorVisitedImg:
                 rotateImage = "beftorVisitedImg";
-                OnClickedIntrestedWidget("visited", "2", beftorVisitedImg);
+                if (VisitedValue == 2) {
+                    OnClickedIntrestedWidget("visited", Constants.intrestDefault, beftorVisitedImg);
+                } else {
+                    OnClickedIntrestedWidget("visited", Constants.beftorVisitedImg, beftorVisitedImg);
+                }
                 break;
 
             case R.id.bookmarkHolder:
                 rotateImage = "bookmarkImg";
-                OnClickedIntrestedWidget("bookmark", "1", bookmarkImg);
+
+                if (BookmarkValue == 1) {
+                    OnClickedIntrestedWidget("bookmark", Constants.intrestDefault, bookmarkImg);
+                } else {
+                    OnClickedIntrestedWidget("bookmark", Constants.bookmarkImg, bookmarkImg);
+                }
                 break;
 
             case R.id.showItinerary1:
                 showProgressDialog();
+                builder.build().inject(this);
                 attractionPresenter.getItineraryAttractionList("attraction", "fa", itineraryId);
                 break;
         }
@@ -671,52 +711,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         textPercentage3.setText((Util.persianNumbers(String.valueOf((int) perc3)) + "%"));
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        //------------- no zoom
-        mMap.getUiSettings().setAllGesturesEnabled(false);
-        mMap.getUiSettings().setMapToolbarEnabled(true);
-        mMap.getUiSettings().setZoomControlsEnabled(false);
-
-        //Initialize Google Play Services
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                buildGoogleApiClient();
-                mMap.setMyLocationEnabled(true);
-            }
-        } else {
-            buildGoogleApiClient();
-            mMap.setMyLocationEnabled(true);
-        }
-        List<ItineraryLodgingCity> lodgingCities = itineraryData.getItineraryLodgingCity();
-        if (MarkerPoints.size() > 1) {
-            MarkerPoints.clear();
-            mMap.clear();
-        }
-        MapDirection mapDirection = new MapDirection(mMap, getApplicationContext(), lodgingCities, MarkerPoints);
-
-
-        // Already two locations
-
-        markers = mapDirection.readytoDirect();
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                Log.e("map is ckicked", "true");
-                Intent intent = new Intent(getApplicationContext(), MapFullActivity.class);
-//                intent.putExtra("itineraryData", (Serializable) itineraryData);
-//                intent.putExtra("fromWhere", "itinerary");
-                List<ItineraryLodgingCity> lodgingCities = itineraryData.getItineraryLodgingCity();
-                intent.putExtra("lodgingCities", (Serializable) lodgingCities);
-                startActivity(intent);
-            }
-        });
-
-    }
 
     //camera zoom to all of points
     @Override
@@ -748,56 +742,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         mGoogleApiClient.connect();
     }
 
-    @Override
-    public void onConnected(Bundle bundle) {
-
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(1000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-//        mLastLocation = location;
-//        if (mCurrLocationMarker != null) {
-//            mCurrLocationMarker.remove();
-//        }
-//
-//        //Place current location marker
-//        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-//        MarkerOptions markerOptions = new MarkerOptions();
-//        markerOptions.position(latLng);
-//        markerOptions.title("Current Position");
-//        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-//        mCurrLocationMarker = mMap.addMarker(markerOptions);
-//
-//        //move map camera
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-//        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-//
-//        //stop location updates
-//        if (mGoogleApiClient != null) {
-//            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-//        }
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-    }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
@@ -969,22 +913,27 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     @Override
     public void setIntrestValue(InterestResult InterestResult) {
-//        if (InterestResult.getResultData()..getWidgetBookmarkValue() != null) {
-//            BookmarkValue = resultWidgetFull.getResultWidget().get(0).getWidgetBookmarkValue();
-//        }
-//        if (resultWidgetFull.getResultWidget().get(0).getWidgetLikeValue() != null) {
-//            LikeValue = resultWidgetFull.getResultWidget().get(0).getWidgetLikeValue();
-//        }
-//        if (resultWidgetFull.getResultWidget().get(0).getWidgetVisitedValue() != null) {
-//            VisitedValue = resultWidgetFull.getResultWidget().get(0).getWidgetVisitedValue();
-//        }
-//        if (resultWidgetFull.getResultWidget().get(0).getWidgetWishValue() != null) {
-//            WishValue = resultWidgetFull.getResultWidget().get(0).getWidgetWishValue();
-//        }
+
     }
 
+    @Override
+    public void removeMarkers() {
+
+    }
+
+    @Override
+    public void showMarkerAt(float latitude, float longitude) {
+
+    }
+
+    @Override
+    public void showDirectionOnMap(PolylineOptions rectLine) {
+        mMap.addPolyline(rectLine);
+    }
+
+
     public class CustomDialogTravel extends Dialog implements
-            android.view.View.OnClickListener {
+            View.OnClickListener {
 
         public Activity c;
         public Dialog d;
@@ -1034,4 +983,132 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             dismiss();
         }
     }
+
+
+    //-------------------------------
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        //------------- no zoom
+        mMap.getUiSettings().setAllGesturesEnabled(false);
+        mMap.getUiSettings().setMapToolbarEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(false);
+
+        //Initialize Google Play Services
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient();
+                mMap.setMyLocationEnabled(true);
+            }
+        } else {
+            buildGoogleApiClient();
+            mMap.setMyLocationEnabled(true);
+        }
+//        showmap();
+        DaggerAtractionComponent.builder()
+                .netComponent(((App) getApplicationContext()).getGoogleNetComponent())
+                .attractionModule(new AttractionModule(this))
+                .build().inject(this);
+
+        //-----------------
+        List<ItineraryLodgingCity> lodgingCities = itineraryData.getItineraryLodgingCity();
+        if (MarkerPoints.size() > 1) {
+            MarkerPoints.clear();
+            mMap.clear();
+        }
+
+        markers = new ArrayList<>();
+        MarkerOptions options = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker));
+
+        for (ItineraryLodgingCity lodgingCity : lodgingCities) {
+            LatLng point = new LatLng(Float.valueOf(lodgingCity.getCityPositionLat()), Float.valueOf(lodgingCity.getCityPositionLon()));
+            MarkerPoints.add(point);
+            options.position(point);
+            markers.add(mMap.addMarker(options));
+        }
+        if (MarkerPoints.size() >= 2) {
+            for (int j = 0; j < MarkerPoints.size() - 1; j++) {
+                String origins = MarkerPoints.get(j).latitude + "," + MarkerPoints.get(j).longitude;
+                String destination = MarkerPoints.get(j + 1).latitude + "," + MarkerPoints.get(j + 1).longitude;
+                attractionPresenter.getDirection(origins, destination);
+            }
+        }
+
+
+        // Already two locations
+
+//        markers = mapDirection.readytoDirect();
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Log.e("map is ckicked", "true");
+                Intent intent = new Intent(getApplicationContext(), MapFullActivity.class);
+//                intent.putExtra("itineraryData", (Serializable) itineraryData);
+//                intent.putExtra("fromWhere", "itinerary");
+                List<ItineraryLodgingCity> lodgingCities = itineraryData.getItineraryLodgingCity();
+                intent.putExtra("lodgingCities", (Serializable) lodgingCities);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+
+    //onconnectioncallback
+    @Override
+    public void onConnected(Bundle bundle) {
+
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    //
+    @Override
+    public void onLocationChanged(Location location) {
+
+//        mLastLocation = location;
+//        if (mCurrLocationMarker != null) {
+//            mCurrLocationMarker.remove();
+//        }
+//
+//        //Place current location marker
+//        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+//        MarkerOptions markerOptions = new MarkerOptions();
+//        markerOptions.position(latLng);
+//        markerOptions.title("Current Position");
+//        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+//        mCurrLocationMarker = mMap.addMarker(markerOptions);
+//
+//        //move map camera
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+//        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+//
+//        //stop location updates
+//        if (mGoogleApiClient != null) {
+//            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+//        }
+
+    }
+
+
 }

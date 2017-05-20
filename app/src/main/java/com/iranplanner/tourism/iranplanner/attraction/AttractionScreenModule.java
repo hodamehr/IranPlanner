@@ -5,11 +5,12 @@ package com.iranplanner.tourism.iranplanner.attraction;
 
 import android.view.View;
 
-import com.iranplanner.tourism.iranplanner.mainscreen.MainSearchScreenContract;
+//import com.iranplanner.tourism.iranplanner.mainscreen.MainSearchScreenContract;
+
+import com.iranplanner.tourism.iranplanner.di.model.CustomScope;
 
 import dagger.Module;
 import dagger.Provides;
-import tools.utilMvp.CustomScope;
 
 /**
  * Created by Hoda
