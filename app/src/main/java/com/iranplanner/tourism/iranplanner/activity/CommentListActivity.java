@@ -24,14 +24,21 @@ import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.adapter.CommentListAdapter;
 import com.iranplanner.tourism.iranplanner.adapter.ReseveDateListAdapter;
+import com.iranplanner.tourism.iranplanner.di.CommentModule;
+import com.iranplanner.tourism.iranplanner.di.DaggerCommentComponent;
+import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
+import com.iranplanner.tourism.iranplanner.ui.presenter.CommentPresenter;
+import com.iranplanner.tourism.iranplanner.ui.presenter.abs.CommentContract;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import entity.CommentSend;
 import entity.ResultComment;
@@ -58,7 +65,7 @@ import static com.iranplanner.tourism.iranplanner.R.id.commentButtonHolder;
  * Created by h.vahidimehr on 21/02/2017.
  */
 
-public class CommentListActivity extends StandardActivity implements DataTransferInterface {
+public class CommentListActivity extends StandardActivity implements DataTransferInterface, CommentContract.View {
     private CommentListAdapter adapter;
     LinearLayoutManager mLayoutManager;
     ImageView sendCommentBtn;
@@ -73,7 +80,9 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
     RecyclerView recyclerView;
     ResultItineraryAttraction attraction;
     String fromWhere;
-
+    DaggerCommentComponent.Builder builder;
+    @Inject
+    CommentPresenter commentPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,19 +92,25 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
         sendCommentBtn = (ImageView) findViewById(R.id.sendCommentBtn);
         txtAddComment = (EditText) findViewById(R.id.txtAddComment);
         commentTitle = (TextView) findViewById(R.id.commentTitle);
+//---
 
+        builder = DaggerCommentComponent.builder()
+                .netComponent(((App) getApplicationContext()).getNetComponent())
+                .commentModule(new CommentModule(this));
+        builder.build().injectComment(this);
+        //----
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         Bundle extras = getIntent().getExtras();
         resultComments = (List<ResultComment>) extras.getSerializable("resultComments");
-        fromWhere =  extras.getString("fromWhere");
-        if(fromWhere.equals("Itinerary")){
+        fromWhere = extras.getString("fromWhere");
+        if (fromWhere.equals("Itinerary")) {
             itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
             nextOffset = (String) extras.getSerializable("nextOffset");
             commentTitle.setText(itineraryData.getItineraryFromCityName() + " " + itineraryData.getItineraryToCityName() + " " + Util.persianNumbers(itineraryData.getItineraryDuration()) + " روز");
 
-        }else if(fromWhere.equals("attraction")){
+        } else if (fromWhere.equals("attraction")) {
             attraction = (ResultItineraryAttraction) extras.getSerializable("attraction");
             nextOffset = (String) extras.getSerializable("nextOffset");
             commentTitle.setText(attraction.getAttractionTitle());
@@ -105,8 +120,8 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
         recyclerView.setAdapter(adapter);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
-        if(nextOffset!=null && Integer.valueOf(nextOffset)>1){
-            recyclerView.smoothScrollToPosition(Integer.valueOf(nextOffset)-1);
+        if (nextOffset != null && Integer.valueOf(nextOffset) > 1) {
+            recyclerView.smoothScrollToPosition(Integer.valueOf(nextOffset) - 1);
         }
 
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
@@ -122,8 +137,26 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
             }
         }));
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                             @Override
+                                             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+
+                                                 if (dy< 0) //check for scroll down
+                                                 {
+                                                     visibleItemCount = mLayoutManager.getChildCount();
+                                                     totalItemCount = mLayoutManager.getItemCount();
+                                                     pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+
+//                                                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                                                     if (( pastVisiblesItems) <= 6) {
+                                                         visibleItemCount = mLayoutManager.getChildCount();
+                                                         totalItemCount = mLayoutManager.getItemCount();
+                                                         pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+//                                                         if ((visibleItemCount + pastVisiblesItems) == totalItemCount) {
+                                                             commentPresenter.getCommentList("pagecomments", itineraryData.getItineraryId(), "itinerary", nextOffset);
+
+//                                                         }
+                                                     }
 //                if (dy > 0) //check for scroll up
 //                {
 //                    visibleItemCount = mLayoutManager.getChildCount();
@@ -133,72 +166,75 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
 //                        getResultOfCommentList(itineraryData.getItineraryId(), nextOffset);
 //                    }
 //                }
-                if (dy > 0) //check for scroll down
-                {
-                    visibleItemCount = mLayoutManager.getChildCount();
-                    totalItemCount = mLayoutManager.getItemCount();
-                    pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-                    if ((visibleItemCount + pastVisiblesItems) == totalItemCount) {
-                        getResultOfCommentList(itineraryData.getItineraryId(), nextOffset);
-                    }
-                    }
-                }
-            }
+//                    if (dy > 0) //check for scroll down
+//                    {
+//                        visibleItemCount = mLayoutManager.getChildCount();
+//                        totalItemCount = mLayoutManager.getItemCount();
+//                        pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+//                        if ((visibleItemCount + pastVisiblesItems) == totalItemCount) {
+////                                                         getResultOfCommentList(itineraryData.getItineraryId(), nextOffset);
+//                            commentPresenter.getCommentList("pagecomments", itineraryData.getItineraryId(), "itinerary", nextOffset);
+//                        }
+//                    }
 
-            );
+                                                 }
+                                             }
+                                         }
 
-
-            txtAddComment.addTextChangedListener(new
-
-            TextWatcher() {
-                @Override
-                public void beforeTextChanged (CharSequence s,int start, int count, int after){
-
-                }
-
-                @Override
-                public void onTextChanged (CharSequence s,int start, int before, int count){
-                    if (start == 0) {
-                        sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
-                    }
-                    if (start != 0 || (start == 0 && before == 0 && count == 1)) {
-                        sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_pink));
-                    }
-                }
-
-                @Override
-                public void afterTextChanged (Editable s){
+        );
 
 
-                }
-            }
+        txtAddComment.addTextChangedListener(new
 
-            );
-            sendCommentBtn.setOnClickListener(new View.OnClickListener()
+                                                     TextWatcher() {
+                                                         @Override
+                                                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            {
-                @Override
-                public void onClick (View v){
-                Log.e("send comment", "clicked");
-                String userId = Util.getUseRIdFromShareprefrence(getApplicationContext());
-                if (!userId.isEmpty() && !txtAddComment.getText().equals("") && !sending) {
-                    sending = true;
-                    sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
-                    if (fromWhere.equals("Itinerary")) {
-                        getResultOfCommentInsert(userId, String.valueOf(txtAddComment.getText()), itineraryData.getItineraryId(), "itinerary");
-                    } else if (fromWhere.equals("attraction")) {
-                        getResultOfCommentInsert(userId, String.valueOf(txtAddComment.getText()), attraction.getAttractionId(), "attraction");
-                    }
-                    txtAddComment.setText("");
-                } else if (userId.isEmpty()) {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید ", Toast.LENGTH_LONG).show();
-                }
-            }
-            }
+                                                         }
 
-            );
-        }
+                                                         @Override
+                                                         public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                                             if (start == 0) {
+                                                                 sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
+                                                             }
+                                                             if (start != 0 || (start == 0 && before == 0 && count == 1)) {
+                                                                 sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_pink));
+                                                             }
+                                                         }
+
+                                                         @Override
+                                                         public void afterTextChanged(Editable s) {
+
+
+                                                         }
+                                                     }
+
+        );
+        sendCommentBtn.setOnClickListener(new View.OnClickListener()
+
+                                          {
+                                              @Override
+                                              public void onClick(View v) {
+                                                  Log.e("send comment", "clicked");
+                                                  String userId = Util.getUseRIdFromShareprefrence(getApplicationContext());
+                                                  if (!userId.isEmpty() && !txtAddComment.getText().equals("") && !sending) {
+                                                      sending = true;
+                                                      sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
+                                                      if (fromWhere.equals("Itinerary")) {
+                                                          getResultOfCommentInsert(userId, String.valueOf(txtAddComment.getText()), itineraryData.getItineraryId(), "itinerary");
+                                                      } else if (fromWhere.equals("attraction")) {
+                                                          getResultOfCommentInsert(userId, String.valueOf(txtAddComment.getText()), attraction.getAttractionId(), "attraction");
+                                                      }
+                                                      txtAddComment.setText("");
+                                                  } else if (userId.isEmpty()) {
+                                                      Log.e("user is not login", "error");
+                                                      Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید ", Toast.LENGTH_LONG).show();
+                                                  }
+                                              }
+                                          }
+
+        );
+    }
 
     @Override
     protected int getLayoutId() {
@@ -219,7 +255,7 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
             public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
 
                 if (response.body() != null) {
-                    loading=false;
+                    loading = false;
                     ResultCommentList jsonResponse = response.body();
                     List<ResultComment> newresultComments = jsonResponse.getResultComment();
                     if (!nextOffset.equals(response.body().getStatistics().getOffsetNext().toString())) {
@@ -249,7 +285,6 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-//        {"uid":"1","cid":"1","ntype":"attraction","nid":"1","gtype":"comment","gvalue":"khobi"}
         Call<ResultCommentList> callc = getJsonInterface.callInsertComment(new CommentSend(userId, "1", type, id, "comment", comment));
         callc.enqueue(new Callback<ResultCommentList>() {
             @Override
@@ -273,6 +308,31 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
                 Log.e("result of intresting", "false");
             }
         });
+    }
+
+    @Override
+    public void showComments(ResultCommentList resultCommentList) {
+        Log.e("dfs", "Fdsfa");
+//            loading = false;
+//            ResultCommentList jsonResponse = response.body();
+//            List<ResultComment> newresultComments = jsonResponse.getResultComment();
+//            if (!nextOffset.equals(response.body().getStatistics().getOffsetNext().toString())) {
+//
+//                resultComments.addAll(newresultComments);
+//                adapter.notifyDataSetChanged();
+////                        waitingLoading.setVisibility(View.INVISIBLE);
+//                nextOffset = response.body().getStatistics().getOffsetNext().toString();
+//            }
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public void showComplete() {
+
     }
 
     public class CustomDialogAlert extends Dialog implements

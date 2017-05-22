@@ -89,9 +89,9 @@ public class LoginActivity extends StandardActivity implements Callback<LoginRes
         progressDialog.show();
 
         String email = _emailText.getText().toString();
-        email = "faridsaniee@gmail.com";
+//        email = "faridsaniee@gmail.com";
         String password = _passwordText.getText().toString();
-        password = "090afe0d4abb5dfdccb84641fe115680";
+//        password = "090afe0d4abb5dfdccb84641fe115680";
         getLoginResponce(email, password);
         // TODO: Implement your own authentication logic here.
 

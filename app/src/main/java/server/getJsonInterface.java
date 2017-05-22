@@ -58,7 +58,8 @@ public interface getJsonInterface {
                                                       @Query("offset") String offset,
                                                       @Query("attraction") String attraction);
 
-    @GET("api-user.php?action=login&email=faridsaniee@gmail.com&password=090afe0d4abb5dfdccb84641fe115680")
+//    @GET("api-user.php?action=login&email=faridsaniee@gmail.com&password=090afe0d4abb5dfdccb84641fe115680")
+    @GET("api-user.php")
     Call<LoginResult> getLoginResult(@Query("action") String param1,
                                      @Query("email") String param2,
                                      @Query("password") String param3);

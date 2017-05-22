@@ -5,46 +5,39 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.ShowAttractionListFragment">
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="@style/StandardTitle"
-    android:text="کامنت"
-    android:layout_margin="@dimen/padding_standard"
-    android:id="@+id/textHotel"/>
     <!--<RelativeLayout-->
-        <!--android:id="@+id/viewDayNumber"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="65dp"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:background="@color/pink">-->
+    <!--android:id="@+id/viewDayNumber"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="65dp"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:background="@color/pink">-->
 
-        <!--<ImageView-->
-            <!--android:layout_width="30dp"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginRight="@dimen/padding_larg"-->
-            <!--android:src="@mipmap/ic_arow_right"-->
-            <!--android:id="@+id/arrowRight"/>-->
-        <!--<ImageView-->
-            <!--android:layout_width="30dp"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginLeft="@dimen/padding_larg"-->
-            <!--android:src="@mipmap/ic_arow_left"-->
-            <!--android:id="@+id/arrowLeft"/>-->
-        <!--<TextView-->
-            <!--android:id="@+id/textDayNumber"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:text="days"-->
-            <!--style="@style/StandardTitle"-->
-            <!--android:textColor="@color/textColorWhite" />-->
+    <!--<ImageView-->
+    <!--android:layout_width="30dp"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_marginRight="@dimen/padding_larg"-->
+    <!--android:src="@mipmap/ic_arow_right"-->
+    <!--android:id="@+id/arrowRight"/>-->
+    <!--<ImageView-->
+    <!--android:layout_width="30dp"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_marginLeft="@dimen/padding_larg"-->
+    <!--android:src="@mipmap/ic_arow_left"-->
+    <!--android:id="@+id/arrowLeft"/>-->
+    <!--<TextView-->
+    <!--android:id="@+id/textDayNumber"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:text="days"-->
+    <!--style="@style/StandardTitle"-->
+    <!--android:textColor="@color/textColorWhite" />-->
 
     <!--</RelativeLayout>-->
 
@@ -52,8 +45,27 @@
         android:id="@+id/reservationListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textHotel"
-        ></android.support.v7.widget.RecyclerView>
+        android:layout_below="@+id/divider"></android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/textHotel"
+        style="@style/StandardTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_standard"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="@dimen/padding_standard"
+        android:paddingRight="@dimen/padding_standard"
+        android:text="نمایش مراکز اقامتی " />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/textHotel"
+        android:background="@color/greyLight"
+        android:id="@+id/divider"
+        android:layout_marginBottom="@dimen/padding_short"
+        />
 </RelativeLayout>
