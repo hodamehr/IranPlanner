@@ -162,7 +162,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     int LikeValue;
     int VisitedValue;
     int WishValue;
-//    DaggerAtractionComponent.Builder builder;
+    //    DaggerAtractionComponent.Builder builder;
     DaggerAtractionComponent.Builder builder;
 
 
@@ -367,7 +367,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
         });
 
-         builder = DaggerAtractionComponent.builder()
+        builder = DaggerAtractionComponent.builder()
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .attractionModule(new AttractionModule(this));
         builder.build().inject(this);
@@ -1046,8 +1046,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             public void onMapClick(LatLng latLng) {
                 Log.e("map is ckicked", "true");
                 Intent intent = new Intent(getApplicationContext(), MapFullActivity.class);
-//                intent.putExtra("itineraryData", (Serializable) itineraryData);
-//                intent.putExtra("fromWhere", "itinerary");
                 List<ItineraryLodgingCity> lodgingCities = itineraryData.getItineraryLodgingCity();
                 intent.putExtra("lodgingCities", (Serializable) lodgingCities);
                 startActivity(intent);
