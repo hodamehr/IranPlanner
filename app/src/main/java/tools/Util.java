@@ -24,11 +24,12 @@ import server.Config;
  */
 public class Util {
 
-     public static final String displayFirebaseRegId(Context context) {
+    public static final String displayFirebaseRegId(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
         return regId;
     }
+
     public static final void showProgressDialog(Context context, ProgressDialog progressDialog) {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("لطفا منتظر بمانید");
@@ -36,6 +37,7 @@ public class Util {
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
     }
+
     public static final Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -49,6 +51,17 @@ public class Util {
         return userId;
     }
 
+    public static final String getTokenFromSharedPreferences(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF, 0);
+        String regId = pref.getString("regId", "");
+
+        return regId;
+    }
+    public static final String getAndroidIdFromSharedPreferences(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF, 0);
+         String andId = pref.getString("andId", "");
+        return andId;
+    }
     public static final String md5(final String s) {
         final String MD5 = "MD5";
         try {

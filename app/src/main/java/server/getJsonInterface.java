@@ -29,11 +29,11 @@ import retrofit2.http.Query;
 public interface getJsonInterface {
     @GET("api-itinerary.php?action=list&lang=fa&from=342&limit=10&offset=0&to")
     Call<ResultItineraryList> getItinerarys(@Query("action") String action,
-                                            @Query("lang")   String lang,
-                                            @Query("from")   String from,
-                                            @Query("limit")  String limit,
+                                            @Query("lang") String lang,
+                                            @Query("from") String from,
+                                            @Query("limit") String limit,
                                             @Query("offset") String offset,
-                                            @Query("to")     String to);
+                                            @Query("to") String to);
 
     @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=widget&uid=792147600796866&cid=1&ntype=itinerary&nid=21905&gtype=bookmark&gvalue=1")
     Call<InterestResult> getInterest(
@@ -58,11 +58,14 @@ public interface getJsonInterface {
                                                       @Query("offset") String offset,
                                                       @Query("attraction") String attraction);
 
-//    @GET("api-user.php?action=login&email=faridsaniee@gmail.com&password=090afe0d4abb5dfdccb84641fe115680")
+    //    @GET("api-user.php?action=login&email=faridsaniee@gmail.com&password=090afe0d4abb5dfdccb84641fe115680")
     @GET("api-user.php")
-    Call<LoginResult> getLoginResult(@Query("action") String param1,
-                                     @Query("email") String param2,
-                                     @Query("password") String param3);
+    Call<LoginResult> getLoginResult(@Query("action") String action,
+                                     @Query("email") String email,
+                                     @Query("password") String password,
+                                     @Query("tkn") String token,
+                                     @Query("andId") String androidId
+                                     );
 //    http://api.parsdid.com/iranplanner/app/api-user.php?action=login&email=09358891239&password=6efa240fc47e3f882ae16d163ca26f91
 
     @POST("api-com.iranplanner.tourism.iranplanner.di.data.php?action=comment")

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.ui.activity.SignupActivity;
@@ -43,7 +45,7 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
     Button _loginButton;
     TextView _signupLink, loginCommand, logout;
     ProgressDialog progressDialog;
-    LinearLayout  accountInputHolder;
+    LinearLayout accountInputHolder;
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
@@ -51,7 +53,7 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         View view = inflater.inflate(R.layout.login, container, false);
@@ -66,9 +68,12 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
         loginCommand.setText("");
 
         setLOginName();
+
+
         logout.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View v) {
+            public void onClick(final View v) {
+
                 clearSharedprefrence();
                 _loginButton.setEnabled(true);
                 accountInputHolder.setVisibility(View.VISIBLE);
@@ -88,8 +93,23 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v) {
-                login();
+            public void onClick(final View v) {
+                if (counter >= 3) {
+                    counter=0;
+                    v.setClickable(false);
+                    v.setBackgroundColor(getResources().getColor(R.color.greyLight));
+                    Toast.makeText(getContext(),"چند دقیقه بعد مجددا تلاش کنید",Toast.LENGTH_LONG).show();
+                    new Handler().postDelayed(new Runnable() {
+                        public void run() {
+
+                            v.setClickable(true);
+                            v.setBackgroundColor(getResources().getColor(R.color.pink));
+                        }
+                    }, 50000);
+                }else {
+                    login();
+                }
+
             }
         });
 
@@ -134,10 +154,10 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
 
     public void login() {
 
-//        if (!validate()) {
-////            onLoginFailed();
-//            return;
-//        }
+        if (!validate()) {
+//            onLoginFailed();
+            return;
+        }
 
 //        _loginButton.setEnabled(false);
         accountInputHolder.setVisibility(View.INVISIBLE);
@@ -145,11 +165,8 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
 
         showProgress();
         String email = _emailText.getText().toString();
-//        email = "faridsaniee@gmail.com";
         String password = Util.md5(_passwordText.getText().toString());
-//        password = "090afe0d4abb5dfdccb84641fe115680";
-        getLoginResponce(email, password);
-
+         getLoginResponce(email, password);
     }
 
     private void showProgress() {
@@ -169,12 +186,12 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
         } else {
             _emailText.setError(null);
         }
-        if (password.isEmpty() || password.length() < 4 ) {
-            _passwordText.setError("کلمه عبور می بایست بیشتر از 4 حرف باشد");
-            valid = false;
-        } else {
-            _passwordText.setError(null);
-        }
+//        if (password.isEmpty() || password.length() < 6 ) {
+//            _passwordText.setError("کلمه عبور می بایست بیشتر از 6 حرف باشد");
+//            valid = false;
+//        } else {
+//            _passwordText.setError(null);
+//        }
         return valid;
     }
 
@@ -184,10 +201,11 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-        Call<LoginResult> callc = getJsonInterface.getLoginResult("login", email, password);
+        Call<LoginResult> callc = getJsonInterface.getLoginResult("login", email, password, Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
         callc.enqueue(this);
     }
 
+    int counter = 0;
 
     @Override
     public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
@@ -204,12 +222,14 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
             loginCommand.setVisibility(View.VISIBLE);
             loginCommand.setText("نام کاربری یا کلمه عبور اشتباه است.");
             accountInputHolder.setVisibility(View.VISIBLE);
+            counter++;
 
         }
     }
 
     @Override
     public void onFailure(Call<LoginResult> call, Throwable t) {
+        Toast.makeText(getContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_SHORT).show();
         Log.e("error", t.toString());
         progressDialog.dismiss();
         _loginButton.setEnabled(true);
@@ -229,7 +249,7 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
         editor.apply();
     }
 
-    private void clearSharedprefrence(){
+    private void clearSharedprefrence() {
 //        SharedPreferences preferences = getSharedPreferences("Mypref", 0);
 //        preferences.edit().remove("shared_pref_key").commit();
         SharedPreferences settings = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);

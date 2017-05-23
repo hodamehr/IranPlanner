@@ -1,5 +1,6 @@
 package com.iranplanner.tourism.iranplanner.ui.activity;
 
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.activity.LoginActivity;
+import com.iranplanner.tourism.iranplanner.ui.fragment.LoginFragment;
 
 import java.util.concurrent.TimeUnit;
 
@@ -71,10 +73,9 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.inject(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
         View logo = getLayoutInflater().inflate(R.layout.custom_imageview_toolbar, null);
-        toolbar.addView(logo);
+
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +87,10 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
             @Override
             public void onClick(View v) {
                 // Finish the registration screen and return to the Login activity
+
+//                Bundle bundle = new Bundle();
+//
+
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 finish();
@@ -117,7 +122,7 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
         String lastName = input_family.getText().toString();
         String email = editText.getText().toString();
         String phoneNumber = input_tel.getText().toString();
-        String password = Util.md5( passwordText.getText().toString());
+        String password = Util.md5(passwordText.getText().toString());
 
         String gender = "0";
         if (radioMan.isChecked()) {
@@ -126,7 +131,7 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
             gender = "0";
         }
         showProgress();
-        getRegisterResponce(email, password, name, lastName, gender, "1",phoneNumber);
+        getRegisterResponce(email, password, name, lastName, gender, "1", phoneNumber);
     }
 
     public boolean validate() {
@@ -152,26 +157,40 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
         }
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editText.setError("ایمیل صحیح را وارد کنید");
+            editText.setError("فرمت ایمیل اشتباه است");
             valid = false;
         } else {
             editText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 ) {
-            passwordText.setError("کلمه عبور می بایست بیشتر از 4 حرف باشد");
+        if (password.isEmpty() || password.length() < 6) {
+            passwordText.setError("کلمه عبور می بایست بیشتر از 6 حرف باشد");
+
+
             valid = false;
+        } else if (password.isEmpty() || password.length() >= 6) {
+            int digitSize = 0;
+            for (int i = 0; i < password.length(); i++) {
+                if (Character.isDigit(password.charAt(i))) {
+                    digitSize = digitSize + 1;
+                }
+            }
+            if (digitSize == password.length() || digitSize == 0) {
+                passwordText.setError("کلمه عبور باید شامل حرف و عدد باشد");
+                valid=false;
+            }
         } else {
+
             passwordText.setError(null);
         }
-        if (password.isEmpty() || password.length() < 4 ) {
-            input_password_repeat.setError("کلمه عبور می بایست بیشتر از 4 حرف باشد");
+        if (password.isEmpty() || password.length() < 6) {
+            input_password_repeat.setError("کلمه عبور می بایست بیشتر از 6 حرف باشد");
             valid = false;
         } else {
             input_password_repeat.setError(null);
         }
         if (!passwordRepeat.equals(password)) {
-            passwordText.setError("کلمه عبور و تکرار با هم یکسان نیستند");
+            passwordText.setError("کلمه عبور و تکرار آن یکسان نیستند");
             valid = false;
         } else {
             input_password_repeat.setError(null);
@@ -190,7 +209,7 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
         return valid;
     }
 
-    public void getRegisterResponce(String email, String password, String fname, String lname, String gender, String cid,String phone) {
+    public void getRegisterResponce(String email, String password, String fname, String lname, String gender, String cid, String phone) {
         OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
@@ -203,7 +222,7 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
 
-        Call<ResultRegister> callc = getJsonInterface.getRegisterResult("register", email, password, fname, lname, gender, cid,phone);
+        Call<ResultRegister> callc = getJsonInterface.getRegisterResult("register", email, password, fname, lname, gender, cid, phone);
         callc.enqueue(this);
     }
 
@@ -218,8 +237,8 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
             if (result.getStatus().equals("Succesfull")) {
                 Toast.makeText(getApplicationContext(), "حساب کاربری با موفقیت انجام شد", Toast.LENGTH_LONG).show();
 
-            } else if (result.getStatus().equals("Duplicate")) {
-                Toast.makeText(getApplicationContext(), "قبلا ثبت شده", Toast.LENGTH_LONG).show();
+            } else if (result.getStatus().equals("Duplicate Phone")) {
+                Toast.makeText(getApplicationContext(), "حساب کاربری قبلاایجاد شده است ", Toast.LENGTH_LONG).show();
 
             } else if (result.getStatus().equals("Invalid info")) {
                 Toast.makeText(getApplicationContext(), "اشکال در مقادیر ورودی", Toast.LENGTH_LONG).show();
@@ -240,6 +259,7 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
         Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
         progressDialog.dismiss();
     }
+
     public void attemptLogin(String phonePrefix, String phoneNumber) {
 //        if (userLoginTask != null) {
 //            return;

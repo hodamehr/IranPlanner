@@ -25,6 +25,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import server.getJsonInterface;
+import tools.Util;
 
 /**
  * Created by h.vahidimehr on 30/01/2017.
@@ -140,17 +141,17 @@ public class LoginActivity extends StandardActivity implements Callback<LoginRes
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+            _emailText.setError("فرمت ایمیل اشتباه است");
             valid = false;
         } else {
             _emailText.setError(null);
         }
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
-            valid = false;
-        } else {
-            _passwordText.setError(null);
-        }
+//        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+//            _passwordText.setError("between 4 and 10 alphanumeric characters");
+//            valid = false;
+//        } else {
+//            _passwordText.setError(null);
+//        }
         return valid;
     }
 
@@ -160,7 +161,7 @@ public class LoginActivity extends StandardActivity implements Callback<LoginRes
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(getJsonInterface.class);
-        Call<LoginResult> callc = getJsonInterface.getLoginResult("login", email, password);
+        Call<LoginResult> callc = getJsonInterface.getLoginResult("login", email, password, Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
         callc.enqueue(this);
     }
 
