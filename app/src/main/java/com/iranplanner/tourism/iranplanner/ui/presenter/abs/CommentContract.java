@@ -12,7 +12,6 @@ import entity.ResultItineraryList;
 public abstract class CommentContract extends Presenter<CommentContract.View> {
     public interface View {
         void showComments(ResultCommentList resultCommentList);
-
         void showError(String message);
 
         void showComplete();
@@ -26,5 +25,7 @@ public abstract class CommentContract extends Presenter<CommentContract.View> {
             String nid,
             String ntype,
             String offset);
+
+
 
 }

@@ -1,6 +1,8 @@
 package com.iranplanner.tourism.iranplanner.ui.presenter;
 
 
+import android.util.Log;
+
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.CommentContract;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.ReservationContract;
 
@@ -34,7 +36,7 @@ public class CommentPresenter extends CommentContract {
     @Override
     public void getCommentList(String action, String nid, String ntype, String offset) {
         retrofit.create(CommentService.class)
-                .getCommentList(action, nid, ntype, offset).subscribeOn(Schedulers.io())
+                .getItineraryCommentList(action, nid, ntype, offset).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultCommentList>() {
@@ -55,6 +57,29 @@ public class CommentPresenter extends CommentContract {
 //                        mView.showItineraries(resultItineraryList, "fromProvince");
                     }
                 });
+//        retrofit.create(AttractionPresenter.AttractionService.class)
+//                .getItineraryCommentList(action, nid, ntype, offset).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .unsubscribeOn(Schedulers.io())
+//                .subscribe(new Observer<ResultCommentList>() {
+//
+//                    @Override
+//                    public void onCompleted() {
+//                        mView.showComplete();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        mView.showError(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(ResultCommentList resultCommentList) {
+//                        mView.showComments(resultCommentList);
+//                        Log.e("fds","fsfs");
+//                    }
+//                });
+
     }
 
     @Override
@@ -80,11 +105,18 @@ public class CommentPresenter extends CommentContract {
     public interface CommentService {
 
 
-        @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=pagecomments&nid=1&ntype=attraction&offset=10")
-        Observable<ResultCommentList> getCommentList(
+//        @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=pagecomments&nid=1&ntype=attraction&offset=10")
+//        Observable<ResultCommentList> getCommentList(
+//                @Query("action") String action,
+//                @Query("nid") String nid,
+//                @Query("ntype") String ntype,
+//                @Query("offset") String offset);
+
+        @GET("api-data.php?action=pagecomments&nid=1&ntype=attraction&offset=10")
+        Observable<ResultCommentList> getItineraryCommentList(
                 @Query("action") String action,
-                @Query("nid") String nid,
-                @Query("ntype") String ntype,
+                @Query("nid") String nId,
+                @Query("ntype") String nType,
                 @Query("offset") String offset);
     }
 }

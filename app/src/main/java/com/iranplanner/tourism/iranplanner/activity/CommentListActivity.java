@@ -141,41 +141,23 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
                                              public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 
 
-                                                 if (dy< 0) //check for scroll down
+                                                 if (dy < 0) //check for scroll down
                                                  {
                                                      visibleItemCount = mLayoutManager.getChildCount();
                                                      totalItemCount = mLayoutManager.getItemCount();
                                                      pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
 //                                                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                                                     if (( pastVisiblesItems) <= 6) {
+                                                     if ((pastVisiblesItems) <= 10 && loading && (Integer.valueOf(nextOffset)>0)) {
+                                                         loading = false;
                                                          visibleItemCount = mLayoutManager.getChildCount();
                                                          totalItemCount = mLayoutManager.getItemCount();
                                                          pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 //                                                         if ((visibleItemCount + pastVisiblesItems) == totalItemCount) {
-                                                             commentPresenter.getCommentList("pagecomments", itineraryData.getItineraryId(), "itinerary", nextOffset);
+                                                         commentPresenter.getCommentList("pagecomments", itineraryData.getItineraryId(), "itinerary", nextOffset);
 
 //                                                         }
                                                      }
-//                if (dy > 0) //check for scroll up
-//                {
-//                    visibleItemCount = mLayoutManager.getChildCount();
-//                    totalItemCount = mLayoutManager.getItemCount();
-//                    pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-//                    if ((visibleItemCount + pastVisiblesItems) == totalItemCount) {
-//                        getResultOfCommentList(itineraryData.getItineraryId(), nextOffset);
-//                    }
-//                }
-//                    if (dy > 0) //check for scroll down
-//                    {
-//                        visibleItemCount = mLayoutManager.getChildCount();
-//                        totalItemCount = mLayoutManager.getItemCount();
-//                        pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-//                        if ((visibleItemCount + pastVisiblesItems) == totalItemCount) {
-////                                                         getResultOfCommentList(itineraryData.getItineraryId(), nextOffset);
-//                            commentPresenter.getCommentList("pagecomments", itineraryData.getItineraryId(), "itinerary", nextOffset);
-//                        }
-//                    }
 
                                                  }
                                              }
@@ -260,7 +242,9 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
                     List<ResultComment> newresultComments = jsonResponse.getResultComment();
                     if (!nextOffset.equals(response.body().getStatistics().getOffsetNext().toString())) {
 
-                        resultComments.addAll(newresultComments);
+//                        resultComments.addAll(newresultComments);
+
+                        resultComments.addAll(0,newresultComments);
                         adapter.notifyDataSetChanged();
 //                        waitingLoading.setVisibility(View.INVISIBLE);
                         nextOffset = response.body().getStatistics().getOffsetNext().toString();
@@ -312,17 +296,14 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
 
     @Override
     public void showComments(ResultCommentList resultCommentList) {
-        Log.e("dfs", "Fdsfa");
-//            loading = false;
-//            ResultCommentList jsonResponse = response.body();
-//            List<ResultComment> newresultComments = jsonResponse.getResultComment();
-//            if (!nextOffset.equals(response.body().getStatistics().getOffsetNext().toString())) {
-//
-//                resultComments.addAll(newresultComments);
-//                adapter.notifyDataSetChanged();
-////                        waitingLoading.setVisibility(View.INVISIBLE);
-//                nextOffset = response.body().getStatistics().getOffsetNext().toString();
-//            }
+
+        List<ResultComment> newresultComments = resultCommentList.getResultComment();
+        if (!nextOffset.equals(resultCommentList.getStatistics().getOffsetNext().toString())) {
+            resultComments.addAll(0,newresultComments);
+            adapter.notifyDataSetChanged();
+            nextOffset = resultCommentList.getStatistics().getOffsetNext().toString();
+            loading = true;
+        }
     }
 
     @Override
