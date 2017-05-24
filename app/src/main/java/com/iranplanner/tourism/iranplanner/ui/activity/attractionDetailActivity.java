@@ -166,13 +166,13 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     }
     private void setAttractionTypeImage(){
         if (attraction.getAttarctionItineraryTypeId().equals("2930")) {
-            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_religious));
+            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_mazhabi));
         } else if (attraction.getAttarctionItineraryTypeId().equals("2931")) {
-            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_nature));
+            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_natural));
         } else if (attraction.getAttarctionItineraryTypeId().equals("2932")) {
-            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_history));
+            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_historical));
         } else if (attraction.getAttarctionItineraryTypeId().equals("2933")) {
-            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_entertainment));
+            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sport));
         }
     }
     private void setWebViewContent(String myData) {
@@ -260,32 +260,32 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
             bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgreen));
         }
         if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 1) {
-            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
-            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
-            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
-            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislikegrey));
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_off));
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_off));
         }
         if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 2) {
-            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso_purple));
-            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso_purple));
-            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_grey_));
-            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_likegrey));
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_off));
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
         }
         if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 3) {
-            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_peurple));
-            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_peurple));
-            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_likegrey));
-            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_off));
         }
         if (resultWidget.get(0).getWidgetVisitedValue() != null && resultWidget.get(0).getWidgetVisitedValue() == 1) {
-            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_checkinnow));
-            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_checkinnow));
-            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_checkinbeforegrey));
+            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_seen_on));
+            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_seen_on));
+            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_off));
         }
         if (resultWidget.get(0).getWidgetVisitedValue() != null && resultWidget.get(0).getWidgetVisitedValue() == 2) {
-            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_checkin_before_pink));
-            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_checkin_before_pink));
-            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_checkinnowgrey));
+            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_on));
+            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_on));
+            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_off));
         }
         if (resultWidget.get(0).getWidgetWishValue() != null && resultWidget.get(0).getWidgetWishValue() == 1) {
             wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));
@@ -591,24 +591,24 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgreen));
                 break;
             case "nowVisitedImg":
-                nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_checkinnow));
-                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_checkinnow));
+                nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_seen_on));
+                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_seen_on));
                 break;
             case "beftorVisitedImg":
-                beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_checkincefore));
-                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_checkincefore));
+                beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_on));
+                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_on));
                 break;
             case "dislikeImg":
-                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_peurple));
-                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_peurple));
+                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
                 break;
             case "okImg":
-                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso_purple));
-                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso_purple));
+                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
                 break;
             case "likeImg":
-                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
-                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
+                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
                 break;
             case "wishImg":
                 wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));

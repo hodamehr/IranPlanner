@@ -133,7 +133,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_checkin_before_grey_" />
+                                        android:src="@mipmap/ic_before_seen_off" />
 
                                     <TextView
                                         android:id="@+id/beftorVisitedTxt"
@@ -163,7 +163,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_checkin_now_grey_1" />
+                                        android:src="@mipmap/ic_now_seen_off" />
 
                                     <TextView
                                         android:id="@+id/nowVisitedTxt"
@@ -207,7 +207,7 @@
                                         android:layout_height="30dp"
                                         android:padding="@dimen/margin_xxshort"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_dislike_grey_" />
+                                        android:src="@mipmap/ic_dislike_off" />
 
                                     <TextView
                                         android:id="@+id/dislikeTxt"
@@ -238,7 +238,7 @@
                                         android:layout_height="30dp"
                                         android:padding="@dimen/margin_xxshort"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_soso" />
+                                        android:src="@mipmap/ic_ok_off" />
 
                                     <TextView
                                         android:id="@+id/okTxt"
@@ -269,7 +269,7 @@
                                         android:layout_height="30dp"
                                         android:padding="@dimen/margin_xxshort"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_like_grey" />
+                                        android:src="@mipmap/ic_like_off" />
 
                                     <TextView
                                         android:id="@+id/likeTxt"
@@ -378,7 +378,7 @@
                                     android:layout_height="30dp"
                                     android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_checkin_now_grey_1" />
+                                    android:src="@mipmap/ic_seen" />
 
                                 <TextView
                                     android:id="@+id/doneTxt"
@@ -485,7 +485,8 @@
                                 android:layout_alignRight="@+id/cityNameHolder"
                                 android:layout_below="@+id/cityNameHolder"
                                 android:gravity="right"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:layout_marginTop="@dimen/margin_short">
 
                                 <TextView
                                     android:id="@+id/textEntranceFee"
@@ -509,7 +510,7 @@
                                 android:id="@+id/cityNameHolder"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentLeft="true"
                                 android:layout_alignParentTop="true"
                                 android:gravity="right"
                                 android:orientation="horizontal"
@@ -539,7 +540,7 @@
                                 android:id="@+id/overlapImageHolder"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentRight="true"
                                 android:layout_alignParentTop="true"
                                 android:layout_marginLeft="10dp"
 
@@ -553,7 +554,8 @@
                                     android:layout_height="50dp"
                                     android:layout_centerHorizontal="true"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_nature" />
+                                    android:src="@mipmap/ic_natural"
+                                    android:paddingTop="@dimen/padding_short"/>
 
                                 <TextView
                                     android:id="@+id/attractionType"
@@ -573,7 +575,7 @@
                             android:id="@+id/mapHolder"
                             android:layout_width="match_parent"
                             android:layout_height="250dp"
-                            android:layout_below="@+id/supplierLayoutTravelType"
+                            android:layout_below="@+id/ShowMoreInfoHolder"
                             android:background="@color/greyLight"
                             android:focusableInTouchMode="true">
 
@@ -595,7 +597,7 @@
                             android:id="@+id/ShowMoreInfoHolder"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_below="@id/mapHolder"
+                            android:layout_below="@id/supplierLayoutTravelType"
                             android:layout_centerVertical="true"
                             android:background="@color/white_"
                             android:padding="@dimen/padding_short">
@@ -609,6 +611,8 @@
                                 android:layout_marginRight="@dimen/padding_short"
                                 android:gravity="right"
                                 android:paddingBottom="@dimen/padding_short"
+                                android:paddingTop="@dimen/padding_short"
+
                                 android:text="درباره این جاذبه"
 
                                 />
@@ -643,8 +647,8 @@
                         <RelativeLayout
                             android:id="@+id/borderLayout"
                             android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:layout_below="@+id/ShowMoreInfoHolder"
+                            android:layout_height="5dp"
+                            android:layout_below="@+id/supplierLayoutTravelType"
                             android:background="@color/greyLight"></RelativeLayout>
                         <!--pageMore-->
                         <RelativeLayout

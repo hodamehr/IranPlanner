@@ -147,7 +147,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_go_grey_" />
+                                        android:src="@mipmap/ic_before_go_off" />
 
                                     <TextView
                                         android:id="@+id/beftorVisitedTxt"
@@ -177,7 +177,7 @@
                                         android:layout_width="25dp"
                                         android:layout_height="25dp"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_go_now_gre" />
+                                        android:src="@mipmap/ic_now_go_off" />
 
                                     <TextView
                                         android:id="@+id/nowVisitedTxt"
@@ -221,7 +221,7 @@
                                         android:layout_height="30dp"
                                         android:padding="@dimen/margin_xxshort"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_dislikegrey" />
+                                        android:src="@mipmap/ic_dislike_off" />
 
                                     <TextView
                                         android:id="@+id/dislikeTxt"
@@ -252,7 +252,7 @@
                                         android:layout_height="30dp"
                                         android:padding="@dimen/margin_xxshort"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_soso" />
+                                        android:src="@mipmap/ic_ok_off" />
 
                                     <TextView
                                         android:id="@+id/okTxt"
@@ -283,7 +283,7 @@
                                         android:layout_height="30dp"
                                         android:padding="@dimen/margin_xxshort"
                                         android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_likegrey" />
+                                        android:src="@mipmap/ic_like_off" />
 
                                     <TextView
                                         android:id="@+id/likeTxt"
@@ -363,7 +363,7 @@
                                     android:layout_height="30dp"
                                     android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_go_grey_" />
+                                    android:src="@mipmap/ic_go" />
 
                                 <TextView
                                     android:id="@+id/doneTxt"

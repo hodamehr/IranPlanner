@@ -226,27 +226,27 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgreen));
         }
         if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 1) {
-            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
-            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
 
         }
         if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 2) {
-            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso_purple));
-            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso_purple));
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
 
 
         }
         if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 3) {
-            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_peurple));
-            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_peurple));
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
         }
         if (resultWidget.get(0).getWidgetVisitedValue() != null && resultWidget.get(0).getWidgetVisitedValue() == 1) {
-            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_now_orange));
-            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_now_orange));
+            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_go_on));
+            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_go_on));
         }
         if (resultWidget.get(0).getWidgetVisitedValue() != null && resultWidget.get(0).getWidgetVisitedValue() == 2) {
-            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_before_orange));
-            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_before_orange));
+            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_go_on));
+            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_go_on));
         }
 
 
@@ -551,35 +551,35 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgreen));
                 break;
             case "nowVisitedImg":
-                nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_now_orange));
-                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_now_orange));
-                beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_gogreydark));
+                nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_go_on));
+                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_go_on));
+                beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_go_off));
 
                 break;
             case "beftorVisitedImg":
-                beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_before_orange));
-                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_before_orange));
-                nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_now_gre));
+                beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_go_on));
+                doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_go_on));
+                nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_go_off));
 
                 break;
             case "dislikeImg":
-                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_peurple));
-                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_peurple));
-                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
-                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_likegrey));
+                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
+                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_off));
+                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
 
                 break;
             case "okImg":
-                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso_purple));
-                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso_purple));
-                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_likegrey));
-                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislikegrey));
+                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
+                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
+                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_off));
                 break;
             case "likeImg":
-                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
-                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
-                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislikegrey));
-                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
+                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+                rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_off));
+                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_off));
                 break;
             default:
                 break;
@@ -866,32 +866,32 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgrey));
         }
         if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 1) {
-            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
-            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like));
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
         } else if (resultUserLogin.get(0).getWidgetLikeValue() == null && resultUserLogin.get(0).getWidgetLikeValue() == 0) {
-            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_grey));
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
         }
         if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 2) {
-            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso_purple));
-            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso_purple));
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
         } else if (resultUserLogin.get(0).getWidgetLikeValue() == null && resultUserLogin.get(0).getWidgetLikeValue() == 0) {
-            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_soso));
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_off));
 
         }
         if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 3) {
-            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_peurple));
-            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_peurple));
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
         } else if (resultUserLogin.get(0).getWidgetLikeValue() == null && resultUserLogin.get(0).getWidgetLikeValue() == 0) {
-            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_grey_));
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_off));
 
         }
         if (resultUserLogin.get(0).getWidgetVisitedValue() != null && resultUserLogin.get(0).getWidgetVisitedValue() == 1) {
-            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_now_orange));
-            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_now_orange));
+            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_go_on));
+            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_go_on));
         }
         if (resultUserLogin.get(0).getWidgetVisitedValue() != null && resultUserLogin.get(0).getWidgetVisitedValue() == 2) {
-            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_before_orange));
-            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_go_before_orange));
+            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_go_on));
+            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_go_on));
         }
     }
 
