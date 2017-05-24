@@ -54,6 +54,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import server.Config;
 import server.getJsonInterface;
 import tools.Util;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -329,7 +330,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     public void getResultOfCommentList() {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(setHttpClient())
-                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .baseUrl(Config.BASEURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
@@ -545,13 +546,13 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
 
     public void getInterestResult(String uid, String nid, String gvalue, String gtype) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .baseUrl(Config.BASEURL)
                 .client(setHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
 //        "api-com.iranplanner.tourism.iranplanner.di.data.php?action=widget&uid=792147600796866&cid=1&ntype=itinerary&nid=21905&gtype=bookmark&gvalue=1"
-        Call<InterestResult> call = getJsonInterface.getInterest("widget", uid, "1", "attraction", nid, gtype, gvalue);
+        Call<InterestResult> call = getJsonInterface.getInterest("widget", uid, Util.getTokenFromSharedPreferences(getApplicationContext()), "attraction", nid, gtype, gvalue);
         call.enqueue(new Callback<InterestResult>() {
             @Override
             public void onResponse(Call<InterestResult> call, Response<InterestResult> response) {

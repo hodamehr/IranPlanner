@@ -27,7 +27,7 @@ import retrofit2.http.Query;
  * Created by Hoda on 10/01/2017.
  */
 public interface getJsonInterface {
-    @GET("api-itinerary.php?action=list&lang=fa&from=342&limit=10&offset=0&to")
+    @GET("api-itinerary.php")
     Call<ResultItineraryList> getItinerarys(@Query("action") String action,
                                             @Query("lang") String lang,
                                             @Query("from") String from,
@@ -35,7 +35,7 @@ public interface getJsonInterface {
                                             @Query("offset") String offset,
                                             @Query("to") String to);
 
-    @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=widget&uid=792147600796866&cid=1&ntype=itinerary&nid=21905&gtype=bookmark&gvalue=1")
+    @GET("api-com.iranplanner.tourism.iranplanner.di.data.php")
     Call<InterestResult> getInterest(
             @Query("action") String action,
             @Query("uid") String uid,
@@ -45,12 +45,12 @@ public interface getJsonInterface {
             @Query("gtype") String gtype,
             @Query("gvalue") String gvalue);
 
-    @GET("api-itinerary.php?action=souvenir&id=28439")
+    @GET("api-itinerary.php")
     Call<ResultSouvenirList> getSouvenirList(
             @Query("action") String action,
             @Query("id") String itineraryId);
 
-    @GET("api-itinerary.php?action=searchattractioncity&lang=fa&from=342&limit=10&offset=0&attraction=id")
+    @GET("api-itinerary.php")
     Call<ResultItineraryList> getItinerarysAttraction(@Query("action") String action,
                                                       @Query("lang") String lang,
                                                       @Query("from") String from,
@@ -63,39 +63,39 @@ public interface getJsonInterface {
     Call<LoginResult> getLoginResult(@Query("action") String action,
                                      @Query("email") String email,
                                      @Query("password") String password,
-                                     @Query("tkn") String token,
+                                     @Query("cid") String token,
                                      @Query("andId") String androidId
                                      );
 //    http://api.parsdid.com/iranplanner/app/api-user.php?action=login&email=09358891239&password=6efa240fc47e3f882ae16d163ca26f91
 
-    @POST("api-com.iranplanner.tourism.iranplanner.di.data.php?action=comment")
+    @POST("api-com.iranplanner.tourism.iranplanner.di.data.php")
     Call<ResultCommentList> callInsertComment(@Body CommentSend request);
 
-    @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=pagecomments&nid=1&ntype=attraction&offset=10")
+    @GET("api-com.iranplanner.tourism.iranplanner.di.data.php")
     Call<ResultCommentList> getCommentList(
             @Query("action") String action,
             @Query("nid") String nid,
             @Query("ntype") String ntype,
             @Query("offset") String offset);
 
-    @GET("api-lodging.php?action=list&city=342")
+    @GET("api-lodging.php")
     Call<ResultLodgingList> getLodgingReserve(
             @Query("action") String action,
             @Query("city") String city);
 
-    @GET("api-lodging.php?action=full&id=23107")
+    @GET("api-lodging.php")
     Call<ResultLodgingHotel> getHotelReserve(
             @Query("action") String action,
             @Query("id") String idHotel);
 
-    @GET("api-lodging.php?action=room&id=22649&fromdate=1488289475&todate=1488489475")
+    @GET("api-lodging.php")
     Call<ResultLodgingRoomList> getResultLodgingRoomList(
             @Query("action") String action,
             @Query("id") String id,
             @Query("fromdate") String fromdate,
             @Query("todate") String todate);
 
-    @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary")
+    @GET("api-com.iranplanner.tourism.iranplanner.di.data.php")
     Call<ResultWidgetFull> getWidgetResult(@Query("action") String param1,
                                            @Query("id") String param2,
                                            @Query("uid") String param3,

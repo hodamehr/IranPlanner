@@ -55,11 +55,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import server.Config;
 import server.getJsonInterface;
 import tools.Util;
 import tools.widget.PersianDatePicker;
 
-import static com.iranplanner.tourism.iranplanner.R.id.commentButtonHolder;
 
 /**
  * Created by h.vahidimehr on 21/02/2017.
@@ -226,7 +226,7 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
     public void getResultOfCommentList(String itineraryId, String Offset) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(setHttpClient())
-                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .baseUrl(Config.BASEURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
@@ -265,7 +265,7 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
 //        getResultLodgingRoomList
         Retrofit retrofit = new Retrofit.Builder()
                 .client(setHttpClient())
-                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .baseUrl(Config.BASEURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);

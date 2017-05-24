@@ -8,17 +8,17 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-import com.digits.sdk.android.AuthCallback;
-import com.digits.sdk.android.Digits;
-import com.digits.sdk.android.DigitsException;
-import com.digits.sdk.android.DigitsSession;
+//import com.digits.sdk.android.AuthCallback;
+//import com.digits.sdk.android.Digits;
+//import com.digits.sdk.android.DigitsException;
+//import com.digits.sdk.android.DigitsSession;
 import com.iranplanner.tourism.iranplanner.adapter.TabPagerAdapter;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
-import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.core.TwitterCore;
-import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+//import com.twitter.sdk.android.core.TwitterAuthConfig;
+//import com.twitter.sdk.android.core.TwitterCore;
+//import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import io.fabric.sdk.android.Fabric;
 import login.DigitsRegisterButton;
@@ -27,19 +27,19 @@ import tools.Util;
 public class MainActivity extends StandardActivity {
     private StandardFragment currentTab;
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private static final String TWITTER_KEY = "9ReBYxJ9ldP2AhMJStWyXF94Y";
-    private static final String TWITTER_SECRET = "U6t7AUdJcuYKevlwNgCm3QpwWGQKxwOTNTltAbeIQQgkqGcW0C";
-    TwitterAuthClient mTwitterAuthClient;
+//    private static final String TWITTER_KEY = "9ReBYxJ9ldP2AhMJStWyXF94Y";
+//    private static final String TWITTER_SECRET = "U6t7AUdJcuYKevlwNgCm3QpwWGQKxwOTNTltAbeIQQgkqGcW0C";
+//    TwitterAuthClient mTwitterAuthClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-        Digits digits = new Digits.Builder()
-                .withTheme(R.style.CustomDigitsTheme).build();
-
-
-        Fabric.with(this, new TwitterCore(authConfig), digits);
+//        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+//        Digits digits = new Digits.Builder()
+//                .withTheme(R.style.CustomDigitsTheme).build();
+//
+//
+//        Fabric.with(this, new TwitterCore(authConfig), digits);
 //        setContentView(R.layout.activity_main);
 
 //        test test=new test();
@@ -75,20 +75,20 @@ public class MainActivity extends StandardActivity {
         Util.displayFirebaseRegId(this);
 //---------------------------------------------------
 //
-        DigitsRegisterButton digitsButton = (DigitsRegisterButton) findViewById(R.id.signup_button);
-        digitsButton.setCallback(new AuthCallback() {
-            @Override
-            public void success(DigitsSession session, String phoneNumber) {
-                // TODO: associate the session userID with your user model
-                Toast.makeText(getApplicationContext(), "Authentication successful for "
-                        + phoneNumber, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void failure(DigitsException exception) {
-                Log.d("Digits", "Sign in with Digits failure", exception);
-            }
-        });
+//        DigitsRegisterButton digitsButton = (DigitsRegisterButton) findViewById(R.id.signup_button);
+//        digitsButton.setCallback(new AuthCallback() {
+//            @Override
+//            public void success(DigitsSession session, String phoneNumber) {
+//                // TODO: associate the session userID with your user model
+//                Toast.makeText(getApplicationContext(), "Authentication successful for "
+//                        + phoneNumber, Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void failure(DigitsException exception) {
+//                Log.d("Digits", "Sign in with Digits failure", exception);
+//            }
+//        });
 
 
 

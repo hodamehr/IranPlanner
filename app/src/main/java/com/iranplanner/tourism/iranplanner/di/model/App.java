@@ -8,6 +8,8 @@ import com.iranplanner.tourism.iranplanner.di.data.component.NetComponent;
 import com.iranplanner.tourism.iranplanner.di.data.module.AppModule;
 import com.iranplanner.tourism.iranplanner.di.data.module.NetModule;
 
+import server.Config;
+
 
 /**
  * Created by Hoda
@@ -21,7 +23,7 @@ public class App extends Application {
         super.onCreate();
         mNetComponent = DaggerNetComponent.builder()
                 .appModule(new AppModule(this))
-                .netModule(new NetModule("http://api.parsdid.com/iranplanner/app/"))
+                .netModule(new NetModule(Config.BASEURL))
                 .build();
         googleNetComponent = DaggerNetComponent.builder()
                 .appModule(new AppModule(this))

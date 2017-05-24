@@ -419,7 +419,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dp"
-                                android:layout_toLeftOf="@id/itinerartMoreShare"
+
                                 android:maxLines="1"
                                 android:text="برنامه سفرهای استان گردی"
                                 android:textColor="#fdfdfb" />

@@ -3,7 +3,6 @@
     <color name="colorPrimary">#f0137d</color>
     <color name="colorPrimaryDark">#181818</color>
     <color name="colorAccent">#87f0137d</color>
-    <color name="appMainColor">#f0137d</color>
     <color name="textColorWhite">#ffffff</color>
     <color name="pink">#f0137d</color>
     <color name="pinkpress">#d10f6c</color>
@@ -12,19 +11,13 @@
     <color name="greyDark">#181818</color>
     <color name="white_">#ffffff</color>
     <color name="greyLight">#ebebeb</color>
-    <color name="greenLight">#c0f9d5</color>
     <color name="green">#3cb878</color>
     <color name="greenpress">#36a16a</color>
-    <color name="greySemiligte">#cecece</color>
     <color name="grey">#737373</color>
     <color name="background">#FFF5F5F5</color>
-    <color name="transparent_grey">#74030000</color>
     <color name="pink_1">#f23e93</color>
     <color name="pink_2">#f0137d</color>
     <color name="pink_3">#d41568</color>
     <color name="pink_4">#c3005c</color>
     <color name="orange_1">#ff8b00</color>
-    <color name="orange_2">#ffa841</color>
-    <color name="purple_1">#9377ec</color>
-    <color name="purple_2">#714fe7</color>
 </resources>

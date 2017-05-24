@@ -3,15 +3,15 @@ package login;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.digits.sdk.android.DigitsAuthButton;
+/*import com.digits.sdk.android.DigitsAuthButton;*/
 import com.iranplanner.tourism.iranplanner.R;
 
 /**
  * Created by h.vahidimehr on 07/04/2017.
  */
 
-public class DigitsRegisterButton extends DigitsAuthButton {
-    public DigitsRegisterButton(Context c) {
+public class DigitsRegisterButton/* extends DigitsAuthButton*/ {
+   /* public DigitsRegisterButton(Context c) {
         super(c);
         init();
     }
@@ -36,5 +36,5 @@ public class DigitsRegisterButton extends DigitsAuthButton {
         setText(getResources().getString(R.string.authentication));
 
 //        setTextColor(getResources().getColor(R.color.theme_color));
-    }
+    }*/
 }

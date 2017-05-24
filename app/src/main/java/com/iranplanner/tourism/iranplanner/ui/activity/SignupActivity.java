@@ -30,6 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import server.Config;
 import server.getJsonInterface;
 import tools.Util;
 
@@ -131,7 +132,7 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
             gender = "0";
         }
         showProgress();
-        getRegisterResponce(email, password, name, lastName, gender, "1", phoneNumber);
+        getRegisterResponce(email, password, name, lastName, gender, Util.getTokenFromSharedPreferences(getApplicationContext()), phoneNumber);
     }
 
     public boolean validate() {
@@ -163,12 +164,12 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
             editText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 6) {
-            passwordText.setError("کلمه عبور می بایست بیشتر از 6 حرف باشد");
+        if (password.isEmpty() || password.length() < 8) {
+            passwordText.setError("کلمه عبور می بایست بیشتر از 8 حرف باشد");
 
 
             valid = false;
-        } else if (password.isEmpty() || password.length() >= 6) {
+        } else if (password.isEmpty() || password.length() >= 8) {
             int digitSize = 0;
             for (int i = 0; i < password.length(); i++) {
                 if (Character.isDigit(password.charAt(i))) {
@@ -183,8 +184,8 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
 
             passwordText.setError(null);
         }
-        if (password.isEmpty() || password.length() < 6) {
-            input_password_repeat.setError("کلمه عبور می بایست بیشتر از 6 حرف باشد");
+        if (password.isEmpty() || password.length() < 8) {
+            input_password_repeat.setError("کلمه عبور می بایست بیشتر از 8 حرف باشد");
             valid = false;
         } else {
             input_password_repeat.setError(null);
@@ -217,7 +218,7 @@ public class SignupActivity extends StandardActivity implements Callback<ResultR
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .baseUrl(Config.BASEURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);

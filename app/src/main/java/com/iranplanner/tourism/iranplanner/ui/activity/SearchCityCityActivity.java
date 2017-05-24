@@ -26,6 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import server.Config;
 import server.getJsonInterface;
 import tools.Util;
 
@@ -118,7 +119,7 @@ public class SearchCityCityActivity extends StandardActivity implements Callback
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.parsdid.com/iranplanner/app/")
+                .baseUrl(Config.BASEURL)
 //                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

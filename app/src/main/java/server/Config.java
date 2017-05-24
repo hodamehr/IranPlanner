@@ -18,4 +18,6 @@ public class Config {
 
     public static final String SHARED_PREF = "ah_firebase";
 
+    public static final String BASEURL = "https://api.parsdid.com/iranplanner/app/";
+
 }
