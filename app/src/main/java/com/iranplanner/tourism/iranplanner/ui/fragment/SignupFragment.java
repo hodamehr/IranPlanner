@@ -1,15 +1,21 @@
-package com.iranplanner.tourism.iranplanner.ui.activity;
+package com.iranplanner.tourism.iranplanner.ui.fragment;
 
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.os.Handler;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +25,7 @@ import com.iranplanner.tourism.iranplanner.activity.LoginActivity;
 import com.iranplanner.tourism.iranplanner.di.DaggerRegisterComponent;
 import com.iranplanner.tourism.iranplanner.di.RegisterModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
+import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.iranplanner.tourism.iranplanner.ui.presenter.RegisterPresenter;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.RegisterContract;
 
@@ -40,11 +47,13 @@ import server.Config;
 import server.getJsonInterface;
 import tools.Util;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by h.vahidimehr on 03/02/2017.
  */
 
-public class SignupActivity extends StandardActivity implements RegisterContract.View {
+public class SignupFragment extends StandardFragment implements RegisterContract.View {
     private static final String TAG = "SignupActivity";
     ProgressDialog progressDialog;
     @InjectView(R.id.input_name)
@@ -71,59 +80,78 @@ public class SignupActivity extends StandardActivity implements RegisterContract
     @Inject
     RegisterPresenter registerPresenter;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
-        ButterKnife.inject(this);
-
-        View logo = getLayoutInflater().inflate(R.layout.custom_imageview_toolbar, null);
-
-        _signupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signup();
-            }
-        });
-
-        _loginLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Finish the registration screen and return to the Login activity
-
-//                Bundle bundle = new Bundle();
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        ButterKnife.inject(getActivity());
+//        View view = inflater.inflate(R.layout.login, container, false);
 //
-
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-    }
-
+//        View logo = getActivity().getLayoutInflater().inflate(R.layout.custom_imageview_toolbar, null);
+//
+//        _signupButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                signup();
+//            }
+//        });
+//
+//        _loginLink.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Finish the registration screen and return to the Login activity
+//
+////                Bundle bundle = new Bundle();
+////
+//
+////                Intent intent = new Intent(getContext(), LoginActivity.class);
+////                startActivity(intent);
+////                finish();
+//            }
+//        });
+//    }
     @Override
-    protected int getLayoutId() {
-        return R.layout.custom_imageview_toolbar;
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             Bundle savedInstanceState) {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        View view = inflater.inflate(R.layout.activity_signup, container, false);
+        ButterKnife.inject(getActivity());
+
+
+
+//        _signupButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                signup();
+//            }
+//        });
+
+
+
+        return view;
     }
+//    @Override
+//    protected int getLayoutId() {
+//        return R.layout.custom_imageview_toolbar;
+//    }
 
     @Override
     public void showRegisterMessage(ResultRegister resultRegister) {
 
         ResultUserRegister result = resultRegister.getResultUserRegister();
         if (result.getStatus().equals("Succesfull")) {
-            Toast.makeText(getApplicationContext(), "حساب کاربری با موفقیت انجام شد", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "حساب کاربری با موفقیت انجام شد", Toast.LENGTH_LONG).show();
 
         } else if (result.getStatus().equals("Duplicate Phone")) {
-            Toast.makeText(getApplicationContext(), "حساب کاربری قبلاایجاد شده است ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "حساب کاربری قبلاایجاد شده است ", Toast.LENGTH_LONG).show();
 
         } else if (result.getStatus().equals("Invalid info")) {
-            Toast.makeText(getApplicationContext(), "اشکال در مقادیر ورودی", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "اشکال در مقادیر ورودی", Toast.LENGTH_LONG).show();
 
         }
         progressDialog.dismiss();
 
         _signupButton.setEnabled(true);
-        setResult(RESULT_OK, null);
+//        setResult(RESULT_OK, null);
         progressDialog.dismiss();
     }
 
@@ -139,10 +167,10 @@ public class SignupActivity extends StandardActivity implements RegisterContract
     }
 
     public void showProgress() {
-        progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("ساخت حساب کاربری");
-        progressDialog.show();
+//        progressDialog = new ProgressDialog(.this, R.style.AppTheme);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage("ساخت حساب کاربری");
+//        progressDialog.show();
     }
 
     @Override
@@ -173,10 +201,10 @@ public class SignupActivity extends StandardActivity implements RegisterContract
         showProgress();
 
         DaggerRegisterComponent.builder()
-                .netComponent(((App) getApplicationContext()).getNetComponent())
+                .netComponent(((App) getContext()).getNetComponent())
                 .registerModule(new RegisterModule(this))
-                .build().inject(this);
-        registerPresenter.getRegisterResult("register", email, password, name, lastName, gender, Util.getTokenFromSharedPreferences(getApplicationContext()), phoneNumber);
+                .build().injectFragment(this);
+        registerPresenter.getRegisterResult("register", email, password, name, lastName, gender, Util.getTokenFromSharedPreferences(getContext()), phoneNumber);
 
 //        getRegisterResponce(email, password, name, lastName, gender, Util.getTokenFromSharedPreferences(getApplicationContext()), phoneNumber);
     }
