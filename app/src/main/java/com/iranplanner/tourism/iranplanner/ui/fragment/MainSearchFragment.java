@@ -23,19 +23,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
-
-
 import com.iranplanner.tourism.iranplanner.di.DaggerMainScreenComponent;
 import com.iranplanner.tourism.iranplanner.di.MainSearchnModule;
+import com.iranplanner.tourism.iranplanner.di.model.App;
+import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.iranplanner.tourism.iranplanner.ui.presenter.MainSearchPresenter;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.MainSearchContract;
-import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.io.Serializable;
@@ -54,7 +54,6 @@ import entity.City;
 import entity.Province;
 import entity.ResultItinerary;
 import entity.ResultItineraryList;
-import com.iranplanner.tourism.iranplanner.di.model.App;
 
 
 public class MainSearchFragment extends StandardFragment implements MainSearchContract.View, View.OnClickListener/*, Callback<ResultItineraryList>*/ {
@@ -99,7 +98,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         city_layout = (LinearLayout) view.findViewById(R.id.city_layout);
         province_layout = (LinearLayout) view.findViewById(R.id.province_layout);
         events_layout = (LinearLayout) view.findViewById(R.id.events_layout);
-          //province
+        //province
         textProvience = (AutoCompleteTextView) view.findViewById(R.id.textProvience);
         searchOk_provience = (Button) view.findViewById(R.id.searchOk_provience);
         tempProvince = autoCompleteProvince(textProvience);
@@ -201,37 +200,54 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
 //                break;
             case R.id.folding_cell_province:
                 fcProvince.toggle(false);
+                folding_cell_City_City.fold(false);
+                folding_cell_attraction.fold(false);
+                folding_cell_city.fold(false);
                 break;
 
             case R.id.folding_cell_City_City:
                 folding_cell_City_City.toggle(false);
+                fcProvince.fold(false);
+                folding_cell_attraction.fold(false);
+                folding_cell_city.fold(false);
                 break;
 
             case R.id.folding_cell_attraction:
                 folding_cell_attraction.toggle(false);
+                fcProvince.fold(false);
+                folding_cell_City_City.fold(false);
+                folding_cell_city.fold(false);
                 break;
 
             case R.id.searchOk_attraction:
+                hideKeyBoard();
                 showAttraction();
                 break;
 
             case R.id.searchOk_city:
+                hideKeyBoard();
                 showCity();
                 break;
 
             case R.id.folding_cell_city:
                 folding_cell_city.toggle(false);
+                fcProvince.fold(false);
+                folding_cell_City_City.fold(false);
+                folding_cell_attraction.fold(false);
                 break;
 
             case R.id.searchOk_city_city:
+                hideKeyBoard();
                 showCityCity();
                 break;
 
             case R.id.searchOk_provience:
+                hideKeyBoard();
                 showProvience();
                 break;
         }
     }
+
     @Override
     public void showError(String message) {
         progressDialog.dismiss();
@@ -457,6 +473,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
 
 
     }
+
     //province method
     public List<Province> autoCompleteProvince(AutoCompleteTextView textProvience) {
         ReadJsonProvince readJsonProvince = new ReadJsonProvince();
@@ -559,7 +576,6 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
     }
 
 
-
     //---------------------------
     private void showAttraction() {
         folding_cell_City_City.toggle(false);
@@ -591,6 +607,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
 
     private void showCityCity() {
         folding_cell_City_City.fold(false);
+
         cityCityFrom = returnCityId(fromCity_city, tempCity1);
         cityEnd = returnCityId(endCity_city, tempCity2);
         if (endCity_city.getText() == null) {
@@ -620,6 +637,14 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         }
         Log.d("search ok clicked", "true");
     }
-    //------------------------------
 
+    //------------------------------
+    private void hideKeyBoard() {
+        // Check if no view has focus:
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
 }

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -74,7 +75,7 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
         attractionRecyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-                LinearLayout navigateBtn = (LinearLayout) view.findViewById(R.id.navigateBtn);
+                Button navigateBtn = (Button) view.findViewById(R.id.navigateBtn);
                 navigateBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -98,7 +99,7 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
                         getIntrestResponce(position,itineraryActionList.get(position).getAttractionId(),Util.getUseRIdFromShareprefrence(getContext()));
                     }
                 });
-                LinearLayout moreInfoHolder = (LinearLayout) view.findViewById(R.id.moreInfoHolder);
+                Button moreInfoHolder = (Button) view.findViewById(R.id.moreInfoHolder);
                 moreInfoHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

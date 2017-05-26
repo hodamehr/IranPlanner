@@ -58,7 +58,7 @@ public class MapFullActivity extends StandardActivity implements OnMapReadyCallb
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         lodgingCities = (List<ItineraryLodgingCity>) bundle.getSerializable("lodgingCities");
-        setContentView(R.layout.activity_map_full);
+//        setContentView(R.layout.activity_map_full);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }

@@ -23,7 +23,7 @@ import com.coinpany.core.android.widget.Utils;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.adapter.CommentListAdapter;
-import com.iranplanner.tourism.iranplanner.adapter.ReseveDateListAdapter;
+
 import com.iranplanner.tourism.iranplanner.di.CommentModule;
 import com.iranplanner.tourism.iranplanner.di.DaggerCommentComponent;
 import com.iranplanner.tourism.iranplanner.di.model.App;
@@ -110,7 +110,7 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
             nextOffset = (String) extras.getSerializable("nextOffset");
             commentTitle.setText(itineraryData.getItineraryFromCityName() + " " + itineraryData.getItineraryToCityName() + " " + Util.persianNumbers(itineraryData.getItineraryDuration()) + " روز");
 
-        } else if (fromWhere.equals("attraction")) {
+        } else if (fromWhere.equals("Attraction")) {
             attraction = (ResultItineraryAttraction) extras.getSerializable("attraction");
             nextOffset = (String) extras.getSerializable("nextOffset");
             commentTitle.setText(attraction.getAttractionTitle());
@@ -148,7 +148,7 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
                                                      pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
 //                                                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                                                     if ((pastVisiblesItems) <= 10 && loading && (Integer.valueOf(nextOffset)>0)) {
+                                                     if ((pastVisiblesItems) <= 15 && loading && (Integer.valueOf(nextOffset)>0)) {
                                                          loading = false;
                                                          visibleItemCount = mLayoutManager.getChildCount();
                                                          totalItemCount = mLayoutManager.getItemCount();
@@ -204,7 +204,7 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
                                                       sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
                                                       if (fromWhere.equals("Itinerary")) {
                                                           getResultOfCommentInsert(userId, String.valueOf(txtAddComment.getText()), itineraryData.getItineraryId(), "itinerary");
-                                                      } else if (fromWhere.equals("attraction")) {
+                                                      } else if (fromWhere.equals("Attraction")) {
                                                           getResultOfCommentInsert(userId, String.valueOf(txtAddComment.getText()), attraction.getAttractionId(), "attraction");
                                                       }
                                                       txtAddComment.setText("");
@@ -222,44 +222,44 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
     protected int getLayoutId() {
         return R.layout.fragment_itinerary_comment;
     }
-
-    public void getResultOfCommentList(String itineraryId, String Offset) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(setHttpClient())
-                .baseUrl(Config.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-//        api-data.php?action=pagecomments&nid=1&ntype=attraction
-        Call<ResultCommentList> callc = getJsonInterface.getCommentList("pagecomments", itineraryId, "itinerary", Offset);
-        callc.enqueue(new Callback<ResultCommentList>() {
-            @Override
-            public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
-
-                if (response.body() != null) {
-                    loading = false;
-                    ResultCommentList jsonResponse = response.body();
-                    List<ResultComment> newresultComments = jsonResponse.getResultComment();
-                    if (!nextOffset.equals(response.body().getStatistics().getOffsetNext().toString())) {
-
-//                        resultComments.addAll(newresultComments);
-
-                        resultComments.addAll(0,newresultComments);
-                        adapter.notifyDataSetChanged();
-//                        waitingLoading.setVisibility(View.INVISIBLE);
-                        nextOffset = response.body().getStatistics().getOffsetNext().toString();
-                    }
-                } else {
-                    Log.e("comment body", "null");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultCommentList> call, Throwable t) {
-                Log.e("result of intresting", "false");
-            }
-        });
-    }
+//
+//    public void getResultOfCommentList(String itineraryId, String Offset) {
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .client(setHttpClient())
+//                .baseUrl(Config.BASEURL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
+////        api-data.php?action=pagecomments&nid=1&ntype=attraction
+//        Call<ResultCommentList> callc = getJsonInterface.getCommentList("pagecomments", itineraryId, "itinerary", Offset);
+//        callc.enqueue(new Callback<ResultCommentList>() {
+//            @Override
+//            public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
+//
+//                if (response.body() != null) {
+//                    loading = false;
+//                    ResultCommentList jsonResponse = response.body();
+//                    List<ResultComment> newresultComments = jsonResponse.getResultComment();
+//                    if (!nextOffset.equals(response.body().getStatistics().getOffsetNext().toString())) {
+//
+////                        resultComments.addAll(newresultComments);
+//
+//                        resultComments.addAll(0,newresultComments);
+//                        adapter.notifyDataSetChanged();
+////                        waitingLoading.setVisibility(View.INVISIBLE);
+//                        nextOffset = response.body().getStatistics().getOffsetNext().toString();
+//                    }
+//                } else {
+//                    Log.e("comment body", "null");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResultCommentList> call, Throwable t) {
+//                Log.e("result of intresting", "false");
+//            }
+//        });
+//    }
 
     public void getResultOfCommentInsert(String userId, String comment, String id, String type) {
 //        getResultLodgingRoomList

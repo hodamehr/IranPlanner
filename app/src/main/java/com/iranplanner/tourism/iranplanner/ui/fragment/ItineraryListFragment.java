@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -116,6 +117,8 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         View view = inflater.inflate(R.layout.fragment_itinerary_list, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
         waitingLoading = (ProgressBar) view.findViewById(R.id.waitingLoading);
@@ -262,7 +265,7 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
 
     @Override
     public void showComplete() {
-        Toast.makeText(getContext(), "complete", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(), "complete", Toast.LENGTH_LONG).show();
         loading = true;
     }
 
@@ -282,7 +285,11 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
         public void run() {
             String cityid = data.get(position).getItineraryId();
             String name = Util.getUseRIdFromShareprefrence(getContext());
-            getIntrestResponce(img, position, duration, cityid, name);
+//            getIntrestResponce(img, position, duration, cityid, name);
+            Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
+            intent.putExtra("itineraryData", (Serializable) data.get(position));
+            intent.putExtra("duration", duration);
+            startActivity(intent);
 
         }
     }

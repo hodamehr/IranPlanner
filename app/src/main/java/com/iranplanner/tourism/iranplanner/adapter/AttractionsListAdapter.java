@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -101,7 +102,7 @@ public class AttractionsListAdapter extends RecyclerView.Adapter<AttractionsList
         private TextView textCityName;
         private TextView textTimeDuration;
         private CircleImageView ImageAttraction;
-        private LinearLayout navigateBtn;
+        private Button navigateBtn;
 
 
         public ViewHolder(View view) {
@@ -110,7 +111,7 @@ public class AttractionsListAdapter extends RecyclerView.Adapter<AttractionsList
             textCityName = (TextView) view.findViewById(R.id.textCityName);
             textTimeDuration = (TextView) view.findViewById(R.id.textTimeDuration);
             ImageAttraction = (CircleImageView) view.findViewById(R.id.ImageAttraction);
-            navigateBtn= (LinearLayout) view.findViewById(R.id.navigateBtn);
+            navigateBtn= (Button) view.findViewById(R.id.navigateBtn);
 
         }
 

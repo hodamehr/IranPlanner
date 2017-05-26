@@ -107,12 +107,13 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/interestingLayout"
                         android:background="@color/greyLight"
-                        android:paddingBottom="10dp">
+                        >
 
                         <RelativeLayout
                             android:id="@+id/VisitedLayout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"

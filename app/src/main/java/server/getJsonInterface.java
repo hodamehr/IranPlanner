@@ -69,6 +69,8 @@ public interface getJsonInterface {
 //    http://api.parsdid.com/iranplanner/app/api-user.php?action=login&email=09358891239&password=6efa240fc47e3f882ae16d163ca26f91
 
     @POST("api-com.iranplanner.tourism.iranplanner.di.data.php")
+//    api.parsdid.com/iranplanner/app/api-com.iranplanner.tourism.iranplanner.di.data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary
+
     Call<ResultCommentList> callInsertComment(@Body CommentSend request);
 
     @GET("api-com.iranplanner.tourism.iranplanner.di.data.php")

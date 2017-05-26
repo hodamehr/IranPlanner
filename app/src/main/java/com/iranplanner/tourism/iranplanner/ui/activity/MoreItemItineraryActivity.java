@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
@@ -54,6 +55,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.activity.CommentListActivity;
 import com.iranplanner.tourism.iranplanner.adapter.ShowTavelToolsAdapter;
+
 
 import com.iranplanner.tourism.iranplanner.di.AttractionModule;
 import com.iranplanner.tourism.iranplanner.di.DaggerAtractionComponent;
@@ -721,9 +723,12 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             int width = myLinearLayout.getWidth();
             int height = myLinearLayout.getHeight();
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            for (Marker marker : markers) {
-                builder.include(marker.getPosition());
+            if(markers!=null){
+                for (Marker marker : markers) {
+                    builder.include(marker.getPosition());
+                }
             }
+
             LatLngBounds bounds = builder.build();
 //        int width = getResources().getDisplayMetrics().widthPixels;
 //        int height = getResources().getDisplayMetrics().heightPixels;
@@ -863,7 +868,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         if (resultUserLogin.get(0).getWidgetBookmarkValue() != null && resultUserLogin.get(0).getWidgetBookmarkValue() == 1) {
             bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgreen));
         } else if (resultUserLogin.get(0).getWidgetBookmarkValue() == null && resultUserLogin.get(0).getWidgetBookmarkValue() == 0) {
-            bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgrey));
+            bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_grey));
         }
         if (resultUserLogin.get(0).getWidgetLikeValue() != null && resultUserLogin.get(0).getWidgetLikeValue() == 1) {
             likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
@@ -949,6 +954,9 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            //        bara inke keybord bala nayad
+            this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             setContentView(R.layout.dialog_date_travel);
             persianDatePickr = (PersianDatePicker) findViewById(R.id.travelDate);

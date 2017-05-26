@@ -31,8 +31,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.activity.CommentListActivity;
+import com.iranplanner.tourism.iranplanner.di.AttractionDetailModule;
+import com.iranplanner.tourism.iranplanner.di.DaggerAtractionDetailComponent;
+import com.iranplanner.tourism.iranplanner.di.model.App;
+import com.iranplanner.tourism.iranplanner.ui.presenter.AttractionDetailPresenter;
+import com.iranplanner.tourism.iranplanner.ui.presenter.abs.AttractionDetailContract;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
@@ -41,6 +47,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import entity.InterestResult;
 import entity.ItineraryLodgingCity;
 import entity.ResultComment;
@@ -48,6 +56,7 @@ import entity.ResultCommentList;
 import entity.ResultData;
 import entity.ResultItineraryAttraction;
 import entity.ResultWidget;
+import entity.ResultWidgetFull;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,12 +65,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import server.Config;
 import server.getJsonInterface;
+import tools.Constants;
 import tools.Util;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class attractionDetailActivity extends FragmentActivity implements OnMapReadyCallback , View.OnClickListener{
-
+public class attractionDetailActivity extends FragmentActivity implements OnMapReadyCallback , View.OnClickListener,AttractionDetailContract.View{
+    @Inject
+    AttractionDetailPresenter attractionDetailPresenter;
     private GoogleMap mMap;
     ResultItineraryAttraction attraction;
     TextView attractionName, attractionPlace, textTimeDuration, textEntranceFee, attractionType, textBody;
@@ -81,7 +92,12 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     RotateAnimation rotate;
     List<ResultWidget> resultWidget;
     ProgressDialog progressDialog;
+    int BookmarkValue;
+    int LikeValue;
+    int VisitedValue;
+    int WishValue;
 
+    DaggerAtractionDetailComponent.Builder builder;
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -254,6 +270,13 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         bookmarkHolder.setOnClickListener(this);
         commentHolder.setOnClickListener(this);
 
+        builder = DaggerAtractionDetailComponent.builder()
+                .netComponent(((App) getApplicationContext()).getNetComponent())
+                .attractionDetailModule(new AttractionDetailModule(this));
+        builder.build().inject(this);
+        attractionDetailPresenter.getWidgetResult("nodeuser", attraction.getAttractionId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "attraction");
+
+
     }
     private void setInterestResponce( List<ResultWidget> resultWidget){
         if (resultWidget.get(0).getWidgetBookmarkValue() != null && resultWidget.get(0).getWidgetBookmarkValue() == 1) {
@@ -327,42 +350,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         });
     }
 
-    public void getResultOfCommentList() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(setHttpClient())
-                .baseUrl(Config.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-        Call<ResultCommentList> callc = getJsonInterface.getCommentList("pagecomments", attraction.getAttractionId(), "attraction","0");
-        callc.enqueue(new Callback<ResultCommentList>() {
-            @Override
-            public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
-                if (response.body() != null) {
-                    ResultCommentList jsonResponse = response.body();
-                    List<ResultComment> resultComments = jsonResponse.getResultComment();
-                    Intent intent = new Intent(attractionDetailActivity.this, CommentListActivity.class);
-                    intent.putExtra("resultComments", (Serializable) resultComments);
-                    intent.putExtra("attraction", (Serializable) attraction);
-                    intent.putExtra("nextOffset", response.body().getStatistics().getOffsetNext().toString());
-                    intent.putExtra("fromWhere", "attraction");
-                    startActivity(intent);
-                    progressDialog.dismiss();
-                } else {
-                    Log.e("comment body", "null");
-                    progressDialog.dismiss();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultCommentList> call, Throwable t) {
-                Log.e("result of intresting", "false");
-                progressDialog.dismiss();
-
-            }
-        });
-    }
-    private void showProgressDialog() {
+     private void showProgressDialog() {
         progressDialog = new ProgressDialog(attractionDetailActivity.this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("لطفا منتظر بمانید");
@@ -373,11 +361,10 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.commentHolder:
-
-                getResultOfCommentList();
                 showProgressDialog();
+                builder.build().inject(this);
+                attractionDetailPresenter.getAttractionCommentList("pagecomments", attraction.getAttractionId(), "attraction", "0");
                 break;
             case R.id.MoreInoText:
                 if (showMore) {
@@ -422,73 +409,61 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
 
             case R.id.likeImg:
                 rotateImage = "likeImg";
-                if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
-                    animWaiting(likeImg);
-                    String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-                    getInterestResult(uid, attraction.getAttractionId(), "1", "like");
-
+                if (LikeValue == 1) {
+                    OnClickedIntrestedWidget("like", Constants.intrestDefault, likeImg);
                 } else {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
+                    OnClickedIntrestedWidget("like", Constants.likeImg, likeImg);
                 }
                 break;
             case R.id.okImg:
                 rotateImage = "okImg";
-                if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
-                    animWaiting(okImg);
-                    String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-                    getInterestResult(uid, attraction.getAttractionId(), "2", "like");
-
+                if (LikeValue == 2) {
+                    OnClickedIntrestedWidget("like", Constants.intrestDefault, okImg);
                 } else {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
+                    OnClickedIntrestedWidget("like", Constants.okImg, okImg);
                 }
                 break;
             case R.id.dislikeImg:
                 rotateImage = "dislikeImg";
-                if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
-                    animWaiting(dislikeImg);
-                    String uid =Util.getUseRIdFromShareprefrence(getApplicationContext());
-                    getInterestResult(uid, attraction.getAttractionId(), "3", "like");
-
+                if (LikeValue == 2) {
+                    OnClickedIntrestedWidget("like", Constants.intrestDefault, dislikeImg);
                 } else {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
+                    OnClickedIntrestedWidget("like", Constants.dislikeImg, dislikeImg);
                 }
                 break;
-
             case R.id.wishImg:
                 rotateImage = "wishImg";
-                if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
-                    animWaiting(wishImg);
-                    String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-                    getInterestResult(uid, attraction.getAttractionId(), "1", "wish");
+                if (WishValue == 1) {
+                    OnClickedIntrestedWidget("wish", Constants.intrestDefault, wishImg);
                 } else {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
+                    OnClickedIntrestedWidget("wish", Constants.wishImg, wishImg);
+                }
+                break;
+            case R.id.nowVisitedImg:
+                rotateImage = "nowVisitedImg";
+
+                if (VisitedValue == 1) {
+                    OnClickedIntrestedWidget("visited", Constants.intrestDefault, nowVisitedImg);
+                } else {
+                    OnClickedIntrestedWidget("visited", Constants.nowVisitedImg, nowVisitedImg);
                 }
                 break;
             case R.id.beftorVisitedImg:
                 rotateImage = "beftorVisitedImg";
-                if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
-                    animWaiting(beftorVisitedImg);
-                    String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-                    getInterestResult(uid, attraction.getAttractionId(), "2", "visited");
+                if (VisitedValue == 2) {
+                    OnClickedIntrestedWidget("visited", Constants.intrestDefault, beftorVisitedImg);
                 } else {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
+                    OnClickedIntrestedWidget("visited", Constants.beftorVisitedImg, beftorVisitedImg);
                 }
                 break;
             case R.id.bookmarkHolder:
-                rotateImage = "bookmarkImg";
-                if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
-                    animWaiting(bookmarkImg);
-                    String uid = Util.getUseRIdFromShareprefrence(getApplicationContext());
-                    getInterestResult(uid, attraction.getAttractionId(), "1", "bookmark");
 
+                rotateImage = "bookmarkImg";
+
+                if (BookmarkValue == 1) {
+                    OnClickedIntrestedWidget("bookmark", Constants.intrestDefault, bookmarkImg);
                 } else {
-                    Log.e("user is not login", "error");
-                    Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
+                    OnClickedIntrestedWidget("bookmark", Constants.bookmarkImg, bookmarkImg);
                 }
                 break;
 
@@ -496,6 +471,17 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
 
         }
     }
+    private void OnClickedIntrestedWidget(String gType, String gValue, ImageView imageView) {
+        if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
+            attractionDetailPresenter.doWaitingAnimation(imageView);
+            attractionDetailPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "attraction", attraction.getAttractionId(), gType, gValue);
+
+        } else {
+            Log.e("user is not login", "error");
+            Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void translateDown() {
 
         AnimatorSet mAnimatorSet = new AnimatorSet();
@@ -544,45 +530,6 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
 
     }
 
-    public void getInterestResult(String uid, String nid, String gvalue, String gtype) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Config.BASEURL)
-                .client(setHttpClient())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-//        "api-com.iranplanner.tourism.iranplanner.di.data.php?action=widget&uid=792147600796866&cid=1&ntype=itinerary&nid=21905&gtype=bookmark&gvalue=1"
-        Call<InterestResult> call = getJsonInterface.getInterest("widget", uid, Util.getTokenFromSharedPreferences(getApplicationContext()), "attraction", nid, gtype, gvalue);
-        call.enqueue(new Callback<InterestResult>() {
-            @Override
-            public void onResponse(Call<InterestResult> call, Response<InterestResult> response) {
-                if (response.body() != null) {
-                    InterestResult jsonResponse = response.body();
-                    ResultData resultData = jsonResponse.getResultData();
-                    //// TODO: 14/02/2017
-                    rotate.setRepeatCount(0);
-                    checkWhichImageIntrested(rotateImage);
-//                    bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_pink));
-                } else {
-                    Log.e("Responce body", "null");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<InterestResult> call, Throwable t) {
-
-            }
-        });
-
-    }
-    private OkHttpClient setHttpClient() {
-        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build();
-        return okHttpClient;
-    }
     private void checkWhichImageIntrested(String imageView) {
 
         String im = imageView;
@@ -593,28 +540,154 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
             case "nowVisitedImg":
                 nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_seen_on));
                 doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_seen_on));
+                beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_off));
+
                 break;
             case "beftorVisitedImg":
                 beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_on));
                 doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_on));
+                nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_off));
+
                 break;
             case "dislikeImg":
                 dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
                 rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
+                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_off));
+                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
+
                 break;
             case "okImg":
                 okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
                 rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
+                likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
+                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_off));
                 break;
             case "likeImg":
                 likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
                 rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+                dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_off));
+                okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_off));
                 break;
             case "wishImg":
                 wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));
-                break;
+               break;
             default:
                 break;
         }
     }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public void showComplete() {
+
+    }
+
+    @Override
+    public void showComment(ResultCommentList resultCommentList, String commentType) {
+        List<ResultComment> resultComments = resultCommentList.getResultComment();
+        Intent intent = new Intent(attractionDetailActivity.this, CommentListActivity.class);
+        intent.putExtra("resultComments", (Serializable) resultComments);
+        intent.putExtra("attraction", (Serializable) attraction);
+        intent.putExtra("nextOffset", resultCommentList.getStatistics().getOffsetNext().toString());
+        intent.putExtra("fromWhere", commentType);
+        startActivity(intent);
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void setLoadWidget(ResultWidgetFull resultWidgetFull) {
+        List<ResultWidget> resultWidget = resultWidgetFull.getResultWidget();
+        setWidgetValue(resultWidget);
+    }
+
+    @Override
+    public void setIntrestedWidget(InterestResult InterestResult) {
+        ResultData resultData = InterestResult.getResultData();
+        //// TODO: 14/02/2017
+//        rotate.setRepeatCount(0);
+        checkWhichImageIntrested(rotateImage);
+    }
+
+    @Override
+    public void showAnimationWhenWaiting() {
+        ratingHolderFlag = attractionDetailPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
+
+    }
+
+    @Override
+    public void setIntrestValue(InterestResult InterestResult) {
+
+    }
+
+    @Override
+    public void showDirectionOnMap(PolylineOptions rectLine) {
+        mMap.addPolyline(rectLine);
+
+    }
+    private void setWidgetValue(List<ResultWidget> resultWidget) {
+
+        if (resultWidget.get(0).getWidgetBookmarkValue() != null) {
+            BookmarkValue = resultWidget.get(0).getWidgetBookmarkValue();
+        }
+        if (resultWidget.get(0).getWidgetLikeValue() != null) {
+            LikeValue = resultWidget.get(0).getWidgetLikeValue();
+        }
+        if (resultWidget.get(0).getWidgetVisitedValue() != null) {
+            VisitedValue = resultWidget.get(0).getWidgetVisitedValue();
+        }
+        if (resultWidget.get(0).getWidgetWishValue() != null) {
+            WishValue = resultWidget.get(0).getWidgetWishValue();
+        }
+
+
+        if (resultWidget.get(0).getWidgetBookmarkValue() != null && resultWidget.get(0).getWidgetBookmarkValue() == 1) {
+            bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgreen));
+        } else if (resultWidget.get(0).getWidgetBookmarkValue() == null || resultWidget.get(0).getWidgetBookmarkValue() == 0) {
+            bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmark_grey));
+        }
+        if (resultWidget.get(0).getWidgetWishValue() != null && resultWidget.get(0).getWidgetWishValue() == 1) {
+            wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));
+        } else if (resultWidget.get(0).getWidgetBookmarkValue() == null || resultWidget.get(0).getWidgetBookmarkValue() == 0) {
+            wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_grey));
+        }
+        if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 1) {
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+        } else if (resultWidget.get(0).getWidgetLikeValue() == null || resultWidget.get(0).getWidgetLikeValue() == 0) {
+            likeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
+        }
+        if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 2) {
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
+        } else if (resultWidget.get(0).getWidgetLikeValue() == null || resultWidget.get(0).getWidgetLikeValue() == 0) {
+            okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_off));
+
+        }
+        if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 3) {
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
+            rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
+        } else if (resultWidget.get(0).getWidgetLikeValue() == null || resultWidget.get(0).getWidgetLikeValue() == 0) {
+            dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_off));
+
+        }
+        if (resultWidget.get(0).getWidgetVisitedValue() != null && resultWidget.get(0).getWidgetVisitedValue() == 1) {
+            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_seen_on));
+            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_now_seen_on));
+        } else if (resultWidget.get(0).getWidgetVisitedValue() == null || resultWidget.get(0).getWidgetVisitedValue() == 0) {
+            nowVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_off));
+
+        }
+        if (resultWidget.get(0).getWidgetVisitedValue() != null && resultWidget.get(0).getWidgetVisitedValue() == 2) {
+            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_on));
+            doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_on));
+        } else if (resultWidget.get(0).getWidgetVisitedValue() == null || resultWidget.get(0).getWidgetVisitedValue() == 0) {
+            beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_seen_off));
+
+        }
+    }
+
 }

@@ -14,8 +14,7 @@ import android.widget.Toast;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.adapter.ReseveDateListAdapter;
-import com.iranplanner.tourism.iranplanner.di.AttractionModule;
-import com.iranplanner.tourism.iranplanner.di.DaggerAtractionComponent;
+
 import com.iranplanner.tourism.iranplanner.di.DaggerReservationComponent;
 import com.iranplanner.tourism.iranplanner.di.ReservationModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;

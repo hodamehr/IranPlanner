@@ -425,7 +425,7 @@
                                     android:layout_height="30dp"
                                     android:padding="@dimen/margin_xxshort"
                                     android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_bookmarkgrey" />
+                                    android:src="@mipmap/ic_air" />
 
                                 <TextView
                                     android:id="@+id/saveTxt"
