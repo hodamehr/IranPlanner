@@ -66,15 +66,20 @@ public class MainActivity extends StandardActivity {
             mainTabLayout.setupWithViewPager(viewPager);
             for (int i = 0; i < mainTabLayout.getTabCount(); i++) {
                 TabLayout.Tab tab = mainTabLayout.getTabAt(i);
-                if (tab != null){
+                if (tab != null) {
                     tab.setCustomView(pagerAdapter.getTabView(i));
                 }
             }
 
         }
-        mainTabLayout.getTabAt(0).getCustomView().setSelected(true);
-        currentTab= (StandardFragment) pagerAdapter.getItem(0);
-
+        Bundle extras = getIntent().getExtras();
+        int position = 0;
+        if (extras != null) {
+            position = extras.getInt("viewpager_position");
+        }
+        mainTabLayout.getTabAt(position).getCustomView().setSelected(true);
+        currentTab = (StandardFragment) pagerAdapter.getItem(position);
+        viewPager.setCurrentItem(position);
         Util.displayFirebaseRegId(this);
 //---------------------------------------------------
 //
@@ -94,7 +99,6 @@ public class MainActivity extends StandardActivity {
 //        });
 
 
-
     }
 
     @Override
@@ -103,10 +107,9 @@ public class MainActivity extends StandardActivity {
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         //If the event returned false, then call the super.
-        if(currentTab == null || !currentTab.onBackPressed())
+        if (currentTab == null || !currentTab.onBackPressed())
             super.onBackPressed();
     }
 

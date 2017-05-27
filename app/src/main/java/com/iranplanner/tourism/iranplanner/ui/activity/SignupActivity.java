@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.iranplanner.tourism.iranplanner.MainActivity;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.activity.LoginActivity;
 import com.iranplanner.tourism.iranplanner.di.DaggerRegisterComponent;
@@ -90,11 +91,11 @@ public class SignupActivity extends StandardActivity implements RegisterContract
             @Override
             public void onClick(View v) {
                 // Finish the registration screen and return to the Login activity
-
 //                Bundle bundle = new Bundle();
-//
 
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("viewpager_position", 1);
                 startActivity(intent);
                 finish();
             }
