@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/background"
         android:padding="@dimen/padding_standard"
-        android:text="نتایج جستجو" />
+        android:text="نتایج جستجوی برنامه سفر" />
 
     <RelativeLayout
         android:id="@+id/divider"

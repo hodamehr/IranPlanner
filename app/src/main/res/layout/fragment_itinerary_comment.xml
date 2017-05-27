@@ -10,10 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/greyLight"
-        android:gravity="center"
+        android:gravity="right"
         android:padding="@dimen/padding_standard"
-        android:text="کامنت"
-        android:textColor="@color/pink" />
+        android:text="نظرات"
+        android:textColor="@color/grey" />
 
     <com.coinpany.core.android.widget.loading.RotateLoading
         android:id="@+id/rotateloading"

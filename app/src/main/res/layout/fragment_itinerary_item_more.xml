@@ -909,9 +909,11 @@
                         <RelativeLayout
                             android:id="@+id/deviderShowMoreInfoHolder"
                             android:layout_width="match_parent"
-                            android:layout_height="10dp"
+                            android:layout_height="5dp"
+                            android:background="@color/greyLight"
                             android:layout_below="@+id/ShowAttractionHolder"
-                            android:background="@color/greyLight"></RelativeLayout>
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"></RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/ShowMoreInfoHolder"
@@ -932,7 +934,6 @@
                                 android:gravity="right"
                                 android:paddingBottom="@dimen/padding_short"
                                 android:text="درباره این سفر"
-                                android:visibility="gone"
 
                                 />
 

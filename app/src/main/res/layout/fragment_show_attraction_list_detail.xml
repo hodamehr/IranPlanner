@@ -140,7 +140,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/button_corner_pink_leftt_stroke"
                                 android:text="مسیریابی"
-                                android:textColor="@color/grey" />
+                                android:textColor="@color/pink" />
 
                             <Button
                                 android:id="@+id/moreInfoHolder"
@@ -150,7 +150,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/button_corner_pink_right_stroke"
                                 android:text="اطلاعات بیشتر"
-                                android:textColor="@color/grey" />
+                                android:textColor="@color/pink" />
                         </LinearLayout>
 
                     </RelativeLayout>
@@ -171,8 +171,8 @@
                             android:layout_alignParentLeft="true"
                             android:layout_marginLeft="@dimen/margin_standard"
                             android:layout_marginTop="@dimen/padding_standard"
-                            app:civ_border_color="@color/pink"
-                            app:civ_border_width="1dp"
+                            app:civ_border_color="@color/greyLight"
+                            app:civ_border_width="2dp"
                             />
 
                         <RelativeLayout
