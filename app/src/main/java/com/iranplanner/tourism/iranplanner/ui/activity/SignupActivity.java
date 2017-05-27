@@ -29,6 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import entity.RegisterReqSend;
 import entity.ResultRegister;
 import entity.ResultUserRegister;
 import okhttp3.OkHttpClient;
@@ -115,7 +116,10 @@ public class SignupActivity extends StandardActivity implements RegisterContract
             Toast.makeText(getApplicationContext(), "حساب کاربری با موفقیت انجام شد", Toast.LENGTH_LONG).show();
 
         } else if (result.getStatus().equals("Duplicate Phone")) {
-            Toast.makeText(getApplicationContext(), "حساب کاربری قبلاایجاد شده است ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "حساب کاربری با این شماره قبلاایجاد شده است ", Toast.LENGTH_LONG).show();
+
+        } else if (result.getStatus().equals("Duplicate email")) {
+            Toast.makeText(getApplicationContext(), "حساب کاربری با این ایمیل قبلاایجاد شده است ", Toast.LENGTH_LONG).show();
 
         } else if (result.getStatus().equals("Invalid info")) {
             Toast.makeText(getApplicationContext(), "اشکال در مقادیر ورودی", Toast.LENGTH_LONG).show();
@@ -125,7 +129,7 @@ public class SignupActivity extends StandardActivity implements RegisterContract
 
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
-        progressDialog.dismiss();
+
     }
 
     @Override
@@ -148,7 +152,7 @@ public class SignupActivity extends StandardActivity implements RegisterContract
 
     @Override
     public void dismissProgress() {
-
+        progressDialog.dismiss();
     }
 
     public void signup() {
@@ -171,13 +175,16 @@ public class SignupActivity extends StandardActivity implements RegisterContract
         } else if (radioWoman.isChecked()) {
             gender = "0";
         }
-        showProgress();
+
 
         DaggerRegisterComponent.builder()
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .registerModule(new RegisterModule(this))
                 .build().inject(this);
-        registerPresenter.getRegisterResult("register", email, password, name, lastName, gender, Util.getTokenFromSharedPreferences(getApplicationContext()), phoneNumber);
+//        registerPresenter.getRegisterResult("register", email, password, name, lastName, gender, Util.getTokenFromSharedPreferences(getApplicationContext()), phoneNumber);
+        RegisterReqSend registerReqSend = new RegisterReqSend("register", email, password, name, lastName, gender, Util.getTokenFromSharedPreferences(getApplicationContext()), phoneNumber, Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+
+        registerPresenter.getRegisterLoginResult(registerReqSend);
 
 //        getRegisterResponce(email, password, name, lastName, gender, Util.getTokenFromSharedPreferences(getApplicationContext()), phoneNumber);
     }

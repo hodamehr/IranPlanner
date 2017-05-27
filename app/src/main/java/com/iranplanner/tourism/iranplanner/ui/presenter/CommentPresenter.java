@@ -8,10 +8,14 @@ import com.iranplanner.tourism.iranplanner.ui.presenter.abs.ReservationContract;
 
 import javax.inject.Inject;
 
+import entity.CommentSend;
 import entity.ResultCommentList;
 import entity.ResultLodgingList;
+import retrofit2.Call;
 import retrofit2.Retrofit;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 import rx.Observer;
@@ -54,7 +58,6 @@ public class CommentPresenter extends CommentContract {
                     @Override
                     public void onNext(ResultCommentList resultItineraryList) {
                         mView.showComments(resultItineraryList);
-//                        mView.showItineraries(resultItineraryList, "fromProvince");
                     }
                 });
 //        retrofit.create(AttractionPresenter.AttractionService.class)
@@ -80,6 +83,31 @@ public class CommentPresenter extends CommentContract {
 //                    }
 //                });
 
+    }
+
+    @Override
+    public void callInsertComment(CommentSend commentSend) {
+        retrofit.create(CommentService.class)
+                .callInsertComment(commentSend).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultCommentList>() {
+
+                    @Override
+                    public void onCompleted() {
+                        mView.showComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.commentResult(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(ResultCommentList resultItineraryList) {
+                        mView.sendCommentMessage(resultItineraryList);
+                    }
+                });
     }
 
     @Override
@@ -118,5 +146,8 @@ public class CommentPresenter extends CommentContract {
                 @Query("nid") String nId,
                 @Query("ntype") String nType,
                 @Query("offset") String offset);
+
+        @POST("api-data.php?action=comment")
+        Observable<ResultCommentList> callInsertComment(@Body CommentSend request);
     }
 }

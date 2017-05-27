@@ -198,7 +198,7 @@ public class SignupFragment extends StandardFragment implements RegisterContract
         } else if (radioWoman.isChecked()) {
             gender = "0";
         }
-        showProgress();
+
 
         DaggerRegisterComponent.builder()
                 .netComponent(((App) getContext()).getNetComponent())

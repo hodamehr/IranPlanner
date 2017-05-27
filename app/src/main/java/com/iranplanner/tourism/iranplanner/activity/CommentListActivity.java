@@ -148,7 +148,7 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
                                                      pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
 //                                                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                                                     if ((pastVisiblesItems) <= 15 && loading && (Integer.valueOf(nextOffset)>0)) {
+                                                     if ((pastVisiblesItems) <= 15 && loading && (Integer.valueOf(nextOffset) > 0)) {
                                                          loading = false;
                                                          visibleItemCount = mLayoutManager.getChildCount();
                                                          totalItemCount = mLayoutManager.getItemCount();
@@ -176,9 +176,9 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
 
                                                          @Override
                                                          public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                                             if (start == 0) {
-                                                                 sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
-                                                             }
+//                                                             if (start != 0 && (start == 0 && before == 0 && count == 1)) {
+//                                                                 sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
+//                                                             }
                                                              if (start != 0 || (start == 0 && before == 0 && count == 1)) {
                                                                  sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_pink));
                                                              }
@@ -186,8 +186,10 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
 
                                                          @Override
                                                          public void afterTextChanged(Editable s) {
-
-
+                                                             Log.e("d", s.toString());
+                                                             if (s.toString().equals("")) {
+                                                                 sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
+                                                             }
                                                          }
                                                      }
 
@@ -203,9 +205,9 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
                                                       sending = true;
                                                       sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
                                                       if (fromWhere.equals("Itinerary")) {
-                                                          getResultOfCommentInsert(userId, String.valueOf(txtAddComment.getText()), itineraryData.getItineraryId(), "itinerary");
+                                                          commentPresenter.callInsertComment(new CommentSend(userId, "1", "itinerary", itineraryData.getItineraryId(), "comment", String.valueOf(txtAddComment.getText())));
                                                       } else if (fromWhere.equals("Attraction")) {
-                                                          getResultOfCommentInsert(userId, String.valueOf(txtAddComment.getText()), attraction.getAttractionId(), "attraction");
+                                                          commentPresenter.callInsertComment(new CommentSend(userId, "1", "itinerary", attraction.getAttractionId(), "attraction", String.valueOf(txtAddComment.getText())));
                                                       }
                                                       txtAddComment.setText("");
                                                   } else if (userId.isEmpty()) {
@@ -222,84 +224,13 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
     protected int getLayoutId() {
         return R.layout.fragment_itinerary_comment;
     }
-//
-//    public void getResultOfCommentList(String itineraryId, String Offset) {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .client(setHttpClient())
-//                .baseUrl(Config.BASEURL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-////        api-data.php?action=pagecomments&nid=1&ntype=attraction
-//        Call<ResultCommentList> callc = getJsonInterface.getCommentList("pagecomments", itineraryId, "itinerary", Offset);
-//        callc.enqueue(new Callback<ResultCommentList>() {
-//            @Override
-//            public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
-//
-//                if (response.body() != null) {
-//                    loading = false;
-//                    ResultCommentList jsonResponse = response.body();
-//                    List<ResultComment> newresultComments = jsonResponse.getResultComment();
-//                    if (!nextOffset.equals(response.body().getStatistics().getOffsetNext().toString())) {
-//
-////                        resultComments.addAll(newresultComments);
-//
-//                        resultComments.addAll(0,newresultComments);
-//                        adapter.notifyDataSetChanged();
-////                        waitingLoading.setVisibility(View.INVISIBLE);
-//                        nextOffset = response.body().getStatistics().getOffsetNext().toString();
-//                    }
-//                } else {
-//                    Log.e("comment body", "null");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResultCommentList> call, Throwable t) {
-//                Log.e("result of intresting", "false");
-//            }
-//        });
-//    }
-
-    public void getResultOfCommentInsert(String userId, String comment, String id, String type) {
-//        getResultLodgingRoomList
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(setHttpClient())
-                .baseUrl(Config.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-        Call<ResultCommentList> callc = getJsonInterface.callInsertComment(new CommentSend(userId, "1", type, id, "comment", comment));
-        callc.enqueue(new Callback<ResultCommentList>() {
-            @Override
-            public void onResponse(Call<ResultCommentList> call, Response<ResultCommentList> response) {
-                if (response.body() != null) {
-                    ResultCommentList jsonResponse = response.body();
-                    entity.Status status = jsonResponse.getStatus();
-                    if (status.getStatus() == 200) {
-                        sending = false;
-                        CustomDialogAlert customDialogAlert = new CustomDialogAlert(CommentListActivity.this);
-                        customDialogAlert.show();
-                    }
-                } else {
-                    Log.e("comment body", "null");
-                    sending = false;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultCommentList> call, Throwable t) {
-                Log.e("result of intresting", "false");
-            }
-        });
-    }
 
     @Override
     public void showComments(ResultCommentList resultCommentList) {
 
         List<ResultComment> newresultComments = resultCommentList.getResultComment();
         if (!nextOffset.equals(resultCommentList.getStatistics().getOffsetNext().toString())) {
-            resultComments.addAll(0,newresultComments);
+            resultComments.addAll(0, newresultComments);
             adapter.notifyDataSetChanged();
             nextOffset = resultCommentList.getStatistics().getOffsetNext().toString();
             loading = true;
@@ -307,8 +238,23 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
     }
 
     @Override
+    public void sendCommentMessage(ResultCommentList resultCommentList) {
+        entity.Status status = resultCommentList.getStatus();
+        if (status.getStatus() == 200) {
+            sending = false;
+            CustomDialogAlert customDialogAlert = new CustomDialogAlert(CommentListActivity.this);
+            customDialogAlert.show();
+        }
+    }
+
+    @Override
     public void showError(String message) {
 
+    }
+
+    @Override
+    public void commentResult(String message) {
+        Toast.makeText(getApplicationContext(), "اشکال در ارسال پیام، بعد از بررسی اتصال به اینترنت دوباره تلاش کنید", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -353,14 +299,6 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
         }
     }
 
-    private OkHttpClient setHttpClient() {
-        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build();
-        return okHttpClient;
-    }
 
     @Override
     public void setValues(ArrayList<String> al) {

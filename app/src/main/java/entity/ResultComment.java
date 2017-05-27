@@ -10,7 +10,7 @@ import java.math.BigInteger;
 public class ResultComment implements Serializable {
     @SerializedName("user_id")
     @Expose
-    private String userId;
+    private BigInteger userId;
     @SerializedName("comment_date")
     @Expose
     private String commentDate;
@@ -28,10 +28,10 @@ public class ResultComment implements Serializable {
     private String commentNtype;
     @SerializedName("comment_nid")
     @Expose
-    private String commentNid;
+    private BigInteger commentNid;
     @SerializedName("comment_id")
     @Expose
-    private String commentId;
+    private BigInteger commentId;
     @SerializedName("user_fname")
     @Expose
     private String userFname;
@@ -45,11 +45,11 @@ public class ResultComment implements Serializable {
     @Expose
     private String userRegister;
 
-    public String getUserId() {
+    public BigInteger getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
 
@@ -77,12 +77,12 @@ public class ResultComment implements Serializable {
         this.commentLang = commentLang;
     }
 
-    public String getCommentId() {
-        return commentId;
+    public String getCommentGtype() {
+        return commentGtype;
     }
 
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
+    public void setCommentGtype(String commentGtype) {
+        this.commentGtype = commentGtype;
     }
 
     public String getCommentNtype() {
@@ -93,20 +93,20 @@ public class ResultComment implements Serializable {
         this.commentNtype = commentNtype;
     }
 
-    public String getCommentGtype() {
-        return commentGtype;
-    }
-
-    public void setCommentGtype(String commentGtype) {
-        this.commentGtype = commentGtype;
-    }
-
-    public String getCommentNid() {
+    public BigInteger getCommentNid() {
         return commentNid;
     }
 
-    public void setCommentNid(String commentNid) {
+    public void setCommentNid(BigInteger commentNid) {
         this.commentNid = commentNid;
+    }
+
+    public BigInteger getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(BigInteger commentId) {
+        this.commentId = commentId;
     }
 
     public String getUserFname() {
@@ -141,70 +141,4 @@ public class ResultComment implements Serializable {
         this.userRegister = userRegister;
     }
 
-//    @SerializedName("uid")
-//    @Expose
-//    private BigInteger uid;
-//    @SerializedName("ntype")
-//    @Expose
-//    private String ntype;
-//    @SerializedName("nid")
-//    @Expose
-//    private Integer nid;
-//    @SerializedName("gtype")
-//    @Expose
-//    private String gtype;
-//    @SerializedName("gvalue")
-//    @Expose
-//    private String gvalue;
-//    @SerializedName("commentid")
-//    @Expose
-//    private BigInteger commentid;
-//
-//    public BigInteger getUid() {
-//        return uid;
-//    }
-//
-//    public void setUid(BigInteger uid) {
-//        this.uid = uid;
-//    }
-//
-//    public String getNtype() {
-//        return ntype;
-//    }
-//
-//    public void setNtype(String ntype) {
-//        this.ntype = ntype;
-//    }
-//
-//    public Integer getNid() {
-//        return nid;
-//    }
-//
-//    public void setNid(Integer nid) {
-//        this.nid = nid;
-//    }
-//
-//    public String getGtype() {
-//        return gtype;
-//    }
-//
-//    public void setGtype(String gtype) {
-//        this.gtype = gtype;
-//    }
-//
-//    public String getGvalue() {
-//        return gvalue;
-//    }
-//
-//    public void setGvalue(String gvalue) {
-//        this.gvalue = gvalue;
-//    }
-//
-//    public BigInteger getCommentid() {
-//        return commentid;
-//    }
-//
-//    public void setCommentid(BigInteger commentid) {
-//        this.commentid = commentid;
-//    }
 }

@@ -1,12 +1,15 @@
 package com.iranplanner.tourism.iranplanner.ui.presenter;
 
 
+import com.iranplanner.tourism.iranplanner.ui.presenter.abs.LoginContract;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.RegisterContract;
 
 import javax.inject.Inject;
 
-import entity.RegisterReqSend;
-import entity.ResultLodgingList;
+import entity.CommentSend;
+import entity.LoginReqSend;
+import entity.LoginResult;
+import entity.ResultCommentList;
 import entity.ResultRegister;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -22,13 +25,13 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Hoda on 11-May-16.
  */
-public class RegisterPresenter extends RegisterContract {
+public class LoginPresenter extends LoginContract {
 
     public Retrofit retrofit;
     View mView;
 
     @Inject
-    public RegisterPresenter(Retrofit retrofit, View mView) {
+    public LoginPresenter(Retrofit retrofit, View mView) {
         this.retrofit = retrofit;
         this.mView = mView;
     }
@@ -55,13 +58,13 @@ public class RegisterPresenter extends RegisterContract {
 
 
     @Override
-    public void getRegisterResult(String action, String email, String password, String fname, String lname, String gender, String cid, String phone) {
+    public void getLoginResult(String action, String email, String password, String token, String androidId) {
         mView.showProgress();
-        retrofit.create(RegisterService.class).getRegisterResult(action, email, password, fname, lname, gender, cid, phone)
+        retrofit.create(LoginService.class).getLoginResult(action, email, password, token, androidId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Observer<ResultRegister>() {
+                .subscribe(new Observer<LoginResult>() {
 
                     @Override
                     public void onCompleted() {
@@ -76,22 +79,21 @@ public class RegisterPresenter extends RegisterContract {
                     }
 
                     @Override
-                    public void onNext(ResultRegister resultRegister) {
-                        mView.showRegisterMessage(resultRegister);
-
-
+                    public void onNext(LoginResult loginResult) {
+                        mView.showLoginResult(loginResult);
+                        mView.dismissProgress();
                     }
                 });
     }
 
     @Override
-    public void getRegisterLoginResult(RegisterReqSend registerReqSend) {
+    public void getLoginPostResul(LoginReqSend loginReqSend) {
         mView.showProgress();
-        retrofit.create(RegisterService.class).getRegisterPostResult(registerReqSend)
+        retrofit.create(LoginService.class).getLoginPostResul(loginReqSend)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Observer<ResultRegister>() {
+                .subscribe(new Observer<LoginResult>() {
 
                     @Override
                     public void onCompleted() {
@@ -106,26 +108,24 @@ public class RegisterPresenter extends RegisterContract {
                     }
 
                     @Override
-                    public void onNext(ResultRegister resultRegister) {
-                        mView.showRegisterMessage(resultRegister);
+                    public void onNext(LoginResult loginResult) {
+                        mView.showLoginResult(loginResult);
                         mView.dismissProgress();
                     }
                 });
     }
 
-    public interface RegisterService {
+    public interface LoginService {
+
 
         @GET("api-user.php")
-        Observable<ResultRegister> getRegisterResult(@Query("action") String action,
-                                               @Query("email")         String email,
-                                               @Query("password")      String password,
-                                               @Query("fname")         String fname,
-                                               @Query("lname")         String lname,
-                                               @Query("gender")         String gender,
-                                               @Query("cid")          String cid,
-                                               @Query("phone")         String phone);
+        Observable<LoginResult> getLoginResult(@Query("action") String action,
+                                               @Query("email") String email,
+                                               @Query("password") String password,
+                                               @Query("cid") String token,
+                                               @Query("andId") String androidId);
+        @POST("api-user.php?action=login")
+        Observable<LoginResult> getLoginPostResul(@Body LoginReqSend loginReqSend);
 
-        @POST("api-user.php?action=register")
-        Observable<ResultRegister> getRegisterPostResult(@Body RegisterReqSend registerReqSend);
     }
 }

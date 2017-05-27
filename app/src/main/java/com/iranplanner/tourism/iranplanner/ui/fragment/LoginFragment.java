@@ -20,10 +20,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.di.CommentModule;
+import com.iranplanner.tourism.iranplanner.di.DaggerLoginComponent;
+import com.iranplanner.tourism.iranplanner.di.LoginModule;
+import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.activity.SignupActivity;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
+import com.iranplanner.tourism.iranplanner.ui.presenter.LoginPresenter;
+import com.iranplanner.tourism.iranplanner.ui.presenter.abs.LoginContract;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import entity.LoginReqSend;
 import entity.LoginResult;
 import entity.ResultUserLogin;
 import retrofit2.Call;
@@ -39,7 +48,7 @@ import tools.Util;
  * Created by h.vahidimehr on 04/02/2017.
  */
 
-public class LoginFragment extends StandardFragment implements Callback<LoginResult> {
+public class LoginFragment extends StandardFragment implements Callback<LoginResult>, LoginContract.View {
 
     EditText _emailText;
     EditText _passwordText;
@@ -52,6 +61,9 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
         LoginFragment fragment = new LoginFragment();
         return fragment;
     }
+
+    @Inject
+    LoginPresenter loginPresenter;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -96,10 +108,10 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
             @Override
             public void onClick(final View v) {
                 if (counter >= 3) {
-                    counter=0;
+                    counter = 0;
                     v.setClickable(false);
                     v.setBackgroundColor(getResources().getColor(R.color.greyLight));
-                    Toast.makeText(getContext(),"چند دقیقه بعد مجددا تلاش کنید",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "چند دقیقه بعد مجددا تلاش کنید", Toast.LENGTH_LONG).show();
                     new Handler().postDelayed(new Runnable() {
                         public void run() {
 
@@ -107,7 +119,7 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
                             v.setBackgroundColor(getResources().getColor(R.color.pink));
                         }
                     }, 50000);
-                }else {
+                } else {
                     login();
                 }
 
@@ -167,14 +179,55 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
         showProgress();
         String email = _emailText.getText().toString();
         String password = Util.md5(_passwordText.getText().toString());
-         getLoginResponce(email, password);
+//        getLoginResponce(email, password);
+        DaggerLoginComponent.builder().netComponent(((App) getActivity().getApplicationContext()).getNetComponent())
+                .loginModule(new LoginModule(this))
+                .build().inject(this);
+//        loginPresenter.getLoginResult("login", email, password, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+        loginPresenter.getLoginPostResul(new LoginReqSend("login", email, password, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext())));
     }
 
-    private void showProgress() {
+    @Override
+    public void showLoginResult(LoginResult loginResult) {
+        ResultUserLogin resultUserLogin = loginResult.getResultUserLogin();
+        saveDataINShareprefrence(resultUserLogin.getUserEmail(), resultUserLogin.getUserFname(), resultUserLogin.getUserLname(), resultUserLogin.getUserUid().toString());
+        progressDialog.dismiss();
+        _loginButton.setEnabled(true);
+        accountInputHolder.setVisibility(View.VISIBLE);
+        setLOginName();
+
+
+    }
+
+    @Override
+    public void showError(String message) {
+        if (message.equals("HTTP 400 BAD REQUEST")) {
+            progressDialog.dismiss();
+            loginCommand.setVisibility(View.VISIBLE);
+            loginCommand.setText("نام کاربری یا کلمه عبور اشتباه است.");
+            accountInputHolder.setVisibility(View.VISIBLE);
+            counter++;
+        } else {
+            Toast.makeText(getActivity(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    @Override
+    public void showComplete() {
+
+    }
+
+    public void showProgress() {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("احراز هویت...");
         progressDialog.show();
+    }
+
+    @Override
+    public void dismissProgress() {
+
     }
 
     public boolean validate() {
@@ -187,12 +240,7 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
         } else {
             _emailText.setError(null);
         }
-//        if (password.isEmpty() || password.length() < 6 ) {
-//            _passwordText.setError("کلمه عبور می بایست بیشتر از 6 حرف باشد");
-//            valid = false;
-//        } else {
-//            _passwordText.setError(null);
-//        }
+
         return valid;
     }
 
@@ -202,7 +250,8 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-        Call<LoginResult> callc = getJsonInterface.getLoginResult("login", email, password, Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
+
+        Call<LoginResult> callc = getJsonInterface.getLoginResult("login", email, password, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
         callc.enqueue(this);
     }
 

@@ -174,7 +174,7 @@ public class AttractionPresenter extends AttractionContract {
 
         rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setRepeatCount(5);
-        rotate.setDuration(5000);
+        rotate.setDuration(3000);
         rotate.setInterpolator(new LinearInterpolator());
         image.startAnimation(rotate);
         rotate.setAnimationListener(new Animation.AnimationListener() {
@@ -203,7 +203,7 @@ public class AttractionPresenter extends AttractionContract {
                 ObjectAnimator.ofFloat(relativeLayout, "translationY", 0),
                 ObjectAnimator.ofFloat(relativeLayout2, "translationY", 0),
                 ObjectAnimator.ofFloat(imageView, "translationY", 0));
-        mAnimatorSet.setDuration(1000);
+        mAnimatorSet.setDuration(700);
         mAnimatorSet.start();
         return false;
 
@@ -216,7 +216,7 @@ public class AttractionPresenter extends AttractionContract {
                 ObjectAnimator.ofFloat(relativeLayout, "translationY", height),
                 ObjectAnimator.ofFloat(relativeLayout2, "translationY", height),
                 ObjectAnimator.ofFloat(imageView, "translationY", -55));
-        mAnimatorSet.setDuration(1000);
+        mAnimatorSet.setDuration(700);
         mAnimatorSet.start();
         return true;
     }

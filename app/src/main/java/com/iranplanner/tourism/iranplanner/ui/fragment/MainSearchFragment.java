@@ -578,7 +578,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
 
     //---------------------------
     private void showAttraction() {
-        folding_cell_City_City.toggle(false);
+        folding_cell_attraction.fold(false);
         cityFromAttraction = returnCityId(fromCity_attraction, tempAttractionCity);
         attractionEnd = returnAttractionId(endAttraction, tempAttraction);
         if (cityFromAttraction != null && attractionEnd != null) {

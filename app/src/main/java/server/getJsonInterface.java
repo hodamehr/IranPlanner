@@ -64,13 +64,10 @@ public interface getJsonInterface {
                                      @Query("email") String email,
                                      @Query("password") String password,
                                      @Query("cid") String token,
-                                     @Query("andId") String androidId
-                                     );
-//    http://api.parsdid.com/iranplanner/app/api-user.php?action=login&email=09358891239&password=6efa240fc47e3f882ae16d163ca26f91
+                                     @Query("andId") String androidId);
 
-    @POST("api-com.iranplanner.tourism.iranplanner.di.data.php")
-//    api.parsdid.com/iranplanner/app/api-com.iranplanner.tourism.iranplanner.di.data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary
-
+    //    api.parsdid.com/iranplanner/app/api-com.iranplanner.tourism.iranplanner.di.data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary
+    @POST("api-data.php?action=comment")
     Call<ResultCommentList> callInsertComment(@Body CommentSend request);
 
     @GET("api-com.iranplanner.tourism.iranplanner.di.data.php")

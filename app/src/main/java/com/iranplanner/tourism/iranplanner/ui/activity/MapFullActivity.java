@@ -126,7 +126,10 @@ public class MapFullActivity extends StandardActivity implements OnMapReadyCallb
 
             MapDirection mapDirection = new MapDirection(mMap, getApplicationContext(), lodgingCities, MarkerPoints);
             // Already two locations
-            markers = mapDirection.readytoDirect();
+            if(markers!=null){
+                markers = mapDirection.readytoDirect();
+            }
+
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(LatLng latLng) {
