@@ -274,7 +274,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .attractionDetailModule(new AttractionDetailModule(this));
         builder.build().inject(this);
-        attractionDetailPresenter.getWidgetResult("nodeuser", attraction.getAttractionId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "attraction");
+        attractionDetailPresenter.getWidgetResult("nodeuser", attraction.getAttractionId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "attraction",Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
 
 
     }
@@ -364,7 +364,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
             case R.id.commentHolder:
                 showProgressDialog();
                 builder.build().inject(this);
-                attractionDetailPresenter.getAttractionCommentList("pagecomments", attraction.getAttractionId(), "attraction", "0");
+                attractionDetailPresenter.getAttractionCommentList("pagecomments", attraction.getAttractionId(), "attraction", "0",Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
                 break;
             case R.id.MoreInoText:
                 if (showMore) {
@@ -474,7 +474,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     private void OnClickedIntrestedWidget(String gType, String gValue, ImageView imageView) {
         if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
             attractionDetailPresenter.doWaitingAnimation(imageView);
-            attractionDetailPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "attraction", attraction.getAttractionId(), gType, gValue);
+            attractionDetailPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "attraction", attraction.getAttractionId(), gType, gValue,Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
 
         } else {
             Log.e("user is not login", "error");

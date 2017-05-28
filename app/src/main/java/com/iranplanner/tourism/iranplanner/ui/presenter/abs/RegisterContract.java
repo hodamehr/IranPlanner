@@ -23,6 +23,6 @@ public abstract class RegisterContract extends Presenter<RegisterContract.View> 
     }
 
     public abstract void getRegisterResult(String action, String email, String password, String fname, String lname, String gender, String cid, String phone);
-    public abstract void getRegisterLoginResult(RegisterReqSend registerReqSend);
+    public abstract void getRegisterLoginResult(RegisterReqSend registerReqSend,String cid , String andId);
 
 }

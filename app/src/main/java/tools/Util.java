@@ -81,15 +81,19 @@ public class Util {
     }
 
     public static final String getUseRIdFromShareprefrence(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String userId = preferences.getString("userId", "");
+        SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF_USER, 0);
+        String userId = pref.getString("userId", "");
         return userId;
     }
+    public static final String getUserNameFromShareprefrence(Context context) {
 
+        SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF_USER, 0);
+        String userName = pref.getString("fname", "");
+        return userName;
+    }
     public static final String getTokenFromSharedPreferences(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", "");
-
         return regId;
     }
     public static final String getAndroidIdFromSharedPreferences(Context context) {

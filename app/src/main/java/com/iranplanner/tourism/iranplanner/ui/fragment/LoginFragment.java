@@ -48,7 +48,7 @@ import tools.Util;
  * Created by h.vahidimehr on 04/02/2017.
  */
 
-public class LoginFragment extends StandardFragment implements Callback<LoginResult>, LoginContract.View {
+public class LoginFragment extends StandardFragment implements LoginContract.View {
 
     EditText _emailText;
     EditText _passwordText;
@@ -56,6 +56,7 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
     TextView _signupLink, loginCommand, logout;
     ProgressDialog progressDialog;
     LinearLayout accountInputHolder;
+    int counter = 0;
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
@@ -80,7 +81,8 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
         logout = (TextView) view.findViewById(R.id.logout);
         loginCommand.setText("");
 
-        setLOginName();
+        // login?
+        setLoginName();
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -91,11 +93,11 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
                 _loginButton.setEnabled(true);
                 accountInputHolder.setVisibility(View.VISIBLE);
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    _loginButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_corner));
+                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_pink_stroke));
 
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner));
+                        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_pink_stroke));
                     }
 
                 }
@@ -112,13 +114,15 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
                     v.setClickable(false);
                     v.setBackgroundColor(getResources().getColor(R.color.greyLight));
                     Toast.makeText(getContext(), "چند دقیقه بعد مجددا تلاش کنید", Toast.LENGTH_LONG).show();
+                    _loginButton.setEnabled(false);
+                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
                     new Handler().postDelayed(new Runnable() {
                         public void run() {
-
+                            v.setEnabled(true);
                             v.setClickable(true);
-                            v.setBackgroundColor(getResources().getColor(R.color.pink));
+                            v.setBackground(getResources().getDrawable(R.drawable.button_corner_pink_stroke));
                         }
-                    }, 50000);
+                    }, 1000);
                 } else {
                     login();
                 }
@@ -130,13 +134,6 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
 
             @Override
             public void onClick(View v) {
-                // Start the Signup activity
-//                FragmentManager fm = getActivity().getSupportFragmentManager();
-//                SignInFragment signInFragment = new SignInFragment();
-//                FragmentTransaction ft = fm.beginTransaction();
-//                ft.replace(R.id.accountHolder, signInFragment);
-//                ft.addToBackStack(null);
-//                ft.commit();
                 Intent intent = new Intent(getContext(), SignupActivity.class);
                 startActivity(intent);
             }
@@ -145,12 +142,11 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
         return view;
     }
 
-    private void setLOginName() {
-        if (getDataFromShareprefrence() != "") {
+    private void setLoginName() {
+        if (!Util.getUseRIdFromShareprefrence(getContext()).equals("") ) {
             loginCommand.setVisibility(View.VISIBLE);
-            loginCommand.setText(getDataFromShareprefrence() + " خوش آمدید");
+            loginCommand.setText(Util.getUserNameFromShareprefrence(getContext()) + " عزیز خوش آمدید");
             logout.setVisibility(View.VISIBLE);
-            _loginButton.setEnabled(false);
             accountInputHolder.setVisibility(View.INVISIBLE);
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
@@ -168,35 +164,35 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
     public void login() {
 
         if (!validate()) {
-//            onLoginFailed();
+            _loginButton.setEnabled(false);
+            _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
+
             return;
         }
-
-//        _loginButton.setEnabled(false);
+        _loginButton.setEnabled(true);
+        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_pink_stroke));
         accountInputHolder.setVisibility(View.INVISIBLE);
 
 
-        showProgress();
+//        showProgress();
         String email = _emailText.getText().toString();
         String password = Util.md5(_passwordText.getText().toString());
-//        getLoginResponce(email, password);
         DaggerLoginComponent.builder().netComponent(((App) getActivity().getApplicationContext()).getNetComponent())
                 .loginModule(new LoginModule(this))
                 .build().inject(this);
-//        loginPresenter.getLoginResult("login", email, password, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
-        loginPresenter.getLoginPostResul(new LoginReqSend("login", email, password, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext())));
+        String cid = Util.getTokenFromSharedPreferences(getContext());
+        String andId = Util.getAndroidIdFromSharedPreferences(getContext());
+        loginPresenter.getLoginPostResul(new LoginReqSend("login", email, password, cid, andId), cid, andId);
     }
 
     @Override
     public void showLoginResult(LoginResult loginResult) {
         ResultUserLogin resultUserLogin = loginResult.getResultUserLogin();
         saveDataINShareprefrence(resultUserLogin.getUserEmail(), resultUserLogin.getUserFname(), resultUserLogin.getUserLname(), resultUserLogin.getUserUid().toString());
-        progressDialog.dismiss();
         _loginButton.setEnabled(true);
+
         accountInputHolder.setVisibility(View.VISIBLE);
-        setLOginName();
-
-
+        setLoginName();
     }
 
     @Override
@@ -206,11 +202,16 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
             loginCommand.setVisibility(View.VISIBLE);
             loginCommand.setText("نام کاربری یا کلمه عبور اشتباه است.");
             accountInputHolder.setVisibility(View.VISIBLE);
+            _loginButton.setEnabled(true);
             counter++;
         } else {
             Toast.makeText(getActivity(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
+            progressDialog.dismiss();
+            loginCommand.setVisibility(View.VISIBLE);
+            loginCommand.setText("نام کاربری یا کلمه عبور اشتباه است.");
+            accountInputHolder.setVisibility(View.VISIBLE);
+            _loginButton.setEnabled(true);
         }
-
     }
 
     @Override
@@ -227,7 +228,9 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
 
     @Override
     public void dismissProgress() {
-
+        if (progressDialog.isShowing() == true) {
+            progressDialog.dismiss();
+        }
     }
 
     public boolean validate() {
@@ -244,90 +247,43 @@ public class LoginFragment extends StandardFragment implements Callback<LoginRes
         return valid;
     }
 
-    public void getLoginResponce(String email, String password) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Config.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-
-        Call<LoginResult> callc = getJsonInterface.getLoginResult("login", email, password, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
-        callc.enqueue(this);
-    }
-
-    int counter = 0;
-
-    @Override
-    public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
-        if (response.body() != null) {
-            LoginResult jsonResponse = response.body();
-            ResultUserLogin resultUserLogin = jsonResponse.getResultUserLogin();
-            saveDataINShareprefrence(resultUserLogin.getUserEmail(), resultUserLogin.getUserFname(), resultUserLogin.getUserLname(), resultUserLogin.getUserUid().toString());
-            progressDialog.dismiss();
-            _loginButton.setEnabled(true);
-            accountInputHolder.setVisibility(View.VISIBLE);
-            setLOginName();
-        } else {
-            progressDialog.dismiss();
-            loginCommand.setVisibility(View.VISIBLE);
-            loginCommand.setText("نام کاربری یا کلمه عبور اشتباه است.");
-            accountInputHolder.setVisibility(View.VISIBLE);
-            counter++;
-
-        }
-    }
-
-    @Override
-    public void onFailure(Call<LoginResult> call, Throwable t) {
-        Toast.makeText(getContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_SHORT).show();
-        Log.e("error", t.toString());
-        progressDialog.dismiss();
-        _loginButton.setEnabled(true);
-        accountInputHolder.setVisibility(View.VISIBLE);
-
-
-    }
-
     private void saveDataINShareprefrence(String email, String lastName, String gender, String userId) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor editor = preferences.edit();
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences pref = getContext().getSharedPreferences(Config.SHARED_PREF_USER, 0);
+        SharedPreferences.Editor editor = pref.edit();
         editor.putString("email", email);
         editor.putString("fname", lastName);
         editor.putString("gender", gender);
         editor.putString("gender", gender);
         editor.putString("userId", userId);
-        editor.apply();
+        editor.commit();
+        //----------------------
+//
+//
+//            SharedPreferences pref = getContext().getSharedPreferences(Config.SHARED_PREF, 0);
+//            SharedPreferences.Editor editors = pref.edit();
+//            editor.putString("regId", token);
+//            editor.putString("andId",androidId);
+//            editor.commit();
+
+
     }
 
     private void clearSharedprefrence() {
 //        SharedPreferences preferences = getSharedPreferences("Mypref", 0);
 //        preferences.edit().remove("shared_pref_key").commit();
-        SharedPreferences settings = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        SharedPreferences settings = getContext().getSharedPreferences(Config.SHARED_PREF_USER, Context.MODE_PRIVATE);
         settings.edit().clear().commit();
+//        SharedPreferences settings = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+//        settings.edit().clear().commit();
     }
 
     private String getDataFromShareprefrence() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String ShareprefrenceName = preferences.getString("fname", "");
         return ShareprefrenceName;
-//        if(ShareprefrenceName!=null){
-//            return true;
-//        }else {
-//            return false;
-//        }
 
     }
 
-//    @Override
-//    public void fragmentBecameInvisible() {
-//        super.fragmentBecameInvisible();
-//        accountInputHolder.setVisibility(View.INVISIBLE);
-//
-//    }
-//
-//    @Override
-//    public void fragmentBecameVisible() {
-//        super.fragmentBecameVisible();
-//        accountInputHolder.setVisibility(View.VISIBLE);
-//    }
+
 }

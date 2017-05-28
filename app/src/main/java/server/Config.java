@@ -17,6 +17,7 @@ public class Config {
     public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
 
     public static final String SHARED_PREF = "ah_firebase";
+    public static final String SHARED_PREF_USER = "pref_user";
 
     public static final String BASEURL = "https://api.parsdid.com/iranplanner/app/";
 

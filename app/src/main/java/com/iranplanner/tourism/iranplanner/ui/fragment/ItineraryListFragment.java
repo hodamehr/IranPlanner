@@ -158,21 +158,21 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
 
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         if (fromCityToCity && loading) {
-                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity);
+                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
                             waitingLoading.setVisibility(View.VISIBLE);
                             loading = false;
                         } else if (fromProvince) {
-                            mainPresenter.loadItineraryFromProvince("searchprovince", provinceId, nextOffset);
+                            mainPresenter.loadItineraryFromProvince("searchprovince", provinceId, nextOffset,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
                             waitingLoading.setVisibility(View.VISIBLE);
 
                         } else if (fromAttraction) {
 
-                            mainPresenter.loadItineraryFromAttraction("searchattractioncity", "fa", cityFrom, "10", nextOffset, attractionId);
+                            mainPresenter.loadItineraryFromAttraction("searchattractioncity", "fa", cityFrom, "10", nextOffset, attractionId,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
                             waitingLoading.setVisibility(View.VISIBLE);
                         } else if (fromCity) {
 //                            getItineraryCity(cityFrom, nextOffset, cityFrom);
 //                            waitingLoading.setVisibility(View.VISIBLE);
-                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity);
+                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
                             waitingLoading.setVisibility(View.VISIBLE);
                             loading = false;
                         }

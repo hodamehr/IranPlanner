@@ -85,9 +85,9 @@ public class RegisterPresenter extends RegisterContract {
     }
 
     @Override
-    public void getRegisterLoginResult(RegisterReqSend registerReqSend) {
+    public void getRegisterLoginResult(RegisterReqSend registerReqSend,String cid, String andId) {
         mView.showProgress();
-        retrofit.create(RegisterService.class).getRegisterPostResult(registerReqSend)
+        retrofit.create(RegisterService.class).getRegisterPostResult(registerReqSend,cid,andId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -117,15 +117,15 @@ public class RegisterPresenter extends RegisterContract {
 
         @GET("api-user.php")
         Observable<ResultRegister> getRegisterResult(@Query("action") String action,
-                                               @Query("email")         String email,
-                                               @Query("password")      String password,
-                                               @Query("fname")         String fname,
-                                               @Query("lname")         String lname,
-                                               @Query("gender")         String gender,
-                                               @Query("cid")          String cid,
-                                               @Query("phone")         String phone);
+                                                     @Query("email") String email,
+                                                     @Query("password") String password,
+                                                     @Query("fname") String fname,
+                                                     @Query("lname") String lname,
+                                                     @Query("gender") String gender,
+                                                     @Query("cid") String cid,
+                                                     @Query("phone") String phone);
 
         @POST("api-user.php?action=register")
-        Observable<ResultRegister> getRegisterPostResult(@Body RegisterReqSend registerReqSend);
+        Observable<ResultRegister> getRegisterPostResult(@Body RegisterReqSend registerReqSend, @Query("cid") String cid, @Query("andId") String andId);
     }
 }

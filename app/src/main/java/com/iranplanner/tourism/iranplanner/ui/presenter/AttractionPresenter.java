@@ -60,9 +60,9 @@ public class AttractionPresenter extends AttractionContract {
     }
 
     @Override
-    public void getItineraryAttractionList(String action, String lang, String id) {
+    public void getItineraryAttractionList(String action, String lang, String id, String cid, String andId) {
         retrofit.create(AttractionService.class)
-                .getItineraryAttractionList(action, lang, id).subscribeOn(Schedulers.io())
+                .getItineraryAttractionList(action, lang, id, cid, andId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultItineraryAttractionList>() {
@@ -87,9 +87,9 @@ public class AttractionPresenter extends AttractionContract {
     }
 
     @Override
-    public void getItineraryCommentList(String action, String nId, String nType, String offset) {
+    public void getItineraryCommentList(String action, String nId, String nType, String offset, String cid, String andId) {
         retrofit.create(AttractionService.class)
-                .getItineraryCommentList(action, nId, nType, offset).subscribeOn(Schedulers.io())
+                .getItineraryCommentList(action, nId, nType, offset, cid, andId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultCommentList>() {
@@ -115,9 +115,9 @@ public class AttractionPresenter extends AttractionContract {
     }
 
     @Override
-    public void getWidgetResult(String action, String id, String uid, String ntype) {
+    public void getWidgetResult(String action, String id, String uid, String ntype, String cid, String andId) {
         retrofit.create(AttractionService.class)
-                .getWidgetResult(action, id, uid, ntype).subscribeOn(Schedulers.io())
+                .getWidgetResult(action, id, uid, ntype, cid, andId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultWidgetFull>() {
@@ -142,9 +142,9 @@ public class AttractionPresenter extends AttractionContract {
     }
 
     @Override
-    public void getInterest(String action, String uid, String cid, String ntype, String nid, String gtype, String gvalue) {
+    public void getInterest(String action, String uid, String cid, String ntype, String nid, String gtype, String gvalue, String andId) {
         retrofit.create(AttractionService.class)
-                .getInterest(action, uid, cid, ntype, nid, gtype, gvalue).subscribeOn(Schedulers.io())
+                .getInterest(action, uid, cid, ntype, nid, gtype, gvalue, andId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Observer<InterestResult>() {
@@ -232,13 +232,13 @@ public class AttractionPresenter extends AttractionContract {
                     @Override
                     public void onCompleted() {
 //                        mView.showComplete();
-                        Log.e("direction path","complete");
+                        Log.e("direction path", "complete");
                     }
 
                     @Override
                     public void onError(Throwable e) {
 //                        mView.showError(e.getMessage());
-                        Log.e("e",e.getMessage());
+                        Log.e("e", e.getMessage());
                     }
 
                     @Override
@@ -305,24 +305,30 @@ public class AttractionPresenter extends AttractionContract {
         Observable<ResultItineraryAttractionList> getItineraryAttractionList(
                 @Query("action") String action,
                 @Query("lang") String lang,
-                @Query("id") String id
+                @Query("id") String id,
+                @Query("cid") String cid,
+                @Query("andId") String andId
         );
 
-        @GET("api-data.php?action=pagecomments&nid=1&ntype=attraction&offset=10")
+        @GET("api-data.php")
         Observable<ResultCommentList> getItineraryCommentList(
                 @Query("action") String action,
                 @Query("nid") String nId,
                 @Query("ntype") String nType,
-                @Query("offset") String offset);
+                @Query("offset") String offset,
+                @Query("cid") String cid,
+                @Query("andId") String andId);
 
 
-        @GET("api-data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary")
+        @GET("api-data.php")
         Observable<ResultWidgetFull> getWidgetResult(@Query("action") String action,
                                                      @Query("id") String id,
                                                      @Query("uid") String uid,
-                                                     @Query("ntype") String ntype);
+                                                     @Query("ntype") String ntype,
+                                                     @Query("cid") String cid,
+                                                     @Query("andId") String andId);
 
-        @GET("api-data.php?action=widget&uid=792147600796866&cid=1&ntype=itinerary&nid=21905&gtype=bookmark&gvalue=1")
+        @GET("api-data.php")
         Observable<InterestResult> getInterest(
                 @Query("action") String action,
                 @Query("uid") String uid,
@@ -330,8 +336,10 @@ public class AttractionPresenter extends AttractionContract {
                 @Query("ntype") String ntype,
                 @Query("nid") String nid,
                 @Query("gtype") String gtype,
-                @Query("gvalue") String gvalue);
-        //        https://maps.googleapis.com/maps/api/directions/json?origin=35.6859016418457,51.38629913330078&destination=36.40290069580078,55.01570129394531&sensor=false
+                @Query("gvalue") String gvalue,
+
+                @Query("andId") String andId);
+
         @GET("/maps/api/directions/json")
         Observable<DestinationResult> getDirection(@Query("origin") String origin,
                                                    @Query("destination") String destination);

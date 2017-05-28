@@ -13,14 +13,14 @@ public class LoginReqSend implements Serializable {
     String email;
     String password;
     String token;
-    String androidId;
+    String andId;
 
     public LoginReqSend(String action, String email, String password, String token, String androidId) {
         this.action = action;
         this.email = email;
         this.password = password;
         this.token = token;
-        this.androidId = androidId;
+        this.andId = androidId;
     }
 
     public String getAction() {
@@ -32,11 +32,11 @@ public class LoginReqSend implements Serializable {
     }
 
     public String getAndroidId() {
-        return androidId;
+        return andId;
     }
 
     public void setAndroidId(String androidId) {
-        this.androidId = androidId;
+        this.andId = androidId;
     }
 
     public String getToken() {

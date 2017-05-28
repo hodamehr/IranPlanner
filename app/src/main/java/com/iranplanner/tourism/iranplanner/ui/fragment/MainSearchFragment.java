@@ -54,6 +54,7 @@ import entity.City;
 import entity.Province;
 import entity.ResultItinerary;
 import entity.ResultItineraryList;
+import tools.Util;
 
 
 public class MainSearchFragment extends StandardFragment implements MainSearchContract.View, View.OnClickListener/*, Callback<ResultItineraryList>*/ {
@@ -583,7 +584,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         attractionEnd = returnAttractionId(endAttraction, tempAttraction);
         if (cityFromAttraction != null && attractionEnd != null) {
             String offset = "0";
-            mainPresenter.loadItineraryFromAttraction("searchattractioncity", "fa", cityFromAttraction, "10", offset, attractionEnd);
+            mainPresenter.loadItineraryFromAttraction("searchattractioncity", "fa", cityFromAttraction, "10", offset, attractionEnd,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
             showProgressDialog();
         } else {
             Toast.makeText(getActivity(), "نام شهر یا جاذبه ثبت نشده است", Toast.LENGTH_SHORT).show();
@@ -597,7 +598,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         cityEnd = cityFrom;
         if (cityFrom != null) {
             String offset = "0";
-            mainPresenter.loadItineraryFromCity("list", "fa", cityFrom, "20", offset, cityEnd);
+            mainPresenter.loadItineraryFromCity("list", "fa", cityFrom, "20", offset, cityEnd,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
             showProgressDialog();
         } else {
             Toast.makeText(getActivity(), "لطفا نام شهر را اصلاح کنید", Toast.LENGTH_SHORT).show();
@@ -616,7 +617,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         if (cityCityFrom != null) {
 //                  getItinerary(cityCityFrom, "0", false, cityEnd);
             String offset = "0";
-            mainPresenter.loadItineraryFromCity("list", "fa", cityCityFrom, "20", offset, cityEnd);
+            mainPresenter.loadItineraryFromCity("list", "fa", cityCityFrom, "20", offset, cityEnd,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
             showProgressDialog();
 
         } else {
@@ -631,7 +632,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         if (provinceName != null) {
 //                    getItinerary(provinceName, "0");
             String offset = "0";
-            mainPresenter.loadItineraryFromProvince("searchprovince", provinceName, offset);
+            mainPresenter.loadItineraryFromProvince("searchprovince", provinceName, offset,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
         } else {
             Toast.makeText(getActivity(), "لطفا نام استان را اصلاح کنید ", Toast.LENGTH_SHORT).show();
         }

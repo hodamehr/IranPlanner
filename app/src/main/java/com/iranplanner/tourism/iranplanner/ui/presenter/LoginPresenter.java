@@ -87,9 +87,9 @@ public class LoginPresenter extends LoginContract {
     }
 
     @Override
-    public void getLoginPostResul(LoginReqSend loginReqSend) {
+    public void getLoginPostResul(LoginReqSend loginReqSend, String cid, String androidId) {
         mView.showProgress();
-        retrofit.create(LoginService.class).getLoginPostResul(loginReqSend)
+        retrofit.create(LoginService.class).getLoginPostResul(loginReqSend, cid, androidId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -110,7 +110,6 @@ public class LoginPresenter extends LoginContract {
                     @Override
                     public void onNext(LoginResult loginResult) {
                         mView.showLoginResult(loginResult);
-                        mView.dismissProgress();
                     }
                 });
     }
@@ -124,8 +123,10 @@ public class LoginPresenter extends LoginContract {
                                                @Query("password") String password,
                                                @Query("cid") String token,
                                                @Query("andId") String androidId);
+
         @POST("api-user.php?action=login")
-        Observable<LoginResult> getLoginPostResul(@Body LoginReqSend loginReqSend);
+        Observable<LoginResult> getLoginPostResul(@Body LoginReqSend loginReqSend, @Query("cid") String token,
+                                                  @Query("andId") String androidId);
 
     }
 }

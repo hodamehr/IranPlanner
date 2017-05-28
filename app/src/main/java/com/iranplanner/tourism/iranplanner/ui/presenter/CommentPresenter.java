@@ -86,9 +86,9 @@ public class CommentPresenter extends CommentContract {
     }
 
     @Override
-    public void callInsertComment(CommentSend commentSend) {
+    public void callInsertComment(CommentSend commentSend,String cid,String andId) {
         retrofit.create(CommentService.class)
-                .callInsertComment(commentSend).subscribeOn(Schedulers.io())
+                .callInsertComment(commentSend,cid,andId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultCommentList>() {
@@ -131,16 +131,7 @@ public class CommentPresenter extends CommentContract {
     }
 
     public interface CommentService {
-
-
-//        @GET("api-com.iranplanner.tourism.iranplanner.di.data.php?action=pagecomments&nid=1&ntype=attraction&offset=10")
-//        Observable<ResultCommentList> getCommentList(
-//                @Query("action") String action,
-//                @Query("nid") String nid,
-//                @Query("ntype") String ntype,
-//                @Query("offset") String offset);
-
-        @GET("api-data.php?action=pagecomments&nid=1&ntype=attraction&offset=10")
+        @GET("api-data.php")
         Observable<ResultCommentList> getItineraryCommentList(
                 @Query("action") String action,
                 @Query("nid") String nId,
@@ -148,6 +139,6 @@ public class CommentPresenter extends CommentContract {
                 @Query("offset") String offset);
 
         @POST("api-data.php?action=comment")
-        Observable<ResultCommentList> callInsertComment(@Body CommentSend request);
+        Observable<ResultCommentList> callInsertComment(@Body CommentSend request, @Query("cid") String cid, @Query("andId") String andId);
     }
 }

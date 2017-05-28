@@ -29,10 +29,11 @@ public class MainSearchPresenter extends MainSearchContract {
     }
 
     @Override
-    public void loadItineraryFromCity(String action, String lang, String from, String limit, String offset, String to) {
+    public void loadItineraryFromCity(String action, String lang, String from, String limit, String offset, String to, String cid,
+                                      String andID) {
 
         retrofit.create(ItineraryService.class)
-                .getItinerariesFromCity(action, lang, from, limit, offset, to).subscribeOn(Schedulers.io())
+                .getItinerariesFromCity(action, lang, from, limit, offset, to, cid, andID).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultItineraryList>() {
@@ -55,9 +56,10 @@ public class MainSearchPresenter extends MainSearchContract {
     }
 
     @Override
-    public void loadItineraryFromProvince(String action, String province, String offset) {
+    public void loadItineraryFromProvince(String action, String province, String offset, String cid,
+                                          String andID) {
         retrofit.create(ItineraryService.class)
-                .getItinerariesFromProvince(action, province, offset).subscribeOn(Schedulers.io())
+                .getItinerariesFromProvince(action, province, offset, cid, andID).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultItineraryList>() {
@@ -80,8 +82,9 @@ public class MainSearchPresenter extends MainSearchContract {
     }
 
     @Override
-    public void loadItineraryFromAttraction(String action, String lang, String from, String limit, String offset, String attraction) {
-        retrofit.create(ItineraryService.class).getItinerariesAttraction(action, lang, from, limit, offset, attraction)
+    public void loadItineraryFromAttraction(String action, String lang, String from, String limit, String offset, String attraction, String cid,
+                                            String andID) {
+        retrofit.create(ItineraryService.class).getItinerariesAttraction(action, lang, from, limit, offset, attraction, cid, andID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -107,26 +110,33 @@ public class MainSearchPresenter extends MainSearchContract {
     }
 
     public interface ItineraryService {
-        @GET("api-itinerary.php?action=list&lang=fa&from=342&limit=10&offset=0&to")
+        @GET("api-itinerary.php")
         Observable<ResultItineraryList> getItinerariesFromCity(@Query("action") String action,
                                                                @Query("lang") String lang,
                                                                @Query("from") String from,
                                                                @Query("limit") String limit,
                                                                @Query("offset") String offset,
-                                                               @Query("to") String to);
+                                                               @Query("to") String to,
+                                                               @Query("cid") String cid,
+                                                               @Query("andId") String andId);
 
         @GET("api-itinerary.php")
         Observable<ResultItineraryList> getItinerariesFromProvince(@Query("action") String action,
                                                                    @Query("province") String province,
-                                                                   @Query("offset") String offset);
+                                                                   @Query("offset") String offset,
+                                                                   @Query("cid") String cid,
+                                                                   @Query("andId") String andId);
 
-        @GET("api-itinerary.php?action=searchattractioncity&lang=fa&from=342&limit=10&offset=0&attraction=id")
+        @GET("api-itinerary.php")
         Observable<ResultItineraryList> getItinerariesAttraction(@Query("action") String action,
                                                                  @Query("lang") String lang,
                                                                  @Query("from") String from,
                                                                  @Query("limit") String limit,
                                                                  @Query("offset") String offset,
-                                                                 @Query("attraction") String attraction);
+                                                                 @Query("attraction") String attraction,
+                                                                 @Query("cid") String cid,
+                                                                 @Query("andId") String andId
+        );
 
     }
 }

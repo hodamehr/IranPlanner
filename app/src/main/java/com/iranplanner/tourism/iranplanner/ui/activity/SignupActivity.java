@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.MainActivity;
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.activity.LoginActivity;
+
 import com.iranplanner.tourism.iranplanner.di.DaggerRegisterComponent;
 import com.iranplanner.tourism.iranplanner.di.RegisterModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
@@ -181,12 +181,8 @@ public class SignupActivity extends StandardActivity implements RegisterContract
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .registerModule(new RegisterModule(this))
                 .build().inject(this);
-//        registerPresenter.getRegisterResult("register", email, password, name, lastName, gender, Util.getTokenFromSharedPreferences(getApplicationContext()), phoneNumber);
         RegisterReqSend registerReqSend = new RegisterReqSend("register", email, password, name, lastName, gender, Util.getTokenFromSharedPreferences(getApplicationContext()), phoneNumber, Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
-
-        registerPresenter.getRegisterLoginResult(registerReqSend);
-
-//        getRegisterResponce(email, password, name, lastName, gender, Util.getTokenFromSharedPreferences(getApplicationContext()), phoneNumber);
+        registerPresenter.getRegisterLoginResult(registerReqSend,Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
     }
 
     public boolean validate() {
@@ -263,75 +259,5 @@ public class SignupActivity extends StandardActivity implements RegisterContract
         }
         return valid;
     }
-
-//    public void getRegisterResponce(String email, String password, String fname, String lname, String gender, String cid, String phone) {
-//        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-//                .connectTimeout(60, TimeUnit.SECONDS)
-//                .readTimeout(60, TimeUnit.SECONDS)
-//                .writeTimeout(60, TimeUnit.SECONDS)
-//                .build();
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .client(okHttpClient)
-//                .baseUrl(Config.BASEURL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-//
-//        Call<ResultRegister> callc = getJsonInterface.getRegisterResult("register", email, password, fname, lname, gender, cid, phone);
-//        callc.enqueue(this);
-//    }
-//
-//    @Override
-//    public void onResponse(Call<ResultRegister> call, Response<ResultRegister> response) {
-//        response.body();
-//        //// TODO: 04/02/2017
-//        if (response.body() != null) {
-//
-//            ResultRegister jsonResponse = response.body();
-//            ResultUserRegister result = jsonResponse.getResultUserRegister();
-//            if (result.getStatus().equals("Succesfull")) {
-//                Toast.makeText(getApplicationContext(), "حساب کاربری با موفقیت انجام شد", Toast.LENGTH_LONG).show();
-//
-//            } else if (result.getStatus().equals("Duplicate Phone")) {
-//                Toast.makeText(getApplicationContext(), "حساب کاربری قبلاایجاد شده است ", Toast.LENGTH_LONG).show();
-//
-//            } else if (result.getStatus().equals("Invalid info")) {
-//                Toast.makeText(getApplicationContext(), "اشکال در مقادیر ورودی", Toast.LENGTH_LONG).show();
-//
-//            }
-//            progressDialog.dismiss();
-//        } else {
-//            Log.e("Responce body", "null");
-//        }
-//        _signupButton.setEnabled(true);
-//        setResult(RESULT_OK, null);
-//        progressDialog.dismiss();
-//    }
-//
-//    @Override
-//    public void onFailure(Call<ResultRegister> call, Throwable t) {
-//        Log.e("error", t.toString());
-//        Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
-//        progressDialog.dismiss();
-//    }
-
-//    public void attemptLogin(String phonePrefix, String phoneNumber) {
-////        if (userLoginTask != null) {
-////            return;
-////        }
-//
-//        if (!TextUtils.isEmpty(phoneNumber) && !TextUtils.isEmpty(phonePrefix)) {
-//
-//            if (phoneNumber.trim().length() < 10
-//                    || phoneNumber.trim().length() > 11
-//                    || (phoneNumber.trim().length() == 11 && !phoneNumber.trim().startsWith("09"))
-//                    || (phoneNumber.trim().length() == 10 && !phoneNumber.trim().startsWith("9"))) {
-//                String message = "شماره تلفن همراه وارد شده صحیح نیست.";
-//
-//            } else {
-//
-//            }
-//        }
-//    }
 
 }

@@ -40,11 +40,11 @@ public abstract class AttractionDetailContract extends Presenter<AttractionDetai
 
 
 
-    public abstract void getAttractionCommentList(String action, String nId, String nType, String offset);
+    public abstract void getAttractionCommentList(String action, String nId, String nType, String offset, String cid, String andId);
 
-    public abstract void getWidgetResult(String action, String id, String uid, String ntype);
+    public abstract void getWidgetResult(String action, String id, String uid, String ntype, String cid, String andId);
 
-    public abstract void getInterest(String action, String uid, String cid, String ntype, String nid, String gtype, String gvalue);
+    public abstract void getInterest(String action, String uid, String cid, String ntype, String nid, String gtype, String gvalue, String andId);
 
     public abstract void doWaitingAnimation(ImageView image);
 

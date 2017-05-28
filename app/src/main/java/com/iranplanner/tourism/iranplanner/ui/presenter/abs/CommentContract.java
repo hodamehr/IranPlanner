@@ -1,6 +1,7 @@
 package com.iranplanner.tourism.iranplanner.ui.presenter.abs;
 
 
+import com.iranplanner.tourism.iranplanner.ui.activity.ShowRoomActivity;
 import com.iranplanner.tourism.iranplanner.ui.presenter.Presenter;
 
 import entity.CommentSend;
@@ -29,6 +30,6 @@ public abstract class CommentContract extends Presenter<CommentContract.View> {
             String ntype,
             String offset);
 
-    public abstract void callInsertComment(CommentSend commentSend);
+    public abstract void callInsertComment(CommentSend commentSend, String cid , String andId);
 
 }

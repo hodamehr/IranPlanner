@@ -22,18 +22,24 @@ public abstract class MainSearchContract {
                                                String from,
                                                String limit,
                                                String offset,
-                                               String to);
+                                               String to,
+                                               String cid,
+                                               String andID);
 
     public abstract void loadItineraryFromProvince(String action,
                                                    String province,
-                                                   String offset);
+                                                   String offset,
+                                                   String cid,
+                                                   String andID);
 
     public abstract void loadItineraryFromAttraction(String action,
                                                      String lang,
                                                      String from,
                                                      String limit,
                                                      String offset,
-                                                     String attraction);
+                                                     String attraction,
+                                                     String cid,
+                                                     String andID);
 
 
 }

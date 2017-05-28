@@ -373,7 +373,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .attractionModule(new AttractionModule(this));
         builder.build().inject(this);
-        attractionPresenter.getWidgetResult("nodeuser", itineraryData.getItineraryId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "itinerary");
+        attractionPresenter.getWidgetResult("nodeuser", itineraryData.getItineraryId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "itinerary",Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
     }
 
     @Override
@@ -410,7 +410,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             case R.id.commentHolder:
                 showProgressDialog();
                 builder.build().inject(this);
-                attractionPresenter.getItineraryCommentList("pagecomments", itineraryId, "itinerary", "0");
+                attractionPresenter.getItineraryCommentList("pagecomments", itineraryId, "itinerary", "0",Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
                 break;
 
             case R.id.showReservation:
@@ -530,7 +530,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             case R.id.showItinerary1:
                 showProgressDialog();
                 builder.build().inject(this);
-                attractionPresenter.getItineraryAttractionList("attraction", "fa", itineraryId);
+                attractionPresenter.getItineraryAttractionList("attraction", "fa", itineraryId,Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
                 break;
         }
     }
@@ -538,7 +538,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     private void OnClickedIntrestedWidget(String gType, String gValue, ImageView imageView) {
         if (!getUseRIdFromShareprefrence().isEmpty()) {
             attractionPresenter.doWaitingAnimation(imageView);
-            attractionPresenter.getInterest("widget", getUseRIdFromShareprefrence(), "1", "itinerary", itineraryId, gType, gValue);
+            attractionPresenter.getInterest("widget", getUseRIdFromShareprefrence(), "1", "itinerary", itineraryId, gType, gValue,Util.getUseRIdFromShareprefrence(getApplicationContext()));
         } else {
             Log.e("user is not login", "error");
             Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
@@ -933,7 +933,12 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     @Override
     public void showDirectionOnMap(PolylineOptions rectLine) {
-        mMap.addPolyline(rectLine);
+//        PolylineOptions lineOptions = null;
+//        lineOptions = new PolylineOptions();
+//
+//        lineOptions.width(10);
+//        lineOptions.color(getApplicationContext().getResources().getColor(R.color.pink));
+        mMap.addPolyline(rectLine).setColor(getApplicationContext().getResources().getColor(R.color.pink_map));
     }
 
 

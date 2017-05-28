@@ -84,9 +84,11 @@ public class MapFullActivity extends StandardActivity implements OnMapReadyCallb
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus == true) {
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            for (Marker marker : markers) {
-                builder.include(marker.getPosition());
-            }
+//            if(markers!=null){
+                for (Marker marker : markers) {
+                    builder.include(marker.getPosition());
+                }
+//            }
             LatLngBounds bounds = builder.build();
             int width = getResources().getDisplayMetrics().widthPixels;
             int height = getResources().getDisplayMetrics().heightPixels;

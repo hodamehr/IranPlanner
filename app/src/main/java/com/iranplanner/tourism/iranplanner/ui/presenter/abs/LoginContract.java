@@ -30,5 +30,6 @@ public abstract class LoginContract extends Presenter<LoginContract.View> {
                                         String token,
                                         String androidId);
 
-    public abstract void getLoginPostResul(LoginReqSend request);
+    public abstract void getLoginPostResul(LoginReqSend request, String cid,
+                                           String androidId);
 }

@@ -15,13 +15,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.activity.LoginActivity;
 import com.iranplanner.tourism.iranplanner.di.DaggerRegisterComponent;
 import com.iranplanner.tourism.iranplanner.di.RegisterModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;

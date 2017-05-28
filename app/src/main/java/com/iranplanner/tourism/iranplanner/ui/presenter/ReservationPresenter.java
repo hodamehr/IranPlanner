@@ -18,6 +18,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import tools.Util;
 
 /**
  * Created by Hoda on 11-May-16.
@@ -55,9 +56,9 @@ public class ReservationPresenter extends ReservationContract {
 
 
     @Override
-    public void getLodgingList(String action, String city) {
+    public void getLodgingList(String action, String city,String cid, String andId) {
         mView.showProgress();
-        retrofit.create(ReservationService.class).getLodgingReserve(action, city)
+        retrofit.create(ReservationService.class).getLodgingReserve(action, city,cid,andId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -86,10 +87,12 @@ public class ReservationPresenter extends ReservationContract {
 
     public interface ReservationService {
 
-        @GET("api-lodging.php?action=list&city=342")
+        @GET("api-lodging.php?")
         Observable<ResultLodgingList> getLodgingReserve(
                 @Query("action") String action,
-                @Query("city") String city);
+                @Query("city") String city,
+                @Query("cid") String token,
+                @Query("andId") String androidId);
 
     }
 }

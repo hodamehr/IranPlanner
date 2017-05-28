@@ -22,8 +22,8 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     private Context context;
     public final int PAGE_COUNT = 2;
     private int[] mTabsIcons = {
-            R.mipmap.ic_search_pink_,
-            R.mipmap.ic_user_pink
+            R.mipmap.ic_search,
+            R.mipmap.ic_profile_grey
     };
     private StandardFragment currentTab;
     //    StandardFragment

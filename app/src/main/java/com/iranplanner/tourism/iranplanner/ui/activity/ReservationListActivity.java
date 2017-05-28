@@ -41,6 +41,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import server.getJsonInterface;
+import tools.Util;
 
 /**
  * Created by h.vahidimehr on 21/02/2017.
@@ -89,14 +90,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
                     @Override
                     public void onClick(View v) {
                         Log.e("reserve", "click");
-//                        progressDialog = new ProgressDialog(getApplicationContext());
-
-//                        Util.showProgressDialog(getApplicationContext(),progressDialog);
-//                        getLodgingReservation(itineraryData.getItineraryLodgingCity().get(position + 1).getCityId());
-
-                        reservationPresenter.getLodgingList("list", itineraryData.getItineraryLodgingCity().get(position + 1).getCityId());
-
-                        //getLodgingResevationRoom(itineraryData.getItineraryLodgingCity().get(position+1).getCityId());
+                        reservationPresenter.getLodgingList("list", itineraryData.getItineraryLodgingCity().get(position + 1).getCityId(), Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
                     }
                 });
 
@@ -110,79 +104,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
     protected int getLayoutId() {
         return R.layout.activity_reservation_list;
     }
-//
-//
-//    private OkHttpClient setHttpClient() {
-//        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-//                .connectTimeout(60, TimeUnit.SECONDS)
-//                .readTimeout(60, TimeUnit.SECONDS)
-//                .writeTimeout(60, TimeUnit.SECONDS)
-//                .build();
-//        return okHttpClient;
-//    }
 
-//    public void getLodgingReservation(String cityId) {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .client(setHttpClient())
-//                .baseUrl("http://api.parsdid.com/iranplanner/app/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-//
-//        Call<ResultLodgingList> callc = getJsonInterface.getLodgingReserve("list", cityId);
-//        callc.enqueue(new Callback<ResultLodgingList>() {
-//            @Override
-//            public void onResponse(Call<ResultLodgingList> call, Response<ResultLodgingList> response) {
-//                Log.e("result of intresting", "true");
-//
-//                if (response.body() != null && response.body().getResultLodging().size() != 0) {
-//                    ResultLodgingList res = response.body();
-//
-//                    List<ResultLodging> resultLodgings = res.getResultLodging();
-//                    Intent intent = new Intent(getApplicationContext(), ReservationHotelListActivity.class);
-//                    intent.putExtra("resultLodgings", (Serializable) resultLodgings);
-//                    intent.putExtra("startOfTravel", startOfTravel);
-//                    intent.putExtra("durationTravel", durationTravel);
-//                    startActivity(intent);
-//                } else {
-//                    progressDialog.dismiss();
-//                    Toast.makeText(getApplicationContext(), "مرکز اقامتی وجود ندارد", Toast.LENGTH_LONG).show();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResultLodgingList> call, Throwable t) {
-//                Log.e("result of intresting", "false");
-//                progressDialog.dismiss();
-//
-//            }
-//        });
-//    }
-
-
-//    public void getLodgingResevationRoom(String cityID) {
-////        getResultLodgingRoomList
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .client(setHttpClient())
-//                .baseUrl("http://api.parsdid.com/iranplanner/app/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-//        cityID = "22649";
-//        Call<ResultLodgingRoomList> callc = getJsonInterface.getResultLodgingRoomList("room", cityID, "", "");
-//        callc.enqueue(new Callback<ResultLodgingRoomList>() {
-//            @Override
-//            public void onResponse(Call<ResultLodgingRoomList> call, Response<ResultLodgingRoomList> response) {
-//                Log.e("result of intresting", "true");
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResultLodgingRoomList> call, Throwable t) {
-//                Log.e("result of intresting", "false");
-//            }
-//        });
-//    }
 
 
     @Override

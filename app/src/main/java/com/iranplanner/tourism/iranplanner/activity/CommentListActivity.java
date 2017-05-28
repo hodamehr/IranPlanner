@@ -205,9 +205,9 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
                                                       sending = true;
                                                       sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
                                                       if (fromWhere.equals("Itinerary")) {
-                                                          commentPresenter.callInsertComment(new CommentSend(userId, "1", "itinerary", itineraryData.getItineraryId(), "comment", String.valueOf(txtAddComment.getText())));
+                                                          commentPresenter.callInsertComment(new CommentSend(userId, "1", "itinerary", itineraryData.getItineraryId(), "comment", String.valueOf(txtAddComment.getText())),Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
                                                       } else if (fromWhere.equals("Attraction")) {
-                                                          commentPresenter.callInsertComment(new CommentSend(userId, "1", "itinerary", attraction.getAttractionId(), "attraction", String.valueOf(txtAddComment.getText())));
+                                                          commentPresenter.callInsertComment(new CommentSend(userId, "1", "itinerary", attraction.getAttractionId(), "attraction", String.valueOf(txtAddComment.getText())),Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
                                                       }
                                                       txtAddComment.setText("");
                                                   } else if (userId.isEmpty()) {

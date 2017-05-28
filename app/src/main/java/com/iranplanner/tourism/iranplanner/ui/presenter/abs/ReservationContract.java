@@ -31,7 +31,7 @@ public abstract class ReservationContract extends Presenter<ReservationContract.
 
 
     public abstract void getLodgingList(String action,
-                                        String city);
+                                        String city, String cid, String andId);
 
 
 }
