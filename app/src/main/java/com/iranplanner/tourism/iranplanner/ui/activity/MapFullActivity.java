@@ -84,11 +84,9 @@ public class MapFullActivity extends StandardActivity implements OnMapReadyCallb
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus == true) {
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
-//            if(markers!=null){
-                for (Marker marker : markers) {
-                    builder.include(marker.getPosition());
-                }
-//            }
+            for (Marker marker : markers) {
+                builder.include(marker.getPosition());
+            }
             LatLngBounds bounds = builder.build();
             int width = getResources().getDisplayMetrics().widthPixels;
             int height = getResources().getDisplayMetrics().heightPixels;
@@ -128,10 +126,7 @@ public class MapFullActivity extends StandardActivity implements OnMapReadyCallb
 
             MapDirection mapDirection = new MapDirection(mMap, getApplicationContext(), lodgingCities, MarkerPoints);
             // Already two locations
-            if(markers!=null){
-                markers = mapDirection.readytoDirect();
-            }
-
+            markers = mapDirection.readytoDirect();
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(LatLng latLng) {
