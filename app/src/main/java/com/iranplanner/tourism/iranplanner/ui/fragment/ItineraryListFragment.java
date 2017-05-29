@@ -158,21 +158,21 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
 
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         if (fromCityToCity && loading) {
-                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
+                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
                             waitingLoading.setVisibility(View.VISIBLE);
                             loading = false;
                         } else if (fromProvince) {
-                            mainPresenter.loadItineraryFromProvince("searchprovince", provinceId, nextOffset,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
+                            mainPresenter.loadItineraryFromProvince("searchprovince", provinceId, nextOffset, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
                             waitingLoading.setVisibility(View.VISIBLE);
 
                         } else if (fromAttraction) {
 
-                            mainPresenter.loadItineraryFromAttraction("searchattractioncity", "fa", cityFrom, "10", nextOffset, attractionId,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
+                            mainPresenter.loadItineraryFromAttraction("searchattractioncity", "fa", cityFrom, "10", nextOffset, attractionId, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
                             waitingLoading.setVisibility(View.VISIBLE);
                         } else if (fromCity) {
 //                            getItineraryCity(cityFrom, nextOffset, cityFrom);
 //                            waitingLoading.setVisibility(View.VISIBLE);
-                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
+                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
                             waitingLoading.setVisibility(View.VISIBLE);
                             loading = false;
                         }
@@ -257,10 +257,15 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
 
     @Override
     public void showError(String message) {
-        if (message.equals("HTTP 400 BAD REQUEST")) {
-            loading = false;
-        }
 
+        loading = false;
+
+        if (message.contains("Unable to resolve host ") || message.contains("Software caused connection abort")) {
+            Toast.makeText(getContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
+        }
+        if (message.contains("HTTP 400 BAD REQUEST")) {
+            Toast.makeText(getContext(), "اتمام برنامه سفر", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

@@ -14,12 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
+import com.iranplanner.tourism.iranplanner.adapter.ShowDetailItineraryAdapter;
 import com.iranplanner.tourism.iranplanner.ui.activity.MapFullActivity;
 import com.iranplanner.tourism.iranplanner.adapter.AttractionsListAdapter;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
@@ -52,6 +55,7 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
     private AttractionsListAdapter adapter;
     LinearLayoutManager mLayoutManager;
     List<ResultItineraryAttraction> itineraryActionList;
+    ImageView arrowRight, arrowLeft;
     int dayNumber, allDays;
 
     @Override
@@ -60,6 +64,8 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
         View view = inflater.inflate(R.layout.fragment_show_attraction_list, container, false);
         Bundle bundle = getArguments();
         attractionRecyclerView = (RecyclerView) view.findViewById(R.id.attractionListRecyclerView);
+        arrowLeft = (ImageView) view.findViewById(R.id.arrowLeft);
+        arrowRight = (ImageView) view.findViewById(R.id.arrowRight);
         TextView textDayNumber = (TextView) view.findViewById(R.id.textDayNumber);
         itineraryActionList = (List<ResultItineraryAttraction>) bundle.getSerializable("itineraryActionList");
         dayNumber = bundle.getInt("dayNumber");
@@ -96,14 +102,14 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
                 imageTextAttractionHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getIntrestResponce(position,itineraryActionList.get(position).getAttractionId(),Util.getUseRIdFromShareprefrence(getContext()));
+                        getIntrestResponce(position, itineraryActionList.get(position).getAttractionId(), Util.getUseRIdFromShareprefrence(getContext()));
                     }
                 });
                 Button moreInfoHolder = (Button) view.findViewById(R.id.moreInfoHolder);
                 moreInfoHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getIntrestResponce(position,itineraryActionList.get(position).getAttractionId(),Util.getUseRIdFromShareprefrence(getContext()));
+                        getIntrestResponce(position, itineraryActionList.get(position).getAttractionId(), Util.getUseRIdFromShareprefrence(getContext()));
                     }
                 });
 //                ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
@@ -138,6 +144,13 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
             }
 //            }
         });
+//        arrowLeft.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getContext(),"به سمت چپ بکشید",Toast.LENGTH_LONG).show();
+//
+//            }
+//        });
         return view;
     }
 
@@ -197,7 +210,7 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
 
     private void buildAlertMessageNoGps(final int position) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("GPS شما فعال نیست. آیا تمایل به روشن کردن آن دارید")
+        builder.setMessage("مسیریاب شما فعال نیست، آیا تمایل به روشن کردن آن دارید؟")
                 .setCancelable(false)
 //                // TODO: 06/02/2017  below
                 // toye startActivityForResult be jaye code request posotion ro ferestam . ye joor kalak .

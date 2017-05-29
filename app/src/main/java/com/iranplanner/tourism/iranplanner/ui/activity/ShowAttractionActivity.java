@@ -33,6 +33,8 @@ public class ShowAttractionActivity extends StandardActivity {
         }
         adapterViewPager = new ShowDetailItineraryAdapter(getSupportFragmentManager(),getDayGroup(itineraryActionList));
         vpPager.setAdapter(adapterViewPager);
+
+
     }
 
     @Override

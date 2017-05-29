@@ -837,7 +837,7 @@
                                 android:layout_margin="5dp"
                                 android:layout_toLeftOf="@+id/imgtheme"
                                 android:maxLines="1"
-                                android:text="برنامه سفرهای رویدادی"
+                                android:text="برنامه سفرهای موضوعی"
                                 android:textColor="@color/white_" />
 
                             <ImageView

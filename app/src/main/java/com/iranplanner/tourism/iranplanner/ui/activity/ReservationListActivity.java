@@ -127,7 +127,17 @@ public class ReservationListActivity extends StandardActivity implements DataTra
 
     @Override
     public void showError(String message) {
-        Toast.makeText(getApplicationContext(), "مرکز اقامتی وجود ندارد", Toast.LENGTH_LONG).show();
+
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+
+        if (message.contains("Unable to resolve host ") || message.contains("Software caused connection abort")) {
+            Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
+        }
+        if (message.contains("HTTP 400 BAD REQUEST")) {
+            Toast.makeText(getApplicationContext(), "مرکز اقامتی وجود ندارد", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

@@ -26,6 +26,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -83,6 +84,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
     List<Attraction> tempAttraction;
     String attractionEnd;
     Button mmActivity;
+    FrameLayout cell_title_view_theme, cell_title_view_events;
 
     public static MainSearchFragment newInstance() {
         MainSearchFragment fragment = new MainSearchFragment();
@@ -99,6 +101,8 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         city_layout = (LinearLayout) view.findViewById(R.id.city_layout);
         province_layout = (LinearLayout) view.findViewById(R.id.province_layout);
         events_layout = (LinearLayout) view.findViewById(R.id.events_layout);
+        cell_title_view_events = (FrameLayout) view.findViewById(R.id.cell_title_view_events);
+        cell_title_view_theme = (FrameLayout) view.findViewById(R.id.cell_title_view_theme);
         //province
         textProvience = (AutoCompleteTextView) view.findViewById(R.id.textProvience);
         searchOk_provience = (Button) view.findViewById(R.id.searchOk_provience);
@@ -138,6 +142,8 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         // -------------attach click listener to folding cell
         folding_cell_city.setOnClickListener(this);
         searchOk_city.setOnClickListener(this);
+        cell_title_view_events.setOnClickListener(this);
+        cell_title_view_theme.setOnClickListener(this);
         return view;
     }
 
@@ -246,12 +252,24 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
                 hideKeyBoard();
                 showProvience();
                 break;
+            case R.id.cell_title_view_theme:
+                Toast.makeText(getContext(), "به زودی ", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.cell_title_view_events:
+                Toast.makeText(getContext(), "به زودی ", Toast.LENGTH_LONG).show();
+                break;
         }
     }
 
     @Override
     public void showError(String message) {
         progressDialog.dismiss();
+        if (message.contains("Unable to resolve host ") || message.contains("Software caused connection abort")) {
+            Toast.makeText(getContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
+        }
+        if (message.contains("HTTP 400 BAD REQUEST")) {
+            Toast.makeText(getContext(), "در این مسیر برنامه سفری یافت نشد", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -584,7 +602,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         attractionEnd = returnAttractionId(endAttraction, tempAttraction);
         if (cityFromAttraction != null && attractionEnd != null) {
             String offset = "0";
-            mainPresenter.loadItineraryFromAttraction("searchattractioncity", "fa", cityFromAttraction, "10", offset, attractionEnd,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
+            mainPresenter.loadItineraryFromAttraction("searchattractioncity", "fa", cityFromAttraction, "10", offset, attractionEnd, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
             showProgressDialog();
         } else {
             Toast.makeText(getActivity(), "نام شهر یا جاذبه ثبت نشده است", Toast.LENGTH_SHORT).show();
@@ -598,7 +616,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         cityEnd = cityFrom;
         if (cityFrom != null) {
             String offset = "0";
-            mainPresenter.loadItineraryFromCity("list", "fa", cityFrom, "20", offset, cityEnd,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
+            mainPresenter.loadItineraryFromCity("list", "fa", cityFrom, "20", offset, cityEnd, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
             showProgressDialog();
         } else {
             Toast.makeText(getActivity(), "لطفا نام شهر را اصلاح کنید", Toast.LENGTH_SHORT).show();
@@ -617,7 +635,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         if (cityCityFrom != null) {
 //                  getItinerary(cityCityFrom, "0", false, cityEnd);
             String offset = "0";
-            mainPresenter.loadItineraryFromCity("list", "fa", cityCityFrom, "20", offset, cityEnd,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
+            mainPresenter.loadItineraryFromCity("list", "fa", cityCityFrom, "20", offset, cityEnd, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
             showProgressDialog();
 
         } else {
@@ -632,7 +650,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         if (provinceName != null) {
 //                    getItinerary(provinceName, "0");
             String offset = "0";
-            mainPresenter.loadItineraryFromProvince("searchprovince", provinceName, offset,Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
+            mainPresenter.loadItineraryFromProvince("searchprovince", provinceName, offset, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
         } else {
             Toast.makeText(getActivity(), "لطفا نام استان را اصلاح کنید ", Toast.LENGTH_SHORT).show();
         }

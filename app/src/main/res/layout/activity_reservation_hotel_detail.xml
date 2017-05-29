@@ -516,7 +516,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:rotation="180"
                                 android:src="@drawable/shape_triangle"
-                                android:visibility="gone"/>
+                            />
 
 
                             <RelativeLayout
@@ -806,7 +806,8 @@
             android:background="@drawable/button_corner_greend"
             android:text="مشاهده اتاق های هتل"
             style="@style/StandardTitle"
-            android:textColor="@color/white_"/>
+            android:textColor="@color/white_"
+            android:visibility="gone"/>
 <!--
         <TextView
             style="@style/StandardTitle"

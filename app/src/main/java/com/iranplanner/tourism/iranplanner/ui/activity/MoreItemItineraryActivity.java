@@ -391,17 +391,17 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     }
 
-    private String getUseRIdFromShareprefrence() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String userId = preferences.getString("userId", "");
-        return userId;
-//        if(ShareprefrenceName!=null){
-//            return true;
-//        }else {
-//            return false;
-//        }
-
-    }
+//    private String getUseRIdFromShareprefrence() {
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//        String userId = preferences.getString("userId", "");
+//        return userId;
+////        if(ShareprefrenceName!=null){
+////            return true;
+////        }else {
+////            return false;
+////        }
+//
+//    }
 
     @Override
     public void onClick(View v) {
@@ -536,9 +536,9 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     }
 
     private void OnClickedIntrestedWidget(String gType, String gValue, ImageView imageView) {
-        if (!getUseRIdFromShareprefrence().isEmpty()) {
+        if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
             attractionPresenter.doWaitingAnimation(imageView);
-            attractionPresenter.getInterest("widget", getUseRIdFromShareprefrence(), "1", "itinerary", itineraryId, gType, gValue,Util.getUseRIdFromShareprefrence(getApplicationContext()));
+            attractionPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "itinerary", itineraryId, gType, gValue,Util.getUseRIdFromShareprefrence(getApplicationContext()));
         } else {
             Log.e("user is not login", "error");
             Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
@@ -829,6 +829,13 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
+
+        if (message.contains("Unable to resolve host ") || message.contains("Software caused connection abort")) {
+            Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
+        }
+        if (message.contains("HTTP 400 BAD REQUEST")) {
+            Toast.makeText(getApplicationContext(), "در این مسیر برنامه سفری یافت نشد", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -938,7 +945,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 //
 //        lineOptions.width(10);
 //        lineOptions.color(getApplicationContext().getResources().getColor(R.color.pink));
-        mMap.addPolyline(rectLine).setColor(getApplicationContext().getResources().getColor(R.color.pink_map));
+        mMap.addPolyline(rectLine).setColor(getApplicationContext().getResources().getColor(R.color.pink));
     }
 
 
