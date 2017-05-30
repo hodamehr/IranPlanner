@@ -102,14 +102,22 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
                 imageTextAttractionHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getIntrestResponce(position, itineraryActionList.get(position).getAttractionId(), Util.getUseRIdFromShareprefrence(getContext()));
+//                        getIntrestResponce(position, itineraryActionList.get(position).getAttractionId(), Util.getUseRIdFromShareprefrence(getContext()));
+                        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+                        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+                        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+                        startActivity(intent);
                     }
                 });
                 Button moreInfoHolder = (Button) view.findViewById(R.id.moreInfoHolder);
                 moreInfoHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getIntrestResponce(position, itineraryActionList.get(position).getAttractionId(), Util.getUseRIdFromShareprefrence(getContext()));
+//                        getIntrestResponce(position, itineraryActionList.get(position).getAttractionId(), Util.getUseRIdFromShareprefrence(getContext()));
+                        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+                        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+                        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+                        startActivity(intent);
                     }
                 });
 //                ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);

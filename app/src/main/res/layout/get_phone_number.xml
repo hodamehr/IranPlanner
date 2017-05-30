@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_standard"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="کد دریافتی از پیامک را در این قسمت وارد کنید"
+        android:layout_marginTop="@dimen/padding_big"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_standard"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_xshort"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/margin_standard">
+
+        <Button
+            android:id="@+id/btnSendCodeAgain"
+            style="@style/StandardText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_xxxshort"
+            android:layout_weight="1"
+            android:background="@drawable/button_corner_pink_leftt_stroke"
+            android:text="ارسال مجدد کد"
+            android:textColor="@color/pink" />
+
+        <Button
+            android:id="@+id/btnInserCode"
+            style="@style/StandardText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_corner_pink_right_stroke"
+            android:text="ok"
+            android:textColor="@color/pink" />
+    </LinearLayout>
+</LinearLayout>

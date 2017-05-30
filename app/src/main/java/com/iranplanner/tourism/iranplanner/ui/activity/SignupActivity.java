@@ -215,7 +215,7 @@ public class SignupActivity extends StandardActivity implements RegisterContract
         }
 
         if (password.isEmpty() || password.length() < 8) {
-            passwordText.setError("کلمه عبور می بایست بیشتر از 8 حرف باشد");
+            passwordText.setError("کلمه عبور باید بیشتر از 8 حرف و ترکیبی از حرف و عدد باشد");
 
 
             valid = false;
@@ -256,7 +256,12 @@ public class SignupActivity extends StandardActivity implements RegisterContract
                 input_tel.setError(message);
                 valid = false;
             }
+        }else if(TextUtils.isEmpty(phoneNumber)){
+            String message = "ثبت شماره تلفن اجباری است";
+            input_tel.setError(message);
+            valid = false;
         }
+
         return valid;
     }
 

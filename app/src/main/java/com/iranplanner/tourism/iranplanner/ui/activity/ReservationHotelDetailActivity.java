@@ -327,9 +327,22 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
             @Override
             public void onMapClick(LatLng latLng) {
                 Log.e("map is ckicked", "true");
+//
+//                Log.e("map is ckicked", "true");
+//                Intent intent = new Intent(getApplicationContext(), MapFullActivity.class);
+//                ItineraryLodgingCity i = new ItineraryLodgingCity();
+//                i.setCityPositionLat(attraction.getAttractionPositionLat());
+//                i.setCityPositionLon(attraction.getAttractionPositionOn());
+//                List<ItineraryLodgingCity> lodgingCities = new ArrayList<ItineraryLodgingCity>();
+//                lodgingCities.add(i);
+//                intent.putExtra("lodgingCities", (Serializable) lodgingCities);
+//                intent.putExtra("attraction", (Serializable) attraction);
+//                startActivity(intent);
+                //===
                 Intent intent = new Intent(getApplicationContext(), MapFullActivity.class);
                 ItineraryLodgingCity i = new ItineraryLodgingCity();
-
+                i.setCityPositionLat(String.valueOf(resultLodgingHotelDetail.getLodgingPosLat()));
+                i.setCityPositionLon(String.valueOf(resultLodgingHotelDetail.getLodgingPosLong()));
                 List<ItineraryLodgingCity> lodgingCities = new ArrayList<ItineraryLodgingCity>();
                 lodgingCities.add(i);
                 intent.putExtra("lodgingCities", (Serializable) lodgingCities);

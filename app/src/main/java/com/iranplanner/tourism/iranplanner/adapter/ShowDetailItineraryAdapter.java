@@ -19,6 +19,10 @@ import entity.ResultItineraryAttraction;
  * Created by Hoda on 20/01/2017.
  */
 public class ShowDetailItineraryAdapter extends FragmentPagerAdapter {
+    @Override
+    public float getPageWidth(int position) {
+        return (0.95f);
+    }
     Map<String, List<ResultItineraryAttraction>> map;
     List<ResultItineraryAttraction> itineraryActionList;
 

@@ -232,7 +232,7 @@
                                         android:layout_marginLeft="5dp"
                                         android:layout_marginRight="5dp"
                                         android:maxLines="1"
-                                        android:text="علاقه مندی" />
+                                        android:text="دوست ندارم" />
 
                                 </LinearLayout>
 
@@ -405,7 +405,7 @@
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
                                     android:maxLines="1"
-                                    android:text="علاقه مندی" />
+                                    android:text="علاقه‌‌‌‌مندی" />
 
 
                             </LinearLayout>

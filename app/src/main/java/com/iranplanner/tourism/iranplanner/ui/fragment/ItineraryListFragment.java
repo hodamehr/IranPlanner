@@ -263,15 +263,20 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
         if (message.contains("Unable to resolve host ") || message.contains("Software caused connection abort")) {
             Toast.makeText(getContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
         }
-        if (message.contains("HTTP 400 BAD REQUEST")) {
-            Toast.makeText(getContext(), "اتمام برنامه سفر", Toast.LENGTH_LONG).show();
+        if(waitingLoading.isEnabled()){
+            waitingLoading.setVisibility(View.INVISIBLE);
         }
+
+//        if (message.contains("HTTP 400 BAD REQUEST")) {
+//            Toast.makeText(getContext(), "اتمام برنامه سفر", Toast.LENGTH_LONG).show();
+//        }
     }
 
     @Override
     public void showComplete() {
 //        Toast.makeText(getContext(), "complete", Toast.LENGTH_LONG).show();
         loading = true;
+        waitingLoading.setVisibility(View.INVISIBLE);
     }
 
     class MyThread extends Thread {

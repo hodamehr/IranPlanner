@@ -22,6 +22,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -718,23 +719,28 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus == true) {
-            RelativeLayout myLinearLayout = (RelativeLayout) findViewById(R.id.mapHolder);
-            int width = myLinearLayout.getWidth();
-            int height = myLinearLayout.getHeight();
-            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            if(markers!=null){
-                for (Marker marker : markers) {
-                    builder.include(marker.getPosition());
+        try{
+            if (hasFocus == true) {
+                RelativeLayout myLinearLayout = (RelativeLayout) findViewById(R.id.mapHolder);
+                int width = myLinearLayout.getWidth();
+                int height = myLinearLayout.getHeight();
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                if(markers!=null){
+                    for (Marker marker : markers) {
+                        builder.include(marker.getPosition());
+                    }
                 }
-            }
 
-            LatLngBounds bounds = builder.build();
+                LatLngBounds bounds = builder.build();
 //        int width = getResources().getDisplayMetrics().widthPixels;
 //        int height = getResources().getDisplayMetrics().heightPixels;
-            int padding = (int) (width * 0.12); // offset from edges of the map 12% of screen
-            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
-            mMap.animateCamera(cu);
+                int padding = (int) (width * 0.12); // offset from edges of the map 12% of screen
+                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
+                mMap.animateCamera(cu);
+        }
+
+        }catch (Exception e){
+
         }
     }
 
@@ -833,9 +839,9 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         if (message.contains("Unable to resolve host ") || message.contains("Software caused connection abort")) {
             Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
         }
-        if (message.contains("HTTP 400 BAD REQUEST")) {
-            Toast.makeText(getApplicationContext(), "در این مسیر برنامه سفری یافت نشد", Toast.LENGTH_LONG).show();
-        }
+//        if (message.contains("HTTP 400 BAD REQUEST")) {
+//            Toast.makeText(getApplicationContext(), "در این مسیر برنامه سفری یافت نشد", Toast.LENGTH_LONG).show();
+//        }
     }
 
     @Override

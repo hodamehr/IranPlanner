@@ -82,18 +82,25 @@ public class MapFullActivity extends StandardActivity implements OnMapReadyCallb
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus == true) {
-            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            for (Marker marker : markers) {
-                builder.include(marker.getPosition());
+        try
+        {
+            if (hasFocus == true) {
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                for (Marker marker : markers) {
+                    builder.include(marker.getPosition());
+                }
+                LatLngBounds bounds = builder.build();
+                int width = getResources().getDisplayMetrics().widthPixels;
+                int height = getResources().getDisplayMetrics().heightPixels;
+                int padding = (int) (width * 0.12); // offset from edges of the map 12% of screen
+                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
+                mMap.animateCamera(cu);
             }
-            LatLngBounds bounds = builder.build();
-            int width = getResources().getDisplayMetrics().widthPixels;
-            int height = getResources().getDisplayMetrics().heightPixels;
-            int padding = (int) (width * 0.12); // offset from edges of the map 12% of screen
-            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
-            mMap.animateCamera(cu);
         }
+        catch (Exception e){
+
+        }
+
     }
 
     @Override

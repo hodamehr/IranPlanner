@@ -253,10 +253,10 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
                 showProvience();
                 break;
             case R.id.cell_title_view_theme:
-                Toast.makeText(getContext(), "به زودی ", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "به زودی ", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.cell_title_view_events:
-                Toast.makeText(getContext(), "به زودی ", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "به زودی ", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
