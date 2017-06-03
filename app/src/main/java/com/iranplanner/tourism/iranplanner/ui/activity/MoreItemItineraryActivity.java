@@ -811,7 +811,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 } else {
 
                     // Permission denied, Disable the functionality that depends on this permission.
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "اجازه دسترسی داده نشد", Toast.LENGTH_LONG).show();
                 }
                 return;
             }

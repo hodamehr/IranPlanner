@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by Mahdi Taherian on 11/16/2015
+ * Created by Hoda  on 11/16/2015
  */
 public class Utils {
     private static final Object smsLock = new Object();
@@ -56,7 +56,7 @@ public class Utils {
     }
     public static String persianNumbers(String str) {
         char[] arabicChars = {'٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'};
-        String englishNumbers = "0123456789";
+        String englishNumbers = "093598891239";
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < str.length(); i++) {
             if (englishNumbers.contains(String.valueOf(str.charAt(i)))) {
