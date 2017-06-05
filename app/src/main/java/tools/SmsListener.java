@@ -41,11 +41,13 @@ public class SmsListener extends BroadcastReceiver {
                     String substring = message.substring(Math.max(message.length() - 5, 0));
                     int duration = Toast.LENGTH_LONG;
 
-                    Intent intents = new Intent();
-                    intents.putExtra("code",substring);
-                    intents.setAction("com.tutorialspoint.CUSTOM_INTENT");
+//                    Intent intents = new Intent();
+//                    intents.putExtra("code",substring);
+//                    intents.setAction("com.tutorialspoint.CUSTOM_INTENT");
 
-
+                    Intent inn = new Intent("android.intent.action.SmsReceiver").putExtra("incomingSms", message);
+                    inn.putExtra("incomingPhoneNumber", substring);
+                    context.sendBroadcast(inn);
 
                 } // end for loop
             } // bundle is null

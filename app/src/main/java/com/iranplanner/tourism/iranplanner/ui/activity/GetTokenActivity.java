@@ -1,6 +1,8 @@
 package com.iranplanner.tourism.iranplanner.ui.activity;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -8,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +28,7 @@ import javax.inject.Inject;
 
 import entity.ResultPhoneVerify;
 import entity.ResultSendPhone;
+import entity.ResultUserVerify;
 import login.SmsListener;
 import tools.Util;
 
@@ -36,7 +40,6 @@ public class GetTokenActivity extends StandardActivity implements GetTokenContra
     EditText token1, token2, token3, token4, token5;
     Button btnInsertCode, btnSendCodeAgain;
     String phoneNumber;
-    tools.SmsListener smsListener;
     @Inject
     GetTokenPresenter getTokenPresenter;
 
@@ -86,9 +89,6 @@ public class GetTokenActivity extends StandardActivity implements GetTokenContra
                         Intent i = new Intent("android.provider.Telephony.SMS_RECEIVED");
                         i.setClass(this, SmsListener.class);
                         this.sendBroadcast(i);
-//                        IntentFilter intentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
-//                        intentFilter.setPriority(MY_PERMISSIONS_REQUEST_SMS);
-//                        this.registerReceiver(smsListener, intentFilter);
 
 
                     }
@@ -104,7 +104,6 @@ public class GetTokenActivity extends StandardActivity implements GetTokenContra
         }
     }
 
-    //------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,9 +116,6 @@ public class GetTokenActivity extends StandardActivity implements GetTokenContra
         }
 
 
-
-
-//        this.sendBroadcast(new Intent("android.provider.Telephony.SMS_RECEIVED"));
         Intent intent = getIntent();
         phoneNumber = intent.getStringExtra("phoneNumber");
         DaggerGetTokenComponent.builder()
@@ -134,38 +130,12 @@ public class GetTokenActivity extends StandardActivity implements GetTokenContra
             }
         });
 
-
-//        input_tel = (TextView) findViewById(R.id.input_tel);
-//        btnSendPhone = (Button) findViewById(R.id.btnSendPhone);
-
-
     }
 
 
     @Override
     protected int getLayoutId() {
         return R.layout.get_token_number;
-    }
-
-    public boolean validate() {
-        boolean valid = true;
-//        String phoneNumber = input_tel.getText().toString();
-//        if (!TextUtils.isEmpty(phoneNumber)) {
-//
-//            if (phoneNumber.trim().length() < 10
-//                    || phoneNumber.trim().length() > 11
-//                    || (phoneNumber.trim().length() == 11 && !phoneNumber.trim().startsWith("09"))
-//                    || (phoneNumber.trim().length() == 10 && !phoneNumber.trim().startsWith("9"))) {
-//                String message = "شماره تلفن همراه وارد شده صحیح نیست.";
-//                input_tel.setError(message);
-//                valid = false;
-//            }
-//        } else if (TextUtils.isEmpty(phoneNumber)) {
-//            String message = "ثبت شماره تلفن اجباری است";
-//            input_tel.setError(message);
-//            valid = false;
-//        }
-        return valid;
     }
 
 
@@ -191,6 +161,58 @@ public class GetTokenActivity extends StandardActivity implements GetTokenContra
 
     @Override
     public void getTokenResult(ResultPhoneVerify resultPhoneVerify) {
+        checkVerify(resultPhoneVerify.getResultUserVerify());
+    }
+
+    private void checkVerify(ResultUserVerify resultUserVerify) {
+    if(resultUserVerify.getPhoneVerify()==0){
+        Log.e("error","retry");
+    }else if(resultUserVerify.getPhoneVerify()==1){
+        Log.e("ok","token is correct");
+
+        // TODO: 6/4/2017 add phone number to shareprefrences
+        if(resultUserVerify.getPhoneRegister()==0){
+            Log.e("error","open register activity");
+
+        }
+        else if(resultUserVerify.getPhoneRegister()==1){
+            Log.e("error","open login ");
+        }
+    }
+
 
     }
+
+    private BroadcastReceiver ReceiveFromService = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //get the data using the keys you entered at the service
+            String code = intent.getStringExtra("incomingPhoneNumber");
+            token1.setText(code);
+
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            unregisterReceiver(ReceiveFromService);
+        } catch (IllegalArgumentException e) {
+            if (e.getMessage().contains("Receiver not registered")) {
+                Log.i("TAG", "Tried to unregister the reciver when it's not registered");
+            } else {
+                throw e;
+            }
+        }
+    }
+
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.intent.action.SmsReceiver");
+        registerReceiver(ReceiveFromService, filter);
+        //the first parameter is the name of the inner class we created.
+    }
+
 }
