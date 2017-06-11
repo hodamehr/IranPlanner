@@ -79,35 +79,7 @@ public class SignupFragment extends StandardFragment implements RegisterContract
     @Inject
     RegisterPresenter registerPresenter;
 
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        ButterKnife.inject(getActivity());
-//        View view = inflater.inflate(R.layout.login, container, false);
-//
-//        View logo = getActivity().getLayoutInflater().inflate(R.layout.custom_imageview_toolbar, null);
-//
-//        _signupButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                signup();
-//            }
-//        });
-//
-//        _loginLink.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Finish the registration screen and return to the Login activity
-//
-////                Bundle bundle = new Bundle();
-////
-//
-////                Intent intent = new Intent(getContext(), LoginActivity.class);
-////                startActivity(intent);
-////                finish();
-//            }
-//        });
-//    }
+
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -117,21 +89,8 @@ public class SignupFragment extends StandardFragment implements RegisterContract
 
 
 
-//        _signupButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                signup();
-//            }
-//        });
-
-
-
         return view;
     }
-//    @Override
-//    protected int getLayoutId() {
-//        return R.layout.custom_imageview_toolbar;
-//    }
 
     @Override
     public void showRegisterMessage(ResultRegister resultRegister) {

@@ -94,32 +94,9 @@ public interface getJsonInterface {
             @Query("fromdate") String fromdate,
             @Query("todate") String todate);
 
-    @GET("api-com.iranplanner.tourism.iranplanner.di.data.php")
-    Call<ResultWidgetFull> getWidgetResult(@Query("action") String param1,
-                                           @Query("id") String param2,
-                                           @Query("uid") String param3,
-                                           @Query("ntype") String param4);
 
-    @GET("api-user.php")
-    Call<ResultRegister> getRegisterResult(@Query("action") String action,
-                                           @Query("email") String email,
-                                           @Query("password") String password,
-                                           @Query("fname") String fname,
-                                           @Query("lname") String lname,
-                                           @Query("gender") String gender,
-                                           @Query("cid") String cid,
-                                           @Query("phone") String phone);
 
-    @GET("api-itinerary.php")
-    Call<ResultItineraryAttractionList> getItineraryAttractionList(
-            @Query("action") String param1,
-            @Query("lang") String param2,
-            @Query("id") String param3
-    );
 
-    @GET("api-itinerary.php")
-    Call<ResultItineraryList> getItinerarysFromProvince(@Query("action") String param1,
-                                                        @Query("province") String param2,
-                                                        @Query("offset") String param3);
+
 
 }

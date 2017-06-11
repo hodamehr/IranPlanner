@@ -28,6 +28,8 @@ import server.Config;
  * Created by Hoda on 10/01/2017.
  */
 public class Util {
+
+
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public static  boolean checkLocationPermission(Activity activity) {
         if (ContextCompat.checkSelfPermission(activity,
@@ -58,6 +60,17 @@ public class Util {
         } else {
             return true;
         }
+    }
+    public static void saveDataINShareprefrence(Context context,String email, String lastName, String gender, String userId) {
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF_USER, 0);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("email", email);
+        editor.putString("fname", lastName);
+        editor.putString("gender", gender);
+        editor.putString("gender", gender);
+        editor.putString("userId", userId);
+        editor.commit();
     }
     public static final String displayFirebaseRegId(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF, 0);

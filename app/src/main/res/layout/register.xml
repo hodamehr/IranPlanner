@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/accountHolder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_blue"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/padding_larg"
+            android:paddingLeft="@dimen/padding_larg"
+            android:paddingRight="@dimen/padding_larg"
+            android:paddingTop="@dimen/padding_big">
+
+
+            <!-- Email Label -->
+            <LinearLayout
+                android:id="@+id/accountInputHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corner_layout"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_standard"
+                android:paddingLeft="@dimen/padding_larg"
+                android:paddingRight="@dimen/padding_larg"
+                android:paddingTop="@dimen/margin_standard">
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_iranplanner_logo" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="right">
+
+                    <EditText
+                        android:id="@+id/input_tel"
+                        style="@style/StandardText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:hint="تلفن همراه"
+                        android:inputType="phone"
+                        android:imeOptions="actionNext"
+                        android:selectAllOnFocus="false" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/input_email"
+                        style="@style/SmallText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="پست الکترونیک"
+                        android:inputType="textEmailAddress" />
+                </android.support.design.widget.TextInputLayout>
+
+                <!-- Password Label -->
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/input_password"
+                        style="@style/SmallText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="کلمه عبور"
+                        android:inputType="textPassword" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/input_password_repeat"
+                        style="@style/SmallText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="تکرار کلمه عبور"
+                        android:inputType="textPassword"
+                        android:imeOptions="actionDone"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/btn_signup"
+                    style="@style/SmallText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:background="@drawable/button_corner_blue_stroke"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_short"
+                    android:text="عضویت"
+                    android:textColor="@color/main_blue" />
+
+                <TextView
+                    android:id="@+id/txtForgetPassword"
+                    style="@style/SmallText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_short"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_short"
+                    android:singleLine="true"
+                    android:text="شرایط و قوانین ایران پلنر را می پذیرم"
+                    android:textColor="@color/grey" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/signupInputHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_standard"
+                android:background="@drawable/corner_layout"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/padding_larg"
+                android:paddingRight="@dimen/padding_larg"
+                android:paddingTop="@dimen/margin_standard">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_standard"
+                    android:background="@drawable/corner_layout">
+
+                    <TextView
+                        android:id="@+id/google"
+                        style="@style/SmallText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="ورود باحساب گوگل"
+                        android:textColor="@color/grey"
+
+                        />
+
+                    <ImageView
+                        android:id="@+id/googleImg"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/padding_short"
+                        android:layout_marginRight="@dimen/padding_short"
+                        android:layout_toRightOf="@+id/google"
+                        android:src="@drawable/ic_google" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

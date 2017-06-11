@@ -79,7 +79,6 @@ public class SignupActivity extends StandardActivity implements RegisterContract
         setContentView(R.layout.activity_signup);
         ButterKnife.inject(this);
 
-        View logo = getLayoutInflater().inflate(R.layout.custom_imageview_toolbar, null);
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +104,7 @@ public class SignupActivity extends StandardActivity implements RegisterContract
 
     @Override
     protected int getLayoutId() {
-        return R.layout.custom_imageview_toolbar;
+        return R.layout.activity_signup;
     }
 
     @Override
@@ -261,7 +260,6 @@ public class SignupActivity extends StandardActivity implements RegisterContract
             input_tel.setError(message);
             valid = false;
         }
-
         return valid;
     }
 

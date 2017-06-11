@@ -63,6 +63,8 @@ dependencies {
 
     compile 'com.google.android.gms:play-services-places:10.0.1'
     compile 'com.google.android.gms:play-services-location:10.0.1'
+    compile 'com.google.android.gms:play-services-auth:10.0.1'
+
     //set default fonts in whole
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     //notification
@@ -70,6 +72,7 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.google.firebase:firebase-crash:10.0.1'
+    compile 'com.google.firebase:firebase-auth:10.0.1'
 //    compile('com.digits.sdk.android:digits:2.0.6@aar') {
 //        transitive = true;
 //    }

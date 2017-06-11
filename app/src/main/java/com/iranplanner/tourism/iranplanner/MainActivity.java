@@ -1,6 +1,7 @@
 package com.iranplanner.tourism.iranplanner;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 //import com.digits.sdk.android.DigitsException;
 //import com.digits.sdk.android.DigitsSession;
 import com.iranplanner.tourism.iranplanner.adapter.TabPagerAdapter;
+import com.iranplanner.tourism.iranplanner.ui.activity.SendPhoneActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
@@ -36,6 +38,13 @@ public class MainActivity extends StandardActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+//------- check for send sms
+
+        /*if (Util.getUseRIdFromShareprefrence(getApplicationContext()) == null ||Util.getUseRIdFromShareprefrence(getApplicationContext())=="" ) {
+            Intent intentSendPhone = new Intent(this, SendPhoneActivity.class);
+            startActivity(intentSendPhone);
+        } else {*/
+
 
 //        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
 //        Digits digits = new Digits.Builder()
@@ -47,7 +56,7 @@ public class MainActivity extends StandardActivity {
 
 //        test test=new test();
 //        test.getItinerary("342");
-        // Setup the viewPager
+            // Setup the viewPager
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        Button btn = (Button) findViewById(R.id.btnss);
 
@@ -56,31 +65,31 @@ public class MainActivity extends StandardActivity {
 //        toolbar.addView(logo);
 
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
-        TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this);
-        if (viewPager != null)
-            viewPager.setAdapter(pagerAdapter);
+            ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
+            TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this);
+            if (viewPager != null)
+                viewPager.setAdapter(pagerAdapter);
 
-        TabLayout mainTabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        if (mainTabLayout != null) {
-            mainTabLayout.setupWithViewPager(viewPager);
-            for (int i = 0; i < mainTabLayout.getTabCount(); i++) {
-                TabLayout.Tab tab = mainTabLayout.getTabAt(i);
-                if (tab != null) {
-                    tab.setCustomView(pagerAdapter.getTabView(i));
+            TabLayout mainTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+            if (mainTabLayout != null) {
+                mainTabLayout.setupWithViewPager(viewPager);
+                for (int i = 0; i < mainTabLayout.getTabCount(); i++) {
+                    TabLayout.Tab tab = mainTabLayout.getTabAt(i);
+                    if (tab != null) {
+                        tab.setCustomView(pagerAdapter.getTabView(i));
+                    }
                 }
-            }
 
-        }
-        Bundle extras = getIntent().getExtras();
-        int position = 0;
-        if (extras != null) {
-            position = extras.getInt("viewpager_position");
-        }
-        mainTabLayout.getTabAt(position).getCustomView().setSelected(true);
-        currentTab = (StandardFragment) pagerAdapter.getItem(position);
-        viewPager.setCurrentItem(position);
-        Util.displayFirebaseRegId(this);
+            }
+            Bundle extras = getIntent().getExtras();
+            int position = 0;
+            if (extras != null) {
+                position = extras.getInt("viewpager_position");
+            }
+            mainTabLayout.getTabAt(position).getCustomView().setSelected(true);
+            currentTab = (StandardFragment) pagerAdapter.getItem(position);
+            viewPager.setCurrentItem(position);
+            Util.displayFirebaseRegId(this);
 //---------------------------------------------------
 //
 //        DigitsRegisterButton digitsButton = (DigitsRegisterButton) findViewById(R.id.signup_button);
@@ -98,8 +107,8 @@ public class MainActivity extends StandardActivity {
 //            }
 //        });
 
-
-    }
+        }
+//    }
 
     @Override
     protected int getLayoutId() {

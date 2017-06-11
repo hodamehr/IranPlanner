@@ -22,9 +22,9 @@ public class SmsListener extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
-            if (!Utils.isWaitingForSms()) {
-                return;
-            }
+//            if (!Utils.isWaitingForSms()) {
+//                return;
+//            }
             Bundle bundle = intent.getExtras();
             SmsMessage[] msgs;
             if (bundle != null) {

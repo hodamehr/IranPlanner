@@ -57,7 +57,7 @@ import tools.Util;
  * Created by h.vahidimehr on 10/01/2017.
  */
 
-public class ItineraryListFragment extends StandardFragment implements MainSearchContract.View,/* Callback<ResultItineraryList>,*/ DataTransferInterface {
+public class ItineraryListFragment extends StandardFragment implements MainSearchContract.View,DataTransferInterface {
 
     @Inject
     MainSearchPresenter mainPresenter;
@@ -79,6 +79,9 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
     String attractionId, cityFrom;
 
     private ProgressBar waitingLoading;
+
+    private boolean loading = true;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
 
     private void checkFromWhereGetBundle() {
         Bundle bundle = getArguments();
@@ -186,62 +189,7 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
         return view;
     }
 
-    public void getIntrestResponce(ImageView img, final int position, final String duration, String cityid, String name) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(setHttpClient())
-                .baseUrl(Config.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-        //api-com.iranplanner.tourism.iranplanner.di.data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary
-//    28439&uid=792147600796866
 
-        Call<ResultWidgetFull> callc = getJsonInterface.getWidgetResult("nodeuser", cityid, name, "itinerary");
-        callc.enqueue(new Callback<ResultWidgetFull>() {
-            @Override
-            public void onResponse(Call<ResultWidgetFull> call, Response<ResultWidgetFull> response) {
-                Log.e("result of intresting", "true");
-                if (response.body() != null) {
-                    ResultWidgetFull res = response.body();
-                    List<ResultWidget> resultWidget = res.getResultWidget();
-                    Log.e("string", "item clicked");
-                    Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
-                    intent.putExtra("itineraryData", (Serializable) data.get(position));
-                    intent.putExtra("duration", duration);
-                    intent.putExtra("resultUserLogin", (Serializable) resultWidget);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
-                    intent.putExtra("itineraryData", (Serializable) data.get(position));
-                    intent.putExtra("duration", duration);
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultWidgetFull> call, Throwable t) {
-                Log.e("result of intresting", "false");
-                Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
-                intent.putExtra("itineraryData", (Serializable) data.get(position));
-                intent.putExtra("duration", duration);
-                startActivity(intent);
-            }
-        });
-    }
-
-//    @Override
-//    public void showItineraries(ResultItineraryList resultItineraryList) {
-//        loading = true;
-//        List<ResultItinerary> jj = resultItineraryList.getResultItinerary();
-//        if (!nextOffset.equals(resultItineraryList.getStatistics().getOffsetNext().toString())) {
-//            com.iranplanner.tourism.iranplanner.di.data.addAll(jj);
-//            adapter.notifyDataSetChanged();
-//            waitingLoading.setVisibility(View.INVISIBLE);
-//            nextOffset = resultItineraryList.getStatistics().getOffsetNext().toString();
-//
-//        }
-//
-//    }
 
     @Override
     public void showItineraries(ResultItineraryList resultItineraryList, String typeOfSearch) {
@@ -303,102 +251,6 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
 
         }
     }
-
-
-    private boolean loading = true;
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
-
-    private OkHttpClient setHttpClient() {
-        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build();
-        return okHttpClient;
-    }
-
-//    public void getItineraryCityToCity(String cityId, String offset, String toCity) {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://api.parsdid.com/iranplanner/app/")
-//                .client(setHttpClient())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        getJsonInterface getJsonInterface = retrofit.create(getJsonInterface.class);
-//        Call<ResultItineraryList> call = getJsonInterface.getItinerarys("list", "fa", cityId, "", offset, toCity);
-//        call.enqueue(this);
-//
-////        private MainView mainView;
-////        private FindItemsInteractor findItemsInteractor;
-////
-////        public MainPresenterImpl(MainView mainView, FindItemsInteractor findItemsInteractor) {
-////            this.mainView = mainView;
-////        this.findItemsInteractor = findItemsInteractor;
-////    }
-//
-//
-//    }
-//
-//    public void getItineraryProvince(String offset, String provinceId) {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://api.parsdid.com/iranplanner/app/")
-//                .client(setHttpClient())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-//        Call<ResultItineraryList> call = getJsonInterface.getItinerarysFromProvince("searchprovince", provinceId, offset);
-//        call.enqueue(this);
-//    }
-//
-//    public void getItineraryCity(String cityId, String offset, String toCity) {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://api.parsdid.com/iranplanner/app/")
-//                .client(setHttpClient())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-//        Call<ResultItineraryList> call = getJsonInterface.getItinerarys("list", "fa", cityId, "", offset, toCity);
-//        call.enqueue(this);
-//    }
-//
-//    public void getItineraryAttraction(String cityId, String offset, String attractionId) {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://api.parsdid.com/iranplanner/app/")
-//                .client(setHttpClient())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-//        Call<ResultItineraryList> call = getJsonInterface.getItinerarysAttraction("searchattractioncity", "fa", cityId, "", offset, attractionId);
-//        call.enqueue(this);
-//    }
-//
-//    @Override
-//    public void onResponse(Call<ResultItineraryList> call, Response<ResultItineraryList> response) {
-//        if (response.body() != null) {
-//            loading = false;
-//            ResultItineraryList jsonResponse = response.body();
-//            List<ResultItinerary> jj = jsonResponse.getResultItinerary();
-//            if (!nextOffset.equals(response.body().getStatistics().getOffsetNext().toString())) {
-//                com.iranplanner.tourism.iranplanner.di.data.addAll(jj);
-//                adapter.notifyDataSetChanged();
-//                waitingLoading.setVisibility(View.INVISIBLE);
-//                nextOffset = response.body().getStatistics().getOffsetNext().toString();
-//            }
-//
-//        } else {
-//            Log.e("Responce body", "null");
-//            waitingLoading.setVisibility(View.INVISIBLE);
-//        }
-//    }
-//
-//    @Override
-//    public void onFailure(Call<ResultItineraryList> call, Throwable t) {
-//        Log.e(" error from server", "error");
-//        Toast.makeText(getContext(), "عدم ارتباط با اینترنت", Toast.LENGTH_LONG).show();
-//    }
-
-
     @Override
     public void setValues(ArrayList<String> al) {
         al.get(0);

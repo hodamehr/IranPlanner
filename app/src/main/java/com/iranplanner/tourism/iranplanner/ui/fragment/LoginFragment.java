@@ -8,6 +8,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,15 +23,32 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.di.CommentModule;
 import com.iranplanner.tourism.iranplanner.di.DaggerLoginComponent;
 import com.iranplanner.tourism.iranplanner.di.LoginModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
+import com.iranplanner.tourism.iranplanner.ui.activity.RegisterActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.SignupActivity;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.iranplanner.tourism.iranplanner.ui.presenter.LoginPresenter;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.LoginContract;
+
+import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
@@ -48,15 +69,19 @@ import tools.Util;
  * Created by h.vahidimehr on 04/02/2017.
  */
 
-public class LoginFragment extends StandardFragment implements LoginContract.View {
+public class LoginFragment extends StandardFragment implements LoginContract.View  {
 
     EditText _emailText;
     EditText _passwordText;
-    Button _loginButton;
+    TextView _loginButton;
     TextView _signupLink, loginCommand, logout;
     ProgressDialog progressDialog;
-    LinearLayout accountInputHolder;
+    LinearLayout accountInputHolder,  signupInputHolder;
     int counter = 0;
+    private GoogleApiClient mGoogleApiClient;
+    private FirebaseAuth mAuth;
+    private static final String TAG = "GoogleActivity";
+    private static final int RC_SIGN_IN = 9001;
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
@@ -74,17 +99,56 @@ public class LoginFragment extends StandardFragment implements LoginContract.Vie
         ButterKnife.inject(getActivity());
         _emailText = (EditText) view.findViewById(R.id.input_email);
         _passwordText = (EditText) view.findViewById(R.id.input_password);
-        _loginButton = (Button) view.findViewById(R.id.btn_login);
+        _loginButton = (TextView) view.findViewById(R.id.btn_login);
         _signupLink = (TextView) view.findViewById(R.id.link_signup);
         loginCommand = (TextView) view.findViewById(R.id.loginCommand);
         accountInputHolder = (LinearLayout) view.findViewById(R.id.accountInputHolder);
         logout = (TextView) view.findViewById(R.id.logout);
         loginCommand.setText("");
+        signupInputHolder= (LinearLayout) view.findViewById(R.id.  signupInputHolder);
+        view.findViewById(R.id.btnSignInGoogle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
         // login?
         setLoginName();
 
+        _emailText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                _loginButton.setEnabled(true);
+                _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+            }
+        });
+        _passwordText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                _loginButton.setEnabled(true);
+                _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+            }
+        });
         logout.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(final View v) {
@@ -93,16 +157,17 @@ public class LoginFragment extends StandardFragment implements LoginContract.Vie
                 _loginButton.setEnabled(true);
                 accountInputHolder.setVisibility(View.VISIBLE);
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_pink_stroke));
+                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
 
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_pink_stroke));
+                        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
                     }
 
                 }
                 loginCommand.setVisibility(View.GONE);
                 logout.setVisibility(View.GONE);
+                signupInputHolder.setVisibility(View.VISIBLE);
             }
         });
         _loginButton.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +185,7 @@ public class LoginFragment extends StandardFragment implements LoginContract.Vie
                         public void run() {
                             v.setEnabled(true);
                             v.setClickable(true);
-                            v.setBackground(getResources().getDrawable(R.drawable.button_corner_pink_stroke));
+                            v.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
                         }
                     }, 1000);
                 } else {
@@ -134,7 +199,9 @@ public class LoginFragment extends StandardFragment implements LoginContract.Vie
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SignupActivity.class);
+//                Intent intent = new Intent(getContext(), SignupActivity.class);
+//                startActivity(intent);
+                Intent intent = new Intent(getContext(), RegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -148,7 +215,7 @@ public class LoginFragment extends StandardFragment implements LoginContract.Vie
             loginCommand.setText(Util.getUserNameFromShareprefrence(getContext()) + " عزیز خوش آمدید");
             logout.setVisibility(View.VISIBLE);
             accountInputHolder.setVisibility(View.INVISIBLE);
-
+            signupInputHolder.setVisibility(View.INVISIBLE);
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                 _loginButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_cornner_disable));
 
@@ -166,11 +233,10 @@ public class LoginFragment extends StandardFragment implements LoginContract.Vie
         if (!validate()) {
             _loginButton.setEnabled(false);
             _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
-
             return;
         }
         _loginButton.setEnabled(true);
-        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_pink_stroke));
+        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
         accountInputHolder.setVisibility(View.INVISIBLE);
 
 
@@ -188,9 +254,9 @@ public class LoginFragment extends StandardFragment implements LoginContract.Vie
     @Override
     public void showLoginResult(LoginResult loginResult) {
         ResultUserLogin resultUserLogin = loginResult.getResultUserLogin();
-        saveDataINShareprefrence(resultUserLogin.getUserEmail(), resultUserLogin.getUserFname(), resultUserLogin.getUserLname(), resultUserLogin.getUserUid().toString());
+        Util.saveDataINShareprefrence(getContext(),resultUserLogin.getUserEmail(), resultUserLogin.getUserFname(), resultUserLogin.getUserLname(), resultUserLogin.getUserUid().toString());
         _loginButton.setEnabled(true);
-
+        signupInputHolder.setVisibility(View.INVISIBLE);
         accountInputHolder.setVisibility(View.VISIBLE);
         setLoginName();
     }
@@ -257,16 +323,6 @@ public class LoginFragment extends StandardFragment implements LoginContract.Vie
         editor.putString("gender", gender);
         editor.putString("userId", userId);
         editor.commit();
-        //----------------------
-//
-//
-//            SharedPreferences pref = getContext().getSharedPreferences(Config.SHARED_PREF, 0);
-//            SharedPreferences.Editor editors = pref.edit();
-//            editor.putString("regId", token);
-//            editor.putString("andId",androidId);
-//            editor.commit();
-
-
     }
 
     private void clearSharedprefrence() {

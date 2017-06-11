@@ -1,32 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/accountHolder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/light_blue"
             android:orientation="vertical"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:paddingTop="56dp">
+            android:paddingBottom="@dimen/padding_larg"
+            android:paddingLeft="@dimen/padding_larg"
+            android:paddingRight="@dimen/padding_larg"
+            android:paddingTop="@dimen/padding_big">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@mipmap/ic_sign_in"
-                app:civ_border_color="@color/greyLight"
-                app:civ_border_width="2dp"
-                />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -58,59 +53,129 @@
                 android:id="@+id/accountInputHolder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@drawable/corner_layout"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_standard"
+                android:paddingLeft="@dimen/padding_larg"
+                android:paddingRight="@dimen/padding_larg"
+                android:paddingTop="@dimen/margin_standard">
+
+                <ImageView
+                    android:layout_width="90dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_iranplanner_logo" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/input_email"
+                        style="@style/SmallText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Email"
+                        android:hint="پست الکترونیک"
                         android:inputType="textEmailAddress" />
                 </android.support.design.widget.TextInputLayout>
 
                 <!-- Password Label -->
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/input_password"
+                        style="@style/SmallText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Password"
-                        android:inputType="textPassword" />
+                        android:hint="کلمه عبور"
+                        android:inputType="textPassword"
+
+                        />
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.v7.widget.AppCompatButton
+                <TextView
                     android:id="@+id/btn_login"
+                    style="@style/SmallText"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/button_corner_pink_stroke"
-                    android:padding="12dp"
-                    android:text="ورود"
-                    android:textColor="@color/pink" />
+                    android:layout_marginTop="@dimen/margin_standard"
+                    android:background="@drawable/button_corner_blue_stroke"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_short"
+                    android:text="ورود به پروفایل"
+                    android:textColor="@color/main_blue" />
+
+                <TextView
+                    android:id="@+id/txtForgetPassword"
+                    style="@style/SmallText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_short"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_short"
+                    android:text="کلمه عبور را فراموش کرده اید؟"
+                    android:textColor="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/signupInputHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_standard"
+                android:background="@drawable/corner_layout"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_standard"
+                android:paddingLeft="@dimen/padding_larg"
+                android:paddingRight="@dimen/padding_larg"
+                android:paddingTop="@dimen/margin_standard">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_standard"
+                    android:background="@drawable/corner_layout">
+
+                    <com.google.android.gms.common.SignInButton
+                        android:id="@+id/btnSignInGoogle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></com.google.android.gms.common.SignInButton>
+                    <!-- <TextView
+                         android:id="@+id/google"
+                         style="@style/SmallText"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:gravity="center"
+                         android:text="ورود باحساب گوگل"
+                         android:textColor="@color/grey"
+                         android:layout_centerInParent="true"
+
+                         />
+                     <ImageView
+                         android:id="@+id/googleImg"
+                         android:layout_width="25dp"
+                         android:layout_height="25dp"
+                         android:src="@drawable/ic_google"
+                         android:layout_marginRight="@dimen/padding_short"
+                         android:layout_centerVertical="true"
+                         android:layout_toRightOf="@+id/google"
+                         android:layout_marginLeft="@dimen/padding_short"
+                         />-->
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/link_signup"
+                    style="@style/StandardText"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/button_corner_blue"
                     android:gravity="center"
-                    android:text="ساخت حساب کاربری"
-                    android:textColor="@color/blue"
-                    android:textSize="16dp" />
+                    android:padding="@dimen/padding_short"
+                    android:text="عضویت"
+                    android:textColor="@color/white_" />
             </LinearLayout>
-
 
         </LinearLayout>
     </ScrollView>

@@ -94,69 +94,9 @@ public abstract class StandardActivity extends AppCompatActivity {
 
     private boolean encrypted = false;
 
-//    public LoginResponse getFromPreferences() {
-//        String responseStr = ApplicationContext.getInstance().getFromPreferences(Constants.PREF_LOGIN_RESPONSE, "", encrypted);
-//        String[] split = responseStr.split(";");
-//        if (split.length != 5) {
-//            return null;
-//        }
-//
-//        boolean isSuccessful = Boolean.parseBoolean(split[0]);
-//        long userId = Long.parseLong(split[1]);
-//        long sessionId = Long.parseLong(split[2]);
-//        long sessionSecret = Long.parseLong(split[3]);
-//        boolean filledProfile = Boolean.parseBoolean(split[4]);
-//
-//        LoginResponse lastLoginResponse = new LoginResponse();
-//        lastLoginResponse.UserId = userId;
-//        lastLoginResponse.sessionId = sessionId;
-//        lastLoginResponse.sessionSecret = sessionSecret;
-//        lastLoginResponse.isSuccessful = isSuccessful;
-//        lastLoginResponse.filledProfile = filledProfile;
-//        return lastLoginResponse;
-//    }
 
-//    /**
-//     * This method is just for backward compatibility and will not available in release version
-//     */
-//    @Deprecated
-//    private LoginResponse getLoginResponseFromDatabase() {
-//        return loginService.getLastLoginResponse();
-//    }
 
-//    public void saveInPreferences(LoginResponse lastLoginResponse) {
-//        String combined = String.valueOf(lastLoginResponse.isSuccessful) + ";";
-//        combined += String.valueOf(lastLoginResponse.UserId) + ";";
-//        combined += String.valueOf(lastLoginResponse.sessionId) + ";";
-//        combined += String.valueOf(lastLoginResponse.sessionSecret) + ";";
-//        combined += String.valueOf(lastLoginResponse.filledProfile);
-//        ApplicationContext.getInstance().saveInPreferences(Constants.PREF_LOGIN_RESPONSE, combined, encrypted);
-//    }
 
-//    @Override
-//    protected void onPause() {
-//        clearReferences();
-//        super.onPause();
-//    }
-//
-//    @Override
-//    protected synchronized void onResume() {
-//        super.onResume();
-//        ApplicationContext.getInstance().setCurrentActivity(this);
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-////        SQLiteStudioService.instance().stop();
-//        clearReferences();
-//        super.onDestroy();
-//    }
-//
-//    private void clearReferences() {
-//        Activity currActivity = ApplicationContext.getInstance().getCurrentActivity();
-//        if (this.equals(currActivity))
-//            ApplicationContext.getInstance().setCurrentActivity(null);
-//    }
 
 
     public int getActionBarSize() {

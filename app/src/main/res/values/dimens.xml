@@ -14,7 +14,6 @@
     <dimen name="margin_xshort">4dp</dimen>
     <dimen name="margin_xxshort">2dp</dimen>
     <dimen name="margin_xxxshort">1dp</dimen>
-
     <dimen name="padding_short">8dp</dimen>
 
 </resources>

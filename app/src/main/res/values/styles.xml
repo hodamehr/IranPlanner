@@ -3,10 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/main_blue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/pink</item>
+        <item name="colorAccent">@color/main_blue</item>
     </style>
+
     <style name="StandardText">
         <item name="fontPath">fonts/IRANSansMobile.ttf</item>
         <item name="android:textSize">14sp</item>
@@ -46,4 +47,39 @@
         <item name="android:textColorLink">@color/transparent</item>
         <item name="android:colorAccent">#ff398622</item>
     </style>
+    <style name="TextLabel" parent="@android:style/TextAppearance">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/white_</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/white_</item>
+        <item name="colorControlNormal">@color/white_</item>
+        <item name="colorControlActivated">@color/white_</item>
+
+    </style>
+
+ <!--   <style name="Widget.Design.TextInputLayout" parent="AppTheme">
+        <item name="hintTextAppearance">@style/AppTheme.TextFloatLabelAppearance</item>
+        <item name="errorTextAppearance">@style/AppTheme.TextErrorAppearance</item>
+        <item name="counterTextAppearance">@style/TextAppearance.Design.Counter</item>
+        <item name="counterOverflowTextAppearance">@style/TextAppearance.Design.Counter.Overflow</item>
+    </style>
+
+    <style name="AppTheme.TextFloatLabelAppearance" parent="TextAppearance.Design.Hint">
+        &lt;!&ndash; Floating label appearance here &ndash;&gt;
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColorHint">@color/white_</item>
+
+        &lt;!&ndash; Label color in TRUE state and bar color FALSE and TRUE State &ndash;&gt;
+        <item name="colorAccent">@color/white_</item>
+        <item name="colorControlNormal">@color/white_</item>
+        <item name="colorControlActivated">@color/white_</item>
+    </style>
+
+    <style name="AppTheme.TextErrorAppearance" parent="TextAppearance.Design.Error">
+        &lt;!&ndash; Error message appearance here &ndash;&gt;
+        <item name="android:textColor">#ffcc00</item>
+        <item name="android:textSize">20sp</item>
+    </style>-->
 </resources>

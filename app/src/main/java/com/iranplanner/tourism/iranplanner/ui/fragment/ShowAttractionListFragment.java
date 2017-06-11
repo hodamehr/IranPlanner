@@ -49,7 +49,7 @@ import server.getJsonInterface;
 import tools.Util;
 
 
-public class ShowAttractionListFragment extends StandardFragment implements /*Callback<ResultItineraryList>,*/ DataTransferInterface {
+public class ShowAttractionListFragment extends StandardFragment implements DataTransferInterface {
     private Context context;
     private RecyclerView attractionRecyclerView;
     private AttractionsListAdapter adapter;
@@ -102,7 +102,6 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
                 imageTextAttractionHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        getIntrestResponce(position, itineraryActionList.get(position).getAttractionId(), Util.getUseRIdFromShareprefrence(getContext()));
                         ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
                         Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
                         intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
@@ -113,25 +112,13 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
                 moreInfoHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        getIntrestResponce(position, itineraryActionList.get(position).getAttractionId(), Util.getUseRIdFromShareprefrence(getContext()));
                         ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
                         Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
                         intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
                         startActivity(intent);
                     }
                 });
-//                ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
-//                Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
-//                intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
-//                startActivity(intent);
-//                DetailAttractionFragment fragment = new DetailAttractionFragment();
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("ResultItineraryAttraction", ResultItineraryAttraction);
 
-//                fragment.setArguments(bundle);
-//                final FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.replace(R.id.Holder, fragment, "NewFragmentTag");
-//                ft.commit();
             }
         }));
 
@@ -152,69 +139,11 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
             }
 //            }
         });
-//        arrowLeft.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getContext(),"به سمت چپ بکشید",Toast.LENGTH_LONG).show();
-//
-//            }
-//        });
+
         return view;
     }
 
-    private OkHttpClient setHttpClient() {
-        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build();
-        return okHttpClient;
-    }
 
-    public void getIntrestResponce(final int position, String attractionId, String uid) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(setHttpClient())
-                .baseUrl(Config.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        getJsonInterface getJsonInterface = retrofit.create(server.getJsonInterface.class);
-
-//        api.parsdid.com/iranplanner/app/api-com.iranplanner.tourism.iranplanner.di.data.php?action=nodeuser&id=29839&uid=792147600796866&ntype=attraction
-        Call<ResultWidgetFull> callc = getJsonInterface.getWidgetResult("nodeuser", attractionId, uid, "attraction");
-        callc.enqueue(new Callback<ResultWidgetFull>() {
-            @Override
-            public void onResponse(Call<ResultWidgetFull> call, Response<ResultWidgetFull> response) {
-                Log.e("result of intresting", "true");
-
-                if (response.body() != null) {
-                    ResultWidgetFull res = response.body();
-                    List<ResultWidget> resultWidget = res.getResultWidget();
-                    Log.e("string", "item clicked");
-                    ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
-                    Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
-                    intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
-                    intent.putExtra("resultWidget", (Serializable) resultWidget);
-                    startActivity(intent);
-
-                } else {
-                    ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
-                    Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
-                    intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
-                    startActivity(intent);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResultWidgetFull> call, Throwable t) {
-                Log.e("result of intresting", "false");
-                ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
-                Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
-                intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
-                startActivity(intent);
-            }
-        });
-    }
 
     private void buildAlertMessageNoGps(final int position) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -266,40 +195,7 @@ public class ShowAttractionListFragment extends StandardFragment implements /*Ca
     private boolean loading = true;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
 
-    //    public void getItinerary(String cityId, String offset) {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://api.parsdid.com/iranplanner/app/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        getJsonInterface getJsonInterface = retrofit.create(getJsonInterface.class);
-//        Call<ResultItineraryList> call = getJsonInterface.getItinerarys("list", "fa", cityId, "", offset);
-//        call.enqueue(this);
-//    }
-//
-//    @Override
-//    public void onResponse(Call<ResultItineraryList> call, Response<ResultItineraryList> response) {
-//        if (response.body() != null) {
-//            loading = false;
-//            ResultItineraryList jsonResponse = response.body();
-//            List<ResultItinerary> jj = jsonResponse.getResultItinerary();
-//            com.iranplanner.tourism.iranplanner.di.data.addAll(jj);
-//            adapter.notifyDataSetChanged();
-//            waiting.setVisibility(View.INVISIBLE);
-//        } else {
-//            Log.e("Responce body", "null");
-//            waiting.setVisibility(View.VISIBLE);
-//        }
-//
-////        rotateloading.stop();
-//    }
-//
-//    @Override
-//    public void onFailure(Call<ResultItineraryList> call, Throwable t) {
-//        Log.e(" error from server", "error");
-//    }
-//
-//
+
     @Override
     public void setValues(ArrayList<String> al) {
         al.get(0);

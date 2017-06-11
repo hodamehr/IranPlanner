@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.activity.SendPhoneActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,8 +32,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ui.activity.notifyActivity" />
+        <activity
+            android:name=".ui.activity.SendPhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.notifyActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.StandardActivity"
             android:screenOrientation="portrait" />
@@ -42,6 +46,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.GetTokenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.RegisterActivity"
             android:screenOrientation="portrait" />
         <!-- <activity android:name=".activity.SearchCityCityActivity" />-->
         <!-- App Indexing. See https://g.co/AppIndexing/AndroidStudio for more information. -->
@@ -96,7 +103,7 @@
             </intent-filter>
         </service>
         <!-- ./Firebase Notifications -->
-   <receiver android:name="tools.SmsListener">
+        <receiver android:name="tools.SmsListener">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
