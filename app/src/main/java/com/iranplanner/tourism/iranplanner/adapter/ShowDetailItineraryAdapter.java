@@ -5,8 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.iranplanner.tourism.iranplanner.ui.fragment.MainSearchFragment;
-import com.iranplanner.tourism.iranplanner.ui.fragment.PageFragment;
+
 import com.iranplanner.tourism.iranplanner.ui.fragment.ShowAttractionListFragment;
 
 import java.io.Serializable;

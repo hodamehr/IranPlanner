@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -17,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,26 +27,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.di.CommentModule;
 import com.iranplanner.tourism.iranplanner.di.DaggerLoginComponent;
 import com.iranplanner.tourism.iranplanner.di.LoginModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
-import com.iranplanner.tourism.iranplanner.ui.activity.RegisterActivity;
-import com.iranplanner.tourism.iranplanner.ui.activity.SignupActivity;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
+import com.iranplanner.tourism.iranplanner.ui.activity.RegisterActivity;
 import com.iranplanner.tourism.iranplanner.ui.presenter.LoginPresenter;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.LoginContract;
-
-import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
@@ -56,33 +44,34 @@ import butterknife.ButterKnife;
 import entity.LoginReqSend;
 import entity.LoginResult;
 import entity.ResultUserLogin;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import server.Config;
-import server.getJsonInterface;
 import tools.Util;
 
 /**
  * Created by h.vahidimehr on 04/02/2017.
  */
 
-public class LoginFragment extends StandardFragment implements LoginContract.View  {
+public class LoginFragment extends StandardFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoginContract.View {
 
     EditText _emailText;
     EditText _passwordText;
     TextView _loginButton;
     TextView _signupLink, loginCommand, logout;
     ProgressDialog progressDialog;
-    LinearLayout accountInputHolder,  signupInputHolder;
+    LinearLayout accountInputHolder, signupInputHolder;
     int counter = 0;
-    private GoogleApiClient mGoogleApiClient;
-    private FirebaseAuth mAuth;
+
+    //==========google signin
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
 
+    // [START declare_auth]
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+
+    private GoogleApiClient mGoogleApiClient;
+
+    //  =============
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
         return fragment;
@@ -105,11 +94,28 @@ public class LoginFragment extends StandardFragment implements LoginContract.Vie
         accountInputHolder = (LinearLayout) view.findViewById(R.id.accountInputHolder);
         logout = (TextView) view.findViewById(R.id.logout);
         loginCommand.setText("");
-        signupInputHolder= (LinearLayout) view.findViewById(R.id.  signupInputHolder);
+        signupInputHolder = (LinearLayout) view.findViewById(R.id.signupInputHolder);
+
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        // [END config_signin]
+
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .enableAutoManage(getActivity(), this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        // [START initialize_auth]
+        mAuth = FirebaseAuth.getInstance();
+        // [END initialize_auth]
+
         view.findViewById(R.id.btnSignInGoogle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                signIn();
             }
         });
         // login?
@@ -210,7 +216,7 @@ public class LoginFragment extends StandardFragment implements LoginContract.Vie
     }
 
     private void setLoginName() {
-        if (!Util.getUseRIdFromShareprefrence(getContext()).equals("") ) {
+        if (!Util.getUseRIdFromShareprefrence(getContext()).equals("")) {
             loginCommand.setVisibility(View.VISIBLE);
             loginCommand.setText(Util.getUserNameFromShareprefrence(getContext()) + " عزیز خوش آمدید");
             logout.setVisibility(View.VISIBLE);
@@ -239,28 +245,37 @@ public class LoginFragment extends StandardFragment implements LoginContract.Vie
         _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
         accountInputHolder.setVisibility(View.INVISIBLE);
 
+        requestLogin(_emailText.getText().toString(), Util.md5(_passwordText.getText().toString()));
+    }
 
-//        showProgress();
-        String email = _emailText.getText().toString();
-        String password = Util.md5(_passwordText.getText().toString());
+    private void requestLogin(String email, String password) {
         DaggerLoginComponent.builder().netComponent(((App) getActivity().getApplicationContext()).getNetComponent())
                 .loginModule(new LoginModule(this))
                 .build().inject(this);
         String cid = Util.getTokenFromSharedPreferences(getContext());
         String andId = Util.getAndroidIdFromSharedPreferences(getContext());
         loginPresenter.getLoginPostResul(new LoginReqSend("login", email, password, cid, andId), cid, andId);
+
     }
 
     @Override
     public void showLoginResult(LoginResult loginResult) {
         ResultUserLogin resultUserLogin = loginResult.getResultUserLogin();
-        Util.saveDataINShareprefrence(getContext(),resultUserLogin.getUserEmail(), resultUserLogin.getUserFname(), resultUserLogin.getUserLname(), resultUserLogin.getUserUid().toString());
+//        Util.saveDataINShareprefrence(getContext(), resultUserLogin.getUserEmail(), resultUserLogin.getUserFname(), resultUserLogin.getUserLname(), resultUserLogin.getUserUid().toString());
+        setSaveDataInShareprefrence(resultUserLogin.getUserEmail(), resultUserLogin.getUserFname(), resultUserLogin.getUserLname(), resultUserLogin.getUserUid().toString());
+//        _loginButton.setEnabled(true);
+//        signupInputHolder.setVisibility(View.INVISIBLE);
+//        accountInputHolder.setVisibility(View.VISIBLE);
+//        setLoginName();
+    }
+
+    private void setSaveDataInShareprefrence(String email,String name,String lName,String userId){
+        Util.saveDataINShareprefrence(getContext(), email,name, lName, userId);
         _loginButton.setEnabled(true);
         signupInputHolder.setVisibility(View.INVISIBLE);
         accountInputHolder.setVisibility(View.VISIBLE);
         setLoginName();
     }
-
     @Override
     public void showError(String message) {
         if (message.equals("HTTP 400 BAD REQUEST")) {
@@ -334,12 +349,61 @@ public class LoginFragment extends StandardFragment implements LoginContract.Vie
 //        settings.edit().clear().commit();
     }
 
-    private String getDataFromShareprefrence() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String ShareprefrenceName = preferences.getString("fname", "");
-        return ShareprefrenceName;
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
 
     }
 
+    @Override
+    public void onConnectionSuspended(int i) {
 
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+
+            setSaveDataInShareprefrence(acct.getEmail(),acct.getDisplayName(),acct.getFamilyName(),"");
+//            mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
+//            updateUI(true);
+        } else {
+            // Signed out, show unauthenticated UI.
+//            updateUI(false);
+        }
+    }
+    // [END handleSignInResult]
+
+
+    // [START signin]
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+    }
 }
