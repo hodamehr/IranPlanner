@@ -32,6 +32,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.EditProfileActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.SendPhoneActivity"
             android:screenOrientation="portrait" />

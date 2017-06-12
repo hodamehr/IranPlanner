@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 public class LodgingRoomAvailability implements Serializable {
 
@@ -13,7 +14,7 @@ public class LodgingRoomAvailability implements Serializable {
     private Integer roomDateNo;
     @SerializedName("room_date_unix")
     @Expose
-    private Integer roomDateUnix;
+    private BigInteger roomDateUnix;
     @SerializedName("room_date_date")
     @Expose
     private String roomDateDate;
@@ -35,11 +36,11 @@ public class LodgingRoomAvailability implements Serializable {
         this.roomDateNo = roomDateNo;
     }
 
-    public Integer getRoomDateUnix() {
+    public BigInteger getRoomDateUnix() {
         return roomDateUnix;
     }
 
-    public void setRoomDateUnix(Integer roomDateUnix) {
+    public void setRoomDateUnix(BigInteger roomDateUnix) {
         this.roomDateUnix = roomDateUnix;
     }
 

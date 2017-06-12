@@ -70,6 +70,10 @@ public class Util {
         editor.putString("gender", gender);
         editor.putString("gender", gender);
         editor.putString("userId", userId);
+//        editor.putString("userCityId", userCityId);
+//        editor.putString("userCityName", userCityName);
+//        editor.putString("userEmailStatus", userEmailStatus);
+
         editor.commit();
     }
     public static final String displayFirebaseRegId(Context context) {
@@ -99,10 +103,14 @@ public class Util {
         return userId;
     }
     public static final String getUserNameFromShareprefrence(Context context) {
-
         SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF_USER, 0);
         String userName = pref.getString("fname", "");
         return userName;
+    }
+    public static final String getEmailFromShareprefrence(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF_USER, 0);
+        String email = pref.getString("email", "");
+        return email;
     }
     public static final String getTokenFromSharedPreferences(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF, 0);

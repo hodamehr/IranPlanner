@@ -13,6 +13,7 @@ import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.ui.fragment.LoginFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.MainSearchFragment;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.SettingFragment;
 
 /**
  * Created by Hoda on 10/01/2017.
@@ -48,12 +49,11 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         switch (pos) {
 
             case 0:
-
                 currentTab = MainSearchFragment.newInstance();
                 return currentTab;
 
             case 1:
-                currentTab = LoginFragment.newInstance();
+                currentTab = SettingFragment.newInstance();
                 return currentTab;
 
         }

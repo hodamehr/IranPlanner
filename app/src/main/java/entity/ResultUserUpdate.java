@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.math.BigInteger;
 
-public class ResultUserRegister {
+public class ResultUserUpdate {
 
     @SerializedName("status")
     @Expose

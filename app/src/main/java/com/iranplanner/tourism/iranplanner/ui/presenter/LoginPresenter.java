@@ -88,7 +88,7 @@ public class LoginPresenter extends LoginContract {
 
     @Override
     public void getLoginPostResul(LoginReqSend loginReqSend, String cid, String androidId) {
-        mView.showProgress();
+//        mView.showProgress();
         retrofit.create(LoginService.class).getLoginPostResul(loginReqSend, cid, androidId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -97,13 +97,13 @@ public class LoginPresenter extends LoginContract {
 
                     @Override
                     public void onCompleted() {
-                        mView.dismissProgress();
+//                        mView.dismissProgress();
                         mView.showComplete();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.dismissProgress();
+//                        mView.dismissProgress();
                         mView.showError(e.getMessage());
                     }
 

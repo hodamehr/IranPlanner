@@ -807,7 +807,7 @@
             android:text="مشاهده اتاق های هتل"
             style="@style/StandardTitle"
             android:textColor="@color/white_"
-            android:visibility="gone"/>
+            />
 <!--
         <TextView
             style="@style/StandardTitle"

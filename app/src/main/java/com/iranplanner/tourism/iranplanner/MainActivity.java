@@ -15,6 +15,7 @@ import android.widget.Toast;
 //import com.digits.sdk.android.DigitsException;
 //import com.digits.sdk.android.DigitsSession;
 import com.iranplanner.tourism.iranplanner.adapter.TabPagerAdapter;
+import com.iranplanner.tourism.iranplanner.ui.activity.LoginActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.SendPhoneActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
@@ -38,6 +39,12 @@ public class MainActivity extends StandardActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        if (Util.getUseRIdFromShareprefrence(getApplicationContext()) == null || Util.getUseRIdFromShareprefrence(getApplicationContext()) == "") {
+            Intent intent = new Intent(this, LoginActivity.class);
+            finish();
+            startActivity(intent);
+        } else {
 //------- check for send sms
 
         /*if (Util.getUseRIdFromShareprefrence(getApplicationContext()) == null ||Util.getUseRIdFromShareprefrence(getApplicationContext())=="" ) {
@@ -107,7 +114,7 @@ public class MainActivity extends StandardActivity {
 //            }
 //        });
 
-        }
+        }}
 //    }
 
     @Override
