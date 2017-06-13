@@ -58,6 +58,7 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
     LinearLayout accountInputHolder, signupInputHolder;
     int counter = 0;
 
+
     //==========google signin
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -96,7 +97,6 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
         logout = (TextView) findViewById(R.id.logout);
         loginCommand.setText("");
         signupInputHolder = (LinearLayout) findViewById(R.id.signupInputHolder);
-
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -170,7 +170,6 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
                     }
-
                 }
                 loginCommand.setVisibility(View.GONE);
                 logout.setVisibility(View.GONE);
@@ -211,10 +210,7 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
             }
-        });
-
-
-    }
+        });    }
 
     private void setLoginName() {
         if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).equals("")) {
@@ -225,12 +221,10 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
             signupInputHolder.setVisibility(View.INVISIBLE);
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                 _loginButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_cornner_disable));
-
             } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     _loginButton.setBackground(getResources().getDrawable(R.drawable.button_cornner_disable));
                 }
-
             }
         }
     }
@@ -277,7 +271,6 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
     @Override
     public void showError(String message) {
         if (message.equals("HTTP 400 BAD REQUEST")) {
-//            progressDialog.dismiss();
             loginCommand.setVisibility(View.VISIBLE);
             loginCommand.setText("نام کاربری یا کلمه عبور اشتباه است.");
             accountInputHolder.setVisibility(View.VISIBLE);
@@ -299,7 +292,7 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
     }
 
     public void showProgress() {
-        progressDialog = new ProgressDialog(getApplicationContext());
+        progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("احراز هویت...");
         progressDialog.show();
@@ -307,7 +300,7 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
 
     @Override
     public void dismissProgress() {
-        if (progressDialog.isShowing() == true) {
+        if (progressDialog.isShowing() == true|| progressDialog!=null) {
             progressDialog.dismiss();
         }
     }

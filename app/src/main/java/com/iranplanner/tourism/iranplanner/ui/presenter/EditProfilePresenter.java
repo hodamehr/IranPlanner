@@ -70,7 +70,7 @@ public class EditProfilePresenter extends EditProfileContract {
 
                     @Override
                     public void onError(Throwable e) {
-//                        mView.commentResult(e.getMessage());
+                        mView.showError(e.getMessage());
                     }
 
                     @Override

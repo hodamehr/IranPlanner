@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 import java.math.BigInteger;
 
 public class ResultUserUpdate {
-
     @SerializedName("status")
     @Expose
     private String status;
@@ -25,31 +24,34 @@ public class ResultUserUpdate {
     private String userLname;
     @SerializedName("user_gender")
     @Expose
-    private String userGender;
+    private Integer userGender;
     @SerializedName("user_email")
     @Expose
     private String userEmail;
     @SerializedName("user_birthday")
     @Expose
-    private String userBirthday;
+    private BigInteger userBirthday;
     @SerializedName("user_city_id")
     @Expose
-    private String userCityId;
+    private Integer userCityId;
     @SerializedName("user_city_name")
     @Expose
     private String userCityName;
     @SerializedName("user_email_status")
     @Expose
-    private String userEmailStatus;
+    private Integer userEmailStatus;
     @SerializedName("user_phone_status")
     @Expose
-    private String userPhoneStatus;
+    private Integer userPhoneStatus;
     @SerializedName("user_phone")
     @Expose
     private String userPhone;
     @SerializedName("user_newsletter")
     @Expose
-    private String userNewsletter;
+    private Integer userNewsletter;
+    @SerializedName("user_cid")
+    @Expose
+    private Integer userCid;
 
     public String getStatus() {
         return status;
@@ -91,11 +93,11 @@ public class ResultUserUpdate {
         this.userLname = userLname;
     }
 
-    public String getUserGender() {
+    public Integer getUserGender() {
         return userGender;
     }
 
-    public void setUserGender(String userGender) {
+    public void setUserGender(Integer userGender) {
         this.userGender = userGender;
     }
 
@@ -107,19 +109,19 @@ public class ResultUserUpdate {
         this.userEmail = userEmail;
     }
 
-    public String getUserBirthday() {
+    public BigInteger getUserBirthday() {
         return userBirthday;
     }
 
-    public void setUserBirthday(String userBirthday) {
+    public void setUserBirthday(BigInteger userBirthday) {
         this.userBirthday = userBirthday;
     }
 
-    public String getUserCityId() {
+    public Integer getUserCityId() {
         return userCityId;
     }
 
-    public void setUserCityId(String userCityId) {
+    public void setUserCityId(Integer userCityId) {
         this.userCityId = userCityId;
     }
 
@@ -131,19 +133,19 @@ public class ResultUserUpdate {
         this.userCityName = userCityName;
     }
 
-    public String getUserEmailStatus() {
+    public Integer getUserEmailStatus() {
         return userEmailStatus;
     }
 
-    public void setUserEmailStatus(String userEmailStatus) {
+    public void setUserEmailStatus(Integer userEmailStatus) {
         this.userEmailStatus = userEmailStatus;
     }
 
-    public String getUserPhoneStatus() {
+    public Integer getUserPhoneStatus() {
         return userPhoneStatus;
     }
 
-    public void setUserPhoneStatus(String userPhoneStatus) {
+    public void setUserPhoneStatus(Integer userPhoneStatus) {
         this.userPhoneStatus = userPhoneStatus;
     }
 
@@ -155,12 +157,20 @@ public class ResultUserUpdate {
         this.userPhone = userPhone;
     }
 
-    public String getUserNewsletter() {
+    public Integer getUserNewsletter() {
         return userNewsletter;
     }
 
-    public void setUserNewsletter(String userNewsletter) {
+    public void setUserNewsletter(Integer userNewsletter) {
         this.userNewsletter = userNewsletter;
+    }
+
+    public Integer getUserCid() {
+        return userCid;
+    }
+
+    public void setUserCid(Integer userCid) {
+        this.userCid = userCid;
     }
 
 }
