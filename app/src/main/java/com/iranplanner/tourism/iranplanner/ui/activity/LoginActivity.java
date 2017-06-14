@@ -232,6 +232,7 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
     public void login() {
 
         if (!validate()) {
+            Toast.makeText(getApplicationContext(),"اشکال در مقادیر ورودی",Toast.LENGTH_SHORT).show();
             _loginButton.setEnabled(false);
             _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
             return;
@@ -315,7 +316,6 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
         } else {
             _emailText.setError(null);
         }
-
         return valid;
     }
 
@@ -372,7 +372,6 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-
             setSaveDataInShareprefrence(acct.getEmail(),acct.getDisplayName(),acct.getFamilyName(),"");
 //            mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
 //            updateUI(true);

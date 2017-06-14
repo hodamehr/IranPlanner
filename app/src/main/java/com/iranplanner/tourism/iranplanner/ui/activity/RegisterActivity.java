@@ -133,6 +133,7 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
     public void signup() {
         Log.d(TAG, "Signup");
         if (!validate()) {
+            Toast.makeText(getApplicationContext(),"اشکال در مقادیر ورودی",Toast.LENGTH_SHORT).show();
             _signupButton.setEnabled(true);
             return;
         }

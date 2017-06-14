@@ -157,6 +157,7 @@ public class SignupActivity extends StandardActivity implements RegisterContract
     public void signup() {
         Log.d(TAG, "Signup");
         if (!validate()) {
+            Toast.makeText(getApplicationContext(),"اشکال در مقادیر ورودی",Toast.LENGTH_SHORT).show();
             _signupButton.setEnabled(true);
             return;
         }

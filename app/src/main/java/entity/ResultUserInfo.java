@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.math.BigInteger;
 
-public class ResultUserLogin implements Serializable{
+public class ResultUserInfo implements Serializable{
 
     @SerializedName("status")
     @Expose
@@ -32,7 +32,7 @@ public class ResultUserLogin implements Serializable{
     private String userEmail;
     @SerializedName("user_birthday")
     @Expose
-    private BigInteger userBirthday;
+    private Integer userBirthday;
     @SerializedName("user_city_id")
     @Expose
     private Integer userCityId;
@@ -51,9 +51,6 @@ public class ResultUserLogin implements Serializable{
     @SerializedName("user_newsletter")
     @Expose
     private Integer userNewsletter;
-    @SerializedName("user_cid")
-    @Expose
-    private Integer userCid;
 
     public String getStatus() {
         return status;
@@ -111,11 +108,11 @@ public class ResultUserLogin implements Serializable{
         this.userEmail = userEmail;
     }
 
-    public BigInteger getUserBirthday() {
+    public Integer getUserBirthday() {
         return userBirthday;
     }
 
-    public void setUserBirthday(BigInteger userBirthday) {
+    public void setUserBirthday(Integer userBirthday) {
         this.userBirthday = userBirthday;
     }
 
@@ -165,14 +162,6 @@ public class ResultUserLogin implements Serializable{
 
     public void setUserNewsletter(Integer userNewsletter) {
         this.userNewsletter = userNewsletter;
-    }
-
-    public Integer getUserCid() {
-        return userCid;
-    }
-
-    public void setUserCid(Integer userCid) {
-        this.userCid = userCid;
     }
 
 }

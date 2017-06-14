@@ -3,16 +3,20 @@ package com.iranplanner.tourism.iranplanner.ui.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.coinpany.core.android.widget.Utils;
 import com.coinpany.core.android.widget.calendar.dateutil.PersianCalendar;
@@ -30,6 +34,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import entity.ResultUpdate;
+import entity.ResultUserInfo;
 import entity.updateProfileSend;
 import tools.Util;
 import tools.widget.PersianDatePicker;
@@ -42,7 +47,7 @@ import static com.iranplanner.tourism.iranplanner.R.id.year;
  */
 
 public class EditProfileActivity extends StandardActivity implements View.OnClickListener, EditProfileContract.View {
-    TextView email_address, txtDate, btnEditProfile;
+    TextView email_address, txtDate, btnEditProfile, btnOpenEditProfile, txtTitle, txtGenderShow, txtNameValueShow, txtFamilyValueShow, txtPhonValueShow, txtBirthdayShow, txtLodgingValueShow;
     EditText input_tel, input_name, input_family, input_lodging;
     RelativeLayout changeDateHolder;
     CheckBox checkBoxNews;
@@ -52,7 +57,9 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
     @Inject
     EditProfilePresenter editProfilePresenter;
     DaggerEditProfileComponent.Builder builder;
-
+    LinearLayout editProfileHolder, showProfileHolder;
+    String from;
+    ResultUserInfo resultUserInfo;
 
     @Override
     protected int getLayoutId() {
@@ -63,19 +70,89 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        Intent intent = getIntent();
+        from = intent.getStringExtra("from");
+        resultUserInfo = (ResultUserInfo) intent.getSerializableExtra("infoUserResult");
+//------- edit profile
+        editProfileHolder = (LinearLayout) findViewById(R.id.editProfileHolder);
         email_address = (TextView) findViewById(R.id.email_address);
         email_address.setText(Util.getEmailFromShareprefrence(getApplicationContext()));
         changeDateHolder = (RelativeLayout) findViewById(R.id.changeDateHolder);
         txtDate = (TextView) findViewById(R.id.txtDate);
         btnEditProfile = (TextView) findViewById(R.id.btnEditProfile);
+        btnOpenEditProfile = (TextView) findViewById(R.id.btnOpenEditProfile);
         input_name = (EditText) findViewById(R.id.input_name);
         input_tel = (EditText) findViewById(R.id.input_tel);
         input_family = (EditText) findViewById(R.id.input_family);
         input_lodging = (EditText) findViewById(R.id.input_lodging);
-        radioMan= (RadioButton) findViewById(R.id.radioMan);
-        radioWoman= (RadioButton) findViewById(R.id.radioWoman);
+        radioMan = (RadioButton) findViewById(R.id.radioMan);
+        radioWoman = (RadioButton) findViewById(R.id.radioWoman);
+        txtTitle = (TextView) findViewById(R.id.txtTitle);
+//------ show profile
+        showProfileHolder = (LinearLayout) findViewById(R.id.showProfileHolder);
+        txtGenderShow = (TextView) findViewById(R.id.txtGenderShow);
+        txtNameValueShow = (TextView) findViewById(R.id.txtNameValueShow);
+        txtFamilyValueShow = (TextView) findViewById(R.id.txtFamilyValueShow);
+        txtPhonValueShow = (TextView) findViewById(R.id.txtPhonValueShow);
+        txtBirthdayShow = (TextView) findViewById(R.id.txtBirthdayShow);
+        txtLodgingValueShow = (TextView) findViewById(R.id.txtLodgingValueShow);
+
+        //----
+        if (from.equals("editKey") || from==null) {
+            editProfileHolder.setVisibility(View.VISIBLE);
+            showProfileHolder.setVisibility(View.GONE);
+            btnOpenEditProfile.setVisibility(View.GONE);
+            editProfileHolder.setVisibility(View.VISIBLE);
+            txtTitle.setText("ویرایش اطلاعات");
+
+        } else if (from.equals("showKey")) {
+            editProfileHolder.setVisibility(View.GONE);
+            showProfileHolder.setVisibility(View.VISIBLE);
+            btnOpenEditProfile.setVisibility(View.VISIBLE);
+            editProfileHolder.setVisibility(View.GONE);
+            txtTitle.setText("نمایش اطلاعات");
+        }
+
+        setValues();
         changeDateHolder.setOnClickListener(this);
         btnEditProfile.setOnClickListener(this);
+        btnOpenEditProfile.setOnClickListener(this);
+    }
+
+    private void setValues() {
+        String gender = (resultUserInfo.getUserGender() == 0) ? "زن" : "مرد";
+        txtGenderShow.setText(gender);
+        txtNameValueShow.setText(resultUserInfo.getUserFname());
+        txtFamilyValueShow.setText(resultUserInfo.getUserLname());
+        txtPhonValueShow.setText(resultUserInfo.getUserPhone());
+//                txtBirthdayShow
+        txtLodgingValueShow.setText(resultUserInfo.getUserCityName());
+
+        input_name.setText(resultUserInfo.getUserFname());
+    }
+
+    public boolean validate() {
+        boolean valid = true;
+
+
+        String phoneNumber = input_tel.getText().toString();
+
+        if (!TextUtils.isEmpty(phoneNumber)) {
+
+            if (phoneNumber.trim().length() < 10
+                    || phoneNumber.trim().length() > 11
+                    || (phoneNumber.trim().length() == 11 && !phoneNumber.trim().startsWith("09"))
+                    || (phoneNumber.trim().length() == 10 && !phoneNumber.trim().startsWith("9"))) {
+                String message = "شماره تلفن همراه وارد شده صحیح نیست.";
+                input_tel.setError(message);
+                valid = false;
+            }
+        } else if (TextUtils.isEmpty(phoneNumber)) {
+            String message = "ثبت شماره تلفن اجباری است";
+            input_tel.setError(message);
+            valid = false;
+        }
+        return valid;
     }
 
     @Override
@@ -85,7 +162,20 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
                 CustomDialogTravel cdd = new CustomDialogTravel(this);
                 cdd.show();
                 break;
+            case R.id.btnOpenEditProfile:
+                Intent intent = new Intent(this, EditProfileActivity.class);
+                intent.putExtra("from","editKey");
+                intent.putExtra("infoUserResult",resultUserInfo);
+                startActivity(intent);
             case R.id.btnEditProfile:
+                if (from.equals("showKey")) {
+                    return;
+                }
+                if (!validate()) {
+                    Toast.makeText(getApplicationContext(), "اشکال در مقادیر ورودی", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 builder = DaggerEditProfileComponent.builder()
                         .netComponent(((App) getApplicationContext()).getNetComponent())
                         .editProfileModule(new EditProfileModule(this));
