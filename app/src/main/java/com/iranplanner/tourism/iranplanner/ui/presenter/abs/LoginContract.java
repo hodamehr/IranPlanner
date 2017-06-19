@@ -4,7 +4,7 @@ import com.iranplanner.tourism.iranplanner.ui.presenter.Presenter;
 
 import entity.LoginReqSend;
 import entity.LoginResult;
-import retrofit2.http.Body;
+import entity.GoogleLoginReqSend;
 
 
 /**
@@ -32,4 +32,6 @@ public abstract class LoginContract extends Presenter<LoginContract.View> {
 
     public abstract void getLoginPostResul(LoginReqSend request, String cid,
                                            String androidId);
+    public abstract void getGoogleLoginPostResult(GoogleLoginReqSend GoogleLoginReqSend, String cid,
+                                                  String androidId);
 }

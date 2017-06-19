@@ -4,7 +4,9 @@ package entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LoginResult {
+import java.io.Serializable;
+
+public class LoginResult implements Serializable{
 
     @SerializedName("Status")
     @Expose

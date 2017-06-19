@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -28,13 +29,17 @@ import com.iranplanner.tourism.iranplanner.ui.presenter.EditProfilePresenter;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.AttractionDetailContract;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.EditProfileContract;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.inject.Inject;
 
+import entity.EmailVerifyReq;
 import entity.ResultUpdate;
+import entity.ResultUpdateReturn;
 import entity.ResultUserInfo;
+import entity.ResultVerifyEmail;
 import entity.updateProfileSend;
 import tools.Util;
 import tools.widget.PersianDatePicker;
@@ -47,7 +52,7 @@ import static com.iranplanner.tourism.iranplanner.R.id.year;
  */
 
 public class EditProfileActivity extends StandardActivity implements View.OnClickListener, EditProfileContract.View {
-    TextView email_address, txtDate, btnEditProfile, btnOpenEditProfile, txtTitle, txtGenderShow, txtNameValueShow, txtFamilyValueShow, txtPhonValueShow, txtBirthdayShow, txtLodgingValueShow;
+    TextView email_verify, email_address, txtDate, btnEditProfile, btnOpenEditProfile, txtTitle, txtGenderShow, txtNameValueShow, txtFamilyValueShow, txtPhonValueShow, txtBirthdayShow, txtLodgingValueShow;
     EditText input_tel, input_name, input_family, input_lodging;
     RelativeLayout changeDateHolder;
     CheckBox checkBoxNews;
@@ -60,6 +65,8 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
     LinearLayout editProfileHolder, showProfileHolder;
     String from;
     ResultUserInfo resultUserInfo;
+    ImageView ImgUserEmailStatus;
+    RelativeLayout verifyEmailHolder;
 
     @Override
     protected int getLayoutId() {
@@ -76,6 +83,8 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
 //------- edit profile
         editProfileHolder = (LinearLayout) findViewById(R.id.editProfileHolder);
         email_address = (TextView) findViewById(R.id.email_address);
+        email_verify = (TextView) findViewById(R.id.email_verify);
+        verifyEmailHolder = (RelativeLayout) findViewById(R.id.verifyEmailHolder);
         email_address.setText(Util.getEmailFromShareprefrence(getApplicationContext()));
         changeDateHolder = (RelativeLayout) findViewById(R.id.changeDateHolder);
         txtDate = (TextView) findViewById(R.id.txtDate);
@@ -88,6 +97,8 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
         radioMan = (RadioButton) findViewById(R.id.radioMan);
         radioWoman = (RadioButton) findViewById(R.id.radioWoman);
         txtTitle = (TextView) findViewById(R.id.txtTitle);
+        checkBoxNews = (CheckBox) findViewById(R.id.checkBoxNews);
+        ImgUserEmailStatus = (ImageView) findViewById(R.id.ImgUserEmailStatus);
 //------ show profile
         showProfileHolder = (LinearLayout) findViewById(R.id.showProfileHolder);
         txtGenderShow = (TextView) findViewById(R.id.txtGenderShow);
@@ -96,9 +107,9 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
         txtPhonValueShow = (TextView) findViewById(R.id.txtPhonValueShow);
         txtBirthdayShow = (TextView) findViewById(R.id.txtBirthdayShow);
         txtLodgingValueShow = (TextView) findViewById(R.id.txtLodgingValueShow);
-
+        birthday = new Date();
         //----
-        if (from.equals("editKey") || from==null) {
+        if (from.equals("editKey") || from == null) {
             editProfileHolder.setVisibility(View.VISIBLE);
             showProfileHolder.setVisibility(View.GONE);
             btnOpenEditProfile.setVisibility(View.GONE);
@@ -113,14 +124,25 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
             txtTitle.setText("نمایش اطلاعات");
         }
 
-        setValues();
+        setValues(resultUserInfo);
         changeDateHolder.setOnClickListener(this);
         btnEditProfile.setOnClickListener(this);
         btnOpenEditProfile.setOnClickListener(this);
+        verifyEmailHolder.setOnClickListener(this);
     }
 
-    private void setValues() {
+    private void setValues(ResultUserInfo resultUserInfo) {
         String gender = (resultUserInfo.getUserGender() == 0) ? "زن" : "مرد";
+        if (resultUserInfo.getUserEmailStatus() == 0) {
+            verifyEmailHolder.setVisibility(View.VISIBLE);
+            ImgUserEmailStatus.setBackgroundResource(R.mipmap.ic_cancel_red);
+
+
+        } else {
+            verifyEmailHolder.setVisibility(View.GONE);
+            ImgUserEmailStatus.setBackgroundResource(R.mipmap.ic_checked_green);
+        }
+
         txtGenderShow.setText(gender);
         txtNameValueShow.setText(resultUserInfo.getUserFname());
         txtFamilyValueShow.setText(resultUserInfo.getUserLname());
@@ -129,6 +151,21 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
         txtLodgingValueShow.setText(resultUserInfo.getUserCityName());
 
         input_name.setText(resultUserInfo.getUserFname());
+
+        txtDate.setText(Utils.getSimpleDateMilli(Long.valueOf(resultUserInfo.getUserBirthday())));
+
+        //---edit
+
+        email_address.setText(resultUserInfo.getUserEmail());
+        input_name.setText(resultUserInfo.getUserFname());
+        input_tel.setText(resultUserInfo.getUserPhone());
+        input_family.setText(resultUserInfo.getUserLname());
+        input_lodging.setText(resultUserInfo.getUserCityName());
+
+        radioWoman.setChecked((resultUserInfo.getUserGender() == 0) ? true : false);
+        radioMan.setChecked((resultUserInfo.getUserGender() == 1) ? true : false);
+        txtPhonValueShow.setText(Utils.getSimpleDateMilli(Long.valueOf(resultUserInfo.getUserBirthday())));
+
     }
 
     public boolean validate() {
@@ -158,14 +195,20 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.verifyEmailHolder:
+                DaggerEditProfileComponent.builder()
+                        .netComponent(((App) getApplicationContext()).getNetComponent())
+                        .editProfileModule(new EditProfileModule(this)).build().inject(this);
+                editProfilePresenter.getVerifyEmail(new EmailVerifyReq(resultUserInfo.getUserEmail().toString(), resultUserInfo.getUserUid().toString()), Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                break;
             case R.id.changeDateHolder:
                 CustomDialogTravel cdd = new CustomDialogTravel(this);
                 cdd.show();
                 break;
             case R.id.btnOpenEditProfile:
                 Intent intent = new Intent(this, EditProfileActivity.class);
-                intent.putExtra("from","editKey");
-                intent.putExtra("infoUserResult",resultUserInfo);
+                intent.putExtra("from", "editKey");
+                intent.putExtra("infoUserResult", resultUserInfo);
                 startActivity(intent);
             case R.id.btnEditProfile:
                 if (from.equals("showKey")) {
@@ -188,6 +231,8 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
                     gender = "0";
                 }
 
+
+                String news = (checkBoxNews.isChecked() == true) ? "1" : "0";
                 updateProfileSend updateProfileSend = new updateProfileSend(Util.getUseRIdFromShareprefrence(getApplicationContext()).toString(),
                         input_name.getText().toString(),
                         input_family.getText().toString(),
@@ -195,10 +240,10 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
                         email_address.getText().toString(),
                         String.valueOf(birthday.getTime()),
                         "", input_lodging.getText().toString(),
-                        "0",
-                        "1",
+                        "0",//this.userPhoneStatus
+                        "1",//userEmailStatus
                         input_tel.getText().toString(),
-                        "1",
+                        news,//userNewsletter
                         Util.getTokenFromSharedPreferences(getApplicationContext()));
                 editProfilePresenter.getEditProfilePostResul(updateProfileSend, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
 
@@ -207,8 +252,23 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
     }
 
     @Override
-    public void showEditProfilePostResul(ResultUpdate resultUpdate) {
+    public void
+    showEditProfilePostResul(ResultUpdateReturn resultUpdate) {
+        resultUserInfo = resultUpdate.getResultUserInfo();
+        setValues(resultUserInfo);
+        Intent intentShowProfile = new Intent(getApplicationContext(), EditProfileActivity.class);
+        String tagFrom = "showKey";
+        intentShowProfile.putExtra("from", tagFrom);
+        intentShowProfile.putExtra("infoUserResult", (Serializable) resultUserInfo);
+        startActivity(intentShowProfile);
+        finish();
+    }
 
+    @Override
+    public void showVerifyEmailResult(ResultVerifyEmail resultVerifyEmail) {
+        if (resultVerifyEmail.getResultUserEmailVerify().getStatus().equals("Succesfull")) {
+            email_verify.setText("لینک فعال سازی در ایمیل خود را چک کنید");
+        }
     }
 
     @Override
@@ -261,11 +321,10 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
             no = (TextView) findViewById(R.id.txtNo);
             yes.setOnClickListener(this);
             no.setOnClickListener(this);
-
             persianDatePickr.setMinYear(1300);
             Date date = new Date();
             PersianCalendar persianCalendar = new PersianCalendar(date.getTime());
-
+            birthday = date;
 
             persianDatePickr.setMaxYear(persianCalendar.getPersianYear());
             persianDatePickr.setOnDateChangedListener(new PersianDatePicker.OnDateChangedListener() {

@@ -1,10 +1,13 @@
 package com.iranplanner.tourism.iranplanner;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 //import com.digits.sdk.android.DigitsException;
 //import com.digits.sdk.android.DigitsSession;
 import com.iranplanner.tourism.iranplanner.adapter.TabPagerAdapter;
+import com.iranplanner.tourism.iranplanner.di.model.ForceUpdateChecker;
 import com.iranplanner.tourism.iranplanner.ui.activity.LoginActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.SendPhoneActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
@@ -28,94 +32,51 @@ import io.fabric.sdk.android.Fabric;
 import login.DigitsRegisterButton;
 import tools.Util;
 
-public class MainActivity extends StandardActivity {
+public class MainActivity extends StandardActivity implements ForceUpdateChecker.OnUpdateNeededListener {
     private StandardFragment currentTab;
-    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-//    private static final String TWITTER_KEY = "9ReBYxJ9ldP2AhMJStWyXF94Y";
-//    private static final String TWITTER_SECRET = "U6t7AUdJcuYKevlwNgCm3QpwWGQKxwOTNTltAbeIQQgkqGcW0C";
-//    TwitterAuthClient mTwitterAuthClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        if (Util.getUseRIdFromShareprefrence(getApplicationContext()) == null || Util.getUseRIdFromShareprefrence(getApplicationContext()) == "") {
-            Intent intent = new Intent(this, LoginActivity.class);
-            finish();
-            startActivity(intent);
-        } else {
-//------- check for send sms
+//        if (Util.getUseRIdFromShareprefrence(getApplicationContext()) == null || Util.getUseRIdFromShareprefrence(getApplicationContext()) == "") {
+//            Intent intent = new Intent(this, LoginActivity.class);
+//            finish();
+//            startActivity(intent);
+//        } else {
 
-        /*if (Util.getUseRIdFromShareprefrence(getApplicationContext()) == null ||Util.getUseRIdFromShareprefrence(getApplicationContext())=="" ) {
-            Intent intentSendPhone = new Intent(this, SendPhoneActivity.class);
-            startActivity(intentSendPhone);
-        } else {*/
+        ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
+        TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this);
+        if (viewPager != null)
+            viewPager.setAdapter(pagerAdapter);
 
-
-//        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
-//        Digits digits = new Digits.Builder()
-//                .withTheme(R.style.CustomDigitsTheme).build();
-//
-//
-//        Fabric.with(this, new TwitterCore(authConfig), digits);
-//        setContentView(R.layout.activity_main);
-
-//        test test=new test();
-//        test.getItinerary("342");
-            // Setup the viewPager
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        Button btn = (Button) findViewById(R.id.btnss);
-
-//        setSupportActionBar(toolbar);
-//        View logo = getLayoutInflater().inflate(R.layout.custom_imageview_toolbar, null);
-//        toolbar.addView(logo);
-
-
-            ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
-            TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this);
-            if (viewPager != null)
-                viewPager.setAdapter(pagerAdapter);
-
-            TabLayout mainTabLayout = (TabLayout) findViewById(R.id.tab_layout);
-            if (mainTabLayout != null) {
-                mainTabLayout.setupWithViewPager(viewPager);
-                for (int i = 0; i < mainTabLayout.getTabCount(); i++) {
-                    TabLayout.Tab tab = mainTabLayout.getTabAt(i);
-                    if (tab != null) {
-                        tab.setCustomView(pagerAdapter.getTabView(i));
-                    }
+        TabLayout mainTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        if (mainTabLayout != null) {
+            mainTabLayout.setupWithViewPager(viewPager);
+            for (int i = 0; i < mainTabLayout.getTabCount(); i++) {
+                TabLayout.Tab tab = mainTabLayout.getTabAt(i);
+                if (tab != null) {
+                    tab.setCustomView(pagerAdapter.getTabView(i));
                 }
-
             }
-            Bundle extras = getIntent().getExtras();
-            int position = 0;
-            if (extras != null) {
-                position = extras.getInt("viewpager_position");
-            }
-            mainTabLayout.getTabAt(position).getCustomView().setSelected(true);
-            currentTab = (StandardFragment) pagerAdapter.getItem(position);
-            viewPager.setCurrentItem(position);
-            Util.displayFirebaseRegId(this);
-//---------------------------------------------------
-//
-//        DigitsRegisterButton digitsButton = (DigitsRegisterButton) findViewById(R.id.signup_button);
-//        digitsButton.setCallback(new AuthCallback() {
-//            @Override
-//            public void success(DigitsSession session, String phoneNumber) {
-//                // TODO: associate the session userID with your user model
-//                Toast.makeText(getApplicationContext(), "Authentication successful for "
-//                        + phoneNumber, Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void failure(DigitsException exception) {
-//                Log.d("Digits", "Sign in with Digits failure", exception);
-//            }
-//        });
 
-        }}
+        }
+        Bundle extras = getIntent().getExtras();
+        int position = 0;
+        if (extras != null) {
+            position = extras.getInt("viewpager_position");
+        }
+        mainTabLayout.getTabAt(position).getCustomView().setSelected(true);
+        currentTab = (StandardFragment) pagerAdapter.getItem(position);
+        viewPager.setCurrentItem(position);
+        Util.displayFirebaseRegId(this);
+
+        ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
+    }
 //    }
+
 
     @Override
     protected int getLayoutId() {
@@ -129,4 +90,30 @@ public class MainActivity extends StandardActivity {
             super.onBackPressed();
     }
 
+    @Override
+    public void onUpdateNeeded(final String updateUrl) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("نسخه جدید برنامه قابل دانلود است")
+                .setMessage("لطفا برنامه را به روز رسانی کنید ")
+                .setPositiveButton("به روز رسانی",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                redirectStore(updateUrl);
+                            }
+                        }).setNegativeButton("نه؛متشکرم",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        }).create();
+        dialog.show();
+    }
+
+    private void redirectStore(String updateUrl) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }

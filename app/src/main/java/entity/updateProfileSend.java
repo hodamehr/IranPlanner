@@ -109,6 +109,9 @@ public class updateProfileSend implements Serializable {
     @SerializedName("user_uid")
     @Expose
     private String userUid;
+    @SerializedName("user_email")
+    @Expose
+    private String userEmail;
     @SerializedName("user_fname")
     @Expose
     private String userFname;
@@ -118,9 +121,6 @@ public class updateProfileSend implements Serializable {
     @SerializedName("user_gender")
     @Expose
     private String userGender;
-    @SerializedName("user_email")
-    @Expose
-    private String userEmail;
     @SerializedName("user_birthday")
     @Expose
     private String userBirthday;

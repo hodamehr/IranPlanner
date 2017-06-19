@@ -7,8 +7,11 @@ import com.iranplanner.tourism.iranplanner.ui.presenter.abs.EditProfileContract;
 import javax.inject.Inject;
 
 import entity.CommentSend;
+import entity.EmailVerifyReq;
 import entity.ResultCommentList;
 import entity.ResultUpdate;
+import entity.ResultUpdateReturn;
+import entity.ResultVerifyEmail;
 import entity.updateProfileSend;
 import retrofit2.Retrofit;
 import retrofit2.http.Body;
@@ -61,7 +64,7 @@ public class EditProfilePresenter extends EditProfileContract {
                 .callEditProfile(updateProfileSend,cid,androidId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Observer<ResultUpdate>() {
+                .subscribe(new Observer<ResultUpdateReturn>() {
 
                     @Override
                     public void onCompleted() {
@@ -74,16 +77,44 @@ public class EditProfilePresenter extends EditProfileContract {
                     }
 
                     @Override
-                    public void onNext(ResultUpdate resultUpdate) {
+                    public void onNext(ResultUpdateReturn resultUpdate) {
                         mView.showEditProfilePostResul(resultUpdate);
                     }
                 });
     }
 
+    @Override
+    public void getVerifyEmail(EmailVerifyReq request, String cid, String andId) {
+        retrofit.create(EditProfileService.class)
+                .verifyEmail(request,cid,andId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultVerifyEmail>() {
+
+                    @Override
+                    public void onCompleted() {
+                        mView.showComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(ResultVerifyEmail resultVerifyEmail) {
+                        mView.showVerifyEmailResult(resultVerifyEmail);
+                    }
+                });
+    }
+
     public interface EditProfileService {
-
-
         @POST("api-user.php?action=update")
-        Observable<ResultUpdate> callEditProfile(@Body updateProfileSend request, @Query("cid") String cid, @Query("andId") String andId);
+        Observable<ResultUpdateReturn> callEditProfile(@Body updateProfileSend request, @Query("cid") String cid, @Query("andId") String andId);
+
+        @POST("api-user.php?action=verifyemail")
+        Observable<ResultVerifyEmail> verifyEmail(@Body EmailVerifyReq request, @Query("cid") String cid, @Query("andId") String andId);
+
+
     }
 }

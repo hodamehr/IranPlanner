@@ -4,9 +4,10 @@ package entity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 
-public class ResultUserRegister {
+public class ResultUserRegister implements Serializable {
 
     @SerializedName("status")
     @Expose

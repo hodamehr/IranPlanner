@@ -6,25 +6,17 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class ResultUpdate implements Serializable {
+public class ResultUpdateReturn implements Serializable{
 
     @SerializedName("Status")
     @Expose
     private Status status;
-    @SerializedName("Result_user_update")
+    @SerializedName("Result_user_info")
     @Expose
-    private ResultUserInfo resultUserUpdate;
+    private ResultUserInfo resultUserInfo;
     @SerializedName("ParsDID")
     @Expose
     private ParsDID parsDID;
-
-    public ResultUserInfo getResultUserUpdate() {
-        return resultUserUpdate;
-    }
-
-    public void setResultUserUpdate(ResultUserInfo resultUserUpdate) {
-        this.resultUserUpdate = resultUserUpdate;
-    }
 
     public Status getStatus() {
         return status;
@@ -34,7 +26,13 @@ public class ResultUpdate implements Serializable {
         this.status = status;
     }
 
+    public ResultUserInfo getResultUserInfo() {
+        return resultUserInfo;
+    }
 
+    public void setResultUserInfo(ResultUserInfo resultUserInfo) {
+        this.resultUserInfo = resultUserInfo;
+    }
 
     public ParsDID getParsDID() {
         return parsDID;

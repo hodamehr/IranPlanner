@@ -15,8 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.di.model.App;
 
 import java.util.Locale;
 
@@ -29,12 +31,15 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class StandardActivity extends AppCompatActivity {
     LocaleUtils localeUtils=new LocaleUtils();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         FirebaseCrash.logcat(Log.ERROR, "firebaseCrash", "NPE caught");
         FirebaseCrash.report(new Exception("opss"));
+        FirebaseCrash.logcat(Log.DEBUG, "TAG", "MainActivity started");
+
         int[] attrs = {R.attr.fontPath};
         TypedArray a = obtainStyledAttributes(R.style.StandardText, attrs);
         String fontPath = a.getString(0);
@@ -94,12 +99,14 @@ public abstract class StandardActivity extends AppCompatActivity {
 
     private boolean encrypted = false;
 
+    @Override
+    protected void onResume() {
+        FirebaseAnalytics firebaseAnalytics = ((App) getApplication()).getmFirebaseAnalytics();
+        Log.d("FAnalytics", "setCurrentScreen: " + getClass().getSimpleName());
+        super.onResume();
+    }
 
-
-
-
-
-    public int getActionBarSize() {
+      public int getActionBarSize() {
         return (int) getResources().getDimension(R.dimen.actionBarSize);
     }
 

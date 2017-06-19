@@ -32,7 +32,7 @@ public class ResultUserInfo implements Serializable{
     private String userEmail;
     @SerializedName("user_birthday")
     @Expose
-    private Integer userBirthday;
+    private String userBirthday;
     @SerializedName("user_city_id")
     @Expose
     private Integer userCityId;
@@ -51,6 +51,17 @@ public class ResultUserInfo implements Serializable{
     @SerializedName("user_newsletter")
     @Expose
     private Integer userNewsletter;
+    @SerializedName("user_cid")
+    @Expose
+    private Integer userCid;
+
+    public Integer getUserCid() {
+        return userCid;
+    }
+
+    public void setUserCid(Integer userCid) {
+        this.userCid = userCid;
+    }
 
     public String getStatus() {
         return status;
@@ -108,11 +119,11 @@ public class ResultUserInfo implements Serializable{
         this.userEmail = userEmail;
     }
 
-    public Integer getUserBirthday() {
+    public String getUserBirthday() {
         return userBirthday;
     }
 
-    public void setUserBirthday(Integer userBirthday) {
+    public void setUserBirthday(String userBirthday) {
         this.userBirthday = userBirthday;
     }
 

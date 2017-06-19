@@ -89,10 +89,7 @@ public class SettingPresenter extends SettingContract {
 
     public interface GetInfoService {
 
-
-
-
-        @POST("api-user.php?action=getinfo")
+       @POST("api-user.php?action=getinfo")
         Observable<GetInfoResult> getInfoUserPostResul(@Body GetInfoReqSend getInfoReqSend, @Query("cid") String token,
                                                   @Query("andId") String androidId);
 

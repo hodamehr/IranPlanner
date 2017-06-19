@@ -2,18 +2,22 @@ package com.iranplanner.tourism.iranplanner.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,12 +36,14 @@ import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.di.DaggerLoginComponent;
 import com.iranplanner.tourism.iranplanner.di.LoginModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
+import com.iranplanner.tourism.iranplanner.di.model.ForceUpdateChecker;
 import com.iranplanner.tourism.iranplanner.ui.presenter.LoginPresenter;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.LoginContract;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import entity.GoogleLoginReqSend;
 import entity.LoginReqSend;
 import entity.LoginResult;
 import entity.ResultUserLogin;
@@ -84,133 +90,140 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        getApplicationContext().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        setContentView(R.layout.login);
+
         ButterKnife.inject(this);
+        if (Util.getUseRIdFromShareprefrence(getApplicationContext()) == null || Util.getUseRIdFromShareprefrence(getApplicationContext()) == "") {
+            setContentView(R.layout.login);
+            _emailText = (EditText) findViewById(R.id.input_email);
+            _passwordText = (EditText) findViewById(R.id.input_password);
+            _loginButton = (TextView) findViewById(R.id.btn_login);
+            _signupLink = (TextView) findViewById(R.id.link_signup);
+            loginCommand = (TextView) findViewById(R.id.loginCommand);
+            accountInputHolder = (LinearLayout) findViewById(R.id.accountInputHolder);
+            loginCommand.setText("");
+            signupInputHolder = (LinearLayout) findViewById(R.id.signupInputHolder);
 
-        _emailText = (EditText) findViewById(R.id.input_email);
-        _passwordText = (EditText) findViewById(R.id.input_password);
-        _loginButton = (TextView) findViewById(R.id.btn_login);
-        _signupLink = (TextView) findViewById(R.id.link_signup);
-        loginCommand = (TextView)findViewById(R.id.loginCommand);
-        accountInputHolder = (LinearLayout) findViewById(R.id.accountInputHolder);
-        logout = (TextView) findViewById(R.id.logout);
-        loginCommand.setText("");
-        signupInputHolder = (LinearLayout) findViewById(R.id.signupInputHolder);
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+            // [END config_signin]
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        // [END config_signin]
+            mGoogleApiClient = new GoogleApiClient.Builder(getApplicationContext())
+                    .enableAutoManage(this, this)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                    .build();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(getApplicationContext())
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+            // [START initialize_auth]
+            mAuth = FirebaseAuth.getInstance();
+            // [END initialize_auth]
 
-        // [START initialize_auth]
-        mAuth = FirebaseAuth.getInstance();
-        // [END initialize_auth]
+            findViewById(R.id.btnSignInGoogle).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    signIn();
+                }
+            });
+            // login?
+//            setLoginName();
 
-        findViewById(R.id.btnSignInGoogle).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
-        // login?
-        setLoginName();
+            _emailText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        _emailText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
-            }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                _loginButton.setEnabled(true);
-                _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
-            }
-        });
-        _passwordText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                _loginButton.setEnabled(true);
-                _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
-            }
-        });
-        logout.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(final View v) {
-
-                clearSharedprefrence();
-                _loginButton.setEnabled(true);
-                accountInputHolder.setVisibility(View.VISIBLE);
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    _loginButton.setEnabled(true);
                     _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+                }
+            });
+            _passwordText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    _loginButton.setEnabled(true);
+                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+                }
+            });
+//            logout.setOnClickListener(new View.OnClickListener() {
+//
+//                public void onClick(final View v) {
+//
+//                    clearSharedprefrence();
+//                    _loginButton.setEnabled(true);
+//                    accountInputHolder.setVisibility(View.VISIBLE);
+//                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+//                        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+//
+//                    } else {
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                            _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+//                        }
+//                    }
+//                    loginCommand.setVisibility(View.GONE);
+//                    logout.setVisibility(View.GONE);
+//                    signupInputHolder.setVisibility(View.VISIBLE);
+//                }
+//            });
+            _loginButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(final View v) {
+                    if (counter >= 3) {
+                        counter = 0;
+                        v.setClickable(false);
+                        v.setBackgroundColor(getResources().getColor(R.color.greyLight));
+                        Toast.makeText(getApplicationContext(), "چند دقیقه بعد مجددا تلاش کنید", Toast.LENGTH_LONG).show();
+                        _loginButton.setEnabled(false);
+                        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
+                        new Handler().postDelayed(new Runnable() {
+                            public void run() {
+                                v.setEnabled(true);
+                                v.setClickable(true);
+                                v.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+                            }
+                        }, 1000);
+                    } else {
+                        login();
                     }
+
                 }
-                loginCommand.setVisibility(View.GONE);
-                logout.setVisibility(View.GONE);
-                signupInputHolder.setVisibility(View.VISIBLE);
-            }
-        });
-        _loginButton.setOnClickListener(new View.OnClickListener() {
+            });
 
-            @Override
-            public void onClick(final View v) {
-                if (counter >= 3) {
-                    counter = 0;
-                    v.setClickable(false);
-                    v.setBackgroundColor(getResources().getColor(R.color.greyLight));
-                    Toast.makeText(getApplicationContext(), "چند دقیقه بعد مجددا تلاش کنید", Toast.LENGTH_LONG).show();
-                    _loginButton.setEnabled(false);
-                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
-                    new Handler().postDelayed(new Runnable() {
-                        public void run() {
-                            v.setEnabled(true);
-                            v.setClickable(true);
-                            v.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
-                        }
-                    }, 1000);
-                } else {
-                    login();
-                }
+            _signupLink.setOnClickListener(new View.OnClickListener() {
 
-            }
-        });
-
-        _signupLink.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
 //                Intent intent = new Intent(getContext(), SignupActivity.class);
 //                startActivity(intent);
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);
-            }
-        });    }
+                    Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            finish();
+            startActivity(intent);
+        }
+    }
 
     private void setLoginName() {
         if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).equals("")) {
@@ -232,7 +245,7 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
     public void login() {
 
         if (!validate()) {
-            Toast.makeText(getApplicationContext(),"اشکال در مقادیر ورودی",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "اشکال در مقادیر ورودی", Toast.LENGTH_SHORT).show();
             _loginButton.setEnabled(false);
             _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
             return;
@@ -254,21 +267,31 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
 
     }
 
+    private void requestGoogleLogin(GoogleLoginReqSend googleLoginReqSend) {
+        DaggerLoginComponent.builder().netComponent(((App) getApplicationContext().getApplicationContext()).getNetComponent())
+                .loginModule(new LoginModule(this))
+                .build().inject(this);
+        loginPresenter.getGoogleLoginPostResult(googleLoginReqSend, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+    }
+
     @Override
     public void showLoginResult(LoginResult loginResult) {
         ResultUserLogin resultUserLogin = loginResult.getResultUserLogin();
         setSaveDataInShareprefrence(resultUserLogin.getUserEmail(), resultUserLogin.getUserFname(), resultUserLogin.getUserLname(), resultUserLogin.getUserUid().toString());
     }
 
-    private void setSaveDataInShareprefrence(String email,String name,String lName,String userId){
-        Util.saveDataINShareprefrence(getApplicationContext(), email,name, lName, userId);
-        _loginButton.setEnabled(true);
-        signupInputHolder.setVisibility(View.INVISIBLE);
-        accountInputHolder.setVisibility(View.VISIBLE);
-        setLoginName();
-        Intent intent=new Intent(this, MainActivity.class);
+    private void setSaveDataInShareprefrence(String email, String name, String lName, String userId) {
+        Util.saveDataINShareprefrence(getApplicationContext(), email, name, lName, userId);
+//        _loginButton.setEnabled(true);
+//        signupInputHolder.setVisibility(View.INVISIBLE);
+//        accountInputHolder.setVisibility(View.VISIBLE);
+//        setLoginName();
+        loginCommand.setVisibility(View.GONE);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
+
     @Override
     public void showError(String message) {
         if (message.equals("HTTP 400 BAD REQUEST")) {
@@ -301,7 +324,7 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
 
     @Override
     public void dismissProgress() {
-        if (progressDialog.isShowing() == true|| progressDialog!=null) {
+        if (progressDialog.isShowing() == true || progressDialog != null) {
             progressDialog.dismiss();
         }
     }
@@ -372,9 +395,8 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            setSaveDataInShareprefrence(acct.getEmail(),acct.getDisplayName(),acct.getFamilyName(),"");
-//            mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
-//            updateUI(true);
+            GoogleLoginReqSend googleLoginReqSend = new GoogleLoginReqSend("googleoauth2", acct.getPhotoUrl().toString(), acct.getId(), acct.getFamilyName(), acct.getGivenName(), acct.getEmail());
+            requestGoogleLogin(googleLoginReqSend);
         } else {
             // Signed out, show unauthenticated UI.
 //            updateUI(false);

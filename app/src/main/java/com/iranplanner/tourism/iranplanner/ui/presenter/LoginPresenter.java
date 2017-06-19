@@ -2,16 +2,12 @@ package com.iranplanner.tourism.iranplanner.ui.presenter;
 
 
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.LoginContract;
-import com.iranplanner.tourism.iranplanner.ui.presenter.abs.RegisterContract;
 
 import javax.inject.Inject;
 
-import entity.CommentSend;
+import entity.GoogleLoginReqSend;
 import entity.LoginReqSend;
 import entity.LoginResult;
-import entity.ResultCommentList;
-import entity.ResultRegister;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -114,6 +110,35 @@ public class LoginPresenter extends LoginContract {
                 });
     }
 
+    @Override
+    public void getGoogleLoginPostResult(GoogleLoginReqSend GoogleLoginReqSend, String cid, String androidId) {
+
+        mView.showProgress();
+        retrofit.create(LoginService.class).getGoogleLoginPostResult(GoogleLoginReqSend, cid, androidId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<LoginResult>() {
+
+                    @Override
+                    public void onCompleted() {
+                        mView.dismissProgress();
+                        mView.showComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.dismissProgress();
+                        mView.showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(LoginResult loginResult) {
+                        mView.showLoginResult(loginResult);
+                    }
+                });
+    }
+
     public interface LoginService {
 
 
@@ -127,6 +152,10 @@ public class LoginPresenter extends LoginContract {
         @POST("api-user.php?action=login")
         Observable<LoginResult> getLoginPostResul(@Body LoginReqSend loginReqSend, @Query("cid") String token,
                                                   @Query("andId") String androidId);
+
+        @POST("api-user.php?action=googleoauth2")
+        Observable<LoginResult> getGoogleLoginPostResult(@Body GoogleLoginReqSend GoogleLoginReqSend, @Query("cid") String token,
+                                                         @Query("andId") String androidId);
 
     }
 }

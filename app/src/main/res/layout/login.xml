@@ -39,14 +39,6 @@
                     android:text="پیام"
                     android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/logout"
-                    style="@style/StandardText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="خروج از حساب کاربری"
-                    android:textColor="@color/blue"
-                    android:visibility="gone" />
             </android.support.design.widget.TextInputLayout>
             <!-- Email Label -->
             <LinearLayout

@@ -30,7 +30,7 @@ public class ResultUserUpdate {
     private String userEmail;
     @SerializedName("user_birthday")
     @Expose
-    private BigInteger userBirthday;
+    private String userBirthday;
     @SerializedName("user_city_id")
     @Expose
     private Integer userCityId;
@@ -109,11 +109,11 @@ public class ResultUserUpdate {
         this.userEmail = userEmail;
     }
 
-    public BigInteger getUserBirthday() {
+    public String getUserBirthday() {
         return userBirthday;
     }
 
-    public void setUserBirthday(BigInteger userBirthday) {
+    public void setUserBirthday(String userBirthday) {
         this.userBirthday = userBirthday;
     }
 
