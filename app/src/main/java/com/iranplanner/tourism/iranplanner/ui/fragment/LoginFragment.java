@@ -92,7 +92,6 @@ public class LoginFragment extends StandardFragment implements GoogleApiClient.C
         _signupLink = (TextView) view.findViewById(R.id.link_signup);
         loginCommand = (TextView) view.findViewById(R.id.loginCommand);
         accountInputHolder = (LinearLayout) view.findViewById(R.id.accountInputHolder);
-        logout = (TextView) view.findViewById(R.id.logout);
         loginCommand.setText("");
         signupInputHolder = (LinearLayout) view.findViewById(R.id.signupInputHolder);
 
