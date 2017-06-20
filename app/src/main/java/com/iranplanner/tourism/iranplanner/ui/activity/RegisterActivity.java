@@ -15,6 +15,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.iranplanner.tourism.iranplanner.MainActivity;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.di.DaggerRegisterComponent;
@@ -50,7 +52,8 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
     EditText input_password_repeat;
     @InjectView(R.id.btn_signup)
     TextView _signupButton;
-
+    private GoogleApiClient mGoogleApiClient;
+    private static final int RC_SIGN_IN = 9001;
 
 
     @Inject
@@ -86,7 +89,7 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
             Util.saveDataINShareprefrence(getApplicationContext(),editText.getText().toString(), "کاربر", "", result.getUserUid().toString());
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.putExtra("viewpager_position", 1);
+            intent.putExtra("viewpager_position", 0);
             startActivity(intent);
             finish();
 
@@ -137,7 +140,7 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
             _signupButton.setEnabled(true);
             return;
         }
-        _signupButton.setEnabled(false);
+//        _signupButton.setEnabled(false);
 
         String name = "";
         String lastName = "";

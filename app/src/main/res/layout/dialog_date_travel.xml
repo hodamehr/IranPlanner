@@ -17,7 +17,7 @@
         android:paddingRight="@dimen/margin_standard"
         android:paddingTop="@dimen/padding_standard"
         android:id="@+id/txtAlertTitle"
-        android:text="تاریخ شروع سفر"
+        android:text="تنظیم تاریخ"
         android:textColor="@color/grey" />
     <com.coinpany.core.android.widget.CDivider
         android:layout_width="match_parent"

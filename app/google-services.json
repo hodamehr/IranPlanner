@@ -15,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "436926546770-aipcd3kp9aia2u4hn9igo5haj78kac2u.apps.googleusercontent.com",
+          "client_id": "436926546770-pu8q46n5klgj5ilkmgvdlnkeqflovgag.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iranplanner.tourism.iranplanner",
+            "certificate_hash": "5e22395b7bcd47eb6ae35375e42149751fe5f278"
+          }
+        },
+        {
+          "client_id": "436926546770-q1226355ejcp4bhulohforafit4j3547.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.iranplanner.tourism.iranplanner",
@@ -23,12 +31,20 @@
           }
         },
         {
-          "client_id": "436926546770-3bvu8lg98fd2f3a3n2tm6rjvv1sr4fgf.apps.googleusercontent.com",
+          "client_id": "436926546770-socro96pimpnald8tlsgeaptdfaisvnb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.iranplanner.tourism.iranplanner",
             "certificate_hash": "3a233678e12e376937d7b6e962ef026c0258380b"
           }
+        },
+        {
+          "client_id": "436926546770-fhl89cqj1andj263r5hbm8tb6foh36sh.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "436926546770-av5l8fihd4lhcutg7abq46ejjtuis46c.apps.googleusercontent.com",
+          "client_type": 3
         },
         {
           "client_id": "436926546770-n93fhubvgkjf4pqr1h3ssou76einkkg6.apps.googleusercontent.com",
@@ -48,7 +64,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "436926546770-n93fhubvgkjf4pqr1h3ssou76einkkg6.apps.googleusercontent.com",
+              "client_id": "436926546770-fhl89cqj1andj263r5hbm8tb6foh36sh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

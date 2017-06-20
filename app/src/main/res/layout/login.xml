@@ -108,7 +108,8 @@
                     android:gravity="center"
                     android:padding="@dimen/padding_short"
                     android:text="کلمه عبور را فراموش کرده اید؟"
-                    android:textColor="@color/grey" />
+                    android:textColor="@color/grey"
+                    android:visibility="invisible"/>
 
             </LinearLayout>
 

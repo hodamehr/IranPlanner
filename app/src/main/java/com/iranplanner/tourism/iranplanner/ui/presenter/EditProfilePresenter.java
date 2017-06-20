@@ -61,7 +61,7 @@ public class EditProfilePresenter extends EditProfileContract {
     @Override
     public void getEditProfilePostResul(updateProfileSend updateProfileSend, String cid, String androidId) {
         retrofit.create(EditProfileService.class)
-                .callEditProfile(updateProfileSend,cid,androidId).subscribeOn(Schedulers.io())
+                .callEditProfile(updateProfileSend, cid, androidId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultUpdateReturn>() {
@@ -85,8 +85,10 @@ public class EditProfilePresenter extends EditProfileContract {
 
     @Override
     public void getVerifyEmail(EmailVerifyReq request, String cid, String andId) {
+        mView.showProgress();
         retrofit.create(EditProfileService.class)
-                .verifyEmail(request,cid,andId).subscribeOn(Schedulers.io())
+
+                .verifyEmail(request, cid, andId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Observer<ResultVerifyEmail>() {
@@ -103,6 +105,7 @@ public class EditProfilePresenter extends EditProfileContract {
 
                     @Override
                     public void onNext(ResultVerifyEmail resultVerifyEmail) {
+                        mView.dismissProgress();
                         mView.showVerifyEmailResult(resultVerifyEmail);
                     }
                 });

@@ -1,11 +1,13 @@
 package com.iranplanner.tourism.iranplanner.ui.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.iranplanner.tourism.iranplanner.di.SettingModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.iranplanner.tourism.iranplanner.ui.activity.EditProfileActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.LoginActivity;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.SettingContract;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.SettingPresenter;
 
@@ -29,6 +32,7 @@ import javax.inject.Inject;
 import entity.GetInfoReqSend;
 import entity.GetInfoResult;
 import entity.InfoResult;
+import entity.Login;
 import entity.LoginResult;
 import server.Config;
 import tools.Util;
@@ -43,6 +47,8 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
     @Inject
     SettingPresenter settingPresenter;
     private String tagFrom;
+    ProgressDialog progressDialog;
+
 
     public static SettingFragment newInstance() {
         SettingFragment fragment = new SettingFragment();
@@ -90,15 +96,17 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
         switch (v.getId()) {
             case R.id.btnEditProfile:
                 requestGetUser();
-                tagFrom="editKey";
+                tagFrom = "editKey";
 
                 break;
             case R.id.LayoutShowProfileHolder:
                 requestGetUser();
-                tagFrom="showKey";
+                tagFrom = "showKey";
                 break;
             case R.id.exitFromAccount:
                 clearSharedprefrence();
+                Intent intent=new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
                 break;
 
         }
@@ -108,10 +116,6 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
         SharedPreferences settings = getContext().getSharedPreferences(Config.SHARED_PREF_USER, Context.MODE_PRIVATE);
         settings.edit().clear().commit();
     }
-
-
-
-
 
 
     @Override
@@ -124,21 +128,33 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
 
     @Override
     public void showError(String message) {
+        Log.e("complete", "get attraction list");
+        if(progressDialog.isShowing()){
+            progressDialog.dismiss();
 
+        }
     }
 
     @Override
     public void showComplete() {
-
+        Log.e("complete", "get attraction list");
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override
     public void showProgress() {
-
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("لطفا منتظر بمانید");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     @Override
     public void dismissProgress() {
-
+        progressDialog.dismiss();
     }
 }

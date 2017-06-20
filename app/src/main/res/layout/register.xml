@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
@@ -134,35 +134,40 @@
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/padding_larg"
                 android:paddingRight="@dimen/padding_larg"
-                android:paddingTop="@dimen/margin_standard">
+                android:paddingTop="@dimen/margin_standard"
+                android:visibility="invisible"
+             >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/padding_standard"
                     android:background="@drawable/corner_layout">
+                    <com.google.android.gms.common.SignInButton
+                        android:id="@+id/btnSignInGoogle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></com.google.android.gms.common.SignInButton>
+                    <!--<TextView-->
+                        <!--android:id="@+id/google"-->
+                        <!--style="@style/SmallText"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerInParent="true"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="ورود باحساب گوگل"-->
+                        <!--android:textColor="@color/grey"-->
 
-                    <TextView
-                        android:id="@+id/google"
-                        style="@style/SmallText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:text="ورود باحساب گوگل"
-                        android:textColor="@color/grey"
+                        <!--/>-->
 
-                        />
-
-                    <ImageView
-                        android:id="@+id/googleImg"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/padding_short"
-                        android:layout_marginRight="@dimen/padding_short"
-                        android:layout_toRightOf="@+id/google"
-                        android:src="@drawable/ic_google" />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/googleImg"-->
+                        <!--android:layout_width="25dp"-->
+                        <!--android:layout_height="25dp"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginLeft="@dimen/padding_short"-->
+                        <!--android:layout_marginRight="@dimen/padding_short"-->
+                        <!--android:layout_toRightOf="@+id/google"-->
+                        <!--android:src="@drawable/ic_google" />-->
                 </RelativeLayout>
 
             </LinearLayout>
