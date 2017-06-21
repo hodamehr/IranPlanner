@@ -1,13 +1,11 @@
-package com.iranplanner.tourism.iranplanner.activity;
+package com.iranplanner.tourism.iranplanner.ui.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
-import com.iranplanner.tourism.iranplanner.MainActivity;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.adapter.CustomGridAdapter;
 

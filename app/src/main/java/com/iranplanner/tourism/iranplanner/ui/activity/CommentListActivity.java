@@ -1,11 +1,8 @@
-package com.iranplanner.tourism.iranplanner.activity;
+package com.iranplanner.tourism.iranplanner.ui.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -15,28 +12,21 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.coinpany.core.android.widget.Utils;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.adapter.CommentListAdapter;
-
 import com.iranplanner.tourism.iranplanner.di.CommentModule;
 import com.iranplanner.tourism.iranplanner.di.DaggerCommentComponent;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
-import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.presenter.CommentPresenter;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.CommentContract;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -45,20 +35,7 @@ import entity.ResultComment;
 import entity.ResultCommentList;
 import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
-import entity.ResultLodging;
-import entity.ResultLodgingList;
-import entity.ResultLodgingRoomList;
-import entity.ResultRoom;
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import server.Config;
-import server.getJsonInterface;
 import tools.Util;
-import tools.widget.PersianDatePicker;
 
 
 /**
@@ -263,7 +240,7 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
     }
 
     public class CustomDialogAlert extends Dialog implements
-            android.view.View.OnClickListener {
+            View.OnClickListener {
 
         public Activity c;
         public Dialog d;

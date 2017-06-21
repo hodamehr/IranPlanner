@@ -13,8 +13,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.ui.presenter.RouteDecode;
-import com.iranplanner.tourism.iranplanner.ui.presenter.abs.AttractionContract;
+import com.iranplanner.tourism.iranplanner.ui.presenter.abs.ItineraryContract;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
@@ -34,7 +33,6 @@ import entity.map.Leg;
 import entity.map.Route;
 import entity.map.StartLocation_;
 import entity.map.Step;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -47,14 +45,14 @@ import rx.schedulers.Schedulers;
  * Created by h.vahidimehr on 12/05/2017.
  */
 
-public class AttractionPresenter extends AttractionContract {
+public class ItineraryPresenter extends ItineraryContract {
 
     public Retrofit retrofit;
-    AttractionContract.View mView;
+    ItineraryContract.View mView;
     RotateAnimation rotate;
 
     @Inject
-    public AttractionPresenter(Retrofit retrofit, AttractionContract.View mView) {
+    public ItineraryPresenter(Retrofit retrofit, ItineraryContract.View mView) {
         this.retrofit = retrofit;
         this.mView = mView;
     }

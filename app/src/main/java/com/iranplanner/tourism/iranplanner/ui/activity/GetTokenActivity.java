@@ -27,9 +27,8 @@ import com.iranplanner.tourism.iranplanner.ui.presenter.abs.GetTokenContract;
 import javax.inject.Inject;
 
 import entity.ResultPhoneVerify;
-import entity.ResultSendPhone;
 import entity.ResultUserVerify;
-import login.SmsListener;
+import server.SmsListener;
 import tools.Util;
 
 /**

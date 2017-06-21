@@ -1,10 +1,8 @@
 package com.iranplanner.tourism.iranplanner.di;
 
 
-import com.iranplanner.tourism.iranplanner.di.AttractionModule;
 import com.iranplanner.tourism.iranplanner.di.data.component.NetComponent;
 import com.iranplanner.tourism.iranplanner.di.model.CustomScope;
-import com.iranplanner.tourism.iranplanner.ui.activity.MoreItemItineraryActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.ReservationListActivity;
 
 import dagger.Component;

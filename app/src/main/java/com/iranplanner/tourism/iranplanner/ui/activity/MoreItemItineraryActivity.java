@@ -5,12 +5,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -22,7 +20,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -54,15 +51,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.activity.CommentListActivity;
+
 import com.iranplanner.tourism.iranplanner.adapter.ShowTavelToolsAdapter;
 
 
-import com.iranplanner.tourism.iranplanner.di.AttractionModule;
-import com.iranplanner.tourism.iranplanner.di.DaggerAtractionComponent;
+import com.iranplanner.tourism.iranplanner.di.DaggerItineraryComponent;
+import com.iranplanner.tourism.iranplanner.di.ItineraryModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
-import com.iranplanner.tourism.iranplanner.ui.presenter.AttractionPresenter;
-import com.iranplanner.tourism.iranplanner.ui.presenter.abs.AttractionContract;
+import com.iranplanner.tourism.iranplanner.ui.presenter.ItineraryPresenter;
+import com.iranplanner.tourism.iranplanner.ui.presenter.abs.ItineraryContract;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
@@ -71,11 +68,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import entity.Attraction;
 import entity.InterestResult;
 import entity.ItineraryLodgingCity;
 import entity.ItineraryPercentage;
@@ -90,13 +85,6 @@ import entity.ResultWidget;
 import entity.ResultWidgetFull;
 
 
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import server.getJsonInterface;
 import tools.Constants;
 
 import tools.Util;
@@ -108,11 +96,11 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,
         View.OnClickListener,
-        AttractionContract.View {
+        ItineraryContract.View {
 
 
     @Inject
-    AttractionPresenter attractionPresenter;
+    ItineraryPresenter itineraryPresenter;
 
     private GoogleMap mMap;
     ArrayList<LatLng> MarkerPoints;
@@ -165,8 +153,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     int LikeValue;
     int VisitedValue;
     int WishValue;
-    //    DaggerAtractionComponent.Builder builder;
-    DaggerAtractionComponent.Builder builder;
+    //    DaggerItineraryComponent.Builder builder;
+    DaggerItineraryComponent.Builder builder;
 
 
     private void findView() {
@@ -370,11 +358,11 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
         });
 
-        builder = DaggerAtractionComponent.builder()
+        builder = DaggerItineraryComponent.builder()
                 .netComponent(((App) getApplicationContext()).getNetComponent())
-                .attractionModule(new AttractionModule(this));
+                .itineraryModule(new ItineraryModule(this));
         builder.build().inject(this);
-        attractionPresenter.getWidgetResult("nodeuser", itineraryData.getItineraryId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "itinerary",Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+        itineraryPresenter.getWidgetResult("nodeuser", itineraryData.getItineraryId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "itinerary",Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
     }
 
     @Override
@@ -411,7 +399,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             case R.id.commentHolder:
                 showProgressDialog();
                 builder.build().inject(this);
-                attractionPresenter.getItineraryCommentList("pagecomments", itineraryId, "itinerary", "0",Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                itineraryPresenter.getItineraryCommentList("pagecomments", itineraryId, "itinerary", "0",Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
                 break;
 
             case R.id.showReservation:
@@ -441,7 +429,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             case R.id.ratingHolder:
                 if (ratingHolderFlag) {
                     builder.build().inject(this);
-                    ratingHolderFlag = attractionPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
+                    ratingHolderFlag = itineraryPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
                 }
                 break;
             case R.id.rateHolder:
@@ -450,11 +438,11 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                     LikeLayout.setVisibility(View.VISIBLE);
                     rotateImage = "rateImg";
                     builder.build().inject(this);
-                    ratingHolderFlag = attractionPresenter.doTranslateAnimationDown(ratingHolder, GroupHolder, triangleShowAttraction, supplierLayoutMore.getHeight());
+                    ratingHolderFlag = itineraryPresenter.doTranslateAnimationDown(ratingHolder, GroupHolder, triangleShowAttraction, supplierLayoutMore.getHeight());
                     break;
                 } else {
                     builder.build().inject(this);
-                    ratingHolderFlag = attractionPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
+                    ratingHolderFlag = itineraryPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
                     break;
                 }
 
@@ -464,12 +452,12 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                     VisitedLayout.setVisibility(View.VISIBLE);
                     rotateImage = "doneImg";
                     builder.build().inject(this);
-                    ratingHolderFlag = attractionPresenter.doTranslateAnimationDown(ratingHolder, GroupHolder, triangleShowAttraction, supplierLayoutMore.getHeight());
+                    ratingHolderFlag = itineraryPresenter.doTranslateAnimationDown(ratingHolder, GroupHolder, triangleShowAttraction, supplierLayoutMore.getHeight());
                     break;
 
                 } else {
                     builder.build().inject(this);
-                    ratingHolderFlag = attractionPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
+                    ratingHolderFlag = itineraryPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
                     break;
                 }
 
@@ -531,15 +519,15 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             case R.id.showItinerary1:
                 showProgressDialog();
                 builder.build().inject(this);
-                attractionPresenter.getItineraryAttractionList("attraction", "fa", itineraryId,Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                itineraryPresenter.getItineraryAttractionList("attraction", "fa", itineraryId,Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
                 break;
         }
     }
 
     private void OnClickedIntrestedWidget(String gType, String gValue, ImageView imageView) {
         if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
-            attractionPresenter.doWaitingAnimation(imageView);
-            attractionPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "itinerary", itineraryId, gType, gValue,Util.getUseRIdFromShareprefrence(getApplicationContext()));
+            itineraryPresenter.doWaitingAnimation(imageView);
+            itineraryPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "itinerary", itineraryId, gType, gValue,Util.getUseRIdFromShareprefrence(getApplicationContext()));
         } else {
             Log.e("user is not login", "error");
             Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
@@ -926,7 +914,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     @Override
     public void showAnimationWhenWaiting() {
-        ratingHolderFlag = attractionPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
+        ratingHolderFlag = itineraryPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
     }
 
     @Override
@@ -1034,9 +1022,9 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             mMap.setMyLocationEnabled(true);
         }
 //        showmap();
-        DaggerAtractionComponent.builder()
+        DaggerItineraryComponent.builder()
                 .netComponent(((App) getApplicationContext()).getGoogleNetComponent())
-                .attractionModule(new AttractionModule(this))
+                .itineraryModule(new ItineraryModule(this))
                 .build().inject(this);
 
         //-----------------
@@ -1059,7 +1047,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             for (int j = 0; j < MarkerPoints.size() - 1; j++) {
                 String origins = MarkerPoints.get(j).latitude + "," + MarkerPoints.get(j).longitude;
                 String destination = MarkerPoints.get(j + 1).latitude + "," + MarkerPoints.get(j + 1).longitude;
-                attractionPresenter.getDirection(origins, destination);
+                itineraryPresenter.getDirection(origins, destination);
             }
         }
 

@@ -3,7 +3,6 @@ package com.iranplanner.tourism.iranplanner.ui.presenter.abs;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.iranplanner.tourism.iranplanner.ui.presenter.Presenter;
 
@@ -17,7 +16,7 @@ import entity.ResultWidgetFull;
 /**
  * Created by Hoda
  */
-public abstract class AttractionContract extends Presenter<AttractionContract.View> {
+public abstract class ItineraryContract extends Presenter<ItineraryContract.View> {
     public interface View {
         void showAttraction(ResultItineraryAttractionList resultItineraryAttractionList);
 

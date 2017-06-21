@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 
 //import com.digits.sdk.android.AuthCallback;
@@ -19,8 +17,6 @@ import android.widget.Toast;
 //import com.digits.sdk.android.DigitsSession;
 import com.iranplanner.tourism.iranplanner.adapter.TabPagerAdapter;
 import com.iranplanner.tourism.iranplanner.di.model.ForceUpdateChecker;
-import com.iranplanner.tourism.iranplanner.ui.activity.LoginActivity;
-import com.iranplanner.tourism.iranplanner.ui.activity.SendPhoneActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
@@ -28,8 +24,6 @@ import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 //import com.twitter.sdk.android.core.TwitterCore;
 //import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
-import io.fabric.sdk.android.Fabric;
-import login.DigitsRegisterButton;
 import tools.Util;
 
 public class MainActivity extends StandardActivity implements ForceUpdateChecker.OnUpdateNeededListener {

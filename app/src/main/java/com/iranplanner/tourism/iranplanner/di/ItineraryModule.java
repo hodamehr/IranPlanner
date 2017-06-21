@@ -5,22 +5,22 @@ import dagger.Module;
 import dagger.Provides;
 
 import com.iranplanner.tourism.iranplanner.di.model.CustomScope;
-import com.iranplanner.tourism.iranplanner.ui.presenter.abs.AttractionContract;
+import com.iranplanner.tourism.iranplanner.ui.presenter.abs.ItineraryContract;
 
 /**
  * Created by Hoda
  */
 @Module
-public class AttractionModule   {
-    private final AttractionContract.View mView;
+public class ItineraryModule {
+    private final ItineraryContract.View mView;
 
 
-    public AttractionModule(AttractionContract.View mView) {
+    public ItineraryModule(ItineraryContract.View mView) {
         this.mView = mView;
     }
 @CustomScope
     @Provides
-    AttractionContract.View a() {
+    ItineraryContract.View a() {
         return mView;
     }
 }

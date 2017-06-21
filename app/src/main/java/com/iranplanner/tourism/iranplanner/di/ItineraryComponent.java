@@ -15,8 +15,8 @@ import com.iranplanner.tourism.iranplanner.ui.activity.MoreItemItineraryActivity
  * Created by Hoda on 11-May-16.
  */
 @CustomScope
-@Component(dependencies = NetComponent.class, modules = {AttractionModule.class})
-public interface AtractionComponent {
+@Component(dependencies = NetComponent.class, modules = {ItineraryModule.class})
+public interface ItineraryComponent {
     void inject(MoreItemItineraryActivity activity);
 
 }

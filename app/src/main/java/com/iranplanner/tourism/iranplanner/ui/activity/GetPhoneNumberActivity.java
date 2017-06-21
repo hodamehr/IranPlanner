@@ -1,8 +1,6 @@
 package com.iranplanner.tourism.iranplanner.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 //import com.digits.sdk.android.AuthCallback;
 //import com.digits.sdk.android.Digits;
@@ -14,8 +12,6 @@ import com.iranplanner.tourism.iranplanner.R;
 //import com.twitter.sdk.android.core.TwitterCore;
 //import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
-import io.fabric.sdk.android.Fabric;
-import login.DigitsRegisterButton;
 import tools.Util;
 
 /**

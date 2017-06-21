@@ -81,7 +81,7 @@
             android:name=".ui.activity.SignupActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.GridActivity"
+            android:name=".ui.activity.GridActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ReservationHotelListActivity"
@@ -90,7 +90,7 @@
             android:name=".ui.activity.ReservationHotelDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.CommentListActivity"
+            android:name=".ui.activity.CommentListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.ShowRoomActivity"

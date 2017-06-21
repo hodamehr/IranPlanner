@@ -60,7 +60,7 @@ public class CommentPresenter extends CommentContract {
                         mView.showComments(resultItineraryList);
                     }
                 });
-//        retrofit.create(AttractionPresenter.AttractionService.class)
+//        retrofit.create(ItineraryPresenter.AttractionService.class)
 //                .getItineraryCommentList(action, nid, ntype, offset).subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .unsubscribeOn(Schedulers.io())

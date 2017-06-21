@@ -50,37 +50,11 @@ public interface getJsonInterface {
             @Query("action") String action,
             @Query("id") String itineraryId);
 
-    @GET("api-itinerary.php")
-    Call<ResultItineraryList> getItinerarysAttraction(@Query("action") String action,
-                                                      @Query("lang") String lang,
-                                                      @Query("from") String from,
-                                                      @Query("limit") String limit,
-                                                      @Query("offset") String offset,
-                                                      @Query("attraction") String attraction);
 
-    //    @GET("api-user.php?action=login&email=faridsaniee@gmail.com&password=090afe0d4abb5dfdccb84641fe115680")
-    @GET("api-user.php")
-    Call<LoginResult> getLoginResult(@Query("action") String action,
-                                     @Query("email") String email,
-                                     @Query("password") String password,
-                                     @Query("cid") String token,
-                                     @Query("andId") String androidId);
 
-    //    api.parsdid.com/iranplanner/app/api-com.iranplanner.tourism.iranplanner.di.data.php?action=nodeuser&id=28439&uid=323148788221963&ntype=itinerary
-    @POST("api-data.php?action=comment")
-    Call<ResultCommentList> callInsertComment(@Body CommentSend request);
 
-    @GET("api-com.iranplanner.tourism.iranplanner.di.data.php")
-    Call<ResultCommentList> getCommentList(
-            @Query("action") String action,
-            @Query("nid") String nid,
-            @Query("ntype") String ntype,
-            @Query("offset") String offset);
 
-    @GET("api-lodging.php")
-    Call<ResultLodgingList> getLodgingReserve(
-            @Query("action") String action,
-            @Query("city") String city);
+
 
     @GET("api-lodging.php")
     Call<ResultLodgingHotel> getHotelReserve(

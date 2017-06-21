@@ -1,5 +1,5 @@
 
-package login;
+package server;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
