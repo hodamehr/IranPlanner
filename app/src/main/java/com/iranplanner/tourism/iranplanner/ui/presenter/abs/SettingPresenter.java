@@ -1,10 +1,7 @@
 package com.iranplanner.tourism.iranplanner.ui.presenter.abs;
 
 
-import com.google.firebase.auth.UserInfo;
-import com.iranplanner.tourism.iranplanner.di.DaggerSettingComponent;
-import com.iranplanner.tourism.iranplanner.di.SettingModule;
-import com.iranplanner.tourism.iranplanner.di.model.App;
+
 
 import javax.inject.Inject;
 

@@ -157,6 +157,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     DaggerItineraryComponent.Builder builder;
 
 
+
     private void findView() {
 //        setContentView(R.layout.fragment_itinerary_item_more);
         txtItinerary_attraction_Difficulty = (TextView) findViewById(R.id.txtItinerary_attraction_Difficulty);

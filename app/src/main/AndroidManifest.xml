@@ -10,9 +10,8 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
 
-
+    <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE"/> -->
     <application
         android:name=".di.model.App"
         android:allowBackup="true"
@@ -21,10 +20,7 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:screenOrientation="portrait"
-        android:theme="@style/AppTheme"
-
-   >
-
+        android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait">
@@ -34,10 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.activity.EditProfileActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.EditProfileActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.SendPhoneActivity"
             android:screenOrientation="portrait" />
@@ -47,16 +45,18 @@
         <activity
             android:name=".ui.activity.StandardActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.ScrollingActivity" />
         <activity
             android:name=".ui.activity.ReservationListActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.activity.GetTokenActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.RegisterActivity"
             android:screenOrientation="portrait" />
-        <!-- <activity android:name=".activity.SearchCityCityActivity" />-->
+        <!-- <activity android:name=".activity.SearchCityCityActivity" /> -->
         <!-- App Indexing. See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -102,7 +102,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name="server.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -114,9 +113,15 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="99164a3830139c22424702ada3eeee9501d88ab9" />
+
+        <activity
+            android:name=".ui.activity.ScrollingActivity1"
+            android:label="@string/title_activity_scrolling1"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -4,9 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.firebase.auth.UserInfo;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.di.DaggerSettingComponent;
 import com.iranplanner.tourism.iranplanner.di.SettingModule;
@@ -22,6 +19,8 @@ import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.iranplanner.tourism.iranplanner.ui.activity.EditProfileActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.LoginActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.ScrollingActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.ScrollingActivity1;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.SettingContract;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.SettingPresenter;
 
@@ -31,9 +30,6 @@ import javax.inject.Inject;
 
 import entity.GetInfoReqSend;
 import entity.GetInfoResult;
-import entity.InfoResult;
-import entity.Login;
-import entity.LoginResult;
 import server.Config;
 import tools.Util;
 
@@ -95,8 +91,10 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
 
         switch (v.getId()) {
             case R.id.btnEditProfile:
-                requestGetUser();
-                tagFrom = "editKey";
+//                requestGetUser();
+//                tagFrom = "editKey";
+                Intent intenta=new Intent(getActivity(), ScrollingActivity.class);
+                startActivity(intenta);
 
                 break;
             case R.id.LayoutShowProfileHolder:
@@ -105,7 +103,7 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
                 break;
             case R.id.exitFromAccount:
                 clearSharedprefrence();
-                Intent intent=new Intent(getActivity(), LoginActivity.class);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 break;
 
@@ -129,7 +127,7 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
     @Override
     public void showError(String message) {
         Log.e("complete", "get attraction list");
-        if(progressDialog.isShowing()){
+        if (progressDialog.isShowing()) {
             progressDialog.dismiss();
 
         }
