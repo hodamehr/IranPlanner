@@ -993,7 +993,6 @@
                                 android:paddingLeft="@dimen/margin_standard"
                                 android:paddingRight="@dimen/margin_short"
                                 android:paddingTop="@dimen/padding_standard"
-                                android:visibility="gone"
                             >
 
                             </android.support.v4.view.ViewPager>

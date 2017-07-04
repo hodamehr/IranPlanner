@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.iranplanner.tourism.iranplanner.ui.activity.ScrollingActivity1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/featureHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_standard">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:translationZ="1dp"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <RelativeLayout
+
+                        android:id="@+id/overlapImageHolderer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        android:translationZ="1dp">
+
+
+                        <ImageView
+                            android:id="@+id/imageTypeAttraction"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_centerHorizontal="true"
+                            android:paddingTop="@dimen/padding_short"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_flight" />
+
+                        <TextView
+                            android:id="@+id/attractionType"
+                            style="@style/StandardTextGrey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imageTypeAttraction"
+                            android:layout_centerHorizontal="true"
+                            android:padding="5dp"
+
+                            android:text="پرواز" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/greyLight"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <RelativeLayout
+
+                        android:id="@+id/overlapImageHolder1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        android:translationZ="1dp">
+
+
+                        <ImageView
+                            android:id="@+id/imageTypeAttraction1"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_centerHorizontal="true"
+                            android:paddingTop="@dimen/padding_short"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_accomodation" />
+
+                        <TextView
+                            android:id="@+id/attractionType1"
+                            style="@style/StandardTextGrey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imageTypeAttraction1"
+                            android:layout_centerHorizontal="true"
+                            android:padding="5dp"
+
+                            android:text="اقامت" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/greyLight"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:translationZ="1dp"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <RelativeLayout
+
+                        android:id="@+id/overlapImageHolder"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+
+                        android:translationZ="1dp">
+
+
+                        <ImageView
+                            android:id="@+id/imageTypeAttraction3"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_centerHorizontal="true"
+                            android:paddingTop="@dimen/padding_short"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_itinerary" />
+
+                        <TextView
+                            android:id="@+id/attractionType3"
+                            style="@style/StandardTextGrey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imageTypeAttraction3"
+                            android:layout_centerHorizontal="true"
+                            android:padding="5dp"
+                            android:text="برنامه سفر" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/greyLight"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/overlapImageHolde1r"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <ImageView
+                            android:id="@+id/imageTypeAttraction11"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_centerHorizontal="true"
+                            android:paddingTop="@dimen/padding_short"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_attraction" />
+
+                        <TextView
+                            android:id="@+id/attractionType11"
+                            style="@style/StandardTextGrey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_below="@+id/imageTypeAttraction11"
+                            android:layout_centerHorizontal="true"
+                            android:padding="5dp"
+                            android:text="جاذبه های دیدنی" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--pageMore-->
+        <RelativeLayout
+            android:id="@+id/viewPagerProvince"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@+id/featureHolder"
+            android:layout_marginTop="@dimen/padding_larg"
+            android:gravity="center"
+            android:paddingLeft="@dimen/margin_short">
+
+            <TextView
+                android:id="@+id/txtDestinationTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/margin_short"
+                android:text="مقاصد دوست داشتنی"
+                style="@style/StandardTitle"
+                />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/ProvincePager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/txtDestinationTitle"
+                android:layout_marginLeft="@dimen/padding_short"
+                android:layout_weight="1"
+                android:background="@color/greyLight"
+                android:gravity="center"
+                android:paddingRight="@dimen/padding_standard"
+                android:paddingTop="@dimen/padding_standard">
+
+            </android.support.v4.view.ViewPager>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/provinceList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewPagerProvince"
+            android:layout_margin="@dimen/margin_standard"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/btnShowProvince"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtProvinceTitle"
+                    style="@style/StandardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:maxLines="1"
+                    android:text="لیست استان های ایران" />
+
+                <ImageView
+                    android:id="@+id/imageCityName1"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_money" />
+
+            </LinearLayout>
+
+            <include layout="@layout/content_province_list" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/provinceList"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/large_text" />
+    </RelativeLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

@@ -26,6 +26,8 @@
     <color name="purple_2">#9479e4</color>
     <color name="main_blue">#3ec1cf</color>
     <color name="light_blue">#a0dae2</color>
+    <color name="light_blue_back">#daeef1</color>
     <color name="dark_blue">#288795</color>
+    <color name="toolbarTransparent">#00FFFFFF</color>
 
 </resources>

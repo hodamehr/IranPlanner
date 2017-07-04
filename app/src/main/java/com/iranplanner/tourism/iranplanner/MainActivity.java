@@ -42,6 +42,7 @@ import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.FirstItem;
+import com.iranplanner.tourism.iranplanner.ui.fragment.HomeFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.MainSearchFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.SettingFragment;
 //import com.twitter.sdk.android.core.TwitterAuthConfig;
@@ -51,7 +52,7 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.SettingFragment;
 import entity.Data;
 import tools.Util;
 
-public class MainActivity extends StandardActivity implements ForceUpdateChecker.OnUpdateNeededListener  {
+public class MainActivity extends StandardActivity implements ForceUpdateChecker.OnUpdateNeededListener {
     private StandardFragment currentTab;
 //
 //    private RtlToolbar mToolbar;
@@ -66,6 +67,7 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     protected CharSequence mTitle;
 
     protected ImageView toolbarToggle;
+    protected ImageView toolbarToggleLeft;
 
     protected static int buildVersion;
 
@@ -83,7 +85,7 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
 //        setupTabLayout();
 
         mTitle = mDrawerTitle = getTitle();
-        mNavigationDrawerItemTitles= getResources().getStringArray(R.array.navigation_items);
+        mNavigationDrawerItemTitles = getResources().getStringArray(R.array.navigation_items);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -104,7 +106,8 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        toolbarToggle = (ImageView)findViewById(R.id.toolbarToggle);
+        toolbarToggle = (ImageView) findViewById(R.id.toolbarToggle);
+        toolbarToggleLeft = (ImageView) findViewById(R.id.toolbarToggleLeft);
         toolbarToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,15 +121,16 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
 
         buildVersion = Build.VERSION.SDK_INT;
 
-        Log.i("PHELAT", String.valueOf(buildVersion));
+        Log.i("hi", String.valueOf(buildVersion));
 
-        if(buildVersion > 20){
+        if (buildVersion > 20) {
 
 //            toolbarToggle.setBackgroundResource(R.drawable.ripple);
 
         }
 
-        toolbarTitle = (TextView)findViewById(R.id.toolbarTitle);
+        toolbarTitle = (TextView) findViewById(R.id.toolbarTitle);
+        toolbarTitle = (TextView) findViewById(R.id.toolbarTitle);
 //        toolbarTitle.setTypeface(YEKAN);
 
 
@@ -180,7 +184,7 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
 
         }
         Bundle extras = getIntent().getExtras();
-        int position = 0;
+        int position = 2;
         if (extras != null) {
             position = extras.getInt("viewpager_position");
         }
@@ -188,7 +192,11 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         currentTab = (StandardFragment) pagerAdapter.getItem(position);
         viewPager.setCurrentItem(position);
 
-
+        if (position == 2) {
+            toolbarToggleLeft.setVisibility(View.GONE);
+        }else {
+            toolbarToggleLeft.setVisibility(View.VISIBLE);
+        }
         Util.displayFirebaseRegId(this);
 
         ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
@@ -244,53 +252,59 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     }
 
 
-
-
     //-------------
 
     public static MainActivity instance;
     private MainSearchFragment mainSearchFragment;
     private SettingFragment settingFragment;
+    private HomeFragment homeFragment;
     private TabLayout allTabs;
+
     public static MainActivity getInstance() {
         return instance;
     }
+
     private void getAllWidgets() {
         allTabs = (TabLayout) findViewById(R.id.tab_layout);
     }
+
     private void setupTabLayout() {
         mainSearchFragment = MainSearchFragment.newInstance();
         settingFragment = SettingFragment.newInstance();
-        allTabs.addTab(allTabs.newTab().setText("حستجو"),true);
+        allTabs.addTab(allTabs.newTab().setText("حستجو"), true);
         allTabs.addTab(allTabs.newTab().setText("حساب من"));
     }
-    private void bindWidgetsWithAnEvent()
-    {
+
+    private void bindWidgetsWithAnEvent() {
         allTabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 setCurrentTabFragment(tab.getPosition());
             }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
+
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
     }
-    private void setCurrentTabFragment(int tabPosition)
-    {
-        switch (tabPosition)
-        {
-            case 0 :
+
+    private void setCurrentTabFragment(int tabPosition) {
+        switch (tabPosition) {
+            case 0:
                 replaceFragment(mainSearchFragment);
                 break;
-            case 1 :
+            case 1:
                 replaceFragment(settingFragment);
                 break;
+            case 3:
+                replaceFragment(homeFragment);
         }
     }
+
     public void replaceFragment(StandardFragment fragment) {
 //        FragmentManager fm = getSupportFragmentManager();
 //        FragmentTransaction ft = fm.beginTransaction();
@@ -303,7 +317,8 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     ///
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
-        @Override public void onItemClick
+        @Override
+        public void onItemClick
                 (AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
         }
@@ -315,6 +330,7 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
 
         switch (position) {
             case 0:
+
                 fragment = new FirstItem();
                 break;
             case 1:
@@ -342,12 +358,13 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         }
     }
 
-    @Override public void setTitle(CharSequence title) {
+    @Override
+    public void setTitle(CharSequence title) {
         mTitle = title;
         toolbarTitle.setText(mTitle);
     }
 
-    void setupToolbar(){
+    void setupToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

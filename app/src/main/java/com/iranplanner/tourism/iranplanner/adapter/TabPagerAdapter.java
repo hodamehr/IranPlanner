@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.ui.fragment.HomeFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.LoginFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.MainSearchFragment;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
@@ -20,14 +21,16 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.SettingFragment;
  */
 public class TabPagerAdapter extends FragmentPagerAdapter {
     private Context context;
-    public final int PAGE_COUNT = 2;
+    public final int PAGE_COUNT = 3;
     private int[] mTabsIcons = {
             R.mipmap.ic_search,
+            R.mipmap.ic_profile_grey,
             R.mipmap.ic_profile_grey
+
     };
     private StandardFragment currentTab;
     //    StandardFragment
-    private final String[] mTabsTitle = {"جستجو", "حساب من"};
+    private final String[] mTabsTitle = {"جستجو", "حساب من","خانه"};
 
     public TabPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -55,7 +58,9 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 currentTab = SettingFragment.newInstance();
                 return currentTab;
-
+            case 2:
+                currentTab = HomeFragment.newInstance();
+                return currentTab;
         }
         return null;
     }

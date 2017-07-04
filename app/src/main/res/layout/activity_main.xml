@@ -20,7 +20,8 @@
             <!--Include our toolbar layout-->
             <include
                 android:id="@+id/toolbar"
-                layout="@layout/toolbar" />
+                layout="@layout/toolbar"
+                />
 
          <!--   <View
                 android:layout_width="match_parent"
