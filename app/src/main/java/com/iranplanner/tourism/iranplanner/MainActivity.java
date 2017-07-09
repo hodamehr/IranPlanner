@@ -79,45 +79,6 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-//        instance=this;
-//        getAllWidgets();
-//        bindWidgetsWithAnEvent();
-//        setupTabLayout();
-
-        mTitle = mDrawerTitle = getTitle();
-        mNavigationDrawerItemTitles = getResources().getStringArray(R.array.navigation_items);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        setupToolbar();
-
-        Data[] drawerItem = new Data[3];
-
-        drawerItem[0] = new Data(R.drawable.ic_google, "ایتم اول");
-        drawerItem[1] = new Data(R.drawable.ic_google, "ایتم دوم");
-        drawerItem[2] = new Data(R.drawable.ic_google, "ایتم سوم");
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        NavigationItemsAdapter adapter = new NavigationItemsAdapter
-                (this, R.layout.nav_list_row, drawerItem);
-        mDrawerList.setAdapter(adapter);
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        toolbarToggle = (ImageView) findViewById(R.id.toolbarToggle);
-        toolbarToggleLeft = (ImageView) findViewById(R.id.toolbarToggleLeft);
-        toolbarToggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mDrawerLayout.openDrawer(GravityCompat.END);
-
-            }
-        });
-
-//        YEKAN = (Typeface.createFromAsset(getAssets(),"Yekan.ttf"));
 
         buildVersion = Build.VERSION.SDK_INT;
 
@@ -192,11 +153,7 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         currentTab = (StandardFragment) pagerAdapter.getItem(position);
         viewPager.setCurrentItem(position);
 
-        if (position == 2) {
-            toolbarToggleLeft.setVisibility(View.GONE);
-        }else {
-            toolbarToggleLeft.setVisibility(View.VISIBLE);
-        }
+
         Util.displayFirebaseRegId(this);
 
         ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
@@ -364,9 +321,9 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         toolbarTitle.setText(mTitle);
     }
 
-    void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
+//    void setupToolbar() {
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//    }
 }

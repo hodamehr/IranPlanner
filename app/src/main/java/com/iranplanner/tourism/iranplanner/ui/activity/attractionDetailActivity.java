@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.iranplanner.tourism.iranplanner.R;
+
 import com.iranplanner.tourism.iranplanner.di.AttractionDetailModule;
 import com.iranplanner.tourism.iranplanner.di.DaggerAtractionDetailComponent;
 import com.iranplanner.tourism.iranplanner.di.model.App;
@@ -95,6 +96,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     int LikeValue;
     int VisitedValue;
     int WishValue;
+
 
     DaggerAtractionDetailComponent.Builder builder;
     @Override

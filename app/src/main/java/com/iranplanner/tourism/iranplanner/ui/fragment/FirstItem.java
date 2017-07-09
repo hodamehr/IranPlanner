@@ -11,7 +11,7 @@ import com.iranplanner.tourism.iranplanner.R;
 
 
 /**
- * Created by phelat on 9/29/16.
+ * Created by h.vahidimehr on 10/01/2017.
  */
 public class FirstItem extends Fragment {
 

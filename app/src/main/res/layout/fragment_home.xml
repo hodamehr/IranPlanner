@@ -1,161 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/containerHomeFragment"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
-    android:clickable="true"
-    tools:context=".MainActivity">
+  >
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/containerHomeFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:elevation="6dp">
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground"
+        android:clickable="true"
+        tools:context=".MainActivity">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/zz"
-                    android:fitsSystemWindows="true"
-                    android:scaleType="centerCrop"
-                    app:layout_collapseMode="parallax" />
-
-                <Button
-                    android:id="@+id/aboutCityBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginBottom="@dimen/margin_standard"
-                    android:layout_marginLeft="@dimen/margin_standard"
-                    android:text="درباره این شهر" />
-
-                <TextView
-                    android:id="@+id/txtWhereGo"
-                    style="@style/StandardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/button_corner_white"
-                    android:paddingBottom="@dimen/padding_short"
-                    android:paddingLeft="@dimen/padding_standard"
-                    android:paddingRight="@dimen/padding_standard"
-                    android:paddingTop="@dimen/padding_short"
-                    android:text="کجا برم؟" />
-            </RelativeLayout>
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-        <RelativeLayout
-            android:id="@+id/featureListRelativeLayout"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:visibility="gone"
-           >
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:elevation="6dp"
+            android:fitsSystemWindows="true"
+            android:background="@android:color/transparent"
+     >
 
-            <LinearLayout
-                android:id="@+id/featureListHolder"
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/background"
-                android:visibility="gone"
-               >
+                android:layout_height="match_parent"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
-                <LinearLayout
-
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/background"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/padding_short"
-                    android:weightSum="4">
+                    android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/test"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:src="@mipmap/ic_attraction" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/zz"
+                        android:fitsSystemWindows="true"
+                        android:scaleType="centerCrop"
+                        app:layout_collapseMode="parallax" />
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/main_blue" />
+                    <Button
+                        android:id="@+id/aboutCityBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginBottom="@dimen/margin_standard"
+                        android:layout_marginLeft="@dimen/margin_standard"
+                        android:text="درباره این شهر" />
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:src="@mipmap/ic_attraction" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/main_blue" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:src="@mipmap/ic_attraction" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/main_blue" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:src="@mipmap/ic_attraction" />
-
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/toolbarFeatureElevation"
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                   android:background="@drawable/toolbar_elevation" />
-            </LinearLayout>
-
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/txtWhereGo"
+                        style="@style/StandardTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/button_corner_white"
+                        android:paddingBottom="@dimen/padding_short"
+                        android:paddingLeft="@dimen/padding_standard"
+                        android:paddingRight="@dimen/padding_standard"
+                        android:paddingTop="@dimen/padding_short"
+                        android:text="کجا برم؟" />
+                </RelativeLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
 
 
-    </android.support.design.widget.AppBarLayout>
+        </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_scrolling_home"
-        />
-    <!--<include layout="@layout/content_scrolling" />-->
-    <!--
         <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/nestedScrollView"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"        >
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+          >
+
+            <include layout="@layout/content_scrolling_home" />
+        </android.support.v4.widget.NestedScrollView>
+
+<!--toolar-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
+
+            <RelativeLayout
+                android:id="@+id/featureListRelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar"
+                android:background="@color/transparent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:visibility="invisible">
+
+                <LinearLayout
+                    android:id="@+id/featureListHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/background"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/padding_short"
+                        android:weightSum="4">
+
+                        <ImageView
+                            android:id="@+id/test"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:src="@mipmap/ic_air" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/main_blue" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:src="@mipmap/ic_attraction" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/main_blue" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:src="@mipmap/ic_attraction" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/main_blue" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:src="@mipmap/ic_attraction" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/toolbarFeatureElevation"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@drawable/toolbar_elevation" />
+                </LinearLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 
-
-        </android.support.v4.widget.NestedScrollView>-->
-
-</android.support.design.widget.CoordinatorLayout>
+    <include
+        layout="@layout/nav_layout"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end" />
+</android.support.v4.widget.DrawerLayout>

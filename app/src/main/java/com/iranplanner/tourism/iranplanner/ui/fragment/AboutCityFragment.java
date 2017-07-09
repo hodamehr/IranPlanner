@@ -21,7 +21,7 @@ import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 
 
 /**
- * Created by phelat on 9/29/16.
+ * Created by h.vahidimehr on 10/01/2017.
  */
 public class AboutCityFragment extends StandardFragment {
 

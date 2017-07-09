@@ -95,7 +95,8 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
     }
 
     private void findView() {
-        setContentView(R.layout.activity_reservation_hotel_detail);
+//        setContentView(R.layout.activity_reservation_hotel_detail);
+        setContentView(R.layout.fragment_reservation);
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
@@ -228,7 +229,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         startOfTravel = (Date) bundle.getSerializable("startOfTravel");
         durationTravel = (int) bundle.getSerializable("durationTravel");
         txtHotelName.setText(resultLodgingHotelDetail.getLodgingName());
-        txtHotelType.setText(resultLodgingHotelDetail.getLodgingTypeTitle());
+        txtHotelType.setText("نوع مرکز اقامتی: "+resultLodgingHotelDetail.getLodgingTypeTitle());
         txtAddress.setText(resultLodgingHotelDetail.getLodgingAddress());
         txtDate.setText(Utils.getSimpleDate(startOfTravel));
         txtDuration.setText(Utils.persianNumbers(String.valueOf(durationTravel)) + " شب");

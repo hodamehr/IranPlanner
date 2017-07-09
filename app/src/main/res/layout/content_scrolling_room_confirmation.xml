@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/provinceList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewPagerProvince"
+            android:layout_margin="@dimen/margin_standard"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                app:cardUseCompatPadding="true"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/greyLight"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/btnShowProvince"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtProvinceTitle"
+                            style="@style/StandardTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:maxLines="1"
+                            android:text="اتاق یک تخته" />
+
+                        <ImageView
+                            android:id="@+id/imageCityName1"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_money" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txtRequestNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/btnShowProvince"
+                        android:paddingRight="@dimen/padding_larg"
+                        android:text="شماره درخواست: 66666"
+                        android:paddingTop="@dimen/padding_standard"/>
+
+                    <TextView
+                        android:id="@+id/txtRequestDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/txtRequestNumber"
+                        android:paddingRight="@dimen/padding_larg"
+                        android:text="شماره درخواست: 66666" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

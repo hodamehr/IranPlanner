@@ -5,43 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    local:layout_collapseMode="parallax"
     local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    local:layout_collapseMode="pin" >
+    local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    android:background="@android:color/transparent"
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@mipmap/ic_menu"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_centerInParent="true"
             android:id="@+id/toolbarToggle"
-            android:clickable="true"/>
-        <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@mipmap/ic_search"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:id="@+id/toolbarToggleLeft"
-            android:clickable="true"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_toLeftOf="@+id/toolbarToggle"
             android:layout_marginRight="10dp"
-            android:textColor="#FFF"
-            android:gravity="center|right"
+            android:clickable="true"
+            android:src="@mipmap/ic_menu" />
+
+        <ImageView
+            android:id="@+id/toolbarToggleLeft"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:clickable="true"
+            android:src="@mipmap/ic_search" />
+
+        <TextView
             android:id="@+id/toolbarTitle"
-            android:textSize="19sp"
-         />
+            style="@style/StandardText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/button_corner_white"
+            android:padding="@dimen/margin_xshort"
+            android:text="کجا برم؟"
+            android:visibility="invisible" />
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--android:layout_toLeftOf="@+id/toolbarToggle"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:textColor="#FFF"-->
+        <!--android:gravity="center|right"-->
+        <!--android:id="@+id/toolbarTitle"-->
+        <!--android:textSize="19sp"-->
+        <!--/>-->
 
     </RelativeLayout>
 
