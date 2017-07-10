@@ -19,10 +19,19 @@ public class HomeInfo implements Serializable {
     private String parentTitle;
     @SerializedName("parent_id")
     @Expose
-    private Integer parentId;
+    private String parentId;
     @SerializedName("type")
     @Expose
     private String type;
+    @SerializedName("position_lat")
+    @Expose
+    private String positionLat;
+    @SerializedName("position_lon")
+    @Expose
+    private String positionLon;
+    @SerializedName("img_url")
+    @Expose
+    private Object imgUrl;
 
     public String getId() {
         return id;
@@ -48,11 +57,11 @@ public class HomeInfo implements Serializable {
         this.parentTitle = parentTitle;
     }
 
-    public Integer getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
-    public void setParentId(Integer parentId) {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 
@@ -62,6 +71,30 @@ public class HomeInfo implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPositionLat() {
+        return positionLat;
+    }
+
+    public void setPositionLat(String positionLat) {
+        this.positionLat = positionLat;
+    }
+
+    public String getPositionLon() {
+        return positionLon;
+    }
+
+    public void setPositionLon(String positionLon) {
+        this.positionLon = positionLon;
+    }
+
+    public Object getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(Object imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
 }

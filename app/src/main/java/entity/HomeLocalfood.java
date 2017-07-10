@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class HomeLocalfood implements Serializable{
+public class HomeLocalfood implements Serializable {
 
     @SerializedName("localfood_id")
     @Expose

@@ -6,14 +6,17 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResultHome implements Serializable{
+public class ResultHome implements Serializable {
 
     @SerializedName("home_info")
     @Expose
     private HomeInfo homeInfo;
+    @SerializedName("home_images")
+    @Expose
+    private List<HomeImage> homeImages = null;
     @SerializedName("home_event")
     @Expose
-    private List<Object> homeEvent = null;
+    private List<HomeEvent> homeEvent = null;
     @SerializedName("home_lodging")
     @Expose
     private List<HomeLodging> homeLodging = null;
@@ -35,6 +38,15 @@ public class ResultHome implements Serializable{
     @SerializedName("home_airport")
     @Expose
     private List<Object> homeAirport = null;
+    @SerializedName("home_neighbor_city")
+    @Expose
+    private List<HomeNeighborCity> homeNeighborCity = null;
+    @SerializedName("home_province_city")
+    @Expose
+    private List<HomeProvinceCity> homeProvinceCity = null;
+    @SerializedName("home_itinerary")
+    @Expose
+    private List<HomeItinerary> homeItinerary = null;
 
     public HomeInfo getHomeInfo() {
         return homeInfo;
@@ -44,11 +56,19 @@ public class ResultHome implements Serializable{
         this.homeInfo = homeInfo;
     }
 
-    public List<Object> getHomeEvent() {
+    public List<HomeImage> getHomeImages() {
+        return homeImages;
+    }
+
+    public void setHomeImages(List<HomeImage> homeImages) {
+        this.homeImages = homeImages;
+    }
+
+    public List<HomeEvent> getHomeEvent() {
         return homeEvent;
     }
 
-    public void setHomeEvent(List<Object> homeEvent) {
+    public void setHomeEvent(List<HomeEvent> homeEvent) {
         this.homeEvent = homeEvent;
     }
 
@@ -106,6 +126,30 @@ public class ResultHome implements Serializable{
 
     public void setHomeAirport(List<Object> homeAirport) {
         this.homeAirport = homeAirport;
+    }
+
+    public List<HomeNeighborCity> getHomeNeighborCity() {
+        return homeNeighborCity;
+    }
+
+    public void setHomeNeighborCity(List<HomeNeighborCity> homeNeighborCity) {
+        this.homeNeighborCity = homeNeighborCity;
+    }
+
+    public List<HomeProvinceCity> getHomeProvinceCity() {
+        return homeProvinceCity;
+    }
+
+    public void setHomeProvinceCity(List<HomeProvinceCity> homeProvinceCity) {
+        this.homeProvinceCity = homeProvinceCity;
+    }
+
+    public List<HomeItinerary> getHomeItinerary() {
+        return homeItinerary;
+    }
+
+    public void setHomeItinerary(List<HomeItinerary> homeItinerary) {
+        this.homeItinerary = homeItinerary;
     }
 
 }

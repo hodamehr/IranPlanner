@@ -3,11 +3,14 @@ package com.iranplanner.tourism.iranplanner.ui.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -35,13 +38,27 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.iranplanner.tourism.iranplanner.MainActivity;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.adapter.NavigationItemsAdapter;
+import com.iranplanner.tourism.iranplanner.di.DaggerHomeComponent;
+import com.iranplanner.tourism.iranplanner.di.HomeModule;
+import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
+import com.iranplanner.tourism.iranplanner.ui.activity.RegisterActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
+import com.iranplanner.tourism.iranplanner.ui.presenter.HomePresenter;
+import com.iranplanner.tourism.iranplanner.ui.presenter.abs.HomeContract;
 
+import java.util.Arrays;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import autoComplet.MyFilterableAdapterCityProvince;
 import autoComplet.MyFilterableAdapterProvince;
@@ -49,14 +66,18 @@ import autoComplet.ReadJsonCityProvince;
 import autoComplet.ReadJsonProvince;
 import entity.CityProvince;
 import entity.Data;
+import entity.GetHomeResult;
+import entity.HomeImage;
+import entity.HomeInfo;
 import entity.Province;
+import entity.ResultHome;
 import tools.Util;
 
 
 /**
  * Created by h.vahidimehr on 10/01/2017.
  */
-public class HomeFragment extends StandardFragment implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, NestedScrollView.OnScrollChangeListener {
+public class HomeFragment extends StandardFragment implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, NestedScrollView.OnScrollChangeListener, HomeContract.View {
 
     protected String[] mNavigationDrawerItemTitles;
     protected DrawerLayout mDrawerLayout;
@@ -64,12 +85,14 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
     protected Toolbar toolbar;
     protected CharSequence mDrawerTitle;
     protected CharSequence mTitle;
-
+    List<CityProvince> CityProvince;
+    String selectId;
     protected ImageView toolbarToggle;
     protected ImageView toolbarToggleLeft;
 
     protected static int buildVersion;
-
+    @Inject
+    HomePresenter homePresenter;
     protected TextView toolbarTitle;
 
     int width;
@@ -89,6 +112,8 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
     LinearLayout featureHolder;
     RelativeLayout frameLayout;
     LinearLayout featureListHolder;
+    private ProgressDialog progressDialog;
+    ImageView imgHome;
 
     public HomeFragment() {
         super();
@@ -103,6 +128,7 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
         AppBarLayout appBarLayout = (AppBarLayout) rootView.findViewById(R.id.app_bar);
         featureHolder = (LinearLayout) rootView.findViewById(R.id.featureHolder);
         aboutCityBtn = (Button) rootView.findViewById(R.id.aboutCityBtn);
+        imgHome = (ImageView) rootView.findViewById(R.id.imgHome);
         card_view_province_list = (LinearLayout) rootView.findViewById(R.id.card_view_province_list);
         txtWhereGo = (TextView) rootView.findViewById(R.id.txtWhereGo);
         test = (ImageView) rootView.findViewById(R.id.test);
@@ -208,11 +234,7 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
 
         Log.i("hi", String.valueOf(buildVersion));
 
-        if (buildVersion > 20) {
 
-            toolbarToggle.setBackgroundResource(R.mipmap.ic_bookmark_grey);
-
-        }
     }
 
     @Override
@@ -306,6 +328,44 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
         }
     }
 
+    @Override
+    public void showError(String message) {
+        Toast.makeText(getContext(), "مقصد مورد نظر یافت نشد", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showComplete() {
+
+    }
+
+    @Override
+    public void getHomeResult(GetHomeResult getHomeResult) {
+        List<ResultHome> resultHomes = getHomeResult.getResultHome();
+
+        setNamePicture(resultHomes.get(0).getHomeInfo(),resultHomes.get(0).getHomeImages());
+    }
+    private void setNamePicture(HomeInfo homeInfo,List<HomeImage> homeImage){
+        txtWhereGo.setText(homeInfo.getTitle());
+//        imgHome.setImageBitmap();
+        if(homeImage.get(0).getImgUrl()!=null){
+            Util.setImageView(homeImage.get(0).getImgUrl(),getContext(),imgHome);
+        }
+    }
+
+    @Override
+    public void showProgress() {
+        progressDialog = new ProgressDialog(getActivity(), R.style.AppTheme);
+        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage("لطفا منتظر بمانید");
+        progressDialog.show();
+    }
+
+    @Override
+    public void dismissProgress() {
+        progressDialog.dismiss();
+    }
+
+
     public class CustomDialogSearchLocation extends Dialog implements
             View.OnClickListener {
 
@@ -330,7 +390,8 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
             listd = (ListView) findViewById(R.id.listd);
             no = (TextView) findViewById(R.id.txtNo);
             no.setOnClickListener(this);
-            tempCityProvince = autoCompleteProvince(autoTextWhere);
+            /*tempCityProvince =*/
+            autoCompleteProvince(autoTextWhere);
 
         }
 
@@ -348,9 +409,7 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
         }
 
 
-        List<CityProvince> CityProvince;
-
-        public List<CityProvince> autoCompleteProvince(AutoCompleteTextView textProvience) {
+        public void autoCompleteProvince(AutoCompleteTextView textProvience) {
             ReadJsonCityProvince readJsonProvince = new ReadJsonCityProvince();
             CityProvince = readJsonProvince.getListOfCityProvience(getContext());
             MyFilterableAdapterCityProvince adapter = new MyFilterableAdapterCityProvince(getContext(), android.R.layout.simple_list_item_1, CityProvince);
@@ -358,13 +417,22 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
             textProvience.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String selected = (String) parent.getItemAtPosition(position);
-//                    int pos = Arrays.asList(regions).indexOf(selected);
+                    selectId = CityProvince.get(position).getId();
+                    getHomeResult("province","309");
+                    dismiss();
                 }
             });
-            return CityProvince;
         }
 
+    }
+
+    private void getHomeResult(String destination,String selectId) {
+        DaggerHomeComponent.builder().netComponent(((App) getContext().getApplicationContext()).getNetComponent())
+                .homeModule(new HomeModule(this))
+                .build().inject(this);
+        String cid = Util.getTokenFromSharedPreferences(getContext());
+        String andId = Util.getAndroidIdFromSharedPreferences(getContext());
+        homePresenter.getHome("home", destination, selectId, cid, andId);
     }
 
     void setupToolbar() {
@@ -372,7 +440,6 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         ((StandardActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbarHeight = ((MainActivity) getActivity()).getSupportActionBar().getHeight();
-
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {

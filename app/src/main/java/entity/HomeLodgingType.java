@@ -16,7 +16,7 @@ public class HomeLodgingType implements Serializable {
     private String lodgingTypeName;
     @SerializedName("lodging_type_count")
     @Expose
-    private Integer lodgingTypeCount;
+    private String lodgingTypeCount;
 
     public String getLodgingTypeId() {
         return lodgingTypeId;
@@ -34,11 +34,11 @@ public class HomeLodgingType implements Serializable {
         this.lodgingTypeName = lodgingTypeName;
     }
 
-    public Integer getLodgingTypeCount() {
+    public String getLodgingTypeCount() {
         return lodgingTypeCount;
     }
 
-    public void setLodgingTypeCount(Integer lodgingTypeCount) {
+    public void setLodgingTypeCount(String lodgingTypeCount) {
         this.lodgingTypeCount = lodgingTypeCount;
     }
 

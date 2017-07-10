@@ -23,6 +23,9 @@ public class HomeAttraction implements Serializable {
     @SerializedName("img_url")
     @Expose
     private String imgUrl;
+    @SerializedName("distance")
+    @Expose
+    private String distance;
 
     public String getAttractionId() {
         return attractionId;
@@ -62,6 +65,14 @@ public class HomeAttraction implements Serializable {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 
 }

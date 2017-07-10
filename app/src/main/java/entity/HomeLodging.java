@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class HomeLodging implements Serializable {
+public class HomeLodging  implements Serializable{
 
     @SerializedName("lodging_id")
     @Expose
@@ -22,10 +22,13 @@ public class HomeLodging implements Serializable {
     private String lodgingTypeName;
     @SerializedName("lodging_rate_id")
     @Expose
-    private Integer lodgingRateId;
+    private String lodgingRateId;
     @SerializedName("img_url")
     @Expose
     private String imgUrl;
+    @SerializedName("distance")
+    @Expose
+    private String distance;
 
     public String getLodgingId() {
         return lodgingId;
@@ -59,11 +62,11 @@ public class HomeLodging implements Serializable {
         this.lodgingTypeName = lodgingTypeName;
     }
 
-    public Integer getLodgingRateId() {
+    public String getLodgingRateId() {
         return lodgingRateId;
     }
 
-    public void setLodgingRateId(Integer lodgingRateId) {
+    public void setLodgingRateId(String lodgingRateId) {
         this.lodgingRateId = lodgingRateId;
     }
 
@@ -73,6 +76,14 @@ public class HomeLodging implements Serializable {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 
 }

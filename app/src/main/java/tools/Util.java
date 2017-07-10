@@ -14,6 +14,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
@@ -29,9 +34,39 @@ import server.Config;
  */
 public class Util {
 
+    public static void setImageView(String url, Context context, ImageView imageView) {
 
+
+//            imgItineraryListMore.setVisibility(View.VISIBLE);
+        Glide.with(context)
+                .load(url)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .listener(new RequestListener<String, GlideDrawable>() {
+
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        //// TODO: 22/01/2017  get defeult picture
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(imageView)
+        ;
+    }
+
+    //    else {
+//            Glide.clear(imgItineraryListMore);
+//            imgItineraryListMore.setImageDrawable(null);
+//
+//        }
+//    }
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    public static  boolean checkLocationPermission(Activity activity) {
+
+    public static boolean checkLocationPermission(Activity activity) {
         if (ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -61,7 +96,8 @@ public class Util {
             return true;
         }
     }
-    public static void saveDataINShareprefrence(Context context,String email, String lastName, String gender, String userId) {
+
+    public static void saveDataINShareprefrence(Context context, String email, String lastName, String gender, String userId) {
 //        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF_USER, 0);
         SharedPreferences.Editor editor = pref.edit();
@@ -76,6 +112,7 @@ public class Util {
 
         editor.commit();
     }
+
     public static final String displayFirebaseRegId(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", null);
@@ -102,26 +139,31 @@ public class Util {
         String userId = pref.getString("userId", "");
         return userId;
     }
+
     public static final String getUserNameFromShareprefrence(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF_USER, 0);
         String userName = pref.getString("fname", "");
         return userName;
     }
+
     public static final String getEmailFromShareprefrence(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF_USER, 0);
         String email = pref.getString("email", "");
         return email;
     }
+
     public static final String getTokenFromSharedPreferences(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF, 0);
         String regId = pref.getString("regId", "");
         return regId;
     }
+
     public static final String getAndroidIdFromSharedPreferences(Context context) {
         SharedPreferences pref = context.getSharedPreferences(Config.SHARED_PREF, 0);
-         String andId = pref.getString("andId", "");
+        String andId = pref.getString("andId", "");
         return andId;
     }
+
     public static final String md5(final String s) {
         final String MD5 = "MD5";
         try {

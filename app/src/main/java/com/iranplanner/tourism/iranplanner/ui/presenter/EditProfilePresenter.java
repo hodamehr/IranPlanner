@@ -60,6 +60,7 @@ public class EditProfilePresenter extends EditProfileContract {
 
     @Override
     public void getEditProfilePostResul(updateProfileSend updateProfileSend, String cid, String androidId) {
+
         retrofit.create(EditProfileService.class)
                 .callEditProfile(updateProfileSend, cid, androidId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -74,11 +75,14 @@ public class EditProfilePresenter extends EditProfileContract {
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.getMessage());
+
+
                     }
 
                     @Override
                     public void onNext(ResultUpdateReturn resultUpdate) {
                         mView.showEditProfilePostResul(resultUpdate);
+
                     }
                 });
     }

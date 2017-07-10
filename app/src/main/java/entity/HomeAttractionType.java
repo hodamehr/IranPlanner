@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class HomeAttractionType implements Serializable{
+public class HomeAttractionType implements Serializable {
 
     @SerializedName("attraction_type_count")
     @Expose

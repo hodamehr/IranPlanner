@@ -16,7 +16,7 @@ public class HomeSouvenir implements Serializable {
     private String souvenirsTitle;
     @SerializedName("souvenirs_province_id")
     @Expose
-    private Integer souvenirsProvinceId;
+    private String souvenirsProvinceId;
     @SerializedName("img_url")
     @Expose
     private Object imgUrl;
@@ -37,11 +37,11 @@ public class HomeSouvenir implements Serializable {
         this.souvenirsTitle = souvenirsTitle;
     }
 
-    public Integer getSouvenirsProvinceId() {
+    public String getSouvenirsProvinceId() {
         return souvenirsProvinceId;
     }
 
-    public void setSouvenirsProvinceId(Integer souvenirsProvinceId) {
+    public void setSouvenirsProvinceId(String souvenirsProvinceId) {
         this.souvenirsProvinceId = souvenirsProvinceId;
     }
 
