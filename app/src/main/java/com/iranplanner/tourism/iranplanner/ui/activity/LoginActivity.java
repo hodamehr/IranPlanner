@@ -63,6 +63,7 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
     ProgressDialog progressDialog;
     LinearLayout accountInputHolder, signupInputHolder;
     int counter = 0;
+    boolean block = false;
 
 
     //==========google signin
@@ -142,8 +143,13 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    _loginButton.setEnabled(true);
-                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+                    if (!block) {
+                        set_loginButton(true, null);
+
+                    }
+
+//                    _loginButton.setEnabled(true);
+//                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
                 }
             });
             _passwordText.addTextChangedListener(new TextWatcher() {
@@ -159,48 +165,42 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    _loginButton.setEnabled(true);
-                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+                    if (!block) {
+                        set_loginButton(true, null);
+
+                    }
+//                    _loginButton.setEnabled(true);
+//                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
                 }
             });
-//            logout.setOnClickListener(new View.OnClickListener() {
-//
-//                public void onClick(final View v) {
-//
-//                    clearSharedprefrence();
-//                    _loginButton.setEnabled(true);
-//                    accountInputHolder.setVisibility(View.VISIBLE);
-//                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-//                        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
-//
-//                    } else {
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//                            _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
-//                        }
-//                    }
-//                    loginCommand.setVisibility(View.GONE);
-//                    logout.setVisibility(View.GONE);
-//                    signupInputHolder.setVisibility(View.VISIBLE);
-//                }
-//            });
+
             _loginButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(final View v) {
                     if (counter >= 3) {
                         counter = 0;
-                        v.setClickable(false);
-                        v.setBackgroundColor(getResources().getColor(R.color.greyLight));
-                        Toast.makeText(getApplicationContext(), "چند دقیقه بعد مجددا تلاش کنید", Toast.LENGTH_LONG).show();
-                        _loginButton.setEnabled(false);
-                        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
+                        block = true;
+//                        loginCommand.setText("");
+//                        v.setClickable(false);
+//                        v.setBackgroundColor(getResources().getColor(R.color.greyLight));
+//                        Toast.makeText(getApplicationContext(), "چند دقیقه بعد مجددا تلاش کنید", Toast.LENGTH_LONG).show();
+//                        _loginButton.setEnabled(false);
+//                        _emailText.setText("");
+//                        _passwordText.setText("");
+//                        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
+                        loginCommand.setText("تلاش ناموفق برای سه بار! چند دقیقه دیگر امتحان کنید");
+
+                        set_loginButton(false, v);
                         new Handler().postDelayed(new Runnable() {
                             public void run() {
-                                v.setEnabled(true);
-                                v.setClickable(true);
-                                v.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+//                                v.setEnabled(true);
+//                                v.setClickable(true);
+//                                v.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+                                cleaner();
+                                set_loginButton(true, v);
                             }
-                        }, 1000);
+                        }, 150000);
                     } else {
                         login();
                     }
@@ -225,35 +225,40 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
         }
     }
 
-    private void setLoginName() {
-        if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).equals("")) {
-            loginCommand.setVisibility(View.VISIBLE);
-            loginCommand.setText(Util.getUserNameFromShareprefrence(getApplicationContext()) + " عزیز خوش آمدید");
-            logout.setVisibility(View.VISIBLE);
-            accountInputHolder.setVisibility(View.INVISIBLE);
-            signupInputHolder.setVisibility(View.INVISIBLE);
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                _loginButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_cornner_disable));
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_cornner_disable));
-                }
-            }
+    private void cleaner() {
+        loginCommand.setText("");
+        _emailText.setText("");
+        _passwordText.setText("");
+    }
+
+    private void set_loginButton(boolean setEnable, View v) {
+        if (setEnable) {
+            block = false;
+            _loginButton.setEnabled(true);
+            _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+            _loginButton.setClickable(true);
+
+        } else {
+            _loginButton.setEnabled(false);
+            _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
+            _loginButton.setClickable(false);
         }
+
     }
 
     public void login() {
 
         if (!validate()) {
             Toast.makeText(getApplicationContext(), "اشکال در مقادیر ورودی", Toast.LENGTH_SHORT).show();
-            _loginButton.setEnabled(false);
-            _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
+            set_loginButton(false, null);
+//            _loginButton.setEnabled(false);
+//            _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
             return;
         }
-        _loginButton.setEnabled(true);
-        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
-        accountInputHolder.setVisibility(View.INVISIBLE);
-
+//        _loginButton.setEnabled(true);
+//        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+//        accountInputHolder.setVisibility(View.INVISIBLE);
+        set_loginButton(true, null);
         requestLogin(_emailText.getText().toString(), Util.md5(_passwordText.getText().toString()));
     }
 
@@ -294,19 +299,20 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
 
     @Override
     public void showError(String message) {
+        counter++;
         if (message.equals("HTTP 400 BAD REQUEST")) {
             loginCommand.setVisibility(View.VISIBLE);
             loginCommand.setText("نام کاربری یا کلمه عبور اشتباه است.");
-            accountInputHolder.setVisibility(View.VISIBLE);
-            _loginButton.setEnabled(true);
-            counter++;
+//            accountInputHolder.setVisibility(View.VISIBLE);
+//            _loginButton.setEnabled(true);
+
         } else {
-            Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
 //            progressDialog.dismiss();
             loginCommand.setVisibility(View.VISIBLE);
             loginCommand.setText("نام کاربری یا کلمه عبور اشتباه است.");
-            accountInputHolder.setVisibility(View.VISIBLE);
-            _loginButton.setEnabled(true);
+//            accountInputHolder.setVisibility(View.VISIBLE);
+//            _loginButton.setEnabled(true);
         }
     }
 

@@ -45,6 +45,8 @@ public class ReadJsonCityProvince {
                 CityProvince cityProvince = new CityProvince();
                 cityProvince.setId(jo_inside.getString("id"));
                 cityProvince.setTitle(jo_inside.getString("title"));
+                cityProvince.setType(jo_inside.getString("type"));
+                cityProvince.setParent(jo_inside.getString("parent"));
                 list.add(cityProvince);
             }
         } catch (JSONException e) {

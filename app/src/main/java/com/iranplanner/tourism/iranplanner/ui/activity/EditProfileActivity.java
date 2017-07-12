@@ -107,7 +107,7 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
         ImgUserEmailStatus = (ImageView) findViewById(R.id.ImgUserEmailStatus);
 //------ show profile
         showProfileHolder = (LinearLayout) findViewById(R.id.showProfileHolder);
-        txtGenderValueShow = (TextView) findViewById(R.id.txtGenderShow);
+        txtGenderValueShow = (TextView) findViewById(R.id.txtGenderValueShow);
         txtNameValueShow = (TextView) findViewById(R.id.txtNameValueShow);
         txtFamilyValueShow = (TextView) findViewById(R.id.txtFamilyValueShow);
         txtPhonValueShow = (TextView) findViewById(R.id.txtPhonValueShow);

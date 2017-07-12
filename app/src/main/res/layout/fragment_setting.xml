@@ -59,7 +59,8 @@
                         android:paddingRight="@dimen/margin_standard"
                         android:paddingTop="@dimen/padding_short"
                         android:text="ویرایش پروفایل"
-                        android:textColor="@color/white_" />
+                        android:textColor="@color/white_"
+                        android:visibility="invisible"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -85,7 +86,8 @@
                         android:layout_height="30dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/ic_send_grey" />
+                        android:src="@mipmap/ic_send_grey"
+                        android:visibility="invisible"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -114,7 +116,8 @@
                         android:layout_height="30dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/ic_send_grey" />
+                        android:src="@mipmap/ic_send_grey"
+                        android:visibility="invisible"/>
                 </RelativeLayout>
 
 

@@ -5,7 +5,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:id="@+id/featureHolder"
@@ -152,7 +155,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"                    >
+                    android:layout_weight="1">
 
                     <RelativeLayout
                         android:id="@+id/overlapImageHolde1r"
@@ -187,29 +190,22 @@
             </LinearLayout>
 
         </LinearLayout>
-        <!--pageMore-->
+
+        <!--viewPagerEventsHolder-->
         <RelativeLayout
-            android:id="@+id/viewPagerProvince"
+            android:id="@+id/viewPagerEventsHolder"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_below="@+id/featureHolder"
             android:gravity="center"
-            android:paddingLeft="@dimen/margin_short">
-
-            <TextView
-                android:id="@+id/txtDestinationTitle"
-                style="@style/StandardTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_margin="@dimen/margin_short"
-                android:text="مقاصد دوست داشتنی" />
+            android:paddingLeft="@dimen/margin_short"
+            android:layout_marginTop="@dimen/padding_24">
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/ProvincePager"
+                android:id="@+id/EventsViewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/txtDestinationTitle"
+                android:layout_below="@+id/txtEventsTitle"
                 android:layout_marginLeft="@dimen/padding_short"
                 android:layout_weight="1"
                 android:background="@color/greyLight"
@@ -219,14 +215,331 @@
 
             </android.support.v4.view.ViewPager>
 
+            <TextView
+                android:id="@+id/txtEventsTitle"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:text="رویدادها" />
+
+
+        </RelativeLayout>
+        <!--hotelsTypeHolder-->
+        <RelativeLayout
+            android:id="@+id/hotelsTypeHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewPagerEventsHolder"
+            android:padding="@dimen/padding_standard">
+
+            <TextView
+                android:id="@+id/txtHotelTypeTitles"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:text="دسته بندی هتل ها" />
+
+            <LinearLayout
+                android:id="@+id/linearEventsHolderTop"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/txtHotelTypeTitles"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_xxshort"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="بوم گردی"
+                        android:layout_centerInParent="true"
+                        android:translationZ="1dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_xxshort"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="بوم گردی"
+                        android:layout_centerInParent="true"
+                        android:translationZ="1dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearEventsHolderBottom"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/linearEventsHolderTop"
+                android:layout_marginTop="@dimen/margin_xshort"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_xxshort"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="بوم گردی"
+                        android:layout_centerInParent="true"
+                        android:translationZ="1dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_xxshort"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="بوم گردی"
+                        android:layout_centerInParent="true"
+                        android:translationZ="1dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+        <!--viewPagerBestHolder-->
+        <RelativeLayout
+            android:id="@+id/viewPagerBestHolder"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/hotelsTypeHolder"
+            android:gravity="center"
+            android:paddingLeft="@dimen/margin_short"
+            android:layout_marginBottom="@dimen/margin_standard">
+
+            <com.iranplanner.tourism.iranplanner.standard.ClickableViewPager
+                android:id="@+id/BestHotelViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtBestTitle"
+                android:layout_marginRight="@dimen/margin_standard"
+                android:layout_marginLeft="@dimen/margin_standard"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/margin_xshort"
+
+
+               >
+
+            </com.iranplanner.tourism.iranplanner.standard.ClickableViewPager>
+
+            <TextView
+                android:id="@+id/txtBestTitle"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:text="هتل های پربازدید" />
+
 
         </RelativeLayout>
 
-        <LinearLayout
+        <!--attractionTypeHolder-->
+        <RelativeLayout
+            android:id="@+id/attracttionTypeHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewPagerBestHolder"
+            android:padding="@dimen/padding_standard">
+
+            <TextView
+                android:id="@+id/txtAttracttionTypeTitles"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:text="دسته بندی جاذبه ها" />
+
+            <LinearLayout
+                android:id="@+id/linearAttractionHolderTop"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/txtAttracttionTypeTitles"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_xxshort"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="بوم گردی"
+                        android:layout_centerInParent="true"
+                        android:translationZ="1dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_xxshort"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="بوم گردی"
+                        android:layout_centerInParent="true"
+                        android:translationZ="1dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearAttractionHolderBottom"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/linearAttractionHolderTop"
+                android:layout_marginTop="@dimen/margin_xshort"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_xxshort"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="بوم گردی"
+                        android:layout_centerInParent="true"
+                        android:translationZ="1dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_xxshort"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="بوم گردی"
+                        android:layout_centerInParent="true"
+                        android:translationZ="1dp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/background" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+        <!--viewPagerAttractionَBestHolder-->
+        <RelativeLayout
+            android:id="@+id/viewPagerBestAttractionHolder"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/attracttionTypeHolder"
+            android:gravity="center"
+            android:paddingLeft="@dimen/margin_short"
+            android:layout_marginBottom="@dimen/margin_standard">
+
+            <com.iranplanner.tourism.iranplanner.standard.ClickableViewPager
+                android:id="@+id/BestAttractionViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtAttractionBestTitle"
+                android:layout_marginRight="@dimen/margin_standard"
+                android:layout_marginLeft="@dimen/margin_standard"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/margin_xshort"
+                android:background="@color/greyLight"
+                >
+
+            </com.iranplanner.tourism.iranplanner.standard.ClickableViewPager>
+
+            <TextView
+                android:id="@+id/txtAttractionBestTitle"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:text="جاذبه های برتر" />
+
+
+        </RelativeLayout>
+        <!--<LinearLayout
             android:id="@+id/provinceList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/viewPagerProvince"
+            android:layout_below="@+id/hotelsTypeHolder"
             android:layout_margin="@dimen/margin_standard"
             android:orientation="vertical">
 
@@ -257,14 +570,9 @@
 
             <include layout="@layout/content_province_list" />
 
-        </LinearLayout>
+        </LinearLayout>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/provinceList"
-            android:layout_margin="@dimen/text_margin"
-            android:text="@string/large_text" />
+
     </RelativeLayout>
 
 

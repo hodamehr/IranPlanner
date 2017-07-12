@@ -157,6 +157,8 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         Util.displayFirebaseRegId(this);
 
         ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
+//        ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager.setOffscreenPageLimit(3);
     }
 
 //    private void initDrawer() {

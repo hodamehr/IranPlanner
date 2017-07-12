@@ -10,6 +10,7 @@
     <color name="pink_shadow">#a6f0137d</color>
     <color name="blue">#00b1dd</color>
     <color name="greyDark">#181818</color>
+    <color name="greyTransparent">#8e181818</color>
     <color name="greyDarkTransparent">#65181818</color>
     <color name="white_">#ffffff</color>
     <color name="greyLight">#ebebeb</color>

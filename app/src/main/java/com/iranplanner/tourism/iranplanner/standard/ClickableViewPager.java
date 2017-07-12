@@ -55,4 +55,5 @@ public class ClickableViewPager  extends ViewPager {
             return true;
         }
     }
+
 }
