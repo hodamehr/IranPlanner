@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_blue"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_blue"
+        android:layout_above="@+id/relativeLayout"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:id="@+id/splashAnimHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+          >
+
+            <LinearLayout
+                android:id="@+id/relativeLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corner_layout"
+                android:layout_marginBottom="130dp"
+                android:padding="@dimen/margin_standard">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_toLeftOf="@+id/splash_img"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/padding_standard"
+                    android:paddingTop="@dimen/padding_standard">
+
+                    <ImageView
+                        android:id="@+id/logotype"
+                        android:layout_width="120dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="right"
+                        android:layout_marginBottom="@dimen/padding_short"
+                        android:background="@drawable/ic_iranplanner_logo"
+                        android:paddingTop="@dimen/padding_standard" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        style="@style/StandardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingTop="@dimen/padding_short"
+                        android:text="سامانه جامع گردشگری ایران" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/splash_img"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@mipmap/ic_logo_pink" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_above="@+id/iranPlanner"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/margin_xshort"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/progress_splash" />
+
+        <TextView
+            android:id="@+id/iranPlanner"
+            style="@style/StandardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="www.iranplanner.com"
+            android:textColor="@color/dark_blue"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/margin_standard"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/margin_short"
+        android:background="@color/white_">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:weightSum="2">
+
+            <ImageView
+                android:id="@+id/hamrah"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/margin_short"
+                android:layout_weight="1"
+                android:src="@mipmap/ic_miras" />
+
+            <ImageView
+                android:id="@+id/miras"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="@dimen/margin_short"
+                android:layout_weight="1"
+                android:src="@mipmap/ic_hamrah" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

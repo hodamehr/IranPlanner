@@ -132,7 +132,7 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
         card_view_province_list = (LinearLayout) rootView.findViewById(R.id.card_view_province_list);
         txtWhereGo = (TextView) rootView.findViewById(R.id.txtWhereGo);
         test = (ImageView) rootView.findViewById(R.id.test);
-        LinearLayout btnShowProvince = (LinearLayout) rootView.findViewById(R.id.btnShowProvince);
+//        LinearLayout btnShowProvince = (LinearLayout) rootView.findViewById(R.id.btnShowProvince);
 
         mDrawerLayout = (DrawerLayout) rootView.findViewById(R.id.drawer_layout);
 
@@ -146,7 +146,7 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         mDrawerList = (ListView) rootView.findViewById(R.id.left_drawer);
 
-        btnShowProvince.setOnClickListener(this);
+//        btnShowProvince.setOnClickListener(this);
         test.setOnClickListener(this);
         appBarLayout.addOnOffsetChangedListener(this);
         if (scroller != null) {
@@ -243,9 +243,9 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
             case R.id.aboutCityBtn:
                 showAboutCityOrProvince();
                 break;
-            case R.id.btnShowProvince:
-                onClickShowProvince(card_view_province_list);
-                break;
+//            case R.id.btnShowProvince:
+//                onClickShowProvince(card_view_province_list);
+//                break;
             case R.id.test:
                 test.setVisibility(View.INVISIBLE);
                 break;

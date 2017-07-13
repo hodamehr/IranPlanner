@@ -19,9 +19,7 @@ public abstract class HomeContract extends Presenter<HomeContract.View> {
     public interface View {
 
         void showError(String message);
-
         void showComplete();
-
         void getHomeResult(GetHomeResult GetHomeResult);
         void showProgress();
         void dismissProgress();
@@ -34,5 +32,4 @@ public abstract class HomeContract extends Presenter<HomeContract.View> {
                                  String value,
                                  String token,
                                  String androidId);
-
 }
