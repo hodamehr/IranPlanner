@@ -53,7 +53,9 @@ import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.iranplanner.tourism.iranplanner.ui.activity.RegisterActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.presenter.HomePresenter;
+import com.iranplanner.tourism.iranplanner.ui.presenter.ReservationPresenter;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.HomeContract;
+import com.iranplanner.tourism.iranplanner.ui.presenter.abs.ReservationContract;
 
 import java.util.Arrays;
 import java.util.List;
@@ -71,13 +73,14 @@ import entity.HomeImage;
 import entity.HomeInfo;
 import entity.Province;
 import entity.ResultHome;
+import entity.ResultLodgingList;
 import tools.Util;
 
 
 /**
  * Created by h.vahidimehr on 10/01/2017.
  */
-public class HomeFragment extends StandardFragment implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, NestedScrollView.OnScrollChangeListener, HomeContract.View {
+public class HomeFragment extends StandardFragment implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, NestedScrollView.OnScrollChangeListener, HomeContract.View ,ReservationContract.View {
 
     protected String[] mNavigationDrawerItemTitles;
     protected DrawerLayout mDrawerLayout;
@@ -93,6 +96,8 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
     protected static int buildVersion;
     @Inject
     HomePresenter homePresenter;
+    @Inject
+    ReservationPresenter reservationPresenter;
     protected TextView toolbarTitle;
 
     int width;
@@ -329,6 +334,11 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
     }
 
     @Override
+    public void showLodgingList(ResultLodgingList resultLodgingList) {
+
+    }
+
+    @Override
     public void showError(String message) {
         Toast.makeText(getContext(), "مقصد مورد نظر یافت نشد", Toast.LENGTH_SHORT).show();
     }
@@ -350,6 +360,9 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
         if(homeImage.get(0).getImgUrl()!=null){
             Util.setImageView(homeImage.get(0).getImgUrl(),getContext(),imgHome);
         }
+
+//        reservationPresenter.getLodgingList("list", "483", Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
+
     }
 
     @Override
@@ -428,11 +441,12 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
 
     private void getHomeResult(String destination,String selectId) {
         DaggerHomeComponent.builder().netComponent(((App) getContext().getApplicationContext()).getNetComponent())
-                .homeModule(new HomeModule(this))
+                .homeModule(new HomeModule(this,this))
                 .build().inject(this);
         String cid = Util.getTokenFromSharedPreferences(getContext());
         String andId = Util.getAndroidIdFromSharedPreferences(getContext());
         homePresenter.getHome("home", destination, selectId, cid, andId);
+
     }
 
     void setupToolbar() {

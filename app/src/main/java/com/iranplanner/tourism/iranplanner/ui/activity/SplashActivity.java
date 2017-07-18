@@ -15,13 +15,15 @@ import com.iranplanner.tourism.iranplanner.di.HomeModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.presenter.HomePresenter;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.HomeContract;
+import com.iranplanner.tourism.iranplanner.ui.presenter.abs.ReservationContract;
 
 import javax.inject.Inject;
 
 import entity.GetHomeResult;
+import entity.ResultLodgingList;
 import tools.Util;
 
-public class SplashActivity extends StandardActivity implements HomeContract.View {
+public class SplashActivity extends StandardActivity implements HomeContract.View ,ReservationContract.View {
     Thread splashTread;
     @Inject
     HomePresenter homePresenter;
@@ -83,12 +85,17 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
     private void getHomeResult(String destination, String selectId) {
 
         DaggerHomeComponent.builder().netComponent(((App) getApplicationContext().getApplicationContext()).getNetComponent())
-                .homeModule(new HomeModule(this))
+                .homeModule(new HomeModule(this,this))
                 .build().inject(this);
         String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
         String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
         homePresenter.getHome("home", destination, selectId, cid, andId);
         StartAnimations();
+
+    }
+
+    @Override
+    public void showLodgingList(ResultLodgingList resultLodgingList) {
 
     }
 
