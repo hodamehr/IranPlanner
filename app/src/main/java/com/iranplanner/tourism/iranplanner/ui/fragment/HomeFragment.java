@@ -4,33 +4,28 @@ package com.iranplanner.tourism.iranplanner.ui.fragment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -38,49 +33,51 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.iranplanner.tourism.iranplanner.MainActivity;
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.adapter.HomeProvinceListAdapter;
 import com.iranplanner.tourism.iranplanner.adapter.NavigationItemsAdapter;
+import com.iranplanner.tourism.iranplanner.adapter.ShowHomeBestAttractionAdapter;
+import com.iranplanner.tourism.iranplanner.adapter.ShowHomeBestLodgingAdapter;
+import com.iranplanner.tourism.iranplanner.adapter.ShowHomeEventAdapter;
 import com.iranplanner.tourism.iranplanner.di.DaggerHomeComponent;
 import com.iranplanner.tourism.iranplanner.di.HomeModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
+import com.iranplanner.tourism.iranplanner.standard.ClickableViewPager;
+import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
-import com.iranplanner.tourism.iranplanner.ui.activity.RegisterActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.presenter.HomePresenter;
 import com.iranplanner.tourism.iranplanner.ui.presenter.ReservationPresenter;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.HomeContract;
 import com.iranplanner.tourism.iranplanner.ui.presenter.abs.ReservationContract;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import autoComplet.MyFilterableAdapterCityProvince;
-import autoComplet.MyFilterableAdapterProvince;
 import autoComplet.ReadJsonCityProvince;
-import autoComplet.ReadJsonProvince;
 import entity.CityProvince;
 import entity.Data;
 import entity.GetHomeResult;
+import entity.HomeAttraction;
+import entity.HomeCountryProvince;
+import entity.HomeEvent;
 import entity.HomeImage;
 import entity.HomeInfo;
-import entity.Province;
+import entity.HomeLodging;
 import entity.ResultHome;
 import entity.ResultLodgingList;
+import me.relex.circleindicator.CircleIndicator;
 import tools.Util;
 
 
 /**
  * Created by h.vahidimehr on 10/01/2017.
  */
-public class HomeFragment extends StandardFragment implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener, NestedScrollView.OnScrollChangeListener, HomeContract.View ,ReservationContract.View {
+public class HomeFragment extends StandardFragment implements DataTransferInterface,View.OnClickListener, AppBarLayout.OnOffsetChangedListener, NestedScrollView.OnScrollChangeListener, HomeContract.View, ReservationContract.View {
 
     protected String[] mNavigationDrawerItemTitles;
     protected DrawerLayout mDrawerLayout;
@@ -114,11 +111,16 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
     NestedScrollView scroller;
     ImageView imageView, test;
     int toolbarHeight = 0;
-    LinearLayout featureHolder;
+    RelativeLayout SelectHolder;
     RelativeLayout frameLayout;
     LinearLayout featureListHolder;
     private ProgressDialog progressDialog;
     ImageView imgHome;
+    ClickableViewPager BestHotelViewPager, BestAttractionViewPager;
+    ClickableViewPager eventsViewPager;
+    CircleIndicator indicator;
+    RelativeLayout viewPagerEventsHolder;
+    RecyclerView recyclerViewProvinceShow;
 
     public HomeFragment() {
         super();
@@ -131,16 +133,18 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         AppBarLayout appBarLayout = (AppBarLayout) rootView.findViewById(R.id.app_bar);
-        featureHolder = (LinearLayout) rootView.findViewById(R.id.featureHolder);
+        SelectHolder = (RelativeLayout) rootView.findViewById(R.id.SelectHolder);
         aboutCityBtn = (Button) rootView.findViewById(R.id.aboutCityBtn);
         imgHome = (ImageView) rootView.findViewById(R.id.imgHome);
         card_view_province_list = (LinearLayout) rootView.findViewById(R.id.card_view_province_list);
         txtWhereGo = (TextView) rootView.findViewById(R.id.txtWhereGo);
         test = (ImageView) rootView.findViewById(R.id.test);
 //        LinearLayout btnShowProvince = (LinearLayout) rootView.findViewById(R.id.btnShowProvince);
-
+        BestHotelViewPager = (ClickableViewPager) rootView.findViewById(R.id.BestHotelViewPager);
+        BestAttractionViewPager = (ClickableViewPager) rootView.findViewById(R.id.BestAttractionViewPager);
         mDrawerLayout = (DrawerLayout) rootView.findViewById(R.id.drawer_layout);
-
+        eventsViewPager = (ClickableViewPager) rootView.findViewById(R.id.EventsViewPager);
+        indicator = (CircleIndicator) rootView.findViewById(R.id.indicator);
         toolbarToggle = (ImageView) rootView.findViewById(R.id.toolbarToggle);
         toolbarToggleLeft = (ImageView) rootView.findViewById(R.id.toolbarToggleLeft);
         frameLayout = (RelativeLayout) rootView.findViewById(R.id.featureListRelativeLayout);
@@ -150,6 +154,8 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
         scroller = (NestedScrollView) rootView.findViewById(R.id.nestedScrollView);
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         mDrawerList = (ListView) rootView.findViewById(R.id.left_drawer);
+        viewPagerEventsHolder = (RelativeLayout) rootView.findViewById(R.id.viewPagerEventsHolder);
+        recyclerViewProvinceShow = (RecyclerView) rootView.findViewById(R.id.recyclerViewProvinceShow);
 
 //        btnShowProvince.setOnClickListener(this);
         test.setOnClickListener(this);
@@ -171,17 +177,17 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
     }
 
     private void getfeatureHolderHight() {
-        ViewTreeObserver vto = featureHolder.getViewTreeObserver();
+        ViewTreeObserver vto = SelectHolder.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    featureHolder.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    SelectHolder.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 } else {
-                    featureHolder.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    SelectHolder.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
-                width = featureHolder.getMeasuredWidth();
-                height = featureHolder.getMeasuredHeight();
+                width = SelectHolder.getMeasuredWidth();
+                height = SelectHolder.getMeasuredHeight();
 
             }
         });
@@ -351,14 +357,62 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
     @Override
     public void getHomeResult(GetHomeResult getHomeResult) {
         List<ResultHome> resultHomes = getHomeResult.getResultHome();
-
-        setNamePicture(resultHomes.get(0).getHomeInfo(),resultHomes.get(0).getHomeImages());
+        setNamePicture(resultHomes.get(0).getHomeInfo(), resultHomes.get(0).getHomeImages());
+        setViewPagerLodging(resultHomes.get(0).getHomeLodging());
+        setViewPagerAttaction(resultHomes.get(0).getHomeAttraction());
+        setViewPagerEvent(resultHomes.get(0).getHomeEvent());
+        if (resultHomes.get(0).getHomeCountryProvince().size() != 0) {
+            setListProvince(resultHomes.get(0).getHomeCountryProvince());
+        }
     }
-    private void setNamePicture(HomeInfo homeInfo,List<HomeImage> homeImage){
+
+    private void setViewPagerEvent(List<HomeEvent> homeEvents) {
+        ShowHomeEventAdapter showHomeEventAdapter = new ShowHomeEventAdapter(getContext(), getActivity(), homeEvents);
+        eventsViewPager.setAdapter(showHomeEventAdapter);
+        indicator.setViewPager(eventsViewPager);
+        eventsViewPager.setCurrentItem(2);
+    }
+
+    private void setListProvince(List<HomeCountryProvince> homeCountryProvince) {
+//        HomeProvinceAdapter homeProvinceAdaptera=new HomeProvinceAdapter()
+//        recyclerViewProvinceShow.setLayoutManager(new RecyclerView.LayoutManager(this) {
+//            @Override
+//            public RecyclerView.LayoutParams generateDefaultLayoutParams() {
+//                return null;
+//            }
+//        });
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        recyclerViewProvinceShow.setLayoutManager(mLayoutManager);
+        HomeProvinceListAdapter homeProvinceAdapter = new HomeProvinceListAdapter(getActivity(), this, homeCountryProvince, getContext(), R.layout.content_province_list);
+        recyclerViewProvinceShow.setAdapter(homeProvinceAdapter);
+//        ShowHomeEventAdapter showHomeEventAdapter = new ShowHomeEventAdapter(getContext(), getActivity(), homeEvents);
+//
+//        eventsViewPager.setAdapter(showHomeEventAdapter);
+//        indicator.setViewPager(eventsViewPager);
+//        eventsViewPager.setCurrentItem(2);
+
+
+    }
+
+    private void setViewPagerLodging(List<HomeLodging> homeLodgings) {
+        ShowHomeBestLodgingAdapter showTavelToolsAdapter = new ShowHomeBestLodgingAdapter(getContext(), getActivity(), homeLodgings);
+        BestHotelViewPager.setAdapter(showTavelToolsAdapter);
+        BestHotelViewPager.setCurrentItem(homeLodgings.size() - 1);
+        BestHotelViewPager.setClipToPadding(false);
+    }
+
+    private void setViewPagerAttaction(List<HomeAttraction> homeAttractions) {
+        ShowHomeBestAttractionAdapter showTavelToolsAdapter = new ShowHomeBestAttractionAdapter(getContext(), getActivity(), homeAttractions);
+        BestAttractionViewPager.setAdapter(showTavelToolsAdapter);
+        BestAttractionViewPager.setCurrentItem(homeAttractions.size() - 1);
+        BestAttractionViewPager.setClipToPadding(false);
+    }
+
+    private void setNamePicture(HomeInfo homeInfo, List<HomeImage> homeImage) {
         txtWhereGo.setText(homeInfo.getTitle());
 //        imgHome.setImageBitmap();
-        if(homeImage.get(0).getImgUrl()!=null){
-            Util.setImageView(homeImage.get(0).getImgUrl(),getContext(),imgHome);
+        if (homeImage.get(0).getImgUrl() != null) {
+            Util.setImageView(homeImage.get(0).getImgUrl(), getContext(), imgHome);
         }
 
 //        reservationPresenter.getLodgingList("list", "483", Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
@@ -376,6 +430,11 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
     @Override
     public void dismissProgress() {
         progressDialog.dismiss();
+    }
+
+    @Override
+    public void setValues(ArrayList<String> al) {
+        al.get(0);
     }
 
 
@@ -431,7 +490,7 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     selectId = CityProvince.get(position).getId();
-                    getHomeResult("province","309");
+                    getHomeResult("country", "311");
                     dismiss();
                 }
             });
@@ -439,9 +498,9 @@ public class HomeFragment extends StandardFragment implements View.OnClickListen
 
     }
 
-    private void getHomeResult(String destination,String selectId) {
+    private void getHomeResult(String destination, String selectId) {
         DaggerHomeComponent.builder().netComponent(((App) getContext().getApplicationContext()).getNetComponent())
-                .homeModule(new HomeModule(this,this))
+                .homeModule(new HomeModule(this, this))
                 .build().inject(this);
         String cid = Util.getTokenFromSharedPreferences(getContext());
         String andId = Util.getAndroidIdFromSharedPreferences(getContext());

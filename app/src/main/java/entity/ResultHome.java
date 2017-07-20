@@ -48,6 +48,18 @@ public class ResultHome implements Serializable {
     @Expose
     private List<HomeItinerary> homeItinerary = null;
 
+    public List<HomeCountryProvince> getHomeCountryProvince() {
+        return homeCountryProvince;
+    }
+
+    public void setHomeCountryProvince(List<HomeCountryProvince> homeCountryProvince) {
+        this.homeCountryProvince = homeCountryProvince;
+    }
+
+    @SerializedName("home_country_province")
+    @Expose
+    private List<HomeCountryProvince> homeCountryProvince = null;
+
     public HomeInfo getHomeInfo() {
         return homeInfo;
     }
