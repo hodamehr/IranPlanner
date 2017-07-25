@@ -16,16 +16,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.coinpany.core.android.widget.CTouchyWebView;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
+
+import entity.HomeInfo;
 
 
 /**
  * Created by h.vahidimehr on 10/01/2017.
  */
 public class AboutCityFragment extends StandardFragment {
+    protected CTouchyWebView contentFullDescription;
 
-
+    HomeInfo homeInfo;
     public AboutCityFragment() {
         super();
     }
@@ -36,6 +40,9 @@ public class AboutCityFragment extends StandardFragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_about_city, container, false);
+        contentFullDescription = (CTouchyWebView) rootView.findViewById(R.id.contentFullDescription);
+         homeInfo= (HomeInfo) getArguments().getSerializable("homeInfo");
+        setWebViewContent(homeInfo.getBody());
         return rootView;
     }
 
@@ -43,5 +50,20 @@ public class AboutCityFragment extends StandardFragment {
         AboutCityFragment fragment = new AboutCityFragment();
         return fragment;
     }
+    private void setWebViewContent(String myData) {
+        contentFullDescription.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
+        contentFullDescription.setLongClickable(false);
+        contentFullDescription.setHapticFeedbackEnabled(false);
 
+
+        String pish = "<html><head><style type=\"text/css\">@font-face {color:#737373;font-family: MyFont;src: url(\"file:///android_asset/fonts/IRANSansMobile.ttf\")}body {font-family: MyFont;font-size: small;text-align: justify;direction:rtl}</style></head><body>";
+        String pas = "</body></html>";
+        String myHtmlString = pish + myData + pas;
+        contentFullDescription.loadDataWithBaseURL(null, myHtmlString, "text/html", "UTF-8", null);
+    }
 }

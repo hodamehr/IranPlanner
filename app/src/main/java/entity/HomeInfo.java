@@ -31,7 +31,20 @@ public class HomeInfo implements Serializable {
     private String positionLon;
     @SerializedName("img_url")
     @Expose
-    private Object imgUrl;
+    private String imgUrl;
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    @SerializedName("body")
+    @Expose
+
+    private String body;
 
     public String getId() {
         return id;
@@ -89,11 +102,11 @@ public class HomeInfo implements Serializable {
         this.positionLon = positionLon;
     }
 
-    public Object getImgUrl() {
+    public String getImgUrl() {
         return imgUrl;
     }
 
-    public void setImgUrl(Object imgUrl) {
+    public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
 

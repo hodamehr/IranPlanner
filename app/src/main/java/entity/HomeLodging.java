@@ -20,9 +20,22 @@ public class HomeLodging  implements Serializable{
     @SerializedName("lodging_type_name")
     @Expose
     private String lodgingTypeName;
+    @SerializedName("lodging_rate_int")
+    @Expose
+
+    private String lodgingRateInt;
     @SerializedName("lodging_rate_id")
     @Expose
     private String lodgingRateId;
+
+    public String getLodgingRateInt() {
+        return lodgingRateInt;
+    }
+
+    public void setLodgingRateInt(String lodgingRateInt) {
+        this.lodgingRateInt = lodgingRateInt;
+    }
+
     @SerializedName("img_url")
     @Expose
     private String imgUrl;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -56,7 +57,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/grey" />
+                    android:background="@color/light_blue" />
 
                 <RelativeLayout
 
@@ -94,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/selectHoldetTop"
-                android:background="@color/grey" />
+                android:background="@color/light_blue" />
 
             <LinearLayout
                 android:id="@+id/hj2"
@@ -140,7 +141,7 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/grey" />
+                    android:background="@color/light_blue" />
 
                 <RelativeLayout
 
@@ -180,61 +181,75 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/hj2"
-                android:background="@color/grey" />
+                android:background="@color/light_blue" />
         </RelativeLayout>
         <!--viewPagerEventsHolder-->
+
         <RelativeLayout
             android:id="@+id/viewPagerEventsHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/SelectHolder"
-            android:gravity="center"
-            android:paddingLeft="@dimen/margin_short">
+            android:padding="@dimen/padding_standard">
 
-
-            <com.iranplanner.tourism.iranplanner.standard.ClickableViewPager
-                android:id="@+id/EventsViewPager"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
+                android:layout_height="300dp"
                 android:layout_below="@+id/txtEventsTitle"
-                android:layout_marginRight="@dimen/padding_short"
-                android:layout_weight="1"
-                android:background="@color/greyLight"
-                android:gravity="center">
+                android:layout_margin="@dimen/margin_xshort"
 
-            </com.iranplanner.tourism.iranplanner.standard.ClickableViewPager>
-            <!--<android.support.v4.view.ViewPager-->
-            <!--android:id="@+id/EventsViewPager"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_below="@+id/txtEventsTitle"-->
-            <!--android:layout_marginRight="@dimen/padding_short"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@color/greyLight"-->
-            <!--android:gravity="center"-->
-            <!--android:paddingTop="@dimen/padding_standard" />-->
+                app:cardCornerRadius="10dp">
 
-            <me.relex.circleindicator.CircleIndicator
-                android:id="@+id/indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                android:background="@color/greyDarkTransparent" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center">
 
+                    <com.iranplanner.tourism.iranplanner.standard.ClickableViewPager
+                        android:id="@+id/EventsViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                    </com.iranplanner.tourism.iranplanner.standard.ClickableViewPager>
+
+
+                    <me.relex.circleindicator.CircleIndicator
+                        android:id="@+id/indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true" />
+
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!--<TextView-->
+            <!--android:id="@+id/txtEventsTitle"-->
+            <!--style="@style/StandardTitle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_marginBottom="@dimen/margin_short"-->
+            <!--android:layout_marginRight="16dp"-->
+            <!--android:paddingTop="@dimen/margin_standard"-->
+            <!--android:text="رویدادها" />-->
             <TextView
                 android:id="@+id/txtEventsTitle"
                 style="@style/StandardTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
                 android:layout_marginBottom="@dimen/margin_short"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
+                android:paddingTop="@dimen/padding_standard"
                 android:text="رویدادها" />
-
-
         </RelativeLayout>
         <!--hotelsTypeHolder-->
         <RelativeLayout
@@ -242,8 +257,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/viewPagerEventsHolder"
-            android:padding="@dimen/padding_standard"
-            android:visibility="gone">
+            android:padding="@dimen/padding_standard">
 
             <TextView
                 android:id="@+id/txtHotelTypeTitles"
@@ -252,7 +266,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="@dimen/margin_short"
-                android:text="دسته بندی هتل ها" />
+                android:text="دسته بندی اقامت گاه ها" />
 
             <LinearLayout
                 android:id="@+id/linearEventsHolderTop"
@@ -269,16 +283,18 @@
                     android:layout_weight="1">
 
                     <TextView
+                        style="@style/StandardTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="بوم گردی"
+                        android:text="هتل آپارتمان"
+                        android:textColor="@color/white_"
                         android:translationZ="1dp" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/background"
+                        android:background="@drawable/aparteman"
                         android:scaleType="fitXY" />
                 </RelativeLayout>
 
@@ -289,16 +305,18 @@
                     android:layout_weight="1">
 
                     <TextView
+                        style="@style/StandardTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="بوم گردی"
+                        android:textColor="@color/white_"
                         android:translationZ="1dp" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/background"
+                        android:background="@drawable/boomgardi"
                         android:scaleType="fitXY" />
                 </RelativeLayout>
             </LinearLayout>
@@ -319,16 +337,18 @@
                     android:layout_weight="1">
 
                     <TextView
+                        style="@style/StandardTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="بوم گردی"
+                        android:text="هتل"
+                        android:textColor="@color/white_"
                         android:translationZ="1dp" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/background"
+                        android:background="@drawable/hotel"
                         android:scaleType="fitXY" />
                 </RelativeLayout>
 
@@ -339,56 +359,63 @@
                     android:layout_weight="1">
 
                     <TextView
+                        style="@style/StandardTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:text="بوم گردی"
+                        android:text="هتل سنتی"
+                        android:textColor="@color/white_"
                         android:translationZ="1dp" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/background"
+                        android:background="@drawable/sonati"
                         android:scaleType="fitXY" />
                 </RelativeLayout>
 
             </LinearLayout>
         </RelativeLayout>
-        <!--viewPagerBestHolder-->
+        <!--HotelBestHolder-->
         <RelativeLayout
             android:id="@+id/viewPagerBestHolder"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:gravity="center"
-            android:paddingLeft="@dimen/margin_short"
-            android:layout_below="@+id/viewPagerEventsHolder"
-            android:layout_toRightOf="@+id/hotelsTypeHolder"
-            android:layout_toEndOf="@+id/hotelsTypeHolder">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/hotelsTypeHolder"
+            android:padding="@dimen/padding_standard">
 
-            <com.iranplanner.tourism.iranplanner.standard.ClickableViewPager
-                android:id="@+id/BestHotelViewPager"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/wallet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtBestTitle"
-                android:layout_weight="1"
-                android:paddingLeft="@dimen/margin_standard"
-                android:paddingRight="@dimen/margin_short"
-                android:paddingTop="@dimen/padding_standard">
+                android:layout_below="@+id/txtBestTitleHotel" />
 
-            </com.iranplanner.tourism.iranplanner.standard.ClickableViewPager>
+            <!--<TextView-->
+            <!--android:id="@+id/txtBestTitleHotel"-->
+            <!--style="@style/StandardTitle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:text="اقامتگاه های پربازدید" />-->
 
+            <!--<TextView-->
+            <!--android:id="@+id/txtBestTitleHotسel"-->
+            <!--style="@style/StandardTitle"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginBottom="@dimen/margin_short"-->
+            <!--android:text="اقامتگاه های پربازدید"-->
+            <!--android:paddingTop="@dimen/padding_standard"/>-->
             <TextView
-                android:id="@+id/txtBestTitle"
+                android:id="@+id/txtBestTitleHotel"
                 style="@style/StandardTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:text="هتل های پربازدید" />
-
-
+                android:layout_marginBottom="@dimen/margin_short"
+                android:text="اقامتگاه های پربازدید" />
         </RelativeLayout>
 
         <!--attractionTypeHolder-->
@@ -397,8 +424,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/viewPagerBestHolder"
-            android:padding="@dimen/padding_standard"
-            android:visibility="gone">
+            android:padding="@dimen/padding_standard">
 
             <TextView
                 android:id="@+id/txtAttracttionTypeTitles"
@@ -507,58 +533,116 @@
         </RelativeLayout>
         <!--viewPagerAttractionَBestHolder-->
         <RelativeLayout
-            android:id="@+id/viewPagerBestAttractionHolder"
+            android:id="@+id/bestAttractionHolder"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/attracttionTypeHolder"
-            android:layout_marginBottom="@dimen/margin_standard"
-            android:gravity="center"
-            android:paddingLeft="@dimen/margin_short"
-            android:visibility="gone">
+            android:padding="@dimen/padding_standard">
 
-            <com.iranplanner.tourism.iranplanner.standard.ClickableViewPager
-                android:id="@+id/BestAttractionViewPager"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerBestAttraction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtAttractionBestTitle"
-                android:layout_marginLeft="@dimen/margin_standard"
-                android:layout_marginRight="@dimen/margin_standard"
-                android:layout_marginTop="@dimen/margin_xshort"
-                android:layout_weight="1"
-                android:background="@color/greyLight"
-                android:gravity="center">
-
-            </com.iranplanner.tourism.iranplanner.standard.ClickableViewPager>
+                android:layout_below="@+id/txtAttractionBestTitle" />
 
             <TextView
                 android:id="@+id/txtAttractionBestTitle"
                 style="@style/StandardTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:text="جاذبه های برتر" />
-
+                android:layout_marginBottom="@dimen/margin_short"
+                android:text="جاذبه های گردشگری" />
 
         </RelativeLayout>
 
+        <!--ItineraryHolder-->
+        <RelativeLayout
+            android:id="@+id/itineraryHomeHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bestAttractionHolder"
+            android:padding="@dimen/padding_standard">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerItinerary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtItineraryTitle" />
+
+
+            <TextView
+                android:id="@+id/txtItineraryTitle"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:text="برنامه سفرها" />
+
+        </RelativeLayout>
+        <!--ItineraryHolder-->
+        <RelativeLayout
+            android:id="@+id/localFoodHomeHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/itineraryHomeHolder"
+            android:padding="@dimen/padding_standard">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerLocalFood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtlocalFoodTitle" />
+
+
+            <TextView
+                android:id="@+id/txtlocalFoodTitle"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:text="غذاهای محلی" />
+
+
+        </RelativeLayout>
+        <!--souvenirHolder-->
+        <RelativeLayout
+            android:id="@+id/souvenirHomeHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/localFoodHomeHolder"
+            android:padding="@dimen/padding_standard">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerSouvenir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtSouvenirTitle" />
+
+            <TextView
+                android:id="@+id/txtSouvenirTitle"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:text="سوغاتی" />
+        </RelativeLayout>
+        <!--listProvince-->
         <LinearLayout
             android:id="@+id/provinceListHOlder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/viewPagerBestAttractionHolder"
+            android:layout_below="@+id/souvenirHomeHolder"
             android:layout_margin="@dimen/margin_standard"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewProvinceShow"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-              ></android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
             <!--<LinearLayout
                 android:id="@+id/btnShowProvince"
                 android:layout_width="wrap_content"
@@ -589,8 +673,6 @@
             -->
 
         </LinearLayout>
-
-
     </RelativeLayout>
 
 

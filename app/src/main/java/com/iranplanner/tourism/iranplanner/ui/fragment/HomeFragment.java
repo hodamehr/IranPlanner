@@ -35,11 +35,14 @@ import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.MainActivity;
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.adapter.AttractionHomeAdapter;
+import com.iranplanner.tourism.iranplanner.adapter.HomeItineraryAdapter;
 import com.iranplanner.tourism.iranplanner.adapter.HomeProvinceListAdapter;
+import com.iranplanner.tourism.iranplanner.adapter.HomeReservationHotelAdapter;
+import com.iranplanner.tourism.iranplanner.adapter.LocalFoodHomeAdapter;
 import com.iranplanner.tourism.iranplanner.adapter.NavigationItemsAdapter;
-import com.iranplanner.tourism.iranplanner.adapter.ShowHomeBestAttractionAdapter;
-import com.iranplanner.tourism.iranplanner.adapter.ShowHomeBestLodgingAdapter;
 import com.iranplanner.tourism.iranplanner.adapter.ShowHomeEventAdapter;
+import com.iranplanner.tourism.iranplanner.adapter.souvenirHomeAdapter;
 import com.iranplanner.tourism.iranplanner.di.DaggerHomeComponent;
 import com.iranplanner.tourism.iranplanner.di.HomeModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
@@ -67,7 +70,10 @@ import entity.HomeCountryProvince;
 import entity.HomeEvent;
 import entity.HomeImage;
 import entity.HomeInfo;
+import entity.HomeItinerary;
+import entity.HomeLocalfood;
 import entity.HomeLodging;
+import entity.HomeSouvenir;
 import entity.ResultHome;
 import entity.ResultLodgingList;
 import me.relex.circleindicator.CircleIndicator;
@@ -77,7 +83,7 @@ import tools.Util;
 /**
  * Created by h.vahidimehr on 10/01/2017.
  */
-public class HomeFragment extends StandardFragment implements DataTransferInterface,View.OnClickListener, AppBarLayout.OnOffsetChangedListener, NestedScrollView.OnScrollChangeListener, HomeContract.View, ReservationContract.View {
+public class HomeFragment extends StandardFragment implements DataTransferInterface, View.OnClickListener, AppBarLayout.OnOffsetChangedListener, NestedScrollView.OnScrollChangeListener, HomeContract.View, ReservationContract.View {
 
     protected String[] mNavigationDrawerItemTitles;
     protected DrawerLayout mDrawerLayout;
@@ -118,9 +124,10 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     ImageView imgHome;
     ClickableViewPager BestHotelViewPager, BestAttractionViewPager;
     ClickableViewPager eventsViewPager;
-    CircleIndicator indicator;
+    CircleIndicator indicator, BestHotelIndicator;
     RelativeLayout viewPagerEventsHolder;
-    RecyclerView recyclerViewProvinceShow;
+    RecyclerView recyclerViewProvinceShow, horizontal_recycler_view, recyclerBestAttraction, recyclerSouvenir, recyclerItinerary, recyclerLocalFood;
+    List<ResultHome> resultHomes;
 
     public HomeFragment() {
         super();
@@ -140,11 +147,12 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         txtWhereGo = (TextView) rootView.findViewById(R.id.txtWhereGo);
         test = (ImageView) rootView.findViewById(R.id.test);
 //        LinearLayout btnShowProvince = (LinearLayout) rootView.findViewById(R.id.btnShowProvince);
-        BestHotelViewPager = (ClickableViewPager) rootView.findViewById(R.id.BestHotelViewPager);
-        BestAttractionViewPager = (ClickableViewPager) rootView.findViewById(R.id.BestAttractionViewPager);
+//        BestHotelViewPager = (ClickableViewPager) rootView.findViewById(R.id.BestHotelViewPager);
+//        BestAttractionViewPager = (ClickableViewPager) rootView.findViewById(R.id.BestAttractionViewPager);
         mDrawerLayout = (DrawerLayout) rootView.findViewById(R.id.drawer_layout);
         eventsViewPager = (ClickableViewPager) rootView.findViewById(R.id.EventsViewPager);
         indicator = (CircleIndicator) rootView.findViewById(R.id.indicator);
+//        BestHotelIndicator = (CircleIndicator) rootView.findViewById(R.id.BestHotelIndicator);
         toolbarToggle = (ImageView) rootView.findViewById(R.id.toolbarToggle);
         toolbarToggleLeft = (ImageView) rootView.findViewById(R.id.toolbarToggleLeft);
         frameLayout = (RelativeLayout) rootView.findViewById(R.id.featureListRelativeLayout);
@@ -156,6 +164,11 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         mDrawerList = (ListView) rootView.findViewById(R.id.left_drawer);
         viewPagerEventsHolder = (RelativeLayout) rootView.findViewById(R.id.viewPagerEventsHolder);
         recyclerViewProvinceShow = (RecyclerView) rootView.findViewById(R.id.recyclerViewProvinceShow);
+        horizontal_recycler_view = (RecyclerView) rootView.findViewById(R.id.wallet);
+        recyclerBestAttraction = (RecyclerView) rootView.findViewById(R.id.recyclerBestAttraction);
+        recyclerItinerary = (RecyclerView) rootView.findViewById(R.id.recyclerItinerary);
+        recyclerSouvenir = (RecyclerView) rootView.findViewById(R.id.recyclerSouvenir);
+        recyclerLocalFood = (RecyclerView) rootView.findViewById(R.id.recyclerLocalFood);
 
 //        btnShowProvince.setOnClickListener(this);
         test.setOnClickListener(this);
@@ -165,14 +178,12 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         }
         aboutCityBtn.setOnClickListener(this);
         txtWhereGo.setOnClickListener(this);
-
-
         mNavigationDrawerItemTitles = getResources().getStringArray(R.array.navigation_items);
 
         setupToolbar();
         getfeatureHolderHight();
         showDrawer();
-
+        getHomeResult("country", "311");
         return rootView;
     }
 
@@ -279,7 +290,11 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void showAboutCityOrProvince() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("homeInfo", resultHomes.get(0).getHomeInfo());
+
         AboutCityFragment aboutCityFragment = AboutCityFragment.newInstance();
+        aboutCityFragment.setArguments(bundle);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.containerHomeFragment, aboutCityFragment);
         transaction.addToBackStack(null);
@@ -356,14 +371,19 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
     @Override
     public void getHomeResult(GetHomeResult getHomeResult) {
-        List<ResultHome> resultHomes = getHomeResult.getResultHome();
+        resultHomes = getHomeResult.getResultHome();
         setNamePicture(resultHomes.get(0).getHomeInfo(), resultHomes.get(0).getHomeImages());
         setViewPagerLodging(resultHomes.get(0).getHomeLodging());
-        setViewPagerAttaction(resultHomes.get(0).getHomeAttraction());
+        setViewPagerAttraction(resultHomes.get(0).getHomeAttraction());
         setViewPagerEvent(resultHomes.get(0).getHomeEvent());
         if (resultHomes.get(0).getHomeCountryProvince().size() != 0) {
             setListProvince(resultHomes.get(0).getHomeCountryProvince());
         }
+        if (resultHomes.get(0).getHomeSouvenirs().size() != 0) {
+            setSouvenir(resultHomes.get(0).getHomeSouvenirs());
+        }
+        setItinerary(resultHomes.get(0).getHomeItinerary());
+        setLocalFood(resultHomes.get(0).getHomeLocalfood());
     }
 
     private void setViewPagerEvent(List<HomeEvent> homeEvents) {
@@ -374,43 +394,57 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void setListProvince(List<HomeCountryProvince> homeCountryProvince) {
-//        HomeProvinceAdapter homeProvinceAdaptera=new HomeProvinceAdapter()
-//        recyclerViewProvinceShow.setLayoutManager(new RecyclerView.LayoutManager(this) {
-//            @Override
-//            public RecyclerView.LayoutParams generateDefaultLayoutParams() {
-//                return null;
-//            }
-//        });
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewProvinceShow.setLayoutManager(mLayoutManager);
         HomeProvinceListAdapter homeProvinceAdapter = new HomeProvinceListAdapter(getActivity(), this, homeCountryProvince, getContext(), R.layout.content_province_list);
         recyclerViewProvinceShow.setAdapter(homeProvinceAdapter);
-//        ShowHomeEventAdapter showHomeEventAdapter = new ShowHomeEventAdapter(getContext(), getActivity(), homeEvents);
-//
-//        eventsViewPager.setAdapter(showHomeEventAdapter);
-//        indicator.setViewPager(eventsViewPager);
-//        eventsViewPager.setCurrentItem(2);
+    }
 
-
+    private void setItinerary(List<HomeItinerary> homeItineraries) {
+        HomeItineraryAdapter homeItineraryAdapter = new HomeItineraryAdapter(homeItineraries, getContext());
+        LinearLayoutManager horizontalLayoutManagaer
+                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerItinerary.setLayoutManager(horizontalLayoutManagaer);
+        recyclerItinerary.setAdapter(homeItineraryAdapter);
     }
 
     private void setViewPagerLodging(List<HomeLodging> homeLodgings) {
-        ShowHomeBestLodgingAdapter showTavelToolsAdapter = new ShowHomeBestLodgingAdapter(getContext(), getActivity(), homeLodgings);
-        BestHotelViewPager.setAdapter(showTavelToolsAdapter);
-        BestHotelViewPager.setCurrentItem(homeLodgings.size() - 1);
-        BestHotelViewPager.setClipToPadding(false);
+        HomeReservationHotelAdapter horizontalAdapter = new HomeReservationHotelAdapter(getActivity(), this, homeLodgings, getContext(), R.layout.content_home_best_hotel_show);
+        LinearLayoutManager horizontalLayoutManagaer
+                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        horizontal_recycler_view.setLayoutManager(horizontalLayoutManagaer);
+        horizontal_recycler_view.setAdapter(horizontalAdapter);
     }
 
-    private void setViewPagerAttaction(List<HomeAttraction> homeAttractions) {
-        ShowHomeBestAttractionAdapter showTavelToolsAdapter = new ShowHomeBestAttractionAdapter(getContext(), getActivity(), homeAttractions);
-        BestAttractionViewPager.setAdapter(showTavelToolsAdapter);
-        BestAttractionViewPager.setCurrentItem(homeAttractions.size() - 1);
-        BestAttractionViewPager.setClipToPadding(false);
+    private void setViewPagerAttraction(List<HomeAttraction> homeAttractions) {
+        AttractionHomeAdapter attractionHomeAdapter = new AttractionHomeAdapter(homeAttractions, getContext());
+        LinearLayoutManager horizontalLayoutManagaer
+                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerBestAttraction.setLayoutManager(horizontalLayoutManagaer);
+        recyclerBestAttraction.setAdapter(attractionHomeAdapter);
+    }
+
+    private void setSouvenir(List<HomeSouvenir> homeSouvenir) {
+        souvenirHomeAdapter attractionHomeAdapter = new souvenirHomeAdapter(homeSouvenir, getContext());
+        LinearLayoutManager horizontalLayoutManagaer
+                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerSouvenir.setLayoutManager(horizontalLayoutManagaer);
+        recyclerSouvenir.setAdapter(attractionHomeAdapter);
+
+    }
+
+    private void setLocalFood(List<HomeLocalfood> homeLocalfood) {
+        LocalFoodHomeAdapter attractionHomeAdapter = new LocalFoodHomeAdapter(homeLocalfood, getContext());
+        LinearLayoutManager horizontalLayoutManagaer
+                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerLocalFood.setLayoutManager(horizontalLayoutManagaer);
+        recyclerLocalFood.setAdapter(attractionHomeAdapter);
+
     }
 
     private void setNamePicture(HomeInfo homeInfo, List<HomeImage> homeImage) {
         txtWhereGo.setText(homeInfo.getTitle());
-//        imgHome.setImageBitmap();
+
         if (homeImage.get(0).getImgUrl() != null) {
             Util.setImageView(homeImage.get(0).getImgUrl(), getContext(), imgHome);
         }
@@ -490,7 +524,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     selectId = CityProvince.get(position).getId();
-                    getHomeResult("country", "311");
+
+                    getHomeResult(CityProvince.get(position).getType(), CityProvince.get(position).getId());
                     dismiss();
                 }
             });

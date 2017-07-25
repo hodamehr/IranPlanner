@@ -19,7 +19,7 @@ public class HomeSouvenir implements Serializable {
     private String souvenirsProvinceId;
     @SerializedName("img_url")
     @Expose
-    private Object imgUrl;
+    private String imgUrl;
 
     public String getSouvenirsId() {
         return souvenirsId;
@@ -45,11 +45,11 @@ public class HomeSouvenir implements Serializable {
         this.souvenirsProvinceId = souvenirsProvinceId;
     }
 
-    public Object getImgUrl() {
+    public String getImgUrl() {
         return imgUrl;
     }
 
-    public void setImgUrl(Object imgUrl) {
+    public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
 

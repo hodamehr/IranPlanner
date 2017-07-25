@@ -3,26 +3,37 @@
     android:id="@+id/imageHotel"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    >
-
-    <ImageView
-        android:id="@+id/toolsImg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="centerInside"
-        android:src="@drawable/food"
-        android:layout_above="@+id/toolsText"/>
-
-    <TextView
-        android:id="@+id/toolsText"
-        style="@style/StandardText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="خوراک محلی"
-        android:translationZ="1dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        />
+    android:background="@color/grey">
 
 
-</RelativeLayout>
+
+        <ImageView
+            android:id="@+id/toolsImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:src="@drawable/food" />
+
+        <TextView
+            android:id="@+id/toolsText"
+            style="@style/StandardText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ffffffffffff"
+            android:translationZ="1dp"
+            android:textColor="@color/white_"
+            android:layout_centerInParent="true"
+      />
+
+
+</RelativeLayout><!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--android:id="@+id/imageHotel"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content">-->
+
+    <!--&lt;!&ndash;<android.support.v7.widget.CardView&ndash;&gt;--><!--&lt;!&ndash;android:id="@+id/card_view_itinerary"&ndash;&gt;--><!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;--><!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;--><!--&lt;!&ndash;app:cardCornerRadius="10dp"&ndash;&gt;--><!--&lt;!&ndash;android:padding="@dimen/padding_standard">&ndash;&gt;-->
+
+
+    <!--<ImageView--><!--android:id="@+id/toolsImg"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:scaleType="centerInside"--><!--android:src="@drawable/food" />-->
+
+    <!--<TextView--><!--android:id="@+id/toolsText"--><!--style="@style/StandardText"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_centerHorizontal="true"--><!--android:text="خوراک محلی"--><!--android:translationZ="1dp"--><!--android:gravity="center"--><!--android:layout_margin="@dimen/margin_short"--><!--android:layout_below="@+id/toolsImg"/>--><!--&lt;!&ndash;</android.support.v7.widget.CardView>&ndash;&gt;-->
+
+
+    <!--</RelativeLayout>-->
