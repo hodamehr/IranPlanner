@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.iranplanner.tourism.iranplanner.MainActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

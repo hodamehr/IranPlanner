@@ -675,7 +675,7 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentTop="true"
                                 android:focusableInTouchMode="true"
-                                tools:context="com.iranplanner.tourism.iranplanner.ui.activity.MoreItemItineraryActivity" />
+                                tools:context="com.iranplanner.tourism.iranplanner.ui.activity.moreItemItinerary.MoreItemItineraryActivity" />
                         </RelativeLayout>
                         <!--facility and about Hotel-->
                         <RelativeLayout

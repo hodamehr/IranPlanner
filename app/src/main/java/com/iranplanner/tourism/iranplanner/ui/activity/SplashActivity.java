@@ -1,6 +1,5 @@
 package com.iranplanner.tourism.iranplanner.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,12 +9,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.di.DaggerHomeComponent;
-import com.iranplanner.tourism.iranplanner.di.HomeModule;
+import com.iranplanner.tourism.iranplanner.ui.activity.login.LoginActivity;
+import com.iranplanner.tourism.iranplanner.ui.fragment.home.DaggerHomeComponent;
+import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomeModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
-import com.iranplanner.tourism.iranplanner.ui.presenter.HomePresenter;
-import com.iranplanner.tourism.iranplanner.ui.presenter.abs.HomeContract;
-import com.iranplanner.tourism.iranplanner.ui.presenter.abs.ReservationContract;
+import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomePresenter;
+import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomeContract;
+import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationContract;
 
 import javax.inject.Inject;
 

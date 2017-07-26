@@ -190,7 +190,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/SelectHolder"
-            android:padding="@dimen/padding_standard">
+            android:padding="@dimen/padding_standard"
+            android:visibility="gone">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -257,7 +258,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/viewPagerEventsHolder"
-            android:padding="@dimen/padding_standard">
+            android:padding="@dimen/padding_standard"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/txtHotelTypeTitles"
@@ -382,13 +384,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/hotelsTypeHolder"
-            android:padding="@dimen/padding_standard">
+            android:padding="@dimen/padding_standard"
+            android:visibility="gone">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/wallet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtBestTitleHotel" />
+                android:layout_below="@+id/txtBestTitleHotel"
+                android:focusable="false"/>
 
             <!--<TextView-->
             <!--android:id="@+id/txtBestTitleHotel"-->
@@ -424,7 +428,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/viewPagerBestHolder"
-            android:padding="@dimen/padding_standard">
+            android:padding="@dimen/padding_standard"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/txtAttracttionTypeTitles"
@@ -537,13 +542,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/attracttionTypeHolder"
-            android:padding="@dimen/padding_standard">
+            android:padding="@dimen/padding_standard"
+            android:visibility="gone">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerBestAttraction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtAttractionBestTitle" />
+                android:layout_below="@+id/txtAttractionBestTitle"
+                android:focusable="false"/>
 
             <TextView
                 android:id="@+id/txtAttractionBestTitle"
@@ -562,13 +569,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bestAttractionHolder"
-            android:padding="@dimen/padding_standard">
+            android:padding="@dimen/padding_standard"
+            android:visibility="gone">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerItinerary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtItineraryTitle" />
+                android:layout_below="@+id/txtItineraryTitle"
+                android:focusable="false"/>
 
 
             <TextView
@@ -587,13 +596,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/itineraryHomeHolder"
-            android:padding="@dimen/padding_standard">
+            android:padding="@dimen/padding_standard"
+            android:visibility="gone">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerLocalFood"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtlocalFoodTitle" />
+                android:layout_below="@+id/txtlocalFoodTitle"
+                android:focusable="false"/>
 
 
             <TextView
@@ -613,7 +624,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/localFoodHomeHolder"
-            android:padding="@dimen/padding_standard">
+            android:padding="@dimen/padding_standard"
+            android:visibility="gone">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerSouvenir"
@@ -637,7 +649,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/souvenirHomeHolder"
             android:layout_margin="@dimen/margin_standard"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewProvinceShow"

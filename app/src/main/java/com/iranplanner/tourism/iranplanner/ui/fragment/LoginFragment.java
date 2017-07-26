@@ -30,13 +30,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.di.DaggerLoginComponent;
-import com.iranplanner.tourism.iranplanner.di.LoginModule;
+import com.iranplanner.tourism.iranplanner.ui.activity.login.DaggerLoginComponent;
+import com.iranplanner.tourism.iranplanner.ui.activity.login.LoginModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
-import com.iranplanner.tourism.iranplanner.ui.activity.RegisterActivity;
-import com.iranplanner.tourism.iranplanner.ui.presenter.LoginPresenter;
-import com.iranplanner.tourism.iranplanner.ui.presenter.abs.LoginContract;
+import com.iranplanner.tourism.iranplanner.ui.activity.register.RegisterActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.login.LoginPresenter;
+import com.iranplanner.tourism.iranplanner.ui.activity.login.LoginContract;
 
 import javax.inject.Inject;
 

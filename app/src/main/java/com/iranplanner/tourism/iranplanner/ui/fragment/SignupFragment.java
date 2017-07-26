@@ -1,12 +1,7 @@
 package com.iranplanner.tourism.iranplanner.ui.fragment;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,14 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.di.DaggerRegisterComponent;
-import com.iranplanner.tourism.iranplanner.di.RegisterModule;
+import com.iranplanner.tourism.iranplanner.ui.activity.register.DaggerRegisterComponent;
+import com.iranplanner.tourism.iranplanner.ui.activity.register.RegisterModule;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
-import com.iranplanner.tourism.iranplanner.ui.presenter.RegisterPresenter;
-import com.iranplanner.tourism.iranplanner.ui.presenter.abs.RegisterContract;
-
-import java.util.concurrent.TimeUnit;
+import com.iranplanner.tourism.iranplanner.ui.activity.register.RegisterPresenter;
+import com.iranplanner.tourism.iranplanner.ui.activity.register.RegisterContract;
 
 import javax.inject.Inject;
 
@@ -36,17 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import entity.ResultRegister;
 import entity.ResultUserRegister;
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import server.Config;
-import server.getJsonInterface;
 import tools.Util;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by h.vahidimehr on 03/02/2017.

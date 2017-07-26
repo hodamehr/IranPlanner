@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".ui.activity.mainActivity.MainActivity"
     android:background="?android:attr/colorBackground"
     >
 
@@ -34,7 +34,9 @@
                     android:background="@drawable/zz"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-                    app:layout_collapseMode="parallax" />
+                    app:layout_collapseMode="parallax"
+                    android:id="@+id/imgHome"
+                    android:transitionName="imgHome"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -42,7 +44,6 @@
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/dark_shadow"
                     android:padding="@dimen/margin_standard">
-
 
 
                         <TextView

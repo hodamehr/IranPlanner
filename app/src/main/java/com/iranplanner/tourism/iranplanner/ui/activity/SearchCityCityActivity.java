@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.ui.fragment.ItineraryListFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
 
 import java.io.Serializable;
 import java.util.List;

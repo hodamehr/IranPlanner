@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.login.LoginActivity"
             android:screenOrientation="portrait">
            <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,13 +41,13 @@
             </intent-filter>-->
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.mainActivity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.EditProfileActivity"
+            android:name=".ui.activity.editprofile.EditProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.SendPhoneActivity"
+            android:name=".ui.activity.getPhoneNumber.SendPhoneActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.notifyActivity"
@@ -57,14 +57,14 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.ScrollingActivity" />
         <activity
-            android:name=".ui.activity.ReservationListActivity"
+            android:name=".ui.activity.hotelReservationListOfCity.ReservationListActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.activity.GetTokenActivity"
+            android:name=".ui.activity.getToken.GetTokenActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.RegisterActivity"
+            android:name=".ui.activity.register.RegisterActivity"
             android:screenOrientation="portrait" />
         <!-- <activity android:name=".activity.SearchCityCityActivity" /> -->
         <!-- App Indexing. See https://g.co/AppIndexing/AndroidStudio for more information. -->
@@ -73,7 +73,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.activity.MoreItemItineraryActivity"
+            android:name=".ui.activity.moreItemItinerary.MoreItemItineraryActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
         <activity
@@ -81,29 +81,26 @@
             android:label="@string/title_activity_map_full"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ShowAttractionActivity"
+            android:name=".ui.activity.showAttraction.ShowAttractionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.attractionDetailActivity"
+            android:name=".ui.activity.attractionDetails.attractionDetailActivity"
             android:label="@string/title_activity_attraction_detail"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.SignupActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.GridActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ReservationHotelListActivity"
+            android:name=".ui.activity.reservationHotelList.ReservationHotelListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ReservationHotelDetailActivity"
+            android:name=".ui.activity.hotelDetails.ReservationHotelDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.CommentListActivity"
+            android:name=".ui.activity.comment.CommentListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.ShowRoomActivity"
+            android:name=".ui.activity.showRoom.ShowRoomActivity"
             android:screenOrientation="portrait" />
 
         <!-- Firebase Notifications -->
