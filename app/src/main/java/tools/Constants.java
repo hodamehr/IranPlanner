@@ -14,4 +14,6 @@ public final class Constants {
     public static final String beftorVisitedImg = "2";
     public static final String bookmarkImg = "1";
     public static final String wishImg = "1";
+    public static final String homeSearch = "homeSearch";
+    public static final String homeHotel = "homeHotel";
 }

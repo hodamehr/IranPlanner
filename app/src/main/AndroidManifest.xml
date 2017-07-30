@@ -59,7 +59,6 @@
         <activity
             android:name=".ui.activity.hotelReservationListOfCity.ReservationListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.activity.getToken.GetTokenActivity"
             android:screenOrientation="portrait" />
@@ -128,6 +127,10 @@
         <activity
             android:name=".ui.activity.ScrollingActivity1"
             android:label="@string/title_activity_scrolling1"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.activity.ScrollingActivityttest"
+            android:label="@string/title_activity_scrolling_activityttest"
             android:theme="@style/AppTheme"></activity>
     </application>
 

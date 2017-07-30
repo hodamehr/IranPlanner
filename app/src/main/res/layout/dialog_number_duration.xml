@@ -17,7 +17,7 @@
         android:paddingRight="@dimen/margin_standard"
         android:paddingTop="@dimen/padding_standard"
         android:id="@+id/txtAlertTitle"
-        android:text="تاریخ"
+        android:text="مدت زمان اقامت "
         android:textColor="@color/grey" />
     <com.coinpany.core.android.widget.CDivider
         android:layout_width="match_parent"
@@ -29,14 +29,12 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:orientation="horizontal">
-        <tools.widget.PersianDatePicker
-            android:id="@+id/travelDate"
+
+        <NumberPicker
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:displayMonthNames="true"
-            app:minYear="1395"
-            app:maxYear="1397"
-            />
+            android:id="@+id/dayNumberPicker"
+            ></NumberPicker>
     </LinearLayout>
 
     <com.coinpany.core.android.widget.CDivider
@@ -79,7 +77,7 @@
             android:gravity="center"
             android:padding="@dimen/padding_standard"
             android:text="تایید"
-            android:textColor="@color/dark_blue" />
+            android:textColor="@color/main_blue" />
     </LinearLayout>
 
 

@@ -227,13 +227,13 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
-        startOfTravel = (Date) bundle.getSerializable("startOfTravel");
-        durationTravel = (int) bundle.getSerializable("durationTravel");
+//        startOfTravel = (Date) bundle.getSerializable("startOfTravel");
+//        durationTravel = (int) bundle.getSerializable("durationTravel");
         txtHotelName.setText(resultLodgingHotelDetail.getLodgingName());
         txtHotelType.setText("نوع مرکز اقامتی: "+resultLodgingHotelDetail.getLodgingTypeTitle());
         txtAddress.setText(resultLodgingHotelDetail.getLodgingAddress());
-        txtDate.setText(Utils.getSimpleDate(startOfTravel));
-        txtDuration.setText(Utils.persianNumbers(String.valueOf(durationTravel)) + " شب");
+//        txtDate.setText(Utils.getSimpleDate(startOfTravel));
+//        txtDuration.setText(Utils.persianNumbers(String.valueOf(durationTravel)) + " شب");
         roomReservationBtn.setOnClickListener(this);
 
 //        if(resultWidget!=null){

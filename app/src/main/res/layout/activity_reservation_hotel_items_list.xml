@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -19,9 +18,7 @@
                 android:id="@+id/card_view_itinerary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_short"
-                app:cardCornerRadius="10dp"
-                app:cardUseCompatPadding="true">
+                android:layout_marginTop="@dimen/margin_xxshort">
 
                 <RelativeLayout
                     android:id="@+id/holder"
@@ -43,34 +40,37 @@
                             android:layout_centerInParent="true"
                             android:translationZ="1dp" />
 
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="25dp"
-                            android:layout_alignRight="@+id/imgItineraryListMore"
-                            android:layout_marginTop="@dimen/padding_standard"
-                            android:src="@color/pink_shadow"
-                            android:translationZ="1dp"
-                            android:visibility="gone"/>
+                        <!--<ImageView-->
+                            <!--android:layout_width="50dp"-->
+                            <!--android:layout_height="25dp"-->
+                            <!--android:layout_alignRight="@+id/imgItineraryListMore"-->
+                            <!--android:layout_marginTop="@dimen/padding_standard"-->
+                            <!--android:src="@color/dark_red"-->
+                            <!--android:translationZ="1dp"-->
+                             <!--/>-->
 
                         <TextView
                             android:id="@+id/txtShowPercent"
-                            style="@style/SmallText"
+                            style="@style/tagText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignRight="@+id/imgItineraryListMore"
                             android:layout_marginTop="@dimen/padding_standard"
-                            android:paddingRight="@dimen/padding_standard"
-                            android:textColor="@color/white_"
+                            android:paddingLeft="@dimen/margin_xshort"
+                            android:paddingRight="@dimen/margin_xshort"
                             android:translationZ="2dp"
-                            android:visibility="gone" />
+                            android:text="تخفیف تا 33%"
+                            android:background="@color/dark_red"
+
+                           />
 
                         <ImageView
                             android:id="@+id/imgItineraryListMore"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginBottom="@dimen/padding_standard"
-                            android:layout_marginRight="@dimen/padding_standard"
-                            android:layout_marginTop="@dimen/padding_standard"
+                            android:layout_marginBottom="@dimen/margin_short"
+                            android:layout_marginRight="@dimen/margin_short"
+                            android:layout_marginTop="@dimen/margin_short"
                             android:scaleType="center"
 
                             />
@@ -93,17 +93,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/margin_xshort"
                             android:maxLines="1"
-                            android:text="هتل آپارتمان رازی" />
+                            android:text="هتل آپارتمان رازی"
+                            android:layout_marginRight="@dimen/margin_short"/>
 
 
                         <RelativeLayout
                             android:id="@+id/infoReserveHolder"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/txtHotelName"
-                            android:layout_margin="@dimen/margin_short">
+                            android:layout_below="@+id/starHolder"
+                            android:layout_marginRight="@dimen/margin_short">
 
                             <ImageView
                                 android:id="@+id/imgType"
@@ -111,27 +111,45 @@
                                 android:layout_height="15dp"
                                 android:layout_alignParentRight="true"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_hotel" />
+                                android:src="@mipmap/ic_hotel"
+                                android:layout_centerVertical="true"/>
 
                             <TextView
                                 android:id="@+id/txtType"
                                 style="@style/SmallText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toLeftOf="@+id/imgType"
+                                android:text="نوع مرکز اقامت"
+                                android:layout_marginRight="@dimen/margin_short"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/startPriceHolder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/infoReserveHolder"
+                            android:layout_marginRight="@dimen/margin_short">
+
+
+                            <TextView
+                                android:id="@+id/txtStartPrice"
+                                style="@style/SmallText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="@dimen/margin_standard"
-                                android:layout_toLeftOf="@+id/imgType"
-                                android:text="نوع مرکز اقامت" />
+                                android:text="شروع قیمت از"
+                                android:textColor="@color/green" />
                         </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/starHolder"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/infoReserveHolder"
-                            android:layout_marginRight="@dimen/margin_short"
-                            android:visibility="gone">
+                            android:layout_below="@+id/txtHotelName"
+                            android:layout_marginRight="@dimen/margin_short">
 
                             <ImageView
                                 android:id="@+id/imgStar1"
@@ -228,7 +246,7 @@
                             android:layout_alignParentRight="true"
                             android:text="شروع قیمت از"
                             android:textColor="@color/grey"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
 
                     </LinearLayout>
 

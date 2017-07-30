@@ -14,6 +14,7 @@
     <color name="greyDarkTransparent">#65181818</color>
     <color name="white_">#ffffff</color>
     <color name="greyLight">#ebebeb</color>
+    <color name="greySemilight">#cecece</color>
     <color name="green">#3cb878</color>
     <color name="greenpress">#36a16a</color>
     <color name="grey">#737373</color>
@@ -29,6 +30,7 @@
     <color name="light_blue">#a0dae2</color>
     <color name="light_blue_back">#daeef1</color>
     <color name="dark_blue">#288795</color>
+    <color name="dark_red">#F0564D</color>
     <color name="toolbarTransparent">#00FFFFFF</color>
 
 </resources>

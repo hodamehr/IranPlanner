@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
+import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
@@ -47,6 +49,8 @@ public class ReservationListActivity extends StandardActivity implements DataTra
     DaggerReservationComponent.Builder builder;
     @Inject
     ReservationPresenter reservationPresenter;
+    protected Toolbar toolbar;
+    ImageView toolbarBack,toolbarToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,11 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         Bundle extras = getIntent().getExtras();
         itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
         startOfTravel = (Date) extras.getSerializable("startOfTravel");
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbarBack = (ImageView) findViewById(R.id.toolbarBack);
+        toolbarToggle = (ImageView) findViewById(R.id.toolbarToggle);
 
+        setupToolbar();
         adapter = new ReseveDateListAdapter(ReservationListActivity.this, this, itineraryData, getApplicationContext(), R.layout.fragment_itinerary_item, startOfTravel);
         recyclerView.setAdapter(adapter);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -86,10 +94,20 @@ public class ReservationListActivity extends StandardActivity implements DataTra
 
             }
         }));
-
+        toolbarBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("ddd","dddddddddddddddddddddddddd");
+            }
+        });
 
     }
-
+    void setupToolbar() {
+        ((StandardActivity) this).setSupportActionBar(toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
+        ((StandardActivity) this).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbarToggle.setVisibility(View.GONE);
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.activity_reservation_list;

@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
@@ -29,6 +32,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import server.Config;
 import server.getJsonInterface;
+import tools.CustomDialogDate;
+import tools.CustomDialogNumberPicker;
 
 /**
  * Created by h.vahidimehr on 21/02/2017.
@@ -40,6 +45,19 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
     Date startOfTravel;
     List<ResultLodging> resultLodgings;
     int durationTravel;
+    protected Toolbar toolbar;
+    ImageView toolbarBack, toolbarToggle;
+    RelativeLayout typeAttractionHolder, holderDate;
+
+    private void showdialog() {
+        CustomDialogNumberPicker cdd = new CustomDialogNumberPicker(this);
+        cdd.show();
+    }
+
+    private void showDialogDate() {
+        CustomDialogDate customDialogDate = new CustomDialogDate(this);
+        customDialogDate.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +72,23 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
         resultLodgings = (List<ResultLodging>) extras.getSerializable("resultLodgings");
         startOfTravel = (Date) extras.getSerializable("startOfTravel");
         durationTravel = (int) extras.getSerializable("durationTravel");
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbarBack = (ImageView) findViewById(R.id.toolbarBack);
+        toolbarToggle = (ImageView) findViewById(R.id.toolbarToggle);
+        typeAttractionHolder = (RelativeLayout) findViewById(R.id.TypeAttractionHolder);
+        holderDate = (RelativeLayout) findViewById(R.id.holderDate);
+        holderDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialogDate();
+            }
+        });
+        typeAttractionHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showdialog();
+            }
+        });
         adapter = new ReseveHotelListAdapter(ReservationHotelListActivity.this, this, resultLodgings, getApplicationContext(), R.layout.fragment_itinerary_item);
         recyclerView.setAdapter(adapter);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -65,6 +99,13 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
                 getResultOfHotelReservation(String.valueOf(resultLodgings.get(position).getLodgingId()));
             }
         }));
+        setupToolbar();
+        toolbarBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("ddd", "dddddddddddddddddddddddddd");
+            }
+        });
     }
 
     @Override
@@ -100,6 +141,12 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
                 Log.e("result of intresting", "false");
             }
         });
+    }
+
+    void setupToolbar() {
+        ((StandardActivity) this).setSupportActionBar(toolbar);
+        ((StandardActivity) this).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbarToggle.setVisibility(View.GONE);
     }
 
     private OkHttpClient setHttpClient() {

@@ -198,9 +198,9 @@ public class PersianDatePicker extends LinearLayout {
         setDividerColor(yearNumberPicker , ResourcesCompat.getColor(getResources(), R.color.greyLight, null));
         setDividerColor(monthNumberPicker  , ResourcesCompat.getColor(getResources(), R.color.greyLight, null));
         setDividerColor(dayNumberPicker , ResourcesCompat.getColor(getResources(), R.color.greyLight, null));
-        setNumberPickerTextColor(yearNumberPicker ,  ResourcesCompat.getColor(getResources(), R.color.grey, null));
-        setNumberPickerTextColor(monthNumberPicker  ,  ResourcesCompat.getColor(getResources(), R.color.grey, null));
-        setNumberPickerTextColor(dayNumberPicker ,  ResourcesCompat.getColor(getResources(), R.color.grey, null));
+        setNumberPickerTextColor(yearNumberPicker ,  ResourcesCompat.getColor(getResources(), R.color.dark_blue, null));
+        setNumberPickerTextColor(monthNumberPicker  ,  ResourcesCompat.getColor(getResources(), R.color.dark_blue, null));
+        setNumberPickerTextColor(dayNumberPicker ,  ResourcesCompat.getColor(getResources(), R.color.dark_blue, null));
         a.recycle();
     }
 

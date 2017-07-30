@@ -47,25 +47,132 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/divider"></android.support.v7.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/textHotel"
-        style="@style/StandardTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/margin_standard"
-        android:layout_marginTop="16dp"
-        android:paddingLeft="@dimen/padding_standard"
-        android:paddingRight="@dimen/padding_standard"
-        android:text="نمایش مراکز اقامتی " />
+    <!-- <TextView
+         android:id="@+id/textHotel"
+         style="@style/StandardTitle"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentTop="true"
+         android:layout_centerHorizontal="true"
+         android:layout_marginBottom="@dimen/margin_standard"
+         android:layout_marginTop="16dp"
+         android:paddingLeft="@dimen/padding_standard"
+         android:paddingRight="@dimen/padding_standard"
+         android:text="نمایش مراکز اقامتی " />-->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+     />
 
     <RelativeLayout
+        android:id="@+id/changeDateTimeHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:id="@+id/selectHoldetTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+
+            <RelativeLayout
+                android:id="@+id/TypeAttractionHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:translationZ="1dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:padding="@dimen/margin_short"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin_standard">
+
+                    <TextView
+                        android:id="@+id/txtTypeHotel"
+                        style="@style/StandardTextGrey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="به مدت 5 شب"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/imageTypeHotel"
+                        android:layout_marginRight="@dimen/margin_short"
+                        />
+
+                    <ImageView
+                        android:id="@+id/imageTypeHotel"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@mipmap/ic_accomodation"
+                        android:layout_alignParentRight="true"/>
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/greySemilight" />
+            <RelativeLayout
+                android:id="@+id/TypeAttractionHolder1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:translationZ="1dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_short"
+                    android:id="@+id/holderDate">
+
+                    <TextView
+                        android:id="@+id/txtTypeHote"
+                        style="@style/StandardTextGrey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="تاریخ"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/imageTypeHote"
+                        android:layout_marginRight="@dimen/margin_short"
+                        />
+
+                    <ImageView
+                        android:id="@+id/imageTypeHote"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@mipmap/ic_accomodation"
+                        android:layout_alignParentRight="true"/>
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+      <!--  <View
+            android:id="@id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/selectHoldetTop"
+            android:background="@color/light_blue" />-->
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/textHotel"
-        android:background="@color/greyLight"
-        android:id="@+id/divider"
-        android:layout_marginBottom="@dimen/padding_short"
-        />
+        android:layout_below="@id/changeDateTimeHolder"
+        android:background="@color/greyLight" />
+    <View
+        android:id="@+id/toolbarFeatureElevation"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_elevation"
+        android:layout_below="@+id/divider"/>
 </RelativeLayout>
