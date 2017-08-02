@@ -22,6 +22,7 @@ import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import java.util.List;
 
 import entity.ResultLodging;
+import tools.Util;
 
 /**
  * Created by Hoda on 10/01/2017.
@@ -57,6 +58,8 @@ public class ReseveHotelListAdapter extends RecyclerView.Adapter<ReseveHotelList
 
         viewHolder.txtHotelName.setText(resultLodgings.get(i).getLodgingName());
         viewHolder.txtType.setText(resultLodgings.get(i).getLodgingTypeTitle());
+        viewHolder.txtShowPercent.setText(Util.persianNumbers(resultLodgings.get(i).getLodgingRoomPriceRuleDetail().getLodgingRoomPriceDetailValue())+"تخفیف تا");
+//        viewHolder.txtStartPrice.setText(resultLodgings.get(i).getLodgingRoomPriceDetail().get(0).getLodgingRoomMinPrice());
 
 //        viewHolder.txtPrice.setText("شروع قیمت از"+ Utils.persianNumbers(String.valueOf(resultLodgings.get(i).getLodgingRoomPriceDetail().get(0).getLodgingRoomMinPrice()/10))+" تومان");
         if(resultLodgings.get(i).getLodgingRoomPriceRuleDetail().getLodgingRoomPriceDetailType().equals("percent")){
@@ -132,7 +135,7 @@ public class ReseveHotelListAdapter extends RecyclerView.Adapter<ReseveHotelList
         private ImageView imgItineraryListMore;
         private ImageView imgStar1, imgStar2, imgStar3, imgStar4, imgStar5;
         RelativeLayout starHolder;
-        private TextView txtHotelName, txtType,txtShowPercent,txtPrice;
+        private TextView txtHotelName, txtType,txtPrice,txtShowPercent,txtStartPrice;
         private ProgressBar imageLoading;
 
 
@@ -147,6 +150,7 @@ public class ReseveHotelListAdapter extends RecyclerView.Adapter<ReseveHotelList
             imgStar5 = (ImageView) view.findViewById(R.id.imgStar5);
             txtHotelName = (TextView) view.findViewById(R.id.txtHotelName);
             txtType = (TextView) view.findViewById(R.id.txtType);
+            txtStartPrice = (TextView) view.findViewById(R.id.txtStartPrice);
             txtPrice = (TextView) view.findViewById(R.id.txtPrice);
             txtShowPercent = (TextView) view.findViewById(R.id.txtShowPercent);
             imageLoading = (ProgressBar) view.findViewById(R.id.imageLoading);

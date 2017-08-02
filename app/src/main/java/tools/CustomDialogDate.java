@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.coinpany.core.android.widget.Utils;
 import com.iranplanner.tourism.iranplanner.R;
 
+import java.util.Date;
+
 import tools.widget.PersianDatePicker;
 
 /**
@@ -24,6 +26,7 @@ public class CustomDialogDate extends Dialog implements
     public Dialog d;
     public TextView yes, no;
     PersianDatePicker persianDatePickr;
+    Date date;
 
     public CustomDialogDate(Activity a) {
         super(a);
@@ -44,10 +47,11 @@ public class CustomDialogDate extends Dialog implements
         no = (TextView) findViewById(R.id.txtNo);
         yes.setOnClickListener(this);
         no.setOnClickListener(this);
+        date = new Date();
         persianDatePickr.setOnDateChangedListener(new PersianDatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(int newYear, int newMonth, int newDay) {
-//                startOfTravel = persianDatePickr.getDisplayDate();
+                date= persianDatePickr.getDisplayDate();
             }
         });
     }
@@ -56,6 +60,9 @@ public class CustomDialogDate extends Dialog implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txtOk:
+                if( dialogDatePick != null ){
+                    dialogDatePick.finish(date);
+                }
                 persianDatePickr.getDisplayDate();
                 dismiss();
 //                break;
@@ -67,6 +74,16 @@ public class CustomDialogDate extends Dialog implements
                 break;
         }
         dismiss();
+    }
+
+
+    OnDialogDatePick dialogDatePick;
+    public interface OnDialogDatePick{
+        void finish(Date result);
+    }
+
+    public void setDialogDateResult(OnDialogDatePick dialogDatePick){
+        this.dialogDatePick = dialogDatePick;
     }
 }
 

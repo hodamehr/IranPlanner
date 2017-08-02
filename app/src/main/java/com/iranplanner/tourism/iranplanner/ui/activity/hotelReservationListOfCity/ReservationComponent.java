@@ -3,6 +3,7 @@ package com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCi
 
 import com.iranplanner.tourism.iranplanner.di.data.component.NetComponent;
 import com.iranplanner.tourism.iranplanner.di.model.CustomScope;
+import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListActivity;
 
 import dagger.Component;
 

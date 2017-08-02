@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_itinerary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/padding_short">
+
+            <RelativeLayout
+                android:id="@+id/imageHolder"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_alignParentStart="true">
+
+                <ProgressBar
+                    android:id="@+id/imageLoading"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:translationZ="1dp" />
+
+
+                <ImageView
+                    android:id="@+id/imgHotelList"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:background="@color/greyLight"
+                    android:scaleType="centerCrop" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageHolder"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/margin_short"
+                android:layout_toEndOf="@+id/imageHolder"
+                android:gravity="start">
+
+                <RelativeLayout
+                    android:id="@+id/RoomTypeHolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/RoomTypeHolder">
+
+                    <TextView
+                        android:id="@+id/roomType"
+                        style="@style/StandardTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/margin_xshort"
+                        android:maxLines="1"
+                        android:text="هتل پارس" />
+
+                    <!--<ImageView
+                        android:id="@+id/imgType"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_hotel" />-->
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/capacityHolderDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/CapacityHolder"
+                    android:layout_marginStart="@dimen/padding_24">
+
+                    <RelativeLayout
+                        android:id="@+id/capacityRoomHolderDetail1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="@dimen/margin_short"
+                        android:visibility="gone">
+
+
+                        <TextView
+                            android:id="@+id/txtCapacityRoomDetail1"
+                            style="@style/StandardTextGrey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/margin_xshort"
+                            android:layout_toEndOf="@+id/imgCapacityRoomDetail"
+                            android:maxLines="1"
+                            android:text="دو تخته به هم چسبیده" />
+
+                        <ImageView
+                            android:id="@+id/imgCapacityRoomDetail"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_hotel" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/capacityRoomHolderDetail2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/capacityRoomHolderDetail1"
+                        android:layout_marginTop="@dimen/margin_short"
+                        android:visibility="gone">
+
+
+                        <TextView
+                            android:id="@+id/txtCapacityRoomDetail2"
+                            style="@style/StandardTextGrey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/margin_xshort"
+                            android:layout_toEndOf="@+id/imgCapacityRoomDetail2"
+                            android:maxLines="1"
+                            android:text="سه تخته به هم چسبیده" />
+
+                        <ImageView
+                            android:id="@+id/imgCapacityRoomDetail2"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_hotel" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/capacityRoomHolderDetail3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/capacityRoomHolderDetail2"
+                        android:layout_marginTop="@dimen/margin_short"
+                        android:visibility="gone">
+
+
+                        <TextView
+                            android:id="@+id/txtCapacityRoomDetail3"
+                            style="@style/StandardTextGrey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/margin_xshort"
+                            android:layout_toEndOf="@+id/imgCapacityRoomDetail3"
+                            android:maxLines="1"
+                            android:text="سه تخته به هم چسبیده" />
+
+                        <ImageView
+                            android:id="@+id/imgCapacityRoomDetail3"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_hotel" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/capacityRoomHolderDetail4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/capacityRoomHolderDetail3"
+                        android:layout_marginTop="@dimen/margin_short"
+                        android:visibility="gone">
+
+
+                        <TextView
+                            android:id="@+id/txtCapacityRoomDetail4"
+                            style="@style/StandardTextGrey"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/margin_xshort"
+                            android:layout_toEndOf="@+id/imgCapacityRoomDetail4"
+                            android:maxLines="1"
+                            android:text="سه تخته به هم چسبیده" />
+
+                        <ImageView
+                            android:id="@+id/imgCapacityRoomDetail4"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_hotel" />
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/CapacityHolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="@dimen/padding_short">
+
+                    <TextView
+                        android:id="@+id/txtCapacity"
+                        style="@style/StandardTextGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/margin_xshort"
+                        android:layout_toEndOf="@+id/imgCapacity"
+                        android:maxLines="1"
+                        android:text="1535336464" />
+
+                    <TextView
+                        android:id="@+id/imgCapacity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="شماره درخواست " />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/capacityHolderDetail">
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/RoomDeleteHolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="@dimen/margin_xshort">
+
+                    <TextView
+                        android:id="@+id/roomDelete"
+                        style="@style/SmallText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/margin_xshort"
+                        android:maxLines="1"
+                        android:text="حذف"
+                        android:textColor="@color/dark_red" />
+
+                    <!--<ImageView
+                        android:id="@+id/imgType"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_hotel" />-->
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/changeDateTimeHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/container"
+                android:layout_marginTop="@dimen/padding_standard"
+                android:background="@drawable/corner_layout">
+
+                <TextView
+                    android:id="@+id/txtTitle"
+                    style="@style/StandardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_xshort"
+                    android:text="مشخصات سرپرست اتاق" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/edtHeadNameReservationHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtTitle">
+
+                    <EditText
+                        android:id="@+id/edtHeadNameReservation"
+                        style="@style/SmallText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="نام"
+                        android:inputType="textEmailAddress" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/edtHeadLastNameReservationHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edtHeadNameReservationHolder">
+
+                    <EditText
+                        android:id="@+id/edtHeadLastNameReservation"
+                        style="@style/SmallText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="نام خانوادگی"
+                        android:inputType="textEmailAddress" />
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/selectHoldetTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edtHeadLastNameReservationHolder"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+
+                    <RelativeLayout
+                        android:id="@+id/DateCheckHolder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:translationZ="1dp">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginStart="@dimen/margin_standard"
+                            android:padding="@dimen/margin_short">
+
+                            <Spinner
+                                android:id="@+id/nationality_spinner"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content" />
+                            <!--<TextView
+                                android:id="@+id/txtDateCheckOutReserveValue"
+                                style="@style/StandardTextGrey"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/margin_short"
+                                android:layout_toEndOf="@+id/txtDateCheckOutReserve"
+                                android:text="fdfdfd" />
+
+                            <TextView
+                                android:id="@+id/txtDateCheckOutReserve"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:layout_alignParentStart="true"
+                                android:text="تاریخ خروج" />-->
+
+
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/dateReserveHolder"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:translationZ="1dp">
+
+                        <RelativeLayout
+                            android:id="@+id/holderDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/margin_short">
+
+                            <TextView
+                                android:id="@+id/txtdateReserve"
+                                style="@style/StandardTextGrey"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/margin_short"
+                                android:layout_toEndOf="@+id/imageTypeHote"
+                                android:text="تاریخ" />
+
+                            <TextView
+                                android:id="@+id/imageTypeHote"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:text="تاریخ ورود" />
+
+
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="درخواست اقامت نیم روز"
+                    android:layout_below="@id/selectHoldetTop"
+                    android:id="@+id/selectHolder"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/margin_short"
+                    android:layout_marginBottom="@dimen/margin_short"
+                    style="@style/StandardTitle"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/selectHolder"
+                    android:id="@+id/jjj"
+                    android:layout_margin="@dimen/margin_short">
+
+                    <TextView
+                        android:id="@+id/txtNews"
+                        style="@style/SmallText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/checkBoxNews1"
+                        android:text="تعجیل در خروج"
+                        android:textColor="@color/grey" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxNews1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_checked_blue" />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/jjj"
+                    android:id="@+id/exitHolder"
+                    android:layout_margin="@dimen/margin_short">
+
+                    <TextView
+                        android:id="@+id/exit"
+                        style="@style/SmallText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/checkBoxNews"
+                        android:text="تاخیر در خروج"
+                        android:textColor="@color/grey" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxNews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_checked_blue" />
+
+                </RelativeLayout>
+                <!--         <LinearLayout
+                             android:id="@+id/selectHoldetTop1"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_below="@+id/selectHoldetTop"
+                             android:orientation="horizontal"
+                             android:weightSum="2">
+
+
+                             <RelativeLayout
+                                 android:id="@+id/TimeCheckHolder"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:layout_weight="1"
+                                 android:translationZ="1dp">
+
+                                 <RelativeLayout
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:layout_alignParentStart="true"
+                                     android:layout_centerHorizontal="true"
+                                     android:layout_marginStart="@dimen/margin_standard"
+                                     android:padding="@dimen/margin_short">
+
+                                     <TextView
+                                         android:id="@+id/txtCheckinValue"
+                                         style="@style/StandardTextGrey"
+                                         android:layout_width="match_parent"
+                                         android:layout_height="wrap_content"
+                                         android:layout_centerVertical="true"
+                                         android:layout_marginStart="@dimen/margin_short"
+                                         android:layout_toEndOf="@+id/txtCheckin"
+                                         android:text="duration" />
+
+                                     <TextView
+                                         android:id="@+id/txtCheckin"
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+
+                                         android:layout_alignParentStart="true"
+                                         android:text="ساعت تحویل" />
+
+
+                                 </RelativeLayout>
+                             </RelativeLayout>
+
+
+                             <RelativeLayout
+                                 android:id="@+id/TypeAttractionHolder1"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="match_parent"
+                                 android:layout_weight="1"
+                                 android:translationZ="1dp">
+
+                                 <RelativeLayout
+                                     android:id="@+id/holderTime"
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:padding="@dimen/margin_short">
+
+                                     <TextView
+                                         android:id="@+id/txtCheckoutValue"
+                                         style="@style/StandardTextGrey"
+                                         android:layout_width="match_parent"
+                                         android:layout_height="wrap_content"
+                                         android:layout_centerVertical="true"
+                                         android:layout_marginStart="@dimen/margin_short"
+                                         android:layout_toEndOf="@+id/txtCheckout"
+                                         android:text="تاریخ" />
+
+                                     <TextView
+                                         android:id="@+id/txtCheckout"
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+                                         android:layout_alignParentStart="true"
+                                         android:text="ساعت خروح" />
+
+
+                                 </RelativeLayout>
+                             </RelativeLayout>
+                         </LinearLayout>
+
+                         <LinearLayout
+                             android:id="@+id/selectHoldetTop2"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_below="@+id/selectHoldetTop1"
+                             android:orientation="horizontal">
+
+                             <RelativeLayout
+                                 android:id="@+id/TypeAttractionHolder"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:layout_weight="1"
+                                 android:translationZ="1dp">
+
+                                 <RelativeLayout
+                                     android:layout_width="wrap_content"
+                                     android:layout_height="wrap_content"
+                                     android:layout_alignParentStart="true"
+                                     android:layout_centerHorizontal="true"
+                                     android:layout_marginStart="@dimen/margin_standard"
+                                     android:padding="@dimen/margin_short">
+
+                                     <TextView
+                                         android:id="@+id/txtHotelAddressValue"
+                                         style="@style/StandardTextGrey"
+                                         android:layout_width="match_parent"
+                                         android:layout_height="wrap_content"
+                                         android:layout_centerVertical="true"
+                                         android:layout_marginStart="@dimen/margin_short"
+                                         android:layout_toEndOf="@+id/txtHotelAddress"
+                                         android:text="gggg" />
+
+                                     <TextView
+                                         android:id="@+id/txtHotelAddress"
+                                         android:layout_width="wrap_content"
+                                         android:layout_height="wrap_content"
+
+                                         android:layout_alignParentStart="true"
+                                         android:text="آدرس" />
+
+
+                                 </RelativeLayout>
+                             </RelativeLayout>
+
+                         </LinearLayout>-->
+            </RelativeLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_itineraryq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/padding_short">
+
+            <TextView
+                android:id="@+id/roomType1"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:maxLines="1"
+                android:text="مشخصات درخواست کننده" />
+
+            <LinearLayout
+                android:id="@+id/changeDateTimeHolder1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/roomType1"
+                android:background="@drawable/corner_layout"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_short">
+
+                <RelativeLayout
+                    android:id="@+id/holderDatea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_short">
+
+                    <TextView
+                        android:id="@+id/txtdateReservea"
+                        style="@style/StandardTextGrey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/margin_short"
+                        android:layout_toEndOf="@+id/imageTypeHote"
+                        android:text="3000 تومان" />
+
+                    <TextView
+                        android:id="@+id/imageTypeHotea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="هزینه سه شب اقامت" />
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/holderDatea1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_short">
+
+                    <TextView
+                        android:id="@+id/txtdateReservea1"
+                        style="@style/StandardTextGrey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/margin_short"
+                        android:layout_toEndOf="@+id/imageTypeHote"
+                        android:text="20 تومان" />
+
+                    <TextView
+                        android:id="@+id/imageTypeHotea1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="یک نفر اضافه" />
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/holderDatea2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_short">
+
+                    <TextView
+                        android:id="@+id/txtdateReservea2"
+                        style="@style/StandardTextGrey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/margin_short"
+                        android:layout_toEndOf="@+id/imageTypeHote"
+                        android:text="10 تومان" />
+
+                    <TextView
+                        android:id="@+id/imageTypeHotea2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="تعجیل در ورود" />
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/holderDatea3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_short">
+
+                    <TextView
+                        android:id="@+id/txtdateReservea3"
+                        style="@style/StandardTextGrey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/margin_short"
+                        android:layout_toEndOf="@+id/imageTypeHote"
+                        android:text="20 تومان"
+                        android:textColor="@color/dark_red"/>
+
+                    <TextView
+                        android:id="@+id/imageTypeHotea3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:text="تخفیف شما"
+                        android:textColor="@color/dark_red"/>
+
+
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="مبلغ قابل پرداخت"
+                    android:gravity="center"
+                    style="@style/StandardTitle"
+                    android:textColor="@color/green"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="320 هزار تومان"
+                    android:gravity="center"
+                    style="@style/StandardTitle"
+                    android:textColor="@color/green"
+
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

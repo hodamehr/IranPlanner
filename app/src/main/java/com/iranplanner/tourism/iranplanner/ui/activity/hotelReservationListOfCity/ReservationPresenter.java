@@ -48,9 +48,10 @@ public class ReservationPresenter extends ReservationContract {
 
 
     @Override
-    public void getLodgingList(String action, String city,String cid, String andId) {
+    public void getLodgingList(String action, String city,  String limit,
+                                String offset,String cid, String andId) {
         mView.showProgress();
-        retrofit.create(ReservationService.class).getLodgingReserve(action, city,cid,andId)
+        retrofit.create(ReservationService.class).getLodgingReserve(action, city,limit,offset,cid,andId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -71,8 +72,6 @@ public class ReservationPresenter extends ReservationContract {
                     @Override
                     public void onNext(ResultLodgingList resultItineraryList) {
                         mView.showLodgingList(resultItineraryList);
-
-
                     }
                 });
     }
@@ -83,6 +82,8 @@ public class ReservationPresenter extends ReservationContract {
         Observable<ResultLodgingList> getLodgingReserve(
                 @Query("action") String action,
                 @Query("city") String city,
+                @Query("limit") String limit,
+                @Query("offset") String offset,
                 @Query("cid") String token,
                 @Query("andId") String androidId);
 

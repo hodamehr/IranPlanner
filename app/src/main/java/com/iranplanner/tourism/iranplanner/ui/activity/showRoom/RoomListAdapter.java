@@ -15,9 +15,12 @@ import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import entity.LodgingRoomBed;
 import entity.LodgingRoomFacility;
 import entity.ResultRoom;
+import tools.Util;
 
 /**
  * Created by Hoda on 10/01/2017.
@@ -49,18 +52,18 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         viewHolder.roomType.setText(ResultRoom.get(position).getRoomTitle());
-        if(ResultRoom.get(position).getRoomCapacityExtra()!=null && (Integer) ResultRoom.get(position).getRoomCapacityExtra()!=0){
-            viewHolder.txtCapacity.setText(ResultRoom.get(position).getRoomCapacityAdult() + " نفر +" + (Integer) ResultRoom.get(position).getRoomCapacityExtra() + "نفر اضافه");
-        }else {
+        if (ResultRoom.get(position).getRoomCapacityExtra() != null && !ResultRoom.get(position).getRoomCapacityExtra().equals("0")) {
+            viewHolder.txtCapacity.setText(ResultRoom.get(position).getRoomCapacityAdult() + " نفر +" + ResultRoom.get(position).getRoomCapacityExtra() + "نفر اضافه");
+        } else {
             viewHolder.txtCapacity.setText(ResultRoom.get(position).getRoomCapacityAdult() + " نفر");
         }
         viewHolder.BreakfastHolder.setVisibility(View.VISIBLE);
-        List<LodgingRoomFacility> LodgingRoomFacility= ResultRoom.get(position).getLodgingRoomFacility();
+        List<LodgingRoomFacility> LodgingRoomFacility = ResultRoom.get(position).getLodgingRoomFacility();
         for (entity.LodgingRoomFacility lodgingRoomFacility : LodgingRoomFacility) {
-            if (lodgingRoomFacility.getRoomFacilityId() == 3754) {
+            if (lodgingRoomFacility.getRoomFacilityId().equals("3754")) {
                 viewHolder.BreakfastHolder.setVisibility(View.VISIBLE);
             }
-            if (lodgingRoomFacility.getRoomFacilityId() == 3755) {
+            if (lodgingRoomFacility.getRoomFacilityId().equals("3755")) {
                 viewHolder.WifiHolder.setVisibility(View.VISIBLE);
             }
         }
@@ -87,10 +90,10 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHo
                 index++;
 
             }
-
         }
-        viewHolder.txtPrice.setText(Utils.persianNumbers(String.valueOf(ResultRoom.get(position).getRoomPrice()/10))+" تومان");
-//        viewHolder.txtnewPrice.setText(ResultRoom.get(position).getRoomTitle());
+        viewHolder.txtPriceRoom.setText(Util.persianNumbers(String.valueOf(Long.decode(ResultRoom.get(position).getRoomPrice()) / 10)) + " تومان");
+        viewHolder.txtnewPrice.setText(ResultRoom.get(position).getRoomPricePromotion()!=null ? Util.persianNumbers(String.valueOf(Long.decode(ResultRoom.get(position).getRoomPricePromotion()) / 10)): "");
+        viewHolder.txtShowPercentPercentage.setText(ResultRoom.get(position).getRoomPriceDifferencePercent()!=null ? "تخفیف تا %"+Util.persianNumbers(ResultRoom.get(position).getRoomPriceDifferencePercent()): "");
     }
 
     @Override
@@ -99,27 +102,44 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView roomType,txtPrice,txtnewPrice;
-        private TextView txtCapacity, txtCapacityRoomDetail1, txtCapacityRoomDetail2, txtCapacityRoomDetail3, txtCapacityRoomDetail4;
-        private RelativeLayout capacityRoomHolderDetail1, capacityRoomHolderDetail2, capacityRoomHolderDetail3, capacityRoomHolderDetail4
-                ,BreakfastHolder,WifiHolder;
+        @InjectView(R.id.roomType)
+        TextView roomType;
+        @InjectView(R.id.txtCapacity)
+        TextView txtCapacity;
+        @InjectView(R.id.txtShowPercentPercentage)
+        TextView txtShowPercentPercentage;
+        @InjectView(R.id.txtCapacityRoomDetail1)
+        TextView txtCapacityRoomDetail1;
+        @InjectView(R.id.txtCapacityRoomDetail2)
+        TextView txtCapacityRoomDetail2;
+        @InjectView(R.id.txtCapacityRoomDetail3)
+        TextView txtCapacityRoomDetail3;
+        @InjectView(R.id.txtCapacityRoomDetail4)
+        TextView txtCapacityRoomDetail4;
+        @InjectView(R.id.txtnewPrice)
+        TextView txtnewPrice;
+        @InjectView(R.id.txtPriceRoom)
+        TextView txtPriceRoom;
+        @InjectView(R.id.capacityRoomHolderDetail1)
+        RelativeLayout capacityRoomHolderDetail1;
+        @InjectView(R.id.capacityRoomHolderDetail2)
+        RelativeLayout capacityRoomHolderDetail2;
+        @InjectView(R.id.capacityRoomHolderDetail3)
+        RelativeLayout capacityRoomHolderDetail3;
+        @InjectView(R.id.capacityRoomHolderDetail4)
+        RelativeLayout capacityRoomHolderDetail4;
+        @InjectView(R.id.WifiHolder)
+        RelativeLayout WifiHolder;
+        @InjectView(R.id.BreakfastHolder)
+        RelativeLayout BreakfastHolder;
+        @InjectView(R.id.chooseHolder)
+        RelativeLayout chooseHolder;
+        @InjectView(R.id.txtNumberChoose)
+        TextView txtNumberChoose;
 
         public ViewHolder(View view) {
             super(view);
-            roomType = (TextView) view.findViewById(R.id.roomType);
-            txtCapacity = (TextView) view.findViewById(R.id.txtCapacity);
-            txtCapacityRoomDetail1 = (TextView) view.findViewById(R.id.txtCapacityRoomDetail1);
-            txtCapacityRoomDetail2 = (TextView) view.findViewById(R.id.txtCapacityRoomDetail2);
-            txtCapacityRoomDetail3 = (TextView) view.findViewById(R.id.txtCapacityRoomDetail3);
-            txtCapacityRoomDetail4 = (TextView) view.findViewById(R.id.txtCapacityRoomDetail4);
-            txtPrice = (TextView) view.findViewById(R.id.txtPrice);
-            txtnewPrice = (TextView) view.findViewById(R.id.txtnewPrice);
-            capacityRoomHolderDetail1 = (RelativeLayout) view.findViewById(R.id.capacityRoomHolderDetail1);
-            capacityRoomHolderDetail2 = (RelativeLayout) view.findViewById(R.id.capacityRoomHolderDetail2);
-            capacityRoomHolderDetail3 = (RelativeLayout) view.findViewById(R.id.capacityRoomHolderDetail3);
-            capacityRoomHolderDetail4 = (RelativeLayout) view.findViewById(R.id.capacityRoomHolderDetail4);
-            WifiHolder = (RelativeLayout) view.findViewById(R.id.WifiHolder);
-            BreakfastHolder = (RelativeLayout) view.findViewById(R.id.BreakfastHolder);
+            ButterKnife.inject(this, view);
         }
     }
 

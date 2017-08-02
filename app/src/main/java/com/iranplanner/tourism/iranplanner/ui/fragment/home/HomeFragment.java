@@ -230,7 +230,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 break;
             case R.id.TypeHotelHolder:
                 if (SelectedType != null && SelectedType.equals("city") && selectId != null) {
-                    reservationPresenter.getLodgingList("list", selectId, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+                    reservationPresenter.getLodgingList("list",selectId ,"20","0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
 
                 } else {
                     openCustomSearchDialog(Constants.homeHotel);
@@ -338,11 +338,12 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         Intent intent = new Intent(getContext(), ReservationHotelListActivity.class);
         intent.putExtra("resultLodgings", (Serializable) resultLodgings);
         long time = System.currentTimeMillis();
-
         Date startOfTravel = new Date(time);
+        intent.putExtra("nextOffset", resultLodgingList.getStatistics().getOffsetNext().toString());
 
         intent.putExtra("startOfTravel", startOfTravel);
-        intent.putExtra("durationTravel", 1);
+        intent.putExtra("durationTravel", 3);
+
         startActivity(intent);
 
     }
@@ -583,7 +584,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
     private void getHotelResults(String destination, String selectId) {
         if (destination .equals("city")) {
-            reservationPresenter.getLodgingList("list", selectId, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+            reservationPresenter.getLodgingList("list", selectId,"20","0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
         } else {
             Toast.makeText(getContext(), "شهر انتخاب شود", Toast.LENGTH_LONG).show();
         }

@@ -8,17 +8,18 @@
     android:paddingRight="@dimen/padding_short">
 
     <TextView
+        android:id="@+id/txtAlertTitle"
         style="@style/StandardText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
 
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="@dimen/margin_short"
         android:paddingRight="@dimen/margin_standard"
         android:paddingTop="@dimen/padding_standard"
-        android:id="@+id/txtAlertTitle"
         android:text="مدت زمان اقامت "
         android:textColor="@color/grey" />
+
     <com.coinpany.core.android.widget.CDivider
         android:layout_width="match_parent"
         android:layout_height="1dp" />

@@ -20,5 +20,6 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="radius_corner">5dp</dimen>
+    <dimen name="buttonBottom">60dp</dimen>
 
 </resources>

@@ -10,22 +10,22 @@ public class LodgingRoomBed implements Serializable {
 
     @SerializedName("room_bed_id")
     @Expose
-    private Integer roomBedId;
+    private String roomBedId;
     @SerializedName("room_bed_name")
     @Expose
     private String roomBedName;
     @SerializedName("room_bed_count")
     @Expose
-    private Integer roomBedCount;
+    private String roomBedCount;
     @SerializedName("room_id")
     @Expose
-    private Integer roomId;
+    private String roomId;
 
-    public Integer getRoomBedId() {
+    public String getRoomBedId() {
         return roomBedId;
     }
 
-    public void setRoomBedId(Integer roomBedId) {
+    public void setRoomBedId(String roomBedId) {
         this.roomBedId = roomBedId;
     }
 
@@ -37,19 +37,19 @@ public class LodgingRoomBed implements Serializable {
         this.roomBedName = roomBedName;
     }
 
-    public Integer getRoomBedCount() {
+    public String getRoomBedCount() {
         return roomBedCount;
     }
 
-    public void setRoomBedCount(Integer roomBedCount) {
+    public void setRoomBedCount(String roomBedCount) {
         this.roomBedCount = roomBedCount;
     }
 
-    public Integer getRoomId() {
+    public String getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(Integer roomId) {
+    public void setRoomId(String roomId) {
         this.roomId = roomId;
     }
 

@@ -115,6 +115,7 @@ public class Utils {
     public static String getSimpleDate(Date date) {
         PersianCalendar calendar = new PersianCalendar(date.getTime());
         return persianNumbers(calendar.getPersianLongDate());
+
     }
 
     public static String getSimpleDateMilli(Long date) {

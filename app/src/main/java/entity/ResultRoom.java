@@ -6,47 +6,65 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResultRoom implements Serializable{
+public class ResultRoom implements Serializable {
 
     @SerializedName("room_title")
     @Expose
     private String roomTitle;
     @SerializedName("room_id")
     @Expose
-    private Integer roomId;
+    private String roomId;
     @SerializedName("room_language")
     @Expose
     private String roomLanguage;
     @SerializedName("room_lodging_id")
     @Expose
-    private Integer roomLodgingId;
+    private String roomLodgingId;
     @SerializedName("room_area")
     @Expose
-    private Object roomArea;
+    private String roomArea;
     @SerializedName("room_capacity_adult")
     @Expose
-    private Integer roomCapacityAdult;
+    private String roomCapacityAdult;
     @SerializedName("room_capacity_children")
     @Expose
-    private Object roomCapacityChildren;
+    private String roomCapacityChildren;
     @SerializedName("room_capacity_extra")
     @Expose
-    private int roomCapacityExtra;
+    private String roomCapacityExtra;
     @SerializedName("room_type_id")
     @Expose
-    private Integer roomTypeId;
+    private String roomTypeId;
     @SerializedName("room_type_name")
     @Expose
     private String roomTypeName;
     @SerializedName("room_price")
     @Expose
-    private Integer roomPrice;
+    private String roomPrice;
+    @SerializedName("room_price_promotion")
+    @Expose
+    private String roomPricePromotion;
     @SerializedName("room_price_foreign")
     @Expose
-    private Integer roomPriceForeign;
+    private String roomPriceForeign;
+    @SerializedName("room_price_ad_people")
+    @Expose
+    private String roomPriceAdPeople;
+    @SerializedName("room_price_difference")
+    @Expose
+    private String roomPriceDifference;
+    @SerializedName("room_price_difference_percent")
+    @Expose
+    private String roomPriceDifferencePercent;
+    @SerializedName("room_price_halfboard_in")
+    @Expose
+    private String roomPriceHalfboardIn;
+    @SerializedName("room_price_halfboard_out")
+    @Expose
+    private String roomPriceHalfboardOut;
     @SerializedName("room_price_quantity")
     @Expose
-    private Integer roomPriceQuantity;
+    private String roomPriceQuantity;
     @SerializedName("lodging_room_bed")
     @Expose
     private List<LodgingRoomBed> lodgingRoomBed = null;
@@ -55,7 +73,7 @@ public class ResultRoom implements Serializable{
     private List<LodgingRoomFacility> lodgingRoomFacility = null;
     @SerializedName("lodging_room_availability")
     @Expose
-    private List<Object> lodgingRoomAvailability = null;
+    private List<LodgingRoomAvailability> lodgingRoomAvailability = null;
     @SerializedName("lodging_room_price")
     @Expose
     private String lodgingRoomPrice;
@@ -68,11 +86,11 @@ public class ResultRoom implements Serializable{
         this.roomTitle = roomTitle;
     }
 
-    public Integer getRoomId() {
+    public String getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(Integer roomId) {
+    public void setRoomId(String roomId) {
         this.roomId = roomId;
     }
 
@@ -84,51 +102,51 @@ public class ResultRoom implements Serializable{
         this.roomLanguage = roomLanguage;
     }
 
-    public Integer getRoomLodgingId() {
+    public String getRoomLodgingId() {
         return roomLodgingId;
     }
 
-    public void setRoomLodgingId(Integer roomLodgingId) {
+    public void setRoomLodgingId(String roomLodgingId) {
         this.roomLodgingId = roomLodgingId;
     }
 
-    public Object getRoomArea() {
+    public String getRoomArea() {
         return roomArea;
     }
 
-    public void setRoomArea(Object roomArea) {
+    public void setRoomArea(String roomArea) {
         this.roomArea = roomArea;
     }
 
-    public Integer getRoomCapacityAdult() {
+    public String getRoomCapacityAdult() {
         return roomCapacityAdult;
     }
 
-    public void setRoomCapacityAdult(Integer roomCapacityAdult) {
+    public void setRoomCapacityAdult(String roomCapacityAdult) {
         this.roomCapacityAdult = roomCapacityAdult;
     }
 
-    public Object getRoomCapacityChildren() {
+    public String getRoomCapacityChildren() {
         return roomCapacityChildren;
     }
 
-    public void setRoomCapacityChildren(Object roomCapacityChildren) {
+    public void setRoomCapacityChildren(String roomCapacityChildren) {
         this.roomCapacityChildren = roomCapacityChildren;
     }
 
-    public Object getRoomCapacityExtra() {
+    public String getRoomCapacityExtra() {
         return roomCapacityExtra;
     }
 
-    public void setRoomCapacityExtra(int roomCapacityExtra) {
+    public void setRoomCapacityExtra(String roomCapacityExtra) {
         this.roomCapacityExtra = roomCapacityExtra;
     }
 
-    public Integer getRoomTypeId() {
+    public String getRoomTypeId() {
         return roomTypeId;
     }
 
-    public void setRoomTypeId(Integer roomTypeId) {
+    public void setRoomTypeId(String roomTypeId) {
         this.roomTypeId = roomTypeId;
     }
 
@@ -140,27 +158,75 @@ public class ResultRoom implements Serializable{
         this.roomTypeName = roomTypeName;
     }
 
-    public Integer getRoomPrice() {
+    public String getRoomPrice() {
         return roomPrice;
     }
 
-    public void setRoomPrice(Integer roomPrice) {
+    public void setRoomPrice(String roomPrice) {
         this.roomPrice = roomPrice;
     }
 
-    public Integer getRoomPriceForeign() {
+    public String getRoomPricePromotion() {
+        return roomPricePromotion;
+    }
+
+    public void setRoomPricePromotion(String roomPricePromotion) {
+        this.roomPricePromotion = roomPricePromotion;
+    }
+
+    public String getRoomPriceForeign() {
         return roomPriceForeign;
     }
 
-    public void setRoomPriceForeign(Integer roomPriceForeign) {
+    public void setRoomPriceForeign(String roomPriceForeign) {
         this.roomPriceForeign = roomPriceForeign;
     }
 
-    public Integer getRoomPriceQuantity() {
+    public String getRoomPriceAdPeople() {
+        return roomPriceAdPeople;
+    }
+
+    public void setRoomPriceAdPeople(String roomPriceAdPeople) {
+        this.roomPriceAdPeople = roomPriceAdPeople;
+    }
+
+    public String getRoomPriceDifference() {
+        return roomPriceDifference;
+    }
+
+    public void setRoomPriceDifference(String roomPriceDifference) {
+        this.roomPriceDifference = roomPriceDifference;
+    }
+
+    public String getRoomPriceDifferencePercent() {
+        return roomPriceDifferencePercent;
+    }
+
+    public void setRoomPriceDifferencePercent(String roomPriceDifferencePercent) {
+        this.roomPriceDifferencePercent = roomPriceDifferencePercent;
+    }
+
+    public String getRoomPriceHalfboardIn() {
+        return roomPriceHalfboardIn;
+    }
+
+    public void setRoomPriceHalfboardIn(String roomPriceHalfboardIn) {
+        this.roomPriceHalfboardIn = roomPriceHalfboardIn;
+    }
+
+    public String getRoomPriceHalfboardOut() {
+        return roomPriceHalfboardOut;
+    }
+
+    public void setRoomPriceHalfboardOut(String roomPriceHalfboardOut) {
+        this.roomPriceHalfboardOut = roomPriceHalfboardOut;
+    }
+
+    public String getRoomPriceQuantity() {
         return roomPriceQuantity;
     }
 
-    public void setRoomPriceQuantity(Integer roomPriceQuantity) {
+    public void setRoomPriceQuantity(String roomPriceQuantity) {
         this.roomPriceQuantity = roomPriceQuantity;
     }
 
@@ -180,11 +246,11 @@ public class ResultRoom implements Serializable{
         this.lodgingRoomFacility = lodgingRoomFacility;
     }
 
-    public List<Object> getLodgingRoomAvailability() {
+    public List<LodgingRoomAvailability> getLodgingRoomAvailability() {
         return lodgingRoomAvailability;
     }
 
-    public void setLodgingRoomAvailability(List<Object> lodgingRoomAvailability) {
+    public void setLodgingRoomAvailability(List<LodgingRoomAvailability> lodgingRoomAvailability) {
         this.lodgingRoomAvailability = lodgingRoomAvailability;
     }
 

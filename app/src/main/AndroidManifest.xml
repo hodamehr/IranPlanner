@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.iranplanner.tourism.iranplanner">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,14 +14,20 @@
 
     <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE"/> -->
     <application
+
         android:name=".di.model.App"
         android:allowBackup="true"
         android:fullBackupContent="true"
+        android:hardwareAccelerated="true"
+
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:screenOrientation="portrait"
-        android:theme="@style/AppTheme">
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
+        tools:replace="allowBackup,supportsRtl">
         <activity
             android:name=".ui.activity.SplashActivity"
             android:label="@string/app_name"
@@ -34,11 +41,11 @@
         <activity
             android:name=".ui.activity.login.LoginActivity"
             android:screenOrientation="portrait">
-           <!-- <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!-- <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>-->
         </activity>
         <activity
             android:name=".ui.activity.mainActivity.MainActivity"
@@ -101,7 +108,9 @@
         <activity
             android:name=".ui.activity.showRoom.ShowRoomActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".ui.activity.ActivityReservationRegisterRoom"
+            android:screenOrientation="portrait" />
         <!-- Firebase Notifications -->
         <service android:name="server.MyFirebaseMessagingService">
             <intent-filter>

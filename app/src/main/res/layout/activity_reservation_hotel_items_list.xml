@@ -31,7 +31,7 @@
                         android:id="@+id/imageHolder"
                         android:layout_width="100dp"
                         android:layout_height="120dp"
-                        android:layout_alignParentRight="true">
+                        android:layout_alignParentStart="true">
 
                         <ProgressBar
                             android:id="@+id/imageLoading"
@@ -41,35 +41,35 @@
                             android:translationZ="1dp" />
 
                         <!--<ImageView-->
-                            <!--android:layout_width="50dp"-->
-                            <!--android:layout_height="25dp"-->
-                            <!--android:layout_alignRight="@+id/imgItineraryListMore"-->
-                            <!--android:layout_marginTop="@dimen/padding_standard"-->
-                            <!--android:src="@color/dark_red"-->
-                            <!--android:translationZ="1dp"-->
-                             <!--/>-->
+                        <!--android:layout_width="50dp"-->
+                        <!--android:layout_height="25dp"-->
+                        <!--android:layout_alignStart="@+id/imgItineraryListMore"-->
+                        <!--android:layout_marginTop="@dimen/padding_standard"-->
+                        <!--android:src="@color/dark_red"-->
+                        <!--android:translationZ="1dp"-->
+                        <!--/>-->
 
                         <TextView
                             android:id="@+id/txtShowPercent"
                             style="@style/tagText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignRight="@+id/imgItineraryListMore"
+                            android:layout_alignStart="@+id/imgItineraryListMore"
                             android:layout_marginTop="@dimen/padding_standard"
-                            android:paddingLeft="@dimen/margin_xshort"
-                            android:paddingRight="@dimen/margin_xshort"
-                            android:translationZ="2dp"
-                            android:text="تخفیف تا 33%"
                             android:background="@color/dark_red"
+                            android:paddingEnd="@dimen/margin_xshort"
+                            android:paddingStart="@dimen/margin_xshort"
+                            android:text="تخفیف تا 33%"
+                            android:translationZ="2dp"
 
-                           />
+                            />
 
                         <ImageView
                             android:id="@+id/imgItineraryListMore"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginBottom="@dimen/margin_short"
-                            android:layout_marginRight="@dimen/margin_short"
+                            android:layout_marginStart="@dimen/margin_short"
                             android:layout_marginTop="@dimen/margin_short"
                             android:scaleType="center"
 
@@ -80,11 +80,11 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginRight="@dimen/margin_short"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/margin_short"
                         android:layout_marginTop="@dimen/padding_standard"
-                        android:layout_toLeftOf="@+id/imageHolder"
-                        android:gravity="right">
+                        android:layout_toEndOf="@+id/imageHolder"
+                        android:gravity="start">
 
 
                         <TextView
@@ -92,10 +92,10 @@
                             style="@style/StandardTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="@dimen/margin_short"
                             android:maxLines="1"
-                            android:text="هتل آپارتمان رازی"
-                            android:layout_marginRight="@dimen/margin_short"/>
+                            android:text="هتل آپارتمان رازی" />
 
 
                         <RelativeLayout
@@ -103,16 +103,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/starHolder"
-                            android:layout_marginRight="@dimen/margin_short">
+                            android:layout_marginStart="@dimen/margin_short">
 
                             <ImageView
                                 android:id="@+id/imgType"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
                                 android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_hotel"
-                                android:layout_centerVertical="true"/>
+                                android:src="@mipmap/ic_hotel" />
 
                             <TextView
                                 android:id="@+id/txtType"
@@ -120,9 +120,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:layout_toLeftOf="@+id/imgType"
-                                android:text="نوع مرکز اقامت"
-                                android:layout_marginRight="@dimen/margin_short"/>
+                                android:layout_marginStart="@dimen/margin_short"
+                                android:layout_toEndOf="@+id/imgType"
+                                android:text="نوع مرکز اقامت" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -130,7 +130,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/infoReserveHolder"
-                            android:layout_marginRight="@dimen/margin_short">
+                            android:layout_marginStart="@dimen/margin_short">
 
 
                             <TextView
@@ -138,7 +138,7 @@
                                 style="@style/SmallText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentStart="true"
                                 android:layout_centerVertical="true"
                                 android:text="شروع قیمت از"
                                 android:textColor="@color/green" />
@@ -146,17 +146,17 @@
 
                         <RelativeLayout
                             android:id="@+id/starHolder"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/txtHotelName"
-                            android:layout_marginRight="@dimen/margin_short">
+                            android:layout_marginStart="@dimen/margin_short">
 
                             <ImageView
                                 android:id="@+id/imgStar1"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginLeft="@dimen/margin_xshort"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginEnd="@dimen/margin_xshort"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_stars"
                                 android:visibility="invisible" />
@@ -165,8 +165,8 @@
                                 android:id="@+id/imgStar2"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginLeft="@dimen/margin_xshort"
-                                android:layout_toLeftOf="@+id/imgStar1"
+                                android:layout_marginEnd="@dimen/margin_xshort"
+                                android:layout_toEndOf="@+id/imgStar1"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_stars"
                                 android:visibility="invisible" />
@@ -175,8 +175,8 @@
                                 android:id="@+id/imgStar3"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginLeft="@dimen/margin_xshort"
-                                android:layout_toLeftOf="@+id/imgStar2"
+                                android:layout_marginEnd="@dimen/margin_xshort"
+                                android:layout_toEndOf="@+id/imgStar2"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_stars"
                                 android:visibility="invisible" />
@@ -185,8 +185,8 @@
                                 android:id="@+id/imgStar4"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginLeft="@dimen/margin_xshort"
-                                android:layout_toLeftOf="@+id/imgStar3"
+                                android:layout_marginEnd="@dimen/margin_xshort"
+                                android:layout_toEndOf="@+id/imgStar3"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_stars"
                                 android:visibility="invisible" />
@@ -195,8 +195,8 @@
                                 android:id="@+id/imgStar5"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginLeft="@dimen/padding_short"
-                                android:layout_toLeftOf="@+id/imgStar4"
+                                android:layout_marginEnd="@dimen/padding_short"
+                                android:layout_toEndOf="@+id/imgStar4"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_stars"
                                 android:visibility="invisible" />
@@ -216,7 +216,7 @@
                                  android:layout_width="wrap_content"
                                  android:layout_height="wrap_content"
                                  android:layout_alignParentTop="true"
-                                 android:layout_toLeftOf="@+id/txtPrice"
+                                 android:layout_toEndOf="@+id/txtPrice"
                                  android:layout_toStartOf="@+id/txtPrice"
                                  android:text="dfd"/>-->
                         </RelativeLayout>
@@ -243,7 +243,7 @@
                             style="@style/SmallText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentStart="true"
                             android:text="شروع قیمت از"
                             android:textColor="@color/grey"
                             android:visibility="gone" />

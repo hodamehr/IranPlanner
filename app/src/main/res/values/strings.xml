@@ -107,4 +107,10 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_scrolling_activityttest">ScrollingActivityttest</string>
+
+        <string-array name="nationality">
+            <item>ایرانی</item>
+            <item>خارجی</item>
+
+        </string-array>
 </resources>

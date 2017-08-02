@@ -1,10 +1,16 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.hotelDetails;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -13,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +40,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.ui.activity.MapFullActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.showRoom.ShowRoomActivity;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
+import android.support.v7.app.AppCompatActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -60,12 +69,12 @@ import server.getJsonInterface;
 import tools.Util;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
+import android.support.v7.widget.Toolbar;
 /**
  * Created by h.vahidimehr on 28/02/2017.
  */
 
-public class ReservationHotelDetailActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
+public class ReservationHotelDetailActivity extends ActionBarActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private GoogleMap mMap;
     //    ResultItineraryAttraction attraction;
@@ -88,13 +97,21 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
     Date startOfTravel;
     int durationTravel;
     Button roomReservationBtn;
+    Toolbar toolbar;
 //    List<ResultWidget> resultWidget;
-
+TabLayout tabLayout;
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+    private void setupTablayout(){
 
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
+
+    }
     private void findView() {
 //        setContentView(R.layout.activity_reservation_hotel_detail);
         setContentView(R.layout.fragment_reservation);
@@ -142,7 +159,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         nowVisitedImg = (ImageView) findViewById(R.id.nowVisitedImg);
         wishImg = (ImageView) findViewById(R.id.wishImg);
         triangleShowAttraction = (ImageView) findViewById(R.id.triangleShowAttraction);
-
+        setupTablayout();
     }
 
     private void overrideFont() {
@@ -217,7 +234,11 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         }
         return myData.substring(0, position) + "...";
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -225,6 +246,7 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
         findView();
         overrideFont();
         Intent intent = getIntent();
+
         Bundle bundle = intent.getExtras();
         resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
 //        startOfTravel = (Date) bundle.getSerializable("startOfTravel");
@@ -236,6 +258,25 @@ public class ReservationHotelDetailActivity extends FragmentActivity implements 
 //        txtDuration.setText(Utils.persianNumbers(String.valueOf(durationTravel)) + " شب");
         roomReservationBtn.setOnClickListener(this);
 
+        toolbar= (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        CollapsingToolbarLayout collapsingToolbarLayout= (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        toolbar.setTitle(resultLodgingHotelDetail.getLodgingName());
+//        getSupportActionBar().setLogo(R.drawable.ic_google);
+//getSupportActionBar().getSubtitle();
+//        Activity test = (Activity) this;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().getSubtitle();
+        getSupportActionBar().setCustomView(R.layout.toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
+        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // back button pressed
+                Log.e("dddddd","ddddddddd");
+            }
+        });
 //        if(resultWidget!=null){
 //            setInterestResponce(resultWidget);
 //        }

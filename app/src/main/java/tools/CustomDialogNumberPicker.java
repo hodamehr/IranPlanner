@@ -87,11 +87,17 @@ public class CustomDialogNumberPicker extends Dialog implements
     public Dialog d;
     public TextView yes, no;
     NumberPicker dayNumberPicker;
+    int maxValue,minValue;
+    String title;
+    int value;
 
-    public CustomDialogNumberPicker(Activity a) {
+    public CustomDialogNumberPicker(Activity a,int maxValue, int minValue, String title) {
         super(a);
         // TODO Auto-generated constructor stub
         this.c = a;
+        this.maxValue=maxValue;
+        this.minValue=minValue;
+        this.title=title;
     }
 
     @Override
@@ -102,19 +108,22 @@ public class CustomDialogNumberPicker extends Dialog implements
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_number_duration);
         dayNumberPicker = (NumberPicker) findViewById(R.id.dayNumberPicker);
-        dayNumberPicker.setMaxValue(10);
-        dayNumberPicker.setMinValue(1);
-        dayNumberPicker.setValue(3);
+        TextView txtAlertTitle = (TextView) findViewById(R.id.txtAlertTitle);
+        txtAlertTitle.setText(title);
+        dayNumberPicker.setMaxValue(maxValue);
+        dayNumberPicker.setMinValue(minValue);
+        dayNumberPicker.setValue(minValue);
         setDividerColor(dayNumberPicker , ResourcesCompat.getColor(c.getResources(), R.color.greyLight, null));
         setNumberPickerTextColor(dayNumberPicker ,  ResourcesCompat.getColor(c.getResources(), R.color.dark_blue, null));
         yes = (TextView) findViewById(R.id.txtOk);
         no = (TextView) findViewById(R.id.txtNo);
         yes.setOnClickListener(this);
         no.setOnClickListener(this);
+        value=1;
         dayNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-
+               value= numberPicker.getValue();
             }
         });
     }
@@ -123,7 +132,9 @@ public class CustomDialogNumberPicker extends Dialog implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txtOk:
-//                persianDatePickr.getDisplayDate();
+                if( dialogNumberPick != null ){
+                    dialogNumberPick.finish(value);
+                }
                 dismiss();
 //                break;
                 break;
@@ -134,5 +145,13 @@ public class CustomDialogNumberPicker extends Dialog implements
                 break;
         }
         dismiss();
+    }
+    OnDialogNumberPick dialogNumberPick;
+    public interface OnDialogNumberPick{
+        void finish(int result);
+    }
+
+    public void setDialogResult(OnDialogNumberPick dialogNumberPick){
+        this.dialogNumberPick = dialogNumberPick;
     }
 }

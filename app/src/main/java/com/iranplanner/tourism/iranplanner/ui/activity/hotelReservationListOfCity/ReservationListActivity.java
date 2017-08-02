@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,7 +89,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
                     @Override
                     public void onClick(View v) {
                         Log.e("reserve", "click");
-                        reservationPresenter.getLodgingList("list", itineraryData.getItineraryLodgingCity().get(position + 1).getCityId(), Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                        reservationPresenter.getLodgingList("list", itineraryData.getItineraryLodgingCity().get(position + 1).getCityId(),"20","0", Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
                     }
                 });
 

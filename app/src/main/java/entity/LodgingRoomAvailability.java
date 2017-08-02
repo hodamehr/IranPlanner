@@ -5,16 +5,15 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 public class LodgingRoomAvailability implements Serializable {
 
     @SerializedName("room_date_no")
     @Expose
-    private Integer roomDateNo;
+    private String roomDateNo;
     @SerializedName("room_date_unix")
     @Expose
-    private BigInteger roomDateUnix;
+    private String roomDateUnix;
     @SerializedName("room_date_date")
     @Expose
     private String roomDateDate;
@@ -23,24 +22,24 @@ public class LodgingRoomAvailability implements Serializable {
     private String roomDateName;
     @SerializedName("room_date_price")
     @Expose
-    private Integer roomDatePrice;
+    private String roomDatePrice;
     @SerializedName("room_date_status")
     @Expose
     private String roomDateStatus;
 
-    public Integer getRoomDateNo() {
+    public String getRoomDateNo() {
         return roomDateNo;
     }
 
-    public void setRoomDateNo(Integer roomDateNo) {
+    public void setRoomDateNo(String roomDateNo) {
         this.roomDateNo = roomDateNo;
     }
 
-    public BigInteger getRoomDateUnix() {
+    public String getRoomDateUnix() {
         return roomDateUnix;
     }
 
-    public void setRoomDateUnix(BigInteger roomDateUnix) {
+    public void setRoomDateUnix(String roomDateUnix) {
         this.roomDateUnix = roomDateUnix;
     }
 
@@ -60,11 +59,11 @@ public class LodgingRoomAvailability implements Serializable {
         this.roomDateName = roomDateName;
     }
 
-    public Integer getRoomDatePrice() {
+    public String getRoomDatePrice() {
         return roomDatePrice;
     }
 
-    public void setRoomDatePrice(Integer roomDatePrice) {
+    public void setRoomDatePrice(String roomDatePrice) {
         this.roomDatePrice = roomDatePrice;
     }
 
