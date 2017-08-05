@@ -16,7 +16,7 @@
         android:paddingRight="@dimen/margin_standard"
         android:paddingTop="@dimen/padding_standard"
         android:id="@+id/txtAlertTitle"
-        android:text="fddddddddddddddd"
+        android:text="اخطار"
         android:textColor="@color/pink" />
 
 
@@ -54,8 +54,8 @@
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:padding="@dimen/padding_standard"
-            android:text="خیر"
-            android:textColor="@color/pink" />
+            android:text="کنسل"
+        />
 
         <com.coinpany.core.android.widget.CDivider
             android:layout_width="1dp"
@@ -72,8 +72,8 @@
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:padding="@dimen/padding_standard"
-            android:text="بله"
-            android:textColor="@color/pink" />
+            android:text="دسترسی به اینترنت"
+          />
     </LinearLayout>
 
 

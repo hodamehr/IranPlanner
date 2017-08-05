@@ -13,7 +13,7 @@ public abstract class HomeContract extends Presenter<HomeContract.View> {
 
         void showError(String message);
         void showComplete();
-        void getHomeResult(GetHomeResult GetHomeResult);
+        void ShowHomeResult(GetHomeResult GetHomeResult);
         void showProgress();
         void dismissProgress();
 

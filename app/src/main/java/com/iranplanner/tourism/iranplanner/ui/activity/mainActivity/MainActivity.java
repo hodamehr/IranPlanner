@@ -41,10 +41,12 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingFragment
 //import com.twitter.sdk.android.core.TwitterCore;
 //import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
+import entity.GetHomeResult;
 import tools.Util;
 
 public class MainActivity extends StandardActivity implements ForceUpdateChecker.OnUpdateNeededListener {
     private StandardFragment currentTab;
+    GetHomeResult homeResult;
 //
 //    private RtlToolbar mToolbar;
 //    private DrawerLayout mDrawerLayout;
@@ -70,57 +72,10 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-        buildVersion = Build.VERSION.SDK_INT;
-
-        Log.i("hi", String.valueOf(buildVersion));
-
-        if (buildVersion > 20) {
-
-//            toolbarToggle.setBackgroundResource(R.drawable.ripple);
-
-        }
-
-//        toolbarTitle = (TextView) findViewById(R.id.toolbarTitle);
-//        toolbarTitle = (TextView) findViewById(R.id.toolbarTitle);
-//        toolbarTitle.setTypeface(YEKAN);
-
-
-        ///
-
-//        if (Util.getUseRIdFromShareprefrence(getApplicationContext()) == null || Util.getUseRIdFromShareprefrence(getApplicationContext()) == "") {
-//            Intent intent = new Intent(this, LoginActivity.class);
-//            finish();
-//            startActivity(intent);
-//        } else {
-
-
-//        mToolbar = (RtlToolbar) findViewById(R.id.toolbar);
-//
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//
-//        mToolbar.setOnMenuItemClickListener(this);
-//
-//        initDrawer();
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(mDrawerLayout, EMAIL, Snackbar.LENGTH_LONG)
-//                        .setAction(R.string.send,
-//                                new View.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(View view) {
-//                                        sendEmail();
-//                                    }
-//                                })
-//                        .show();
-//            }
-//        });
-        //--------------
+        Bundle extras = getIntent().getExtras();
+        homeResult = (GetHomeResult) extras.getSerializable("HomeResult");
         ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
-        TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this);
+        TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,homeResult);
         if (viewPager != null)
             viewPager.setAdapter(pagerAdapter);
 
@@ -135,11 +90,11 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
             }
 
         }
-        Bundle extras = getIntent().getExtras();
+
         int position = 2;
-        if (extras != null) {
-            position = extras.getInt("viewpager_position");
-        }
+//        if (extras != null) {
+//            position = extras.getInt("viewpager_position");
+//        }
         mainTabLayout.getTabAt(position).getCustomView().setSelected(true);
         currentTab = (StandardFragment) pagerAdapter.getItem(position);
         viewPager.setCurrentItem(position);
@@ -264,59 +219,8 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     }
 
 
-    ///
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
-        @Override
-        public void onItemClick
-                (AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
-    }
 
-    private void selectItem(int position) {
 
-        Fragment fragment = null;
 
-        switch (position) {
-            case 0:
-
-                fragment = new FirstItem();
-                break;
-            case 1:
-                fragment = new FirstItem();
-                break;
-            case 2:
-                fragment = new FirstItem();
-                break;
-
-            default:
-                break;
-        }
-
-        if (fragment != null) {
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
-//
-//            mDrawerList.setItemChecked(position, true);
-//            mDrawerList.setSelection(position);
-//            setTitle(mNavigationDrawerItemTitles[position]);
-//            mDrawerLayout.closeDrawer(GravityCompat.END);
-
-        } else {
-            Log.e("MainActivity", "Error in creating fragment");
-        }
-    }
-
-//    @Override
-//    public void setTitle(CharSequence title) {
-//        mTitle = title;
-//        toolbarTitle.setText(mTitle);
-//    }
-
-//    void setupToolbar() {
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//    }
 }

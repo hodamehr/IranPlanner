@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -27,14 +26,16 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.di.model.App;
+import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.register.RegisterActivity;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import entity.GetHomeResult;
 import entity.GoogleLoginReqSend;
 import entity.LoginReqSend;
 import entity.LoginResult;
@@ -46,7 +47,7 @@ import tools.Util;
  * Created by h.vahidimehr on 04/02/2017.
  */
 
-public class LoginActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoginContract.View {
+public class LoginActivity extends StandardActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoginContract.View {
 
     EditText _emailText;
     EditText _passwordText;
@@ -56,7 +57,7 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
     LinearLayout accountInputHolder, signupInputHolder;
     int counter = 0;
     boolean block = false;
-
+    GetHomeResult HomeResult;
 
     //==========google signin
     private static final String TAG = "GoogleActivity";
@@ -84,6 +85,9 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
         super.onCreate(savedInstanceState);
 //        getApplicationContext().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        Bundle extras = getIntent().getExtras();
+         HomeResult = (GetHomeResult) extras.getSerializable("HomeResult");
 
 
         ButterKnife.inject(this);
@@ -212,9 +216,15 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
             });
         } else {
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("HomeResult", HomeResult);
             finish();
             startActivity(intent);
         }
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.login;
     }
 
     private void cleaner() {
@@ -285,6 +295,7 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.C
 //        setLoginName();
         loginCommand.setVisibility(View.GONE);
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("HomeResult", HomeResult);
         startActivity(intent);
         finish();
     }

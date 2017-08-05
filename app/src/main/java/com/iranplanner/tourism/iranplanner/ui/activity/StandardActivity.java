@@ -138,6 +138,15 @@ public abstract class StandardActivity extends AppCompatActivity {
                 Resources res = app.getBaseContext().getResources();
                 res.updateConfiguration(config, res.getDisplayMetrics());
             }
+            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                Configuration configurationw = getResources().getConfiguration();
+                if (/*isSlectedLanguageRTL*/true) {
+                    configuration.setLayoutDirection(new Locale("fa"));
+                } else {
+                    configuration.setLayoutDirection(Locale.ENGLISH);
+                }
+                getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
+            }
         }
     }
 

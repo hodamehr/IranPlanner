@@ -1,14 +1,12 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.hotelDetails;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -19,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +26,6 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.coinpany.core.android.widget.CTouchyWebView;
-import com.coinpany.core.android.widget.Utils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -40,11 +36,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.ui.activity.MapFullActivity;
-import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.showRoom.ShowRoomActivity;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
-import android.support.v7.app.AppCompatActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -69,7 +63,7 @@ import server.getJsonInterface;
 import tools.Util;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-import android.support.v7.widget.Toolbar;
+
 /**
  * Created by h.vahidimehr on 28/02/2017.
  */
@@ -98,13 +92,15 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
     int durationTravel;
     Button roomReservationBtn;
     Toolbar toolbar;
-//    List<ResultWidget> resultWidget;
-TabLayout tabLayout;
+    //    List<ResultWidget> resultWidget;
+    TabLayout tabLayout;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-    private void setupTablayout(){
+
+    private void setupTablayout() {
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -112,6 +108,7 @@ TabLayout tabLayout;
         tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
 
     }
+
     private void findView() {
 //        setContentView(R.layout.activity_reservation_hotel_detail);
         setContentView(R.layout.fragment_reservation);
@@ -234,11 +231,13 @@ TabLayout tabLayout;
         }
         return myData.substring(0, position) + "...";
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -252,14 +251,14 @@ TabLayout tabLayout;
 //        startOfTravel = (Date) bundle.getSerializable("startOfTravel");
 //        durationTravel = (int) bundle.getSerializable("durationTravel");
         txtHotelName.setText(resultLodgingHotelDetail.getLodgingName());
-        txtHotelType.setText("نوع مرکز اقامتی: "+resultLodgingHotelDetail.getLodgingTypeTitle());
+        txtHotelType.setText("نوع مرکز اقامتی: " + resultLodgingHotelDetail.getLodgingTypeTitle());
         txtAddress.setText(resultLodgingHotelDetail.getLodgingAddress());
 //        txtDate.setText(Utils.getSimpleDate(startOfTravel));
 //        txtDuration.setText(Utils.persianNumbers(String.valueOf(durationTravel)) + " شب");
         roomReservationBtn.setOnClickListener(this);
 
-        toolbar= (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
-        CollapsingToolbarLayout collapsingToolbarLayout= (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolbar.setTitle(resultLodgingHotelDetail.getLodgingName());
 //        getSupportActionBar().setLogo(R.drawable.ic_google);
 //getSupportActionBar().getSubtitle();
@@ -274,7 +273,7 @@ TabLayout tabLayout;
             @Override
             public void onClick(View v) {
                 // back button pressed
-                Log.e("dddddd","ddddddddd");
+                Log.e("dddddd", "ddddddddd");
             }
         });
 //        if(resultWidget!=null){

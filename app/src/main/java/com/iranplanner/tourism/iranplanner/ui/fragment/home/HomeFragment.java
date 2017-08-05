@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -91,7 +92,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     String selectId, SelectedType;
     protected ImageView toolbarToggle;
     protected ImageView toolbarToggleLeft;
-
+    GetHomeResult homeResult;
     protected static int buildVersion;
     @Inject
     HomePresenter homePresenter;
@@ -117,7 +118,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     RelativeLayout frameLayout;
     LinearLayout featureListHolder;
     private ProgressDialog progressDialog;
-    ImageView imgHome;
+    ImageView imgHome,toolbarBack;
     ClickableViewPager BestHotelViewPager, BestAttractionViewPager;
     ClickableViewPager eventsViewPager;
     CircleIndicator indicator, BestHotelIndicator;
@@ -144,6 +145,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         imgHome = (ImageView) rootView.findViewById(R.id.imgHome);
         card_view_province_list = (LinearLayout) rootView.findViewById(R.id.card_view_province_list);
         txtWhereGo = (TextView) rootView.findViewById(R.id.txtWhereGo);
+        toolbarBack = (ImageView) rootView.findViewById(R.id.toolbarBack);
+        toolbarBack.setVisibility(View.GONE);
         test = (ImageView) rootView.findViewById(R.id.test);
 //        LinearLayout btnShowProvince = (LinearLayout) rootView.findViewById(R.id.btnShowProvince);
 //        BestHotelViewPager = (ClickableViewPager) rootView.findViewById(R.id.BestHotelViewPager);
@@ -195,9 +198,11 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         setupToolbar();
         getfeatureHolderHight();
         showDrawer();
-        getHomeResult("country", "311");
+//        ShowHomeResult("country", "311");
+        ShowHomeResult(homeResult);
         return rootView;
     }
+    Bundle bundle = new Bundle();
 
     private void getfeatureHolderHight() {
         ViewTreeObserver vto = SelectHolder.getViewTreeObserver();
@@ -216,10 +221,21 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         });
     }
 
-    public static HomeFragment newInstance() {
+    public static HomeFragment newInstance(GetHomeResult homeResult) {
         HomeFragment fragment = new HomeFragment();
+        fragment.homeResult=homeResult;
         return fragment;
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final Bundle args = getArguments();
+         homeResult = (GetHomeResult) args.getSerializable("HomeResult");
+
+
+    }
+
 
 
     @Override
@@ -359,16 +375,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     @Override
-    public void getHomeResult(GetHomeResult getHomeResult) {
-//        viewPagerEventsHolder.setVisibility(View.GONE);
-//        hotelsTypeHolder.setVisibility(View.GONE);
-//        viewPagerBestHolder.setVisibility(View.GONE);
-//        attracttionTypeHolder.setVisibility(View.GONE);
-//        bestAttractionHolder.setVisibility(View.GONE);
-//        itineraryHomeHolder.setVisibility(View.GONE);
-//        localFoodHomeHolder.setVisibility(View.GONE);
-//        souvenirHomeHolder.setVisibility(View.GONE);
-//        provinceListHOlder.setVisibility(View.GONE);
+    public void ShowHomeResult(GetHomeResult getHomeResult) {
 
         resultHomes = getHomeResult.getResultHome();
         setNamePicture(resultHomes.get(0).getHomeInfo(), resultHomes.get(0).getHomeImages());
@@ -485,7 +492,10 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void setNamePicture(HomeInfo homeInfo, List<HomeImage> homeImage) {
-        txtWhereGo.setText(homeInfo.getTitle());
+        if(!homeInfo.getId().equals("311")){
+            txtWhereGo.setText(homeInfo.getTitle());
+        }
+
         if (homeImage.get(0).getImgUrl() != null) {
             Util.setImageView(homeImage.get(0).getImgUrl(), getContext(), imgHome);
         }

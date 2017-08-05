@@ -1,6 +1,7 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.mainActivity;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,12 +16,15 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearc
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingFragment;
 
+import entity.GetHomeResult;
+
 /**
  * Created by Hoda on 10/01/2017.
  */
 public class TabPagerAdapter extends FragmentPagerAdapter {
     private Context context;
     public final int PAGE_COUNT = 3;
+    GetHomeResult homeResult;
     private int[] mTabsIcons = {
             R.mipmap.ic_search,
             R.mipmap.ic_profile_grey,
@@ -31,9 +35,10 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     //    StandardFragment
     private final String[] mTabsTitle = {"جستجو", "حساب من","خانه"};
 
-    public TabPagerAdapter(FragmentManager fm, Context context) {
+    public TabPagerAdapter(FragmentManager fm, Context context, GetHomeResult homeResult) {
         super(fm);
         this.context = context;
+        this.homeResult=homeResult;
     }
 
     public View getTabView(int position) {
@@ -58,7 +63,12 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
                 currentTab = SettingFragment.newInstance();
                 return currentTab;
             case 2:
-                currentTab = HomeFragment.newInstance();
+                currentTab = HomeFragment.newInstance(homeResult);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("HomeResult",homeResult);
+
+                currentTab.setArguments(bundle);
+
                 return currentTab;
         }
         return null;
