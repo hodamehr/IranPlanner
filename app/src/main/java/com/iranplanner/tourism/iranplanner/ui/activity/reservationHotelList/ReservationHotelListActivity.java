@@ -74,9 +74,10 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
     @InjectView(R.id.txtDurationHotel)
     TextView txtDurationHotel;
     private String nextOffset;
+    private String todayDate;
 
     private void showDialogNumber() {
-        CustomDialogNumberPicker cdd = new CustomDialogNumberPicker(this, 10, 1, "مدت زمان اقامت");
+        CustomDialogNumberPicker cdd = new CustomDialogNumberPicker(this, 10, 1, "مدت زمان اقامت",null);
         cdd.show();
         cdd.setDialogResult(new CustomDialogNumberPicker.OnDialogNumberPick() {
             @Override
@@ -143,6 +144,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
 
         durationTravel = (int) extras.getSerializable("durationTravel");
         nextOffset = extras.getString("nextOffset");
+        todayDate = extras.getString("todayDate");
 
     }
 
@@ -155,17 +157,18 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .reservationHotelListModule(new ReservationHotelListModule(this, this))
                 .build().injectReservationHotelList(this);
-        getExtras();
-        setUpRecyclerView();
-        setupToolbar();
+
 //
 //        builder = DaggerReservationComponent.builder()
 //                .netComponent(((App) getApplicationContext()).getNetComponent())
 //                .reservationModule(new ReservationModule(this));
 //        builder.build().inject()
+        getExtras();
         txtDurationHotel.setText(Util.persianNumbers(durationTravel+"شب"));
         txtTypeHotel.setText(Utils.getSimpleDate(startOfTravel));
 
+        setUpRecyclerView();
+        setupToolbar();
         toolbarBack.setOnClickListener(this);
         holderDate.setOnClickListener(this);
         typeAttractionHolder.setOnClickListener(this);
@@ -212,6 +215,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
             intent.putExtra("resultLodgingHotelDetail", (Serializable) resultLodgingHotelDetail);
             intent.putExtra("startOfTravel", startOfTravel);
             intent.putExtra("durationTravel", durationTravel);
+            intent.putExtra("todayDate", todayDate);
             startActivity(intent);
         }
     }

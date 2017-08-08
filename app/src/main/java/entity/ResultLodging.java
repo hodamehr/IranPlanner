@@ -8,9 +8,34 @@ import com.google.gson.annotations.SerializedName;
 
 public class ResultLodging implements Serializable {
 
+    @SerializedName("lodging_checkout")
+    @Expose
+    private String lodgingCheckout;
+    @SerializedName("lodging_checkin")
+    @Expose
+    private String lodgingCheckin;
+
+    public String getLodgingCheckout() {
+        return lodgingCheckout;
+    }
+
+    public void setLodgingCheckout(String lodgingCheckout) {
+        this.lodgingCheckout = lodgingCheckout;
+    }
+
+    public String getLodgingCheckin() {
+        return lodgingCheckin;
+    }
+
+    public void setLodgingCheckin(String lodgingCheckin) {
+        this.lodgingCheckin = lodgingCheckin;
+    }
+
     @SerializedName("lodging_id")
     @Expose
     private Integer lodgingId;
+
+
     @SerializedName("lodging_name")
     @Expose
     private String lodgingName;
@@ -64,6 +89,8 @@ public class ResultLodging implements Serializable {
     private List<LodgingRoomPriceDetail> lodgingRoomPriceDetail = null;
     @SerializedName("lodging_room_price_rule_detail")
     @Expose
+
+
     private LodgingRoomPriceRuleDetail lodgingRoomPriceRuleDetail;
 
     public Integer getLodgingId() {

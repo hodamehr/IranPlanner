@@ -76,7 +76,7 @@ public class HomePresenter extends HomeContract {
 
                     @Override
                     public void onNext(GetHomeResult getHomeResult) {
-                        mView.getHomeResult(getHomeResult);
+                        mView.ShowHomeResult(getHomeResult);
                     }
                 });
     }

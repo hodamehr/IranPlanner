@@ -128,6 +128,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         intent.putExtra("resultLodgings", (Serializable) resultLodgings);
         intent.putExtra("startOfTravel", startOfTravel);
         intent.putExtra("durationTravel", durationTravel);
+        intent.putExtra("todayDate", resultLodgingList.getStatistics().getDateNow());
         startActivity(intent);
     }
 

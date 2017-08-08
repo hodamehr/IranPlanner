@@ -64,8 +64,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/margin_xshort"
-                        android:maxLines="1"
-                        android:text="هتل پارس" />
+                        android:maxLines="1" />
 
                     <!--<ImageView
                         android:id="@+id/imgType"
@@ -346,11 +345,15 @@
 
 
                     <RelativeLayout
-                        android:id="@+id/DateCheckHolder"
+                        android:id="@+id/addPerHolderHolder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:translationZ="1dp">
+                        android:translationZ="1dp"
+                        android:background="@drawable/button_corner_grey_stroke"
+                        android:layout_marginEnd="@dimen/margin_xshort"
+                        android:layout_marginStart="@dimen/margin_xshort"
+                        >
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
@@ -360,21 +363,23 @@
                             android:layout_marginStart="@dimen/margin_standard"
                             android:padding="@dimen/margin_short">
 
-                            <Spinner
+                           <!-- <Spinner
                                 android:id="@+id/nationality_spinner"
                                 android:layout_width="fill_parent"
-                                android:layout_height="wrap_content" />
-                            <!--<TextView
-                                android:id="@+id/txtDateCheckOutReserveValue"
+                                android:layout_height="wrap_content"
+                                android:entries="@array/nationality"
+                                />-->
+                            <TextView
+                                android:id="@+id/txtaddPersonValue"
                                 style="@style/StandardTextGrey"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="@dimen/margin_short"
                                 android:layout_toEndOf="@+id/txtDateCheckOutReserve"
-                                android:text="fdfdfd" />
+                                android:text="تعداد نفرات اضافه" />
 
-                            <TextView
+                      <!--      <TextView
                                 android:id="@+id/txtDateCheckOutReserve"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -388,235 +393,210 @@
 
 
                     <RelativeLayout
-                        android:id="@+id/dateReserveHolder"
+                        android:id="@+id/NationalHolder"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:translationZ="1dp">
 
                         <RelativeLayout
-                            android:id="@+id/holderDate"
+                            android:id="@+id/holderNationality"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/margin_short">
-
-                            <TextView
-                                android:id="@+id/txtdateReserve"
+                            android:padding="@dimen/margin_short"
+                            android:background="@drawable/button_corner_grey_stroke"
+                            android:layout_marginEnd="@dimen/margin_xshort"
+                            android:layout_marginStart="@dimen/margin_xshort">
+                            <!--<Spinner
+                                android:id="@+id/numberAdditional_spinner"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                               />-->
+                           <TextView
+                                android:id="@+id/txtNationalityValue"
                                 style="@style/StandardTextGrey"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="@dimen/margin_short"
                                 android:layout_toEndOf="@+id/imageTypeHote"
-                                android:text="تاریخ" />
+                                android:text="ملیت" />
 
-                            <TextView
+                         <!--   <TextView
                                 android:id="@+id/imageTypeHote"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
-                                android:text="تاریخ ورود" />
+                                android:text="تاریخ ورود" />&ndash;&gt;-->
 
 
                         </RelativeLayout>
                     </RelativeLayout>
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="درخواست اقامت نیم روز"
-                    android:layout_below="@id/selectHoldetTop"
-                    android:id="@+id/selectHolder"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="@dimen/margin_short"
-                    android:layout_marginBottom="@dimen/margin_short"
-                    style="@style/StandardTitle"
-                    />
+                <!-- <LinearLayout
+                     android:id="@+id/selectHoldetTop1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_below="@+id/selectHoldetTop"
+                     android:orientation="horizontal"
+                     android:weightSum="2">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/selectHolder"
-                    android:id="@+id/jjj"
-                    android:layout_margin="@dimen/margin_short">
 
-                    <TextView
-                        android:id="@+id/txtNews"
-                        style="@style/SmallText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/checkBoxNews1"
-                        android:text="تعجیل در خروج"
-                        android:textColor="@color/grey" />
+                     <RelativeLayout
+                         android:id="@+id/TimeCheckHolder"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_weight="1"
+                         android:translationZ="1dp">
 
-                    <CheckBox
-                        android:id="@+id/checkBoxNews1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/ic_checked_blue" />
-
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/jjj"
-                    android:id="@+id/exitHolder"
-                    android:layout_margin="@dimen/margin_short">
-
-                    <TextView
-                        android:id="@+id/exit"
-                        style="@style/SmallText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/checkBoxNews"
-                        android:text="تاخیر در خروج"
-                        android:textColor="@color/grey" />
-
-                    <CheckBox
-                        android:id="@+id/checkBoxNews"
-                        android:layout_width="wrap_content"
-                        android:layout_height="15dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/ic_checked_blue" />
-
-                </RelativeLayout>
-                <!--         <LinearLayout
-                             android:id="@+id/selectHoldetTop1"
-                             android:layout_width="match_parent"
+                         <RelativeLayout
+                             android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
-                             android:layout_below="@+id/selectHoldetTop"
-                             android:orientation="horizontal"
-                             android:weightSum="2">
+                             android:layout_alignParentStart="true"
+                             android:layout_centerHorizontal="true"
+                             android:layout_marginStart="@dimen/margin_standard"
+                             android:padding="@dimen/margin_short">
 
-
-                             <RelativeLayout
-                                 android:id="@+id/TimeCheckHolder"
+                             <TextView
+                                 android:id="@+id/txtCheckinValue"
+                                 style="@style/StandardTextGrey"
                                  android:layout_width="match_parent"
                                  android:layout_height="wrap_content"
-                                 android:layout_weight="1"
-                                 android:translationZ="1dp">
+                                 android:layout_centerVertical="true"
+                                 android:layout_marginStart="@dimen/margin_short"
+                                 android:layout_toEndOf="@+id/txtCheckin"
+                                 android:text="duration" />
 
-                                 <RelativeLayout
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_alignParentStart="true"
-                                     android:layout_centerHorizontal="true"
-                                     android:layout_marginStart="@dimen/margin_standard"
-                                     android:padding="@dimen/margin_short">
+                             <TextView
+                                 android:id="@+id/txtCheckin"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
 
-                                     <TextView
-                                         android:id="@+id/txtCheckinValue"
-                                         style="@style/StandardTextGrey"
-                                         android:layout_width="match_parent"
-                                         android:layout_height="wrap_content"
-                                         android:layout_centerVertical="true"
-                                         android:layout_marginStart="@dimen/margin_short"
-                                         android:layout_toEndOf="@+id/txtCheckin"
-                                         android:text="duration" />
-
-                                     <TextView
-                                         android:id="@+id/txtCheckin"
-                                         android:layout_width="wrap_content"
-                                         android:layout_height="wrap_content"
-
-                                         android:layout_alignParentStart="true"
-                                         android:text="ساعت تحویل" />
+                                 android:layout_alignParentStart="true"
+                                 android:text="ساعت تحویل" />
 
 
-                                 </RelativeLayout>
-                             </RelativeLayout>
+                         </RelativeLayout>
+                     </RelativeLayout>
 
 
-                             <RelativeLayout
-                                 android:id="@+id/TypeAttractionHolder1"
-                                 android:layout_width="match_parent"
-                                 android:layout_height="match_parent"
-                                 android:layout_weight="1"
-                                 android:translationZ="1dp">
+                     <RelativeLayout
+                         android:id="@+id/TypeAttractionHolder1"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:layout_weight="1"
+                         android:translationZ="1dp">
 
-                                 <RelativeLayout
-                                     android:id="@+id/holderTime"
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:padding="@dimen/margin_short">
-
-                                     <TextView
-                                         android:id="@+id/txtCheckoutValue"
-                                         style="@style/StandardTextGrey"
-                                         android:layout_width="match_parent"
-                                         android:layout_height="wrap_content"
-                                         android:layout_centerVertical="true"
-                                         android:layout_marginStart="@dimen/margin_short"
-                                         android:layout_toEndOf="@+id/txtCheckout"
-                                         android:text="تاریخ" />
-
-                                     <TextView
-                                         android:id="@+id/txtCheckout"
-                                         android:layout_width="wrap_content"
-                                         android:layout_height="wrap_content"
-                                         android:layout_alignParentStart="true"
-                                         android:text="ساعت خروح" />
-
-
-                                 </RelativeLayout>
-                             </RelativeLayout>
-                         </LinearLayout>
-
-                         <LinearLayout
-                             android:id="@+id/selectHoldetTop2"
-                             android:layout_width="match_parent"
+                         <RelativeLayout
+                             android:id="@+id/holderTime"
+                             android:layout_width="wrap_content"
                              android:layout_height="wrap_content"
-                             android:layout_below="@+id/selectHoldetTop1"
-                             android:orientation="horizontal">
+                             android:padding="@dimen/margin_short">
 
-                             <RelativeLayout
-                                 android:id="@+id/TypeAttractionHolder"
+                             <TextView
+                                 android:id="@+id/txtCheckoutValue"
+                                 style="@style/StandardTextGrey"
                                  android:layout_width="match_parent"
                                  android:layout_height="wrap_content"
-                                 android:layout_weight="1"
-                                 android:translationZ="1dp">
+                                 android:text="تاریخ"
+                                 android:layout_centerVertical="true"
+                                 android:layout_alignParentEnd="true" />
 
-                                 <RelativeLayout
-                                     android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:layout_alignParentStart="true"
-                                     android:layout_centerHorizontal="true"
-                                     android:layout_marginStart="@dimen/margin_standard"
-                                     android:padding="@dimen/margin_short">
-
-                                     <TextView
-                                         android:id="@+id/txtHotelAddressValue"
-                                         style="@style/StandardTextGrey"
-                                         android:layout_width="match_parent"
-                                         android:layout_height="wrap_content"
-                                         android:layout_centerVertical="true"
-                                         android:layout_marginStart="@dimen/margin_short"
-                                         android:layout_toEndOf="@+id/txtHotelAddress"
-                                         android:text="gggg" />
-
-                                     <TextView
-                                         android:id="@+id/txtHotelAddress"
-                                         android:layout_width="wrap_content"
-                                         android:layout_height="wrap_content"
-
-                                         android:layout_alignParentStart="true"
-                                         android:text="آدرس" />
+                             <TextView
+                                 android:id="@+id/txtCheckout"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentStart="true"
+                                 android:text="ساعت خروح" />
 
 
-                                 </RelativeLayout>
-                             </RelativeLayout>
+                         </RelativeLayout>
+                     </RelativeLayout>
+                 </LinearLayout>-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/selectHoldetTop"
+                    android:layout_marginTop="@dimen/margin_short">
 
-                         </LinearLayout>-->
+                    <TextView
+                        android:id="@+id/titleMidDay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="درخواست اقامت نیم روز" />
+
+                    <LinearLayout
+                        android:id="@+id/selectHoldetTop2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titleMidDay"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/margin_standard"
+                            android:layout_marginRight="@dimen/margin_standard"
+                            android:layout_marginTop="@dimen/margin_standard">
+
+                            <TextView
+                                android:id="@+id/txtNews"
+                                style="@style/SmallText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_toEndOf="@+id/checkHalfIn"
+                                android:text="تاخیر در خروج"
+                                android:textColor="@color/grey" />
+
+                            <CheckBox
+                                android:id="@+id/checkHalfIn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="15dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:src="@mipmap/ic_checked_blue" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/margin_standard"
+                            android:layout_marginRight="@dimen/margin_standard"
+                            android:layout_marginTop="@dimen/margin_standard">
+
+                            <TextView
+                                android:id="@+id/txtNewsa"
+                                style="@style/SmallText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@+id/checkHalfOut"
+                                android:text="تعجیل در خروج"
+                                android:textColor="@color/grey" />
+
+                            <CheckBox
+                                android:id="@+id/checkHalfOut"
+                                android:layout_width="wrap_content"
+                                android:layout_height="15dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:src="@mipmap/ic_checked_blue" />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
             </RelativeLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/card_view_itineraryq"
+        android:id="@+id/card_view_itinerazry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true">
@@ -652,13 +632,12 @@
                     android:padding="@dimen/margin_short">
 
                     <TextView
-                        android:id="@+id/txtdateReservea"
+                        android:id="@+id/txtPrice"
                         style="@style/StandardTextGrey"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/margin_short"
-                        android:layout_toEndOf="@+id/imageTypeHote"
+                        android:layout_toEndOf="@+id/imageTypeHotea"
                         android:text="3000 تومان" />
 
                     <TextView
@@ -670,6 +649,7 @@
 
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/holderDatea1"
                     android:layout_width="wrap_content"
@@ -677,13 +657,12 @@
                     android:padding="@dimen/margin_short">
 
                     <TextView
-                        android:id="@+id/txtdateReservea1"
+                        android:id="@+id/txtAddPeople"
                         style="@style/StandardTextGrey"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/margin_short"
-                        android:layout_toEndOf="@+id/imageTypeHote"
+                        android:layout_toEndOf="@+id/imageTypeHotea1"
                         android:text="20 تومان" />
 
                     <TextView
@@ -695,6 +674,7 @@
 
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/holderDatea2"
                     android:layout_width="wrap_content"
@@ -702,13 +682,12 @@
                     android:padding="@dimen/margin_short">
 
                     <TextView
-                        android:id="@+id/txtdateReservea2"
+                        android:id="@+id/txthalfInPrice"
                         style="@style/StandardTextGrey"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/margin_short"
-                        android:layout_toEndOf="@+id/imageTypeHote"
+                        android:layout_toEndOf="@+id/imageTypeHotea2"
                         android:text="10 تومان" />
 
                     <TextView
@@ -720,6 +699,7 @@
 
 
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:id="@+id/holderDatea3"
                     android:layout_width="wrap_content"
@@ -732,10 +712,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/margin_short"
-                        android:layout_toEndOf="@+id/imageTypeHote"
+                        android:layout_toEndOf="@+id/imageTypeHotea3"
                         android:text="20 تومان"
-                        android:textColor="@color/dark_red"/>
+                        android:textColor="@color/dark_red" />
 
                     <TextView
                         android:id="@+id/imageTypeHotea3"
@@ -743,18 +722,19 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:text="تخفیف شما"
-                        android:textColor="@color/dark_red"/>
+                        android:textColor="@color/dark_red" />
 
 
                 </RelativeLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="مبلغ قابل پرداخت"
                     android:gravity="center"
                     style="@style/StandardTitle"
-                    android:textColor="@color/green"
-                    />
+                    android:textColor="@color/green" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

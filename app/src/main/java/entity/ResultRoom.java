@@ -1,16 +1,116 @@
 
 package entity;
 
-import java.io.Serializable;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.List;
+
 public class ResultRoom implements Serializable {
+    @SerializedName("selectedNationality")
+    @Expose
+    private String selectedNationality;
+
+
+    public String getSelectedNationality() {
+        return selectedNationality;
+    }
+
+    public void setSelectedNationality(String selectedNationality) {
+        this.selectedNationality = selectedNationality;
+    }
+
+    public String getSelectedAddNumbers() {
+        return selectedAddNumbers;
+    }
+
+    public void setSelectedAddNumbers(String selectedAddNumbers) {
+        this.selectedAddNumbers = selectedAddNumbers;
+    }
+
+    @SerializedName("selected_AddNumbers")
+   @Expose
+    private String selectedAddNumbers;
+
+
+    @SerializedName("head_name")
+    @Expose
+    private String headName;
+
+    @SerializedName("head_last_name")
+
+    @Expose
+    private String headLastName;
+
+    public String getHeadName() {
+        return headName;
+    }
+
+    public void setHeadName(String headName) {
+        this.headName = headName;
+    }
+
+    public String getHeadLastName() {
+        return headLastName;
+    }
+
+    public void setHeadLastName(String headLastName) {
+        this.headLastName = headLastName;
+    }
+
+
 
     @SerializedName("room_title")
     @Expose
     private String roomTitle;
+
+    @SerializedName("Price_add_people")
+    @Expose
+    private String PriceAddPeople;
+    @SerializedName("is_halfIn")
+    @Expose
+    private Boolean isHalfIn;
+    @SerializedName("is_halfOut")
+    @Expose
+    private Boolean isHalfOut;
+
+    public Boolean getHalfIn() {
+        return isHalfIn;
+    }
+
+    public void setHalfIn(Boolean halfIn) {
+        isHalfIn = halfIn;
+    }
+
+    public Boolean getHalfOut() {
+        return isHalfOut;
+    }
+
+    public void setHalfOut(Boolean halfOut) {
+        isHalfOut = halfOut;
+    }
+
+    public String getPriceAddPeople() {
+        return PriceAddPeople;
+    }
+
+    public void setPriceAddPeople(String priceAddPeople) {
+        PriceAddPeople = priceAddPeople;
+    }
+
+    public String getRoom_price_final() {
+        return room_price_final;
+    }
+
+    public void setRoom_price_final(String room_price_final) {
+        this.room_price_final = room_price_final;
+    }
+
+    @SerializedName("room_price_final")
+    @Expose
+
+    private String room_price_final;
     @SerializedName("room_id")
     @Expose
     private String roomId;

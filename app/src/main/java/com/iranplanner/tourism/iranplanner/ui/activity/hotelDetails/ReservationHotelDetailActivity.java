@@ -26,6 +26,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.coinpany.core.android.widget.CTouchyWebView;
+import com.coinpany.core.android.widget.Utils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -80,7 +81,7 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
     SupportMapFragment mapFragment;
     Boolean showMore = true;
     String myData;
-    TextView txtOk, MoreInoText, txtHotelType, txtHotelName, txtAddress, txtDate, txtDuration;
+    TextView txtDateCheckIn,txtOk, MoreInoText, txtHotelType, txtHotelName, txtAddress, txtDate, txtDurationHotel;
     RelativeLayout ratingHolder, GroupHolder, interestingLayout, VisitedLayout, LikeLayout, changeDateHolder;
     LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder;
     ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg, triangleShowAttraction;
@@ -92,22 +93,23 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
     int durationTravel;
     Button roomReservationBtn;
     Toolbar toolbar;
+    private String todayDate;
     //    List<ResultWidget> resultWidget;
-    TabLayout tabLayout;
+//    TabLayout tabLayout;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    private void setupTablayout() {
-
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-
-    }
+//    private void setupTablayout() {
+//
+//        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+//        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
+//        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
+//
+//    }
 
     private void findView() {
 //        setContentView(R.layout.activity_reservation_hotel_detail);
@@ -116,10 +118,11 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
                 .findFragmentById(R.id.map);
         contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
         MoreInoText = (TextView) findViewById(R.id.MoreInoText);
-        txtHotelType = (TextView) findViewById(R.id.txtHotelType);
+        txtDateCheckIn = (TextView) findViewById(R.id.txtDateCheckIn);
         txtHotelName = (TextView) findViewById(R.id.txtHotelName);
         txtDate = (TextView) findViewById(R.id.txtDate);
-        txtDuration = (TextView) findViewById(R.id.txtDuration);
+        txtDurationHotel = (TextView) findViewById(R.id.txtDurationHotel);
+        txtHotelType = (TextView) findViewById(R.id.txtHotelType);
         txtAddress = (TextView) findViewById(R.id.txtAddress);
         attractionName = (TextView) findViewById(R.id.attractionName);
         attractionPlace = (TextView) findViewById(R.id.attractionPlace);
@@ -156,7 +159,7 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
         nowVisitedImg = (ImageView) findViewById(R.id.nowVisitedImg);
         wishImg = (ImageView) findViewById(R.id.wishImg);
         triangleShowAttraction = (ImageView) findViewById(R.id.triangleShowAttraction);
-        setupTablayout();
+//        setupTablayout();
     }
 
     private void overrideFont() {
@@ -238,18 +241,25 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
         return true;
     }
 
+    private void getExtras() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
+        startOfTravel = (Date) bundle.getSerializable("startOfTravel");
+        durationTravel = (int) bundle.getSerializable("durationTravel");
+        todayDate =  bundle.getString("todayDate");
+        String s=(startOfTravel!=null)? Utils.getSimpleDate(startOfTravel):Utils.getSimpleDateMilli(Long.valueOf(todayDate));
+//        txtDateCheckIn.setText(s);
+        txtDurationHotel.setText(Util.persianNumbers(String.valueOf(durationTravel)) + " شب");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         findView();
         overrideFont();
-        Intent intent = getIntent();
-
-        Bundle bundle = intent.getExtras();
-        resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
-//        startOfTravel = (Date) bundle.getSerializable("startOfTravel");
-//        durationTravel = (int) bundle.getSerializable("durationTravel");
+        getExtras();
         txtHotelName.setText(resultLodgingHotelDetail.getLodgingName());
         txtHotelType.setText("نوع مرکز اقامتی: " + resultLodgingHotelDetail.getLodgingTypeTitle());
         txtAddress.setText(resultLodgingHotelDetail.getLodgingAddress());
@@ -528,7 +538,9 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
                     ResultLodgingRoomList res = response.body();
                     List<ResultRoom> ResultRooms = res.getResultRoom();
                     Intent intent = new Intent(getApplicationContext(), ShowRoomActivity.class);
+
                     intent.putExtra("ResultRooms", (Serializable) ResultRooms);
+                    intent.putExtra("resultLodgingHotelDetail", (Serializable) resultLodgingHotelDetail);
                     intent.putExtra("startOfTravel", startOfTravel);
                     intent.putExtra("durationTravel", durationTravel);
                     startActivity(intent);

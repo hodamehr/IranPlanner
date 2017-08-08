@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -194,7 +195,9 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         txtWhereGo.setOnClickListener(this);
         TypeHotelHolder.setOnClickListener(this);
         mNavigationDrawerItemTitles = getResources().getStringArray(R.array.navigation_items);
-
+        DaggerHomeComponent.builder().netComponent(((App) getContext().getApplicationContext()).getNetComponent())
+                .homeModule(new HomeModule(this, this))
+                .build().inject(this);
         setupToolbar();
         getfeatureHolderHight();
         showDrawer();
@@ -359,6 +362,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
         intent.putExtra("startOfTravel", startOfTravel);
         intent.putExtra("durationTravel", 3);
+        intent.putExtra("todayDate", resultLodgingList.getStatistics().getDateNow());
 
         startActivity(intent);
 
@@ -601,9 +605,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void getHomeResult(String destination, String selectId) {
-        DaggerHomeComponent.builder().netComponent(((App) getContext().getApplicationContext()).getNetComponent())
-                .homeModule(new HomeModule(this, this))
-                .build().inject(this);
+
         String cid = Util.getTokenFromSharedPreferences(getContext());
         String andId = Util.getAndroidIdFromSharedPreferences(getContext());
         homePresenter.getHome("home", destination, selectId, cid, andId);

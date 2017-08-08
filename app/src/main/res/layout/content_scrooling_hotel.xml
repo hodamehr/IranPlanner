@@ -43,7 +43,7 @@
                         android:padding="@dimen/margin_short">
 
                         <TextView
-                            android:id="@+id/txtTypeHotel"
+                            android:id="@+id/txtDurationHotel"
                             style="@style/StandardTextGrey"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                         android:padding="@dimen/margin_short">
 
                         <TextView
-                            android:id="@+id/txtTypeHote"
+                            android:id="@+id/txtDateCheckIn"
                             style="@style/StandardTextGrey"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

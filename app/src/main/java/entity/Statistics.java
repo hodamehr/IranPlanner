@@ -11,68 +11,68 @@ public class Statistics implements Serializable {
 
     @SerializedName("offset_last")
     @Expose
-    private Integer offsetLast;
+    private String offsetLast;
     @SerializedName("offset_next")
     @Expose
-    private Integer offsetNext;
+    private String offsetNext;
     @SerializedName("DurationArray")
     @Expose
-    private List<Integer> durationArray = null;
+    private List<String> durationArray = null;
     @SerializedName("Count_All")
     @Expose
-    private Integer countAll;
+    private String countAll;
     @SerializedName("Count_Row")
     @Expose
-    private Integer countRow;
+    private String countRow;
     @SerializedName("Response_Time")
     @Expose
     private Double responseTime;
     @SerializedName("Size")
     @Expose
-    private Integer size;
+    private String size;
 
     @SerializedName("Date_Now")
     @Expose
-    private Integer dateNow;
+    private String dateNow;
 
 
-    public Integer getOffsetLast() {
+    public String getOffsetLast() {
         return offsetLast;
     }
 
-    public void setOffsetLast(Integer offsetLast) {
+    public void setOffsetLast(String offsetLast) {
         this.offsetLast = offsetLast;
     }
 
-    public Integer getOffsetNext() {
+    public String getOffsetNext() {
         return offsetNext;
     }
 
-    public void setOffsetNext(Integer offsetNext) {
+    public void setOffsetNext(String offsetNext) {
         this.offsetNext = offsetNext;
     }
 
-    public List<Integer> getDurationArray() {
+    public List<String> getDurationArray() {
         return durationArray;
     }
 
-    public void setDurationArray(List<Integer> durationArray) {
+    public void setDurationArray(List<String> durationArray) {
         this.durationArray = durationArray;
     }
 
-    public Integer getCountAll() {
+    public String getCountAll() {
         return countAll;
     }
 
-    public void setCountAll(Integer countAll) {
+    public void setCountAll(String countAll) {
         this.countAll = countAll;
     }
 
-    public Integer getCountRow() {
+    public String getCountRow() {
         return countRow;
     }
 
-    public void setCountRow(Integer countRow) {
+    public void setCountRow(String countRow) {
         this.countRow = countRow;
     }
 
@@ -84,18 +84,18 @@ public class Statistics implements Serializable {
         this.responseTime = responseTime;
     }
 
-    public Integer getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(String size) {
         this.size = size;
     }
-    public Integer getDateNow() {
+    public String getDateNow() {
         return dateNow;
     }
 
-    public void setDateNow(Integer dateNow) {
+    public void setDateNow(String dateNow) {
         this.dateNow = dateNow;
     }
 

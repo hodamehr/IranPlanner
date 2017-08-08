@@ -54,6 +54,9 @@
             android:name=".ui.activity.mainActivity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.activity.confirmHotelReservation.ActivityHotelReservationConfirm"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.editprofile.EditProfileActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/card_view_itinerary"
+        android:id="@+id/card_view_Hotel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true">
@@ -31,7 +31,7 @@
 
 
                 <ImageView
-                    android:id="@+id/imgHotelList"
+                    android:id="@+id/imgHotel"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     android:background="@color/greyLight"
@@ -58,7 +58,7 @@
                     android:layout_below="@id/RoomTypeHolder">
 
                     <TextView
-                        android:id="@+id/roomType"
+                        android:id="@+id/txtHotelName"
                         style="@style/StandardTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -230,7 +230,7 @@
                     android:layout_marginBottom="@dimen/padding_short">
 
                     <TextView
-                        android:id="@+id/txtCapacity"
+                        android:id="@+id/txtRoomSelected"
                         style="@style/StandardTextGrey"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -272,46 +272,8 @@
                     android:id="@+id/selectHoldetTop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:weightSum="2">
-
-
-                    <RelativeLayout
-                        android:id="@+id/DateCheckHolder"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:translationZ="1dp">
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginStart="@dimen/margin_standard"
-                            android:padding="@dimen/margin_short">
-
-                            <TextView
-                                android:id="@+id/txtDateCheckOutReserveValue"
-                                style="@style/StandardTextGrey"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginStart="@dimen/margin_short"
-                                android:layout_toEndOf="@+id/txtDateCheckOutReserve"
-                                android:text="fdfdfd" />
-
-                            <TextView
-                                android:id="@+id/txtDateCheckOutReserve"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-
-                                android:layout_alignParentStart="true"
-                                android:text="تاریخ خروج" />
-
-
-                        </RelativeLayout>
-                    </RelativeLayout>
 
 
                     <RelativeLayout
@@ -328,17 +290,17 @@
                             android:padding="@dimen/margin_short">
 
                             <TextView
-                                android:id="@+id/txtdateReserve"
+                                android:id="@+id/txtCheckInDateReserveValue"
                                 style="@style/StandardTextGrey"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="@dimen/margin_short"
-                                android:layout_toEndOf="@+id/imageTypeHote"
+                                android:layout_toEndOf="@+id/txtCheckInDateReserve"
                                 android:text="تاریخ" />
 
                             <TextView
-                                android:id="@+id/imageTypeHote"
+                                android:id="@+id/txtCheckInDateReserve"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
@@ -347,6 +309,44 @@
 
                         </RelativeLayout>
                     </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/DateCheckHolder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:translationZ="1dp">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginStart="@dimen/margin_standard"
+                            android:padding="@dimen/margin_short">
+
+                            <TextView
+                                android:id="@+id/txtDurationTravel"
+                                style="@style/StandardTextGrey"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/margin_short"
+                                android:layout_toEndOf="@+id/txtDateCheckOutReserve"
+                                />
+
+                            <TextView
+                                android:id="@+id/txtDateCheckOutReserve"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:layout_alignParentStart="true"
+                                android:text="مدت اقامت" />
+
+
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -374,7 +374,7 @@
                             android:padding="@dimen/margin_short">
 
                             <TextView
-                                android:id="@+id/txtCheckinValue"
+                                android:id="@+id/txtTimeCheckinValue"
                                 style="@style/StandardTextGrey"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -410,7 +410,7 @@
                             android:padding="@dimen/margin_short">
 
                             <TextView
-                                android:id="@+id/txtCheckoutValue"
+                                android:id="@+id/txtTimeCheckoutValue"
                                 style="@style/StandardTextGrey"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -424,7 +424,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
-                                android:text="ساعت خروح" />
+                                android:text="ساعت تخلیه" />
 
 
                         </RelativeLayout>
