@@ -115,7 +115,7 @@ public class CustomDialogNumberPicker extends Dialog implements
         no = (TextView) findViewById(R.id.txtNo);
         yes.setOnClickListener(this);
         no.setOnClickListener(this);
-        value = 1;
+        value = 0;
         dayNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {

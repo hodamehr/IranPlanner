@@ -8,7 +8,20 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ResultRoom implements Serializable {
+    @SerializedName("ok_confirm_change")
+    @Expose
+    private Boolean okConfirmChange;
+
+    public Boolean getOkConfirmChange() {
+        return okConfirmChange;
+    }
+
+    public void setOkConfirmChange(Boolean okConfirmChange) {
+        this.okConfirmChange = okConfirmChange;
+    }
+
     @SerializedName("selectedNationality")
+
     @Expose
     private String selectedNationality;
 

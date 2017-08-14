@@ -28,7 +28,7 @@
 
 
                 <RelativeLayout
-                    android:id="@+id/TypeAttractionHolder"
+                    android:id="@+id/TypeDurationHolder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

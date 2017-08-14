@@ -20,7 +20,8 @@
                 android:id="@+id/imageHolder"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                >
 
                 <ProgressBar
                     android:id="@+id/imageLoading"
@@ -47,6 +48,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="@dimen/margin_short"
+
                 android:layout_toEndOf="@+id/imageHolder"
                 android:gravity="start">
 
@@ -63,7 +65,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/margin_xshort"
                         android:maxLines="1"
                         android:text="هتل پارس" />
 
@@ -238,14 +239,16 @@
                         android:layout_marginStart="@dimen/margin_xshort"
                         android:layout_toEndOf="@+id/imgCapacity"
                         android:maxLines="1"
-                        android:text="1" />
+                        android:text="1"
+                        />
 
                     <TextView
                         android:id="@+id/imgCapacity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:text="تعداد اتاق" />
+                        android:text="تعداد اتاق"
+                        style="@style/StandardTextDarkblue"/>
 
 
                 </RelativeLayout>
@@ -287,6 +290,7 @@
                             android:id="@+id/holderDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_standard"
                             android:padding="@dimen/margin_short">
 
                             <TextView
@@ -301,14 +305,17 @@
 
                             <TextView
                                 android:id="@+id/txtCheckInDateReserve"
+                                style="@style/StandardTextDarkblue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
-                                android:text="تاریخ ورود" />
+                                android:text="تاریخ ورود"
+                                android:textColor="@color/dark_blue" />
 
 
                         </RelativeLayout>
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:id="@+id/DateCheckHolder"
                         android:layout_width="match_parent"
@@ -331,14 +338,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="@dimen/margin_short"
-                                android:layout_toEndOf="@+id/txtDateCheckOutReserve"
-                                />
+                                android:layout_toEndOf="@+id/txtDateCheckOutReserve" />
 
                             <TextView
                                 android:id="@+id/txtDateCheckOutReserve"
+                                style="@style/StandardTextDarkblue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
                                 android:layout_alignParentStart="true"
                                 android:text="مدت اقامت" />
 
@@ -385,9 +391,9 @@
 
                             <TextView
                                 android:id="@+id/txtCheckin"
+                                style="@style/StandardTextDarkblue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
                                 android:layout_alignParentStart="true"
                                 android:text="ساعت تحویل" />
 
@@ -421,6 +427,7 @@
 
                             <TextView
                                 android:id="@+id/txtCheckout"
+                                style="@style/StandardTextDarkblue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
@@ -465,9 +472,9 @@
 
                             <TextView
                                 android:id="@+id/txtHotelAddress"
+                                style="@style/StandardTextDarkblue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
                                 android:layout_alignParentStart="true"
                                 android:text="آدرس" />
 
@@ -508,7 +515,7 @@
                 android:layout_below="@+id/roomType1"
                 android:background="@drawable/corner_layout"
                 android:orientation="vertical"
-                android:padding="@dimen/padding_short">
+                android:padding="@dimen/padding_standard">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"

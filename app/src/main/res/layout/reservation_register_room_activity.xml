@@ -23,13 +23,13 @@
 
          </android.support.v7.widget.Toolbar>
 
-        <android.support.design.widget.TabLayout
+        <!--<android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
             android:background="@color/green"
-            android:scrollbars="horizontal" />
+            android:scrollbars="horizontal" />-->
     </android.support.design.widget.AppBarLayout>
       <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:app="http://schemas.android.com/apk/res-auto"

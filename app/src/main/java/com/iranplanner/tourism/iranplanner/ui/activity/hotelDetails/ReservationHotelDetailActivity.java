@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -61,6 +60,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import server.Config;
 import server.getJsonInterface;
+import tools.CustomDialogDate;
+import tools.CustomDialogNumberPicker;
 import tools.Util;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -81,8 +82,8 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
     SupportMapFragment mapFragment;
     Boolean showMore = true;
     String myData;
-    TextView txtDateCheckIn,txtOk, MoreInoText, txtHotelType, txtHotelName, txtAddress, txtDate, txtDurationHotel;
-    RelativeLayout ratingHolder, GroupHolder, interestingLayout, VisitedLayout, LikeLayout, changeDateHolder;
+    TextView txtDateCheckIn, txtOk, MoreInoText, txtHotelType, txtHotelName, txtAddress, txtDate, txtDurationHotel;
+    RelativeLayout TypeDurationHolder, holderDate, ratingHolder, GroupHolder, interestingLayout, VisitedLayout, LikeLayout, changeDateHolder;
     LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder;
     ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg, triangleShowAttraction;
     boolean ratingHolderFlag = false;
@@ -122,6 +123,7 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
         txtHotelName = (TextView) findViewById(R.id.txtHotelName);
         txtDate = (TextView) findViewById(R.id.txtDate);
         txtDurationHotel = (TextView) findViewById(R.id.txtDurationHotel);
+        TypeDurationHolder = (RelativeLayout) findViewById(R.id.TypeDurationHolder);
         txtHotelType = (TextView) findViewById(R.id.txtHotelType);
         txtAddress = (TextView) findViewById(R.id.txtAddress);
         attractionName = (TextView) findViewById(R.id.attractionName);
@@ -132,6 +134,7 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
         imageTypeAttraction = (ImageView) findViewById(R.id.imageTypeAttraction);
         imgHotel = (ImageView) findViewById(R.id.imgHotel);
         roomReservationBtn = (Button) findViewById(R.id.roomReservationBtn);
+        holderDate = (RelativeLayout) findViewById(R.id.holderDate);
 
         rateHolder = (LinearLayout) findViewById(R.id.rateHolder);
         doneHolder = (LinearLayout) findViewById(R.id.doneHolder);
@@ -247,10 +250,22 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
         resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
         startOfTravel = (Date) bundle.getSerializable("startOfTravel");
         durationTravel = (int) bundle.getSerializable("durationTravel");
-        todayDate =  bundle.getString("todayDate");
-        String s=(startOfTravel!=null)? Utils.getSimpleDate(startOfTravel):Utils.getSimpleDateMilli(Long.valueOf(todayDate));
-//        txtDateCheckIn.setText(s);
+        todayDate = bundle.getString("todayDate");
+        String s = (startOfTravel != null) ? Utils.getSimpleDate(startOfTravel) : Utils.getSimpleDateMilli(Long.valueOf(todayDate));
+        txtDateCheckIn.setText(s);
         txtDurationHotel.setText(Util.persianNumbers(String.valueOf(durationTravel)) + " شب");
+    }
+
+    private void showDialogNumber() {
+        CustomDialogNumberPicker cdd = new CustomDialogNumberPicker(this, 10, 1, "مدت زمان اقامت", null);
+        cdd.show();
+        cdd.setDialogResult(new CustomDialogNumberPicker.OnDialogNumberPick() {
+            @Override
+            public void finish(int result) {
+                durationTravel = result;
+                txtDurationHotel.setText(Util.persianNumbers(result + "شب"));
+            }
+        });
     }
 
     @Override
@@ -272,13 +287,15 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
         toolbar.setTitle(resultLodgingHotelDetail.getLodgingName());
 //        getSupportActionBar().setLogo(R.drawable.ic_google);
 //getSupportActionBar().getSubtitle();
-//        Activity test = (Activity) this;
+//        Activity content_show_room = (Activity) this;
         setSupportActionBar(toolbar);
         getSupportActionBar().getSubtitle();
         getSupportActionBar().setCustomView(R.layout.toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+        holderDate.setOnClickListener(this);
+        TypeDurationHolder.setOnClickListener(this);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -421,10 +438,21 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
                 }
 
                 break;
+            case R.id.TypeDurationHolder:
+
+                    showDialogNumber();
+
+
+                break;
             case R.id.ratingHolder:
                 if (ratingHolderFlag) {
                     translateUp();
                 }
+                break;
+            case R.id.holderDate:
+
+                    showDialogDate();
+
                 break;
             case R.id.rateHolder:
                 if (!ratingHolderFlag) {
@@ -519,6 +547,18 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
                 getLodgingResevationRoom(String.valueOf(resultLodgingHotelDetail.getLodgingId()));
                 break;
         }
+    }
+
+    private void showDialogDate() {
+        CustomDialogDate customDialogDate = new CustomDialogDate(this);
+        customDialogDate.show();
+        customDialogDate.setDialogDateResult(new CustomDialogDate.OnDialogDatePick() {
+            @Override
+            public void finish(Date result) {
+                startOfTravel = result;
+                txtDateCheckIn.setText(Utils.getSimpleDate(result));
+            }
+        });
     }
 
     public void getLodgingResevationRoom(String hotelID) {

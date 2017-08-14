@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/Holder"
@@ -5,57 +7,64 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.showAttractionList.ShowAttractionListFragment">
 
-    <TextView
-        android:id="@+id/textHotel"
-        style="@style/StandardTitle"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_standard"
-        android:text="ورود اطلاعات " />
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+
+    </android.support.design.widget.AppBarLayout>
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/reservationListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textHotel"
-        android:layout_above="@+id/hotelReservationOkHolder"></android.support.v7.widget.RecyclerView>
+        android:layout_above="@+id/hotelReservationOkHolder"
+        android:layout_below="@+id/app_bar"></android.support.v7.widget.RecyclerView>
 
     <RelativeLayout
         android:id="@+id/hotelReservationOkHolder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/buttonBottom"
         android:layout_alignParentBottom="true"
-        android:clickable="true"
-        >
+        android:clickable="true">
 
         <TextView
             android:id="@+id/roomReservationBtn"
             style="@style/StandardTitle"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/buttonBottom"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/txtNumber"
             android:background="@color/green"
             android:text="ادامه فرایند رزرواسیون"
-            android:textColor="@color/white_"
-
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/txtNumber" />
+            android:textAlignment="center"
+            android:textColor="@color/white_" />
 
         <TextView
+            android:id="@+id/txtNumber"
+            style="@style/StandardTitle"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/buttonBottom"
-            android:text="0"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:background="@color/greenpress"
-            android:id="@+id/txtNumber"
             android:paddingEnd="@dimen/padding_standard"
             android:paddingStart="@dimen/padding_standard"
-            android:textColor="@color/white_"
-            style="@style/StandardTitle"
 
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:text="0"
+            android:textColor="@color/white_" />
 
     </RelativeLayout>
 
 </RelativeLayout>
+
+

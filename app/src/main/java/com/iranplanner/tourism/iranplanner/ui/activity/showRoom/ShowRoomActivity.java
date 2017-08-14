@@ -43,7 +43,7 @@ public class ShowRoomActivity extends StandardActivity implements DataTransferIn
     Date startOfTravel;
     int durationTravel;
     RelativeLayout chooseHolder;
-    TextView txtNumberRoom;
+    TextView txtNumberRoom,txtNumberChoose;
     ResultLodging resultLodgingHotelDetail;
     Set keys;
     List<ReqLodgingReservation> reqLodgingReservationList;
@@ -76,7 +76,7 @@ public class ShowRoomActivity extends StandardActivity implements DataTransferIn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_room_list);
+        setContentView(R.layout.activity_show_room);
         ButterKnife.inject(this);
 
         recyclerView.setHasFixedSize(true);
@@ -93,10 +93,13 @@ public class ShowRoomActivity extends StandardActivity implements DataTransferIn
             public void onItemClick(View view, final int position) {
                 chooseHolder = (RelativeLayout) view.findViewById(R.id.chooseHolder);
                 txtNumberRoom = (TextView) view.findViewById(R.id.txtNumberRoom);
+                txtNumberChoose = (TextView) view.findViewById(R.id.txtNumberChoose);
+
+
                 chooseHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        showDialogNumber(position, txtNumberRoom);
+                        showDialogNumber(position, txtNumberRoom,txtNumberChoose);
                     }
                 });
 
@@ -108,7 +111,7 @@ public class ShowRoomActivity extends StandardActivity implements DataTransferIn
 
     CustomDialogNumberPicker cdd;
 
-    private void showDialogNumber(final int position, final TextView txtNumberRoom) {
+    private void showDialogNumber(final int position, final TextView txtNumberRoom, final TextView txtNumberChoose) {
         cdd = new CustomDialogNumberPicker(this, Integer.valueOf(ResultRooms.get(position).getRoomPriceQuantity()), 0, "تعداد اتاق های درخواستی",null);
         cdd.show();
         cdd.setDialogResult(new CustomDialogNumberPicker.OnDialogNumberPick() {
@@ -116,6 +119,11 @@ public class ShowRoomActivity extends StandardActivity implements DataTransferIn
             public void finish(int result) {
                 txtNumberRoom.setText(String.valueOf(result));
                 selectedRooms.put(position, result);
+                if(result!=0){
+                    txtNumberChoose.setBackgroundColor(getResources().getColor(R.color.green));
+                    txtNumberRoom.setBackgroundColor(getResources().getColor(R.color.greenpress));
+                }
+
                 sums();
                 ss();
             }
