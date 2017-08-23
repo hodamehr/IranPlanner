@@ -864,17 +864,15 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         toolbarToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mDrawerLayout.openDrawer(GravityCompat.END);
-
+                /**
+                 * This Feature is Temporarily Disabled bc The Main navigation refactor coming up
+                 */
+//                mDrawerLayout.openDrawer(GravityCompat.END);
             }
         });
-
 
         buildVersion = Build.VERSION.SDK_INT;
 
         Log.i("hi", String.valueOf(buildVersion));
-
-
     }
 }
