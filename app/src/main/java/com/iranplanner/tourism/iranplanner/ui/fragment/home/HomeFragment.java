@@ -871,8 +871,17 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             }
         });
 
+        //this method is used to hide toolbar drawables & I don't know why exactly
+        hideToolbarIcons();
+
         buildVersion = Build.VERSION.SDK_INT;
 
         Log.i("hi", String.valueOf(buildVersion));
     }
+
+    private void hideToolbarIcons() {
+        toolbarToggle.setVisibility(View.GONE);
+        toolbarBack.setVisibility(View.GONE);
+    }
+
 }
