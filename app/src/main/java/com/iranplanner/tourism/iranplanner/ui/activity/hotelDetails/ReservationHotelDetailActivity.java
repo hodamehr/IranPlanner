@@ -1,5 +1,6 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.hotelDetails;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.ui.activity.MapFullActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMorePresenter;
 import com.iranplanner.tourism.iranplanner.ui.activity.showRoom.ShowRoomActivity;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
@@ -46,12 +48,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import entity.InterestResult;
 import entity.ItineraryLodgingCity;
+import entity.ResultCommentList;
 import entity.ResultData;
 import entity.ResultLodging;
 import entity.ResultLodgingRoomList;
 import entity.ResultRoom;
+import entity.ShowAtractionDetailMore;
+import entity.ShowAttractionMoreList;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,7 +77,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by h.vahidimehr on 28/02/2017.
  */
 
-public class ReservationHotelDetailActivity extends ActionBarActivity implements OnMapReadyCallback, View.OnClickListener {
+public class ReservationHotelDetailActivity extends ActionBarActivity implements OnMapReadyCallback, View.OnClickListener, AttractionListMorePresenter.View {
 
     private GoogleMap mMap;
     //    ResultItineraryAttraction attraction;
@@ -95,9 +102,12 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
     Button roomReservationBtn;
     Toolbar toolbar;
     private String todayDate;
+    private ProgressDialog progressDialog;
     //    List<ResultWidget> resultWidget;
 //    TabLayout tabLayout;
 
+    @Inject
+    AttractionListMorePresenter attractionListMorePresenter;
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -440,7 +450,7 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
                 break;
             case R.id.TypeDurationHolder:
 
-                    showDialogNumber();
+                showDialogNumber();
 
 
                 break;
@@ -451,7 +461,7 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
                 break;
             case R.id.holderDate:
 
-                    showDialogDate();
+                showDialogDate();
 
                 break;
             case R.id.rateHolder:
@@ -544,6 +554,7 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
                 }
                 break;
             case R.id.roomReservationBtn:
+                showProgress();
                 getLodgingResevationRoom(String.valueOf(resultLodgingHotelDetail.getLodgingId()));
                 break;
         }
@@ -575,6 +586,7 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
             public void onResponse(Call<ResultLodgingRoomList> call, Response<ResultLodgingRoomList> response) {
                 Log.e("result of ResultRooms", "true");
                 if (response.body() != null) {
+                    dismissProgress();
                     ResultLodgingRoomList res = response.body();
                     List<ResultRoom> ResultRooms = res.getResultRoom();
                     Intent intent = new Intent(getApplicationContext(), ShowRoomActivity.class);
@@ -654,7 +666,9 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
         Call<InterestResult> call = getJsonInterface.getInterest("widget", uid, Util.getTokenFromSharedPreferences(getApplicationContext()), "attraction", nid, gtype, gvalue);
         call.enqueue(new Callback<InterestResult>() {
             @Override
+
             public void onResponse(Call<InterestResult> call, Response<InterestResult> response) {
+
                 if (response.body() != null) {
                     InterestResult jsonResponse = response.body();
                     ResultData resultData = jsonResponse.getResultData();
@@ -669,9 +683,52 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
 
             @Override
             public void onFailure(Call<InterestResult> call, Throwable t) {
-
+                dismissProgress();
             }
         });
+
+    }
+
+    @Override
+    public void showComments(ResultCommentList resultCommentList) {
+
+    }
+
+    @Override
+    public void sendCommentMessage(ResultCommentList resultCommentList) {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public void commentResult(String message) {
+
+    }
+
+    @Override
+    public void showComplete() {
+
+    }
+
+    public void showProgress() {
+        progressDialog = Util.showProgressDialog(getApplicationContext(), "لطفا منتظر بمانید", ReservationHotelDetailActivity.this);
+    }
+
+    public void dismissProgress() {
+        Util.dismissProgress(progressDialog);
+    }
+
+    @Override
+    public void ShowAttractionLists(ShowAttractionMoreList showAttractionList) {
+
+    }
+
+    @Override
+    public void showAttractionDetail(ShowAtractionDetailMore showAttractionFull) {
 
     }
 
@@ -718,4 +775,5 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
 //                break;
 //        }
     }
+
 }

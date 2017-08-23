@@ -78,12 +78,14 @@ import entity.ResultCommentList;
 import entity.ResultData;
 import entity.ResultItinerary;
 import entity.ResultItineraryAttraction;
+import entity.ResultItineraryAttractionDay;
 import entity.ResultItineraryAttractionList;
 import entity.ResultWidget;
 
 import entity.ResultWidgetFull;
 
 
+import entity.ShowAttractionListItinerary;
 import tools.Constants;
 
 import tools.Util;
@@ -110,6 +112,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     ResultItinerary itineraryData;
     private String itineraryId;
     List<ResultItineraryAttraction> itineraryActionList;
+    List<ResultItineraryAttractionDay> resultItineraryAttractionDays;
     CircularProgressBar progress1;
     CircularProgressBar progress2;
     CircularProgressBar progress3;
@@ -519,7 +522,9 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             case R.id.showItinerary1:
                 showProgressDialog();
                 builder.build().inject(this);
-                itineraryPresenter.getItineraryAttractionList("attraction", "fa", itineraryId,Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+//                itineraryPresenter.getItineraryAttractionList("attraction", "fa", itineraryId,Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                itineraryPresenter.getItineraryAttractionListDay("attractionday", "fa", itineraryId,Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+
                 break;
         }
     }
@@ -915,6 +920,15 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     @Override
     public void showAnimationWhenWaiting() {
         ratingHolderFlag = itineraryPresenter.doTranslateAnimationUp(ratingHolder, GroupHolder, triangleShowAttraction);
+    }
+
+    @Override
+    public void showAttractionDay(ShowAttractionListItinerary showAttractionListItinerary) {
+        resultItineraryAttractionDays = showAttractionListItinerary.getResultItineraryAttractionDay();
+        progressDialog.dismiss();
+        Intent intent = new Intent(getApplicationContext(), ShowAttractionActivity.class);
+        intent.putExtra("resultItineraryAttractionDays", (Serializable) resultItineraryAttractionDays);
+        startActivity(intent);
     }
 
     @Override

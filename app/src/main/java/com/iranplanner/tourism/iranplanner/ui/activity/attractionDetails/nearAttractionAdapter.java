@@ -1,4 +1,4 @@
-package com.iranplanner.tourism.iranplanner.ui.fragment.home;
+package com.iranplanner.tourism.iranplanner.ui.activity.attractionDetails;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +12,8 @@ import com.iranplanner.tourism.iranplanner.R;
 
 import java.util.List;
 
-import entity.HomeLocalfood;
+import entity.HomeSouvenir;
+import entity.ResultAttractionList;
 import tools.Util;
 
 
@@ -20,10 +21,11 @@ import tools.Util;
  * Created by HoDA on 7/22/2017.
  */
 
-public class LocalFoodHomeAdapter extends RecyclerView.Adapter<LocalFoodHomeAdapter.MyViewHolder> {
+public class nearAttractionAdapter extends RecyclerView.Adapter<nearAttractionAdapter.MyViewHolder> {
 
-    List<HomeLocalfood> homeLocalfood;
     Context context;
+   List<ResultAttractionList> resultAttractionList;
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -38,8 +40,8 @@ public class LocalFoodHomeAdapter extends RecyclerView.Adapter<LocalFoodHomeAdap
         }
     }
 
-    public LocalFoodHomeAdapter(List<HomeLocalfood> homeLocalfood, Context context) {
-        this.homeLocalfood = homeLocalfood;
+    public nearAttractionAdapter( List<ResultAttractionList> resultAttractionList, Context context) {
+        this.resultAttractionList = resultAttractionList;
         this.context = context;
     }
 
@@ -56,15 +58,15 @@ public class LocalFoodHomeAdapter extends RecyclerView.Adapter<LocalFoodHomeAdap
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {
         TextView textViewName = holder.textViewName;
         ImageView imageView = holder.imageViewIcon;
-        textViewName.setText(homeLocalfood.get(listPosition).getLocalfoodTitle());
-        if (homeLocalfood.get(listPosition).getImgUrl() != null) {
-            Util.setImageView(String.valueOf(homeLocalfood.get(listPosition).getImgUrl()), context, imageView,null);
+        textViewName.setText(resultAttractionList.get(listPosition).getResulAttraction().getAttractionTitle());
+        if (resultAttractionList.get(listPosition).getResulAttraction().getAttractionImgUrl() != null) {
+            Util.setImageView(String.valueOf(resultAttractionList.get(listPosition).getResulAttraction().getAttractionImgUrl()), context, imageView,null);
         }
     }
 
     @Override
     public int getItemCount() {
-        return homeLocalfood.size();
+        return resultAttractionList.size();
     }
 }
 

@@ -1,5 +1,6 @@
 package com.iranplanner.tourism.iranplanner.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.coinpany.core.android.widget.Utils;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.ui.activity.confirmHotelReservation.ActivityHotelReservationConfirm;
+import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListActivity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -69,6 +71,7 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
     EditText textPhoneAddress;
     ResultLodging resultLodgingHotelDetail;
     String bundleId;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,7 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
             @Override
             public void onClick(View view) {
                 if (validate()) {
+
                     Intent intentReservationRegisterRoom = new Intent(getApplicationContext(), ActivityHotelReservationConfirm.class);
                     intentReservationRegisterRoom.putExtra("selectedRooms", (Serializable) selectedRooms);
                     intentReservationRegisterRoom.putExtra("ResultRooms", (Serializable) ResultRooms);

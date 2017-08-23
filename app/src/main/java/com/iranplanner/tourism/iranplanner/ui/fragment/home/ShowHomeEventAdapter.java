@@ -51,7 +51,7 @@ public class ShowHomeEventAdapter extends PagerAdapter {
         ImageView toolsImg = (ImageView) page.findViewById(R.id.toolsImg);
         toolsText.setText(homeEvent.get(position).getEventTitle());
         if (homeEvent.get(position).getImgUrl() != null) {
-            Util.setImageView(homeEvent.get(position).getImgUrl(), context, toolsImg);
+            Util.setImageView(homeEvent.get(position).getImgUrl(), context, toolsImg,null);
         }
 
         hotelPosition = position;

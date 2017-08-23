@@ -3,6 +3,7 @@ package com.iranplanner.tourism.iranplanner.ui.activity.showRoom;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +95,12 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHo
         viewHolder.txtPriceRoom.setText(Util.persianNumbers(String.valueOf(Long.decode(ResultRoom.get(position).getRoomPrice()) / 10)) + " تومان");
         viewHolder.txtnewPrice.setText(ResultRoom.get(position).getRoomPricePromotion()!=null ? Util.persianNumbers(String.valueOf(Long.decode(ResultRoom.get(position).getRoomPricePromotion()) / 10)): "");
         viewHolder.txtShowPercentPercentage.setText(ResultRoom.get(position).getRoomPriceDifferencePercent()!=null ? "تخفیف تا %"+Util.persianNumbers(ResultRoom.get(position).getRoomPriceDifferencePercent()): "");
+        viewHolder.chooseHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("test","teeeeeeeeeeeeeeeeeeest");
+            }
+        });
     }
 
     @Override
@@ -136,6 +143,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHo
         RelativeLayout chooseHolder;
         @InjectView(R.id.txtNumberChoose)
         TextView txtNumberChoose;
+
 
         public ViewHolder(View view) {
             super(view);

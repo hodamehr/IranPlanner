@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.iranplanner.tourism.iranplanner.R;
@@ -29,13 +30,14 @@ public class AttractionHomeAdapter extends  RecyclerView.Adapter<AttractionHomeA
 
         TextView textViewName;
         ImageView imageViewIcon;
+        ProgressBar imageLoading;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
             this.textViewName = (TextView) itemView.findViewById(R.id.txtView);
             this.imageViewIcon = (ImageView) itemView.findViewById(R.id.image);
-
+            this.imageLoading = (ProgressBar) itemView.findViewById(R.id.imageLoading);
         }
     }
 
@@ -58,9 +60,10 @@ public class AttractionHomeAdapter extends  RecyclerView.Adapter<AttractionHomeA
 
         TextView textViewName = holder.textViewName;
         ImageView imageView = holder.imageViewIcon;
+        ProgressBar imageLoading = holder.imageLoading;
         textViewName.setText(homeAttractions.get(listPosition).getAttractionTitle());
         if (homeAttractions.get(listPosition).getImgUrl() != null) {
-            Util.setImageView(homeAttractions.get(listPosition).getImgUrl(), context, imageView);
+            Util.setImageView(homeAttractions.get(listPosition).getImgUrl(), context, imageView,imageLoading);
         }
     }
 

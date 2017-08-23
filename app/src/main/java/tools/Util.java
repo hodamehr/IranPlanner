@@ -2,6 +2,7 @@ package tools;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,12 +11,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,8 +24,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
+import com.iranplanner.tourism.iranplanner.ui.activity.login.LoginActivity;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -39,7 +39,6 @@ import server.Config;
 public class Util {
 
 
-
     public static boolean isNetworkAvailable(Context context) {
 //            ConnectivityManager connectivityManager
 //                    = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -52,13 +51,14 @@ public class Util {
             android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             android.net.NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
-            if((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting())) return true;
+            if ((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting()))
+                return true;
             else return false;
         } else
             return false;
-        }
+    }
 
-    public static  AlertDialog.Builder buildDialog(Context c) {
+    public static AlertDialog.Builder buildDialog(Context c) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setTitle("عدم دسترسی به اینترنت");
@@ -75,7 +75,8 @@ public class Util {
 
         return builder;
     }
-    public static void setImageView(String url, Context context, ImageView imageView) {
+
+    public static void setImageView(String url, Context context, ImageView imageView, ProgressBar loading) {
 
 
 //            imgItineraryListMore.setVisibility(View.VISIBLE);
@@ -95,8 +96,11 @@ public class Util {
                         return false;
                     }
                 })
-                .into(imageView)
-        ;
+                .into(imageView);
+        if (loading != null) {
+            loading.setVisibility(View.GONE);
+        }
+
     }
 
     //    else {
@@ -159,15 +163,21 @@ public class Util {
         String regId = pref.getString("regId", null);
         return regId;
     }
-
-    public static final void showProgressDialog(Context context, ProgressDialog progressDialog) {
+    ProgressDialog progressDialog;
+    public static final ProgressDialog showProgressDialog(Context context, /*ProgressDialog progressDialog,*/String message , Activity activity) {
+        ProgressDialog progressDialog = new ProgressDialog(activity);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("لطفا منتظر بمانید");
+        progressDialog.setMessage(message);
         progressDialog.show();
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
+        return progressDialog;
     }
-
+    public static void dismissProgress(ProgressDialog progressDialog) {
+        if (progressDialog.isShowing() == true || progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
     public static final Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -242,7 +252,7 @@ public class Util {
             if (totalMinute == 0) {
                 textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf(hours)) + " ساعت ");
             } else {
-                textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf(hours)) + " ساعت و " + totalMinute + " دقیقه ");
+                textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf(hours)) + " ساعت و " + Util.persianNumbers(String.valueOf(totalMinute) ) + " دقیقه ");
             }
         } else {
             textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf(totalMinute)) + " دقیقه ");

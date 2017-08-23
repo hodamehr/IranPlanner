@@ -29,6 +29,7 @@ import entity.ResultItineraryAttractionList;
 import entity.ResultWidgetFull;
 
 
+import entity.ShowAttractionListItinerary;
 import entity.map.DestinationResult;
 import entity.map.Leg;
 import entity.map.Route;
@@ -80,6 +81,33 @@ public class ItineraryPresenter extends ItineraryContract {
                     public void onNext(ResultItineraryAttractionList resultItineraryList) {
 //                        mView.showItineraries(resultItineraryList, "fromCityToCity");
                         mView.showAttraction(resultItineraryList);
+
+                    }
+                });
+    }
+
+    @Override
+    public void getItineraryAttractionListDay(String action, String lang, String id, String cid, String andId) {
+        retrofit.create(AttractionService.class)
+                .getItineraryAttractionListDay(action, lang, id, cid, andId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<ShowAttractionListItinerary>() {
+
+                    @Override
+                    public void onCompleted() {
+                        mView.showComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(ShowAttractionListItinerary resultItineraryList) {
+//                        mView.showItineraries(resultItineraryList, "fromCityToCity");
+                        mView.showAttractionDay(resultItineraryList);
 
                     }
                 });
@@ -343,5 +371,15 @@ public class ItineraryPresenter extends ItineraryContract {
         Observable<DestinationResult> getDirection(@Query("origin") String origin,
                                                    @Query("destination") String destination);
 
+
+//        https://api.parsdid.com/iranplanner/app/api-itinerary.php?action=attractionday&id=29458&lang=fa&offset=20
+        @GET("api-itinerary.php")
+        Observable<ShowAttractionListItinerary> getItineraryAttractionListDay(
+                @Query("action") String action,
+                @Query("lang") String lang,
+                @Query("id") String id,
+                @Query("cid") String cid,
+                @Query("andId") String andId
+        );
     }
 }

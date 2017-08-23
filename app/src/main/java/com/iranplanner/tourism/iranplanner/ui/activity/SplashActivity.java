@@ -3,19 +3,15 @@ package com.iranplanner.tourism.iranplanner.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.di.model.App;
+import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMorePresenter;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationContract;
 import com.iranplanner.tourism.iranplanner.ui.activity.login.LoginActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListPresenter;
 import com.iranplanner.tourism.iranplanner.ui.fragment.home.DaggerHomeComponent;
 import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomeContract;
 import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomeModule;
@@ -24,11 +20,16 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomePresenter;
 import javax.inject.Inject;
 
 import entity.GetHomeResult;
+import entity.ResultCommentList;
+import entity.ResultLodgingHotel;
 import entity.ResultLodgingList;
+import entity.ShowAtractionDetailMore;
+import entity.ShowAttractionListMore;
+import entity.ShowAttractionMoreList;
 import tools.CustomMessage;
 import tools.Util;
 
-public class SplashActivity extends StandardActivity implements HomeContract.View, ReservationContract.View {
+public class SplashActivity extends StandardActivity implements HomeContract.View, ReservationContract.View, AttractionListMorePresenter.View,ReservationHotelListPresenter.View  {
     Thread splashTread;
     @Inject
     HomePresenter homePresenter;
@@ -125,7 +126,7 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
     private void getHomeResult(String destination, String selectId) {
 
         DaggerHomeComponent.builder().netComponent(((App) getApplicationContext().getApplicationContext()).getNetComponent())
-                .homeModule(new HomeModule(this, this))
+                .homeModule(new HomeModule(this, this,this,this))
                 .build().inject(this);
         String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
         String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
@@ -140,8 +141,28 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
     }
 
     @Override
+    public void showComments(ResultCommentList resultCommentList) {
+
+    }
+
+    @Override
+    public void sendCommentMessage(ResultCommentList resultCommentList) {
+
+    }
+
+    @Override
+    public void showHotelReserveList(ResultLodgingHotel resultLodgingHotel) {
+
+    }
+
+    @Override
     public void showError(String message) {
         SplashActivity.this.finish();
+    }
+
+    @Override
+    public void commentResult(String message) {
+
     }
 
     @Override
@@ -160,12 +181,27 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
     }
 
     @Override
+    public void ShowAttractionLists(ShowAttractionListMore getAttractionList) {
+
+    }
+
+    @Override
     public void showProgress() {
 
     }
 
     @Override
     public void dismissProgress() {
+
+    }
+
+    @Override
+    public void ShowAttractionLists(ShowAttractionMoreList showAttractionList) {
+
+    }
+
+    @Override
+    public void showAttractionDetail(ShowAtractionDetailMore showAttractionFull) {
 
     }
 

@@ -3,6 +3,8 @@ package com.iranplanner.tourism.iranplanner.ui.activity.confirmHotelReservation;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,13 +92,15 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
 
     private void changeBtnOKConfirm(ViewHolder viewHolder, int position) {
         resultRooms.get(position).setOkConfirmChange(false);
+        viewHolder.txtOkRoom.setBackgroundColor(context.getResources().getColor(R.color.dark_blue));
 
 //        viewHolder.txtOkRoom.setBackground(context.getResources().getDrawable(R.drawable.button_corner_green_stroke));
-        viewHolder.txtOkRoom.setText("تایید");
+//        viewHolder.txtOkRoom.setText("تایید");
 
     }
 
     private void setVisibleHalfBoard(ViewHolder viewHolder, int position) {
+//        viewHolder.txtOkRoom.setBackground(context.getDrawable(R.drawable.button_corner_green_stroke));
         if (resultRooms.get(position).getRoomPriceHalfboardIn() != null || resultRooms.get(position).getRoomPriceHalfboardOut() != null) {
             viewHolder.holder.setVisibility(View.VISIBLE);
         }
@@ -111,25 +115,87 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
         }
     }
 
+    private void setHeadNameReservation(final ViewHolder viewHolder, final int position) {
+        viewHolder.edtHeadNameReservation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                                                             if (start != 0 && (start == 0 && before == 0 && count == 1)) {
+//                                                                 sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
+//                                                             }
+                if (start != 0 || (start == 0 && before == 0 && count == 1)) {
+                    changeBtnOKConfirm(viewHolder, position);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.e("d", s.toString());
+                if (s.toString().equals("")) {
+                    changeBtnOKConfirm(viewHolder, position);
+                }
+            }
+        });
+    }
+
+    private void setHeadLastNameReservation(final ViewHolder viewHolder, final int position) {
+        viewHolder.edtHeadLastNameReservation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                                                             if (start != 0 && (start == 0 && before == 0 && count == 1)) {
+//                                                                 sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
+//                                                             }
+                if (start != 0 || (start == 0 && before == 0 && count == 1)) {
+                    changeBtnOKConfirm(viewHolder, position);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.e("d", s.toString());
+                if (s.toString().equals("")) {
+                    changeBtnOKConfirm(viewHolder, position);
+                }
+            }
+        });
+    }
+
     private void setChangeAddPerson(final ViewHolder viewHolder, final int position) {
+//        viewHolder.txtOkRoom.setBackground(context.getDrawable(R.drawable.button_corner_green_stroke));
+
         viewHolder.addPerHolderHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialogNumber(viewHolder, position, roomCapacityExtra, viewHolder.txtaddPersonValue, null, " نفراضافه ");
+                changeBtnOKConfirm(viewHolder, position);
             }
         });
     }
 
     private void setChangeNationalityPerson(final ViewHolder viewHolder, final int position) {
+//        viewHolder.txtOkRoom.setBackground(context.getDrawable(R.drawable.button_corner_green_stroke));
+
         viewHolder.NationalHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDialogString(viewHolder, position, 1, viewHolder.txtNationalityValue, new String[]{"ایرانی", "خارجی"}, " نفراضافه ");
+                changeBtnOKConfirm(viewHolder, position);
             }
         });
     }
 
     private void setChangeHalfBoard(final ViewHolder viewHolder, final int position) {
+//        viewHolder.txtOkRoom.setBackground(context.getDrawable(R.drawable.button_corner_green_stroke));
+
         viewHolder.checkHalfIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -176,20 +242,24 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
         setChangeAddPerson(viewHolder, position);
         setChangeNationalityPerson(viewHolder, position);
         setChangeHalfBoard(viewHolder, position);
+        setHeadNameReservation(viewHolder, position);
+        setHeadLastNameReservation(viewHolder, position);
+//        setConfirmAllChanges(viewHolder,position);
 //        setConfirmAllChanges(viewHolder, position);
         viewHolder.txtOkRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean a=checkInfo(viewHolder, position);
-
-                if (resultRooms.get(position).getOkConfirmChange()!=null && !resultRooms.get(position).getOkConfirmChange() && a) {
+                boolean a = checkInfo(viewHolder, position);
+                if (resultRooms.get(position).getOkConfirmChange() != null && !resultRooms.get(position).getOkConfirmChange() && a) {
                     resultRooms.get(position).setHeadName(viewHolder.edtHeadNameReservation.getText().toString());
                     resultRooms.get(position).setHeadLastName(viewHolder.edtHeadLastNameReservation.getText().toString());
                     resultRooms.get(position).setOkConfirmChange(true);
                     notifyDataSetChanged();
-                    Log.e("dd","dd");
+                    Log.e("notifyDataSetChanged", "true");
+                    if (resultRooms.get(position).getOkConfirmChange()) {
+                        view.setBackgroundColor(context.getResources().getColor(R.color.green));
+                    }
                 }
-
             }
         });
         viewHolder.roomDelete.setOnClickListener(new View.OnClickListener() {
@@ -202,20 +272,29 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
 
     private boolean checkInfo(ViewHolder viewHolder, int position) {
         boolean validate = true;
-        if (!viewHolder.edtHeadNameReservation.getText().toString().equals("")) {
+        if (!viewHolder.edtHeadNameReservation.getText().toString().equals("") && !viewHolder.edtHeadLastNameReservation.getText().toString().equals("")) {
             resultRooms.get(position).setHeadName(viewHolder.edtHeadNameReservation.getText().toString());
-            changeBtnOKConfirm(viewHolder, position);
-        } else if (viewHolder.edtHeadNameReservation.getText().toString().equals("")) {
-            viewHolder.edtHeadNameReservation.setError("نام سرپرست وارد نشده است");
-            validate = false;
-        }
-        if (!viewHolder.edtHeadLastNameReservation.getText().toString().equals("")) {
             resultRooms.get(position).setHeadLastName(viewHolder.edtHeadLastNameReservation.getText().toString());
             changeBtnOKConfirm(viewHolder, position);
-        } else if (viewHolder.edtHeadLastNameReservation.getText().toString().equals("")) {
-            viewHolder.edtHeadLastNameReservation.setError("نام خانوادگی سرپرست وارد نشده است");
+            validate = true;
+        } else {
+            viewHolder.edtHeadLastNameReservation.setError("نام و یا نام خانوادگی سرپرست وارد نشده است");
             validate = false;
         }
+//        if (!viewHolder.edtHeadNameReservation.getText().toString().equals("")) {
+//            resultRooms.get(position).setHeadName(viewHolder.edtHeadNameReservation.getText().toString());
+//            changeBtnOKConfirm(viewHolder, position);
+//        } else if (viewHolder.edtHeadNameReservation.getText().toString().equals("")) {
+//            viewHolder.edtHeadNameReservation.setError("نام سرپرست وارد نشده است");
+//            validate = false;
+//        }
+//        if (!viewHolder.edtHeadLastNameReservation.getText().toString().equals("")) {
+//            resultRooms.get(position).setHeadLastName(viewHolder.edtHeadLastNameReservation.getText().toString());
+//            changeBtnOKConfirm(viewHolder, position);
+//        } else if (viewHolder.edtHeadLastNameReservation.getText().toString().equals("")) {
+//            viewHolder.edtHeadLastNameReservation.setError("نام خانوادگی سرپرست وارد نشده است");
+//            validate = false;
+//        }
         return validate;
     }
 

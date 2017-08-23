@@ -128,7 +128,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
                     pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                        reservationPresenter.getLodgingList("list", String.valueOf(resultLodgings.get(0).getLodgingCityId()), "20", nextOffset, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                        reservationPresenter.getLodgingList("list", String.valueOf(resultLodgings.get(0).getLodgingCityId()), "20", nextOffset, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()),"");
                     }
                 }
             }
@@ -248,23 +248,17 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
 //        progressDialog.dismiss();
     }
 
+
+
+
+
     @Override
     public void showProgress() {
-
+        progressDialog = Util.showProgressDialog(getApplicationContext(), "لطفا منتظر بمانید", ReservationHotelListActivity.this);
     }
 
     @Override
     public void dismissProgress() {
-
-    }
-
-    private void showProgressDialog() {
-        progressDialog = new ProgressDialog(ReservationHotelListActivity.this.getApplicationContext());
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("لطفا منتظر بمانید");
-        progressDialog.show();
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
-
+        Util.dismissProgress(progressDialog);
     }
 }

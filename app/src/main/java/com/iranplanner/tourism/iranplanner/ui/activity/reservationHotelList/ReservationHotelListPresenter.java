@@ -28,8 +28,8 @@ public class ReservationHotelListPresenter extends ReservationHotelListContract 
 
     @Override
     public void getHotelReserve(String action, String idHotel, String limit, String offset, String cid, String andID) {
-
-        retrofit.create(ItineraryService.class).getHotelReserve(action, idHotel, limit, offset, cid, andID)
+        mView.showProgress();
+        retrofit.create(ReservationHotelListService.class).getHotelReserve(action, idHotel, limit, offset, cid, andID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -38,11 +38,13 @@ public class ReservationHotelListPresenter extends ReservationHotelListContract 
                     @Override
                     public void onCompleted() {
                         mView.showComplete();
+                        mView.dismissProgress();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.getMessage());
+                        mView.dismissProgress();
                     }
 
                     @Override
@@ -53,7 +55,7 @@ public class ReservationHotelListPresenter extends ReservationHotelListContract 
     }
 
 
-    public interface ItineraryService {
+    public interface ReservationHotelListService {
 
         @GET("api-lodging.php")
         Observable<ResultLodgingHotel> getHotelReserve(@Query("action") String action,

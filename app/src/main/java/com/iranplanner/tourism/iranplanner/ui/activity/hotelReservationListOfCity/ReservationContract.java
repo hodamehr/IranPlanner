@@ -27,7 +27,9 @@ public abstract class ReservationContract extends Presenter<ReservationContract.
                                         String cid,
                                         String limit,
                                         String offset,
-                                        String andId);
+                                        String andId,
+                                        String type
+    );
 
 
 }

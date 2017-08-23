@@ -30,7 +30,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.ItineraryLodgingCity;
+import entity.ResulAttraction;
+import entity.ResultAttractionList;
 import entity.ResultItineraryAttraction;
+import entity.ResultItineraryAttractionDay;
 import tools.Util;
 
 
@@ -40,6 +43,7 @@ public class ShowAttractionListFragment extends StandardFragment implements Data
     private AttractionsListAdapter adapter;
     LinearLayoutManager mLayoutManager;
     List<ResultItineraryAttraction> itineraryActionList;
+    List<ResultItineraryAttractionDay> resultItineraryAttractionDays;
     ImageView arrowRight, arrowLeft;
     int dayNumber, allDays;
 
@@ -53,14 +57,17 @@ public class ShowAttractionListFragment extends StandardFragment implements Data
         arrowRight = (ImageView) view.findViewById(R.id.arrowRight);
         TextView textDayNumber = (TextView) view.findViewById(R.id.textDayNumber);
         itineraryActionList = (List<ResultItineraryAttraction>) bundle.getSerializable("itineraryActionList");
+        resultItineraryAttractionDays = (List<ResultItineraryAttractionDay>) bundle.getSerializable("resultItineraryAttractionDays");
         dayNumber = bundle.getInt("dayNumber");
         allDays = bundle.getInt("allDays");
         textDayNumber.setText(" روز " + Util.persianNumbers(String.valueOf(dayNumber)) + " از " + Util.persianNumbers(String.valueOf(allDays)));
         attractionRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         attractionRecyclerView.setLayoutManager(layoutManager);
-        adapter = new AttractionsListAdapter(getActivity(), this, itineraryActionList, getContext(), R.layout.fragment_show_attraction_list_detail);
-        attractionRecyclerView.setAdapter(adapter);
+//        adapter = new AttractionsListAdapter(getActivity(), this, itineraryActionList, getContext(), R.layout.fragment_show_attraction_list_detail);
+        AttractionsListAdapterDay adapters = new AttractionsListAdapterDay(getActivity(), this, resultItineraryAttractionDays, getContext(), R.layout.fragment_show_attraction_list_detail);
+//        attractionRecyclerView.setAdapter(adapter);
+        attractionRecyclerView.setAdapter(adapters);
         mLayoutManager = new LinearLayoutManager(getContext());
         attractionRecyclerView.setLayoutManager(mLayoutManager);
         attractionRecyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
@@ -78,8 +85,6 @@ public class ShowAttractionListFragment extends StandardFragment implements Data
                         } else {
                             openMapFull(position);
                         }
-
-
                     }
                 });
 
@@ -87,9 +92,13 @@ public class ShowAttractionListFragment extends StandardFragment implements Data
                 imageTextAttractionHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+//                        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+                        ResulAttraction resulAttraction = resultItineraryAttractionDays.get(position).getResulAttraction();
+                      List<ResultAttractionList >resultAttractionList= (List<ResultAttractionList>) resultItineraryAttractionDays.get(position).getResultAttractionList();
                         Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
-                        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+//                        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+                        intent.putExtra("resulAttraction", (Serializable) resulAttraction);
+                        intent.putExtra("resultAttractionList", (Serializable) resultAttractionList);
                         startActivity(intent);
                     }
                 });
@@ -97,10 +106,10 @@ public class ShowAttractionListFragment extends StandardFragment implements Data
                 moreInfoHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
-                        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
-                        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
-                        startActivity(intent);
+//                        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
+//                        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+//                        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
+//                        startActivity(intent);
                     }
                 });
 

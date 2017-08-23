@@ -52,7 +52,7 @@ public class HomeReservationHotelAdapter extends RecyclerView.Adapter<HomeReserv
     public void onBindViewHolder(final HomeReservationHotelAdapter.ViewHolder viewHolder, int i) {
         viewHolder.txtView.setText(homeLodgings.get(i).getLodgingTitle());
         if (homeLodgings.get(i).getImgUrl() != null) {
-            Util.setImageView(homeLodgings.get(i).getImgUrl(), context, viewHolder.imageView);
+            Util.setImageView(homeLodgings.get(i).getImgUrl(), context, viewHolder.imageView,null);
         }
         if (homeLodgings.get(i).getLodgingRateInt()=="1") {
             viewHolder.starHolder.setVisibility(View.VISIBLE);

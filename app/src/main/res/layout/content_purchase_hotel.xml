@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/imageTextAttractionHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:id="@+id/imageTextAttractionHolder1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="@dimen/margin_standard"
+
+            android:layout_alignParentStart="true">
+
+            <ProgressBar
+                android:id="@+id/imageLoading"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:translationZ="1dp" />
+
+
+            <ImageView
+                android:id="@+id/ImageAttraction"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="@dimen/margin_short"
+                android:src="@drawable/emam2"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/margin_short"
+            android:layout_marginTop="@dimen/padding_standard"
+            android:layout_toEndOf="@+id/imageTextAttractionHolder1"
+            android:gravity="start">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true">
+
+                <TextView
+                    android:id="@+id/attraction_name"
+                    style="@style/StandardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="@dimen/margin_short"
+                    android:layout_marginLeft="@dimen/margin_standard"
+                    android:layout_marginRight="@dimen/margin_standard"
+                    android:text="پارسه" />
+
+                <RelativeLayout
+                    android:id="@+id/cityNameHolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/attraction_name"
+
+                    android:paddingBottom="@dimen/margin_xshort">
+
+
+                    <TextView
+                        android:id="@+id/textCityName"
+                        style="@style/SmallText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/txtTypeRoome"
+
+                        android:maxLines="1"
+                        android:text="txtTypeRoome" />
+
+                    <TextView
+                        android:id="@+id/txtTypeRoome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignTop="@+id/textCityName"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:scaleType="centerCrop"
+                        android:text="type" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/cityNameHolderz"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/imageTextAttractionHolder1"
+                    android:layout_below="@+id/cityNameHolder"
+                    android:paddingBottom="@dimen/margin_xshort">
+
+
+                    <TextView
+                        android:id="@+id/textTimeDuration"
+                        style="@style/SmallText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/txtRequestCode"
+
+                        android:maxLines="1"
+                        android:text="textCityName" />
+
+                    <TextView
+                        android:id="@+id/txtRequestCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:text="requestCode" />
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/infoHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageTextAttractionHolder"
+        android:paddingEnd="@dimen/padding_standard"
+        android:paddingStart="@dimen/padding_standard">
+
+        <RelativeLayout
+            android:id="@+id/dateHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/attraction_name"
+            android:paddingBottom="@dimen/margin_xshort">
+
+
+            <TextView
+                android:id="@+id/txtDate"
+                style="@style/SmallText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageDate"
+
+                android:maxLines="1"
+                android:text="از چهارشنبه" />
+
+            <ImageView
+                android:id="@+id/imageDate"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/textCityName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_pinblack" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/statusRequestHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dateHolder"
+            android:paddingBottom="@dimen/margin_xshort">
+
+            <TextView
+                android:id="@+id/txtstatusRequestValue"
+                style="@style/SmallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/txtstatusRequest"
+
+                android:layout_alignBottom="@+id/txtstatusRequest"
+                android:layout_alignParentEnd="true"
+                android:maxLines="1"
+                android:text="در حال تایید"
+                android:layout_toEndOf="@+id/txtstatusRequest" />
+
+            <TextView
+                android:id="@+id/txtstatusRequest"
+                style="@style/SmallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignBottom="@+id/imagestatusRequest"
+                android:layout_toEndOf="@+id/imagestatusRequest"
+                android:maxLines="1"
+                android:text="از چهارشنبه" />
+
+            <ImageView
+                android:id="@+id/imagestatusRequest"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/textCityName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_pinblack" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/statusRequestHolderDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/statusRequestHolder"
+            android:paddingBottom="@dimen/margin_xshort">
+
+            <TextView
+                android:id="@+id/txtstatusRequestValueDate"
+                style="@style/SmallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/txtstatusRequest"
+
+                android:layout_alignBottom="@+id/txtstatusRequest"
+                android:layout_alignParentEnd="true"
+                android:maxLines="1"
+                android:text="در حال تایید"
+                android:layout_toEndOf="@+id/txtstatusRequestDate" />
+
+            <TextView
+                android:id="@+id/txtstatusRequestDate"
+                style="@style/SmallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignBottom="@+id/imagestatusRequest"
+                android:layout_toEndOf="@+id/imagestatusRequestDate"
+                android:maxLines="1"
+                android:text="از چهارشنبه" />
+
+            <ImageView
+                android:id="@+id/imagestatusRequestDate"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/textCityName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_pinblack"
+                android:visibility="invisible" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/headNameHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/statusRequestHolderDate"
+            android:paddingBottom="@dimen/margin_xshort">
+
+            <TextView
+                android:id="@+id/txtHeadNameValue"
+                style="@style/SmallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/txtHeadName"
+
+                android:layout_alignBottom="@+id/txtHeadName"
+                android:layout_alignParentEnd="true"
+                android:maxLines="1"
+                android:text="ddd"
+                android:layout_toEndOf="@+id/txtHeadName" />
+
+            <TextView
+                android:id="@+id/txtHeadName"
+                style="@style/SmallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignBottom="@+id/imagestatusRequest"
+                android:layout_toEndOf="@+id/imageHeadName"
+                android:maxLines="1"
+                android:text="df" />
+
+            <ImageView
+                android:id="@+id/imageHeadName"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/textCityName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_pinblack" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/moreInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/infoHolder">
+
+        <RelativeLayout
+            android:id="@+id/MoreHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/attraction_name"
+            android:layout_centerInParent="true"
+            android:paddingBottom="@dimen/margin_xshort">
+
+
+            <TextView
+                android:id="@+id/txtMore"
+                style="@style/SmallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageMore"
+                android:maxLines="1"
+                android:text=" نمایش جزییات سفر"
+                android:textColor="@color/main_blue" />
+
+            <ImageView
+                android:id="@+id/imageMore"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignTop="@+id/textCityName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_arrow_down_grey" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/allPriceHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/moreInfo"
+        android:padding="@dimen/padding_standard">
+
+        <RelativeLayout
+            android:id="@+id/priceHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/attraction_name"
+            android:paddingBottom="@dimen/margin_xshort">
+
+
+            <TextView
+                android:id="@+id/txtpriceValue"
+                style="@style/SmallText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/txtPrice"
+                android:maxLines="1"
+                android:text="از چهارشنبه" />
+
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/textCityName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_pinblack"
+                android:text="قیمت اولیه" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/DiscountHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/priceHolder"
+            android:paddingBottom="@dimen/margin_xshort">
+
+
+            <TextView
+                android:id="@+id/txtDiscountValue"
+                style="@style/SmallText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/txtDiscount"
+                android:maxLines="1"
+                android:text="از چهارشنبه" />
+
+            <TextView
+                android:id="@+id/txtDiscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/textCityName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="centerCrop"
+                android:text="قیمت اولیه" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/payableHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/DiscountHolder"
+            android:paddingBottom="@dimen/margin_xshort">
+
+
+            <TextView
+                android:id="@+id/txtPayableValue"
+                style="@style/SmallText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/txtPayable"
+                android:maxLines="1"
+                android:text="dfd"
+                android:textColor="@color/green" />
+
+            <TextView
+                android:id="@+id/txtPayable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/textCityName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="gh"
+                android:textColor="@color/green" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/allPriceHolder"
+        android:paddingLeft="@dimen/padding_standard"
+        android:paddingRight="@dimen/padding_standard">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="سبد خرید"
+            android:id="@+id/button2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="لغو درخواست"
+            android:layout_alignBaseline="@+id/button2"
+            android:layout_alignBottom="@+id/button2"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/dark_red"/>
+
+    </RelativeLayout>
+</RelativeLayout>

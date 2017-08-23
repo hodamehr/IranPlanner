@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -37,15 +36,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.ClickableViewPager;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMorePresenter;
+import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.ShowAttractionListMoreActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.attractionDetails.attractionDetailActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.hotelDetails.ReservationHotelDetailActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationContract;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationPresenter;
 import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListPresenter;
 import com.iranplanner.tourism.iranplanner.ui.fragment.FirstItem;
 import com.iranplanner.tourism.iranplanner.ui.fragment.homeInfo.AboutCityFragment;
 
@@ -58,6 +63,8 @@ import javax.inject.Inject;
 
 import autoComplet.MyFilterableAdapterCityProvince;
 import autoComplet.ReadJsonCityProvince;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import entity.CityProvince;
 import entity.Data;
 import entity.GetHomeResult;
@@ -70,9 +77,16 @@ import entity.HomeItinerary;
 import entity.HomeLocalfood;
 import entity.HomeLodging;
 import entity.HomeSouvenir;
+import entity.ResulAttraction;
+import entity.ResultAttractionList;
+import entity.ResultCommentList;
 import entity.ResultHome;
 import entity.ResultLodging;
+import entity.ResultLodgingHotel;
 import entity.ResultLodgingList;
+import entity.ShowAtractionDetailMore;
+import entity.ShowAttractionListMore;
+import entity.ShowAttractionMoreList;
 import me.relex.circleindicator.CircleIndicator;
 import tools.Constants;
 import tools.Util;
@@ -81,53 +95,124 @@ import tools.Util;
 /**
  * Created by h.vahidimehr on 10/01/2017.
  */
-public class HomeFragment extends StandardFragment implements DataTransferInterface, View.OnClickListener, AppBarLayout.OnOffsetChangedListener, NestedScrollView.OnScrollChangeListener, HomeContract.View, ReservationContract.View {
+public class HomeFragment extends StandardFragment implements DataTransferInterface, View.OnClickListener,
+        AppBarLayout.OnOffsetChangedListener, NestedScrollView.OnScrollChangeListener,
+        HomeContract.View, ReservationContract.View, AttractionListMorePresenter.View, ReservationHotelListPresenter.View {
 
     protected String[] mNavigationDrawerItemTitles;
-    protected DrawerLayout mDrawerLayout;
-    protected ListView mDrawerList;
-    protected Toolbar toolbar;
-    protected CharSequence mDrawerTitle;
-    protected CharSequence mTitle;
     List<CityProvince> CityProvince;
     String selectId, SelectedType;
-    protected ImageView toolbarToggle;
-    protected ImageView toolbarToggleLeft;
     GetHomeResult homeResult;
     protected static int buildVersion;
     @Inject
     HomePresenter homePresenter;
     @Inject
     ReservationPresenter reservationPresenter;
-    protected TextView toolbarTitle;
+    @Inject
+    AttractionListMorePresenter attractionListMorePresenter;
+    @Inject
+    ReservationHotelListPresenter reservationHotelListPresenter;
+//    protected TextView toolbarTitle;
 
     int width;
     int height;
     boolean anim = false;
-    Button aboutCityBtn;
-    LinearLayout card_view_province_list;
-    TextView txtWhereGo;
     boolean showContentProvince = true;
-    View toolbarFeatureElevation;
-    String cityProvinceName;
-    private String cityProvinceId;
-    List<CityProvince> tempCityProvince;
-    NestedScrollView scroller;
-    ImageView imageView, test;
+
     int toolbarHeight = 0;
-    RelativeLayout SelectHolder;
-    RelativeLayout frameLayout;
-    LinearLayout featureListHolder;
+
     private ProgressDialog progressDialog;
-    ImageView imgHome,toolbarBack;
-    ClickableViewPager BestHotelViewPager, BestAttractionViewPager;
-    ClickableViewPager eventsViewPager;
-    CircleIndicator indicator, BestHotelIndicator;
-    RecyclerView recyclerViewProvinceShow, horizontal_recycler_view, recyclerBestAttraction, recyclerSouvenir, recyclerItinerary, recyclerLocalFood;
     List<ResultHome> resultHomes;
-    RelativeLayout TypeHotelHolder, viewPagerEventsHolder, hotelsTypeHolder, viewPagerBestHolder, attracttionTypeHolder, bestAttractionHolder, itineraryHomeHolder, localFoodHomeHolder, souvenirHomeHolder;
+    @InjectView(R.id.app_bar)
+    AppBarLayout appBarLayout;
+    @InjectView(R.id.SelectHolder)
+    RelativeLayout SelectHolder;
+    @InjectView(R.id.aboutCityBtn)
+    Button aboutCityBtn;
+    @InjectView(R.id.imgHome)
+    ImageView imgHome;
+    @InjectView(R.id.toolbarBack)
+    ImageView toolbarBack;
+    @InjectView(R.id.txtWhereGo)
+    TextView txtWhereGo;
+    @InjectView(R.id.txtMoreTitleAttraction)
+    TextView txtMoreTitleAttraction;
+    @InjectView(R.id.TypeAttractionHolder)
+    RelativeLayout TypeAttractionHolder;
+    @InjectView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @InjectView(R.id.EventsViewPager)
+    ClickableViewPager eventsViewPager;
+    @InjectView(R.id.indicator)
+    CircleIndicator indicator;
+    @InjectView(R.id.toolbarToggle)
+    ImageView toolbarToggle;
+    @InjectView(R.id.toolbarToggleLeft)
+    ImageView toolbarToggleLeft;
+    @InjectView(R.id.featureListRelativeLayout)
+    RelativeLayout frameLayout;
+    @InjectView(R.id.featureListHolder)
+    LinearLayout featureListHolder;
+    @InjectView(R.id.toolbarFeatureElevation)
+    View toolbarFeatureElevation;
+    @InjectView(R.id.toolbarTitle)
+    TextView toolbarTitle;
+    @InjectView(R.id.nestedScrollView)
+    NestedScrollView scroller;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
+    @InjectView(R.id.left_drawer)
+    ListView mDrawerList;
+    @InjectView(R.id.recyclerViewProvinceShow)
+    RecyclerView recyclerViewProvinceShow;
+    @InjectView(R.id.recyclerBestHotel)
+    RecyclerView recyclerBestHotel;
+    @InjectView(R.id.recyclerBestAttraction)
+    RecyclerView recyclerBestAttraction;
+    @InjectView(R.id.recyclerItinerary)
+    RecyclerView recyclerItinerary;
+    @InjectView(R.id.recyclerSouvenir)
+    RecyclerView recyclerSouvenir;
+    @InjectView(R.id.recyclerLocalFood)
+    RecyclerView recyclerLocalFood;
+    @InjectView(R.id.viewPagerEventsHolder)
+    RelativeLayout viewPagerEventsHolder;
+    @InjectView(R.id.hotelsTypeHolder)
+    RelativeLayout hotelsTypeHolder;
+    @InjectView(R.id.viewPagerBestHolder)
+    RelativeLayout viewPagerBestHolder;
+    @InjectView(R.id.attracttionTypeHolder)
+    RelativeLayout attracttionTypeHolder;
+    @InjectView(R.id.bestAttractionHolder)
+    RelativeLayout bestAttractionHolder;
+    @InjectView(R.id.itineraryHomeHolder)
+    RelativeLayout itineraryHomeHolder;
+    @InjectView(R.id.localFoodHomeHolder)
+    RelativeLayout localFoodHomeHolder;
+    @InjectView(R.id.souvenirHomeHolder)
+    RelativeLayout souvenirHomeHolder;
+    @InjectView(R.id.TypeHotelHolder)
+    RelativeLayout TypeHotelHolder;
+    @InjectView(R.id.provinceListHOlder)
     LinearLayout provinceListHOlder;
-    NestedScrollView nestedScrollView;
+    @InjectView(R.id.hotelHolderGrouping)
+    RelativeLayout hotelHolderGrouping;
+    @InjectView(R.id.hotelTraditionalHolderGrouping)
+    RelativeLayout hotelTraditionalHolderGrouping;
+    @InjectView(R.id.hotelBoomgardiHolderGrouping)
+    RelativeLayout hotelBoomgardiHolderGrouping;
+    @InjectView(R.id.hotelَAppartementHolderGrouping)
+    RelativeLayout hotelَAppartementHolderGrouping;
+    @InjectView(R.id.txtMoreTitleHotel)
+    TextView txtMoreTitleHotel;
+    @InjectView(R.id.attractionHistoricalHolder)
+    RelativeLayout attractionHistoricalHolder;
+    @InjectView(R.id.attractionNaturalHolder)
+    RelativeLayout attractionNaturalHolder;
+    @InjectView(R.id.attractionSportHolder)
+    RelativeLayout attractionSportHolder;
+    @InjectView(R.id.attractionRelgonHolder)
+    RelativeLayout attractionRelgonHolder;
 
 
     public HomeFragment() {
@@ -140,63 +225,31 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        AppBarLayout appBarLayout = (AppBarLayout) rootView.findViewById(R.id.app_bar);
-        SelectHolder = (RelativeLayout) rootView.findViewById(R.id.SelectHolder);
-        aboutCityBtn = (Button) rootView.findViewById(R.id.aboutCityBtn);
-        imgHome = (ImageView) rootView.findViewById(R.id.imgHome);
-        card_view_province_list = (LinearLayout) rootView.findViewById(R.id.card_view_province_list);
-        txtWhereGo = (TextView) rootView.findViewById(R.id.txtWhereGo);
-        toolbarBack = (ImageView) rootView.findViewById(R.id.toolbarBack);
+        ButterKnife.inject(this, rootView);
         toolbarBack.setVisibility(View.GONE);
-        test = (ImageView) rootView.findViewById(R.id.test);
-//        LinearLayout btnShowProvince = (LinearLayout) rootView.findViewById(R.id.btnShowProvince);
-//        BestHotelViewPager = (ClickableViewPager) rootView.findViewById(R.id.BestHotelViewPager);
-//        BestAttractionViewPager = (ClickableViewPager) rootView.findViewById(R.id.BestAttractionViewPager);
-        mDrawerLayout = (DrawerLayout) rootView.findViewById(R.id.drawer_layout);
-        eventsViewPager = (ClickableViewPager) rootView.findViewById(R.id.EventsViewPager);
-        indicator = (CircleIndicator) rootView.findViewById(R.id.indicator);
-//        BestHotelIndicator = (CircleIndicator) rootView.findViewById(R.id.BestHotelIndicator);
-        toolbarToggle = (ImageView) rootView.findViewById(R.id.toolbarToggle);
-        toolbarToggleLeft = (ImageView) rootView.findViewById(R.id.toolbarToggleLeft);
-        frameLayout = (RelativeLayout) rootView.findViewById(R.id.featureListRelativeLayout);
-        featureListHolder = (LinearLayout) rootView.findViewById(R.id.featureListHolder);
-        toolbarFeatureElevation = (View) rootView.findViewById(R.id.toolbarFeatureElevation);
-        toolbarTitle = (TextView) rootView.findViewById(R.id.toolbarTitle);
-        scroller = (NestedScrollView) rootView.findViewById(R.id.nestedScrollView);
-        toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        mDrawerList = (ListView) rootView.findViewById(R.id.left_drawer);
-
-        recyclerViewProvinceShow = (RecyclerView) rootView.findViewById(R.id.recyclerViewProvinceShow);
-        horizontal_recycler_view = (RecyclerView) rootView.findViewById(R.id.wallet);
-        recyclerBestAttraction = (RecyclerView) rootView.findViewById(R.id.recyclerBestAttraction);
-        recyclerItinerary = (RecyclerView) rootView.findViewById(R.id.recyclerItinerary);
-        recyclerSouvenir = (RecyclerView) rootView.findViewById(R.id.recyclerSouvenir);
-        recyclerLocalFood = (RecyclerView) rootView.findViewById(R.id.recyclerLocalFood);
-
-
-        viewPagerEventsHolder = (RelativeLayout) rootView.findViewById(R.id.viewPagerEventsHolder);
-        hotelsTypeHolder = (RelativeLayout) rootView.findViewById(R.id.hotelsTypeHolder);
-        viewPagerBestHolder = (RelativeLayout) rootView.findViewById(R.id.viewPagerBestHolder);
-        attracttionTypeHolder = (RelativeLayout) rootView.findViewById(R.id.attracttionTypeHolder);
-        bestAttractionHolder = (RelativeLayout) rootView.findViewById(R.id.bestAttractionHolder);
-        itineraryHomeHolder = (RelativeLayout) rootView.findViewById(R.id.itineraryHomeHolder);
-        localFoodHomeHolder = (RelativeLayout) rootView.findViewById(R.id.localFoodHomeHolder);
-        souvenirHomeHolder = (RelativeLayout) rootView.findViewById(R.id.souvenirHomeHolder);
-        TypeHotelHolder = (RelativeLayout) rootView.findViewById(R.id.TypeHotelHolder);
-        provinceListHOlder = (LinearLayout) rootView.findViewById(R.id.provinceListHOlder);
-
-//        btnShowProvince.setOnClickListener(this);
-        test.setOnClickListener(this);
         appBarLayout.addOnOffsetChangedListener(this);
         if (scroller != null) {
             scroller.setOnScrollChangeListener(this);
         }
         aboutCityBtn.setOnClickListener(this);
         txtWhereGo.setOnClickListener(this);
+        txtMoreTitleAttraction.setOnClickListener(this);
+        TypeAttractionHolder.setOnClickListener(this);
         TypeHotelHolder.setOnClickListener(this);
+        hotelHolderGrouping.setOnClickListener(this);
+        hotelَAppartementHolderGrouping.setOnClickListener(this);
+        hotelBoomgardiHolderGrouping.setOnClickListener(this);
+        hotelTraditionalHolderGrouping.setOnClickListener(this);
+
+
+        attractionHistoricalHolder.setOnClickListener(this);
+        attractionNaturalHolder.setOnClickListener(this);
+        attractionSportHolder.setOnClickListener(this);
+        attractionRelgonHolder.setOnClickListener(this);
+        txtMoreTitleHotel.setOnClickListener(this);
         mNavigationDrawerItemTitles = getResources().getStringArray(R.array.navigation_items);
         DaggerHomeComponent.builder().netComponent(((App) getContext().getApplicationContext()).getNetComponent())
-                .homeModule(new HomeModule(this, this))
+                .homeModule(new HomeModule(this, this, this, this))
                 .build().inject(this);
         setupToolbar();
         getfeatureHolderHight();
@@ -205,6 +258,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         ShowHomeResult(homeResult);
         return rootView;
     }
+
     Bundle bundle = new Bundle();
 
     private void getfeatureHolderHight() {
@@ -226,7 +280,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
     public static HomeFragment newInstance(GetHomeResult homeResult) {
         HomeFragment fragment = new HomeFragment();
-        fragment.homeResult=homeResult;
+        fragment.homeResult = homeResult;
         return fragment;
     }
 
@@ -234,12 +288,20 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final Bundle args = getArguments();
-         homeResult = (GetHomeResult) args.getSerializable("HomeResult");
+        homeResult = (GetHomeResult) args.getSerializable("HomeResult");
 
 
     }
 
+    private void getAttractionResults() {
+        getAttractionMore("");
 
+    }
+
+    private void getAttractionMore(String type) {
+        homePresenter.getAttractionMore("search", "fa", selectId, "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), type);
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -247,9 +309,47 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             case R.id.aboutCityBtn:
                 showAboutCityOrProvince();
                 break;
+
+
+            case R.id.attractionHistoricalHolder:
+                getAttractionMore(Constants.attractionHistoricalCode);
+                break;
+            case R.id.attractionNaturalHolder:
+                getAttractionMore(Constants.attractionNaturalCode);
+                break;
+            case R.id.attractionSportHolder:
+                getAttractionMore(Constants.attractionSortCode);
+
+                break;
+            case R.id.attractionRelgonHolder:
+                getAttractionMore(Constants.attractionRelegonCode);
+                break;
+
+            case R.id.txtMoreTitleAttraction:
+                getAttractionResults();
+                break;
+            case R.id.TypeAttractionHolder:
+                getAttractionResults();
+                break;
+            case R.id.hotelHolderGrouping:
+                getHotelResults(SelectedType, selectId, Constants.hotelCode);
+                break;
+            case R.id.hotelTraditionalHolderGrouping:
+                getHotelResults(SelectedType, selectId, Constants.hotelTraditionalCode);
+                break;
+            case R.id.hotelBoomgardiHolderGrouping:
+                getHotelResults(SelectedType, selectId, Constants.hotelboomgardiCode);
+                break;
+            case R.id.hotelَAppartementHolderGrouping:
+                getHotelResults(SelectedType, selectId, Constants.hotelApartmentCode);
+                break;
+            case R.id.txtMoreTitleHotel:
+                getHotelResults(SelectedType, selectId, "");
+                break;
             case R.id.TypeHotelHolder:
                 if (SelectedType != null && SelectedType.equals("city") && selectId != null) {
-                    reservationPresenter.getLodgingList("list",selectId ,"20","0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+//                    reservationPresenter.getLodgingList("list", selectId,  Util.getTokenFromSharedPreferences(getContext()), "20","0", Util.getAndroidIdFromSharedPreferences(getContext()),"");
+                    getHotelResults(SelectedType, selectId, "");
 
                 } else {
                     openCustomSearchDialog(Constants.homeHotel);
@@ -260,9 +360,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 //            case R.id.btnShowProvince:
 //                onClickShowProvince(card_view_province_list);
 //                break;
-            case R.id.test:
-                test.setVisibility(View.INVISIBLE);
-                break;
+
             case R.id.txtWhereGo:
                 openCustomSearchDialog(Constants.homeSearch);
                 frameLayout.setVisibility(View.INVISIBLE);
@@ -285,7 +383,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     private void showAboutCityOrProvince() {
         Bundle bundle = new Bundle();
         bundle.putSerializable("homeInfo", resultHomes.get(0).getHomeInfo());
-
         AboutCityFragment aboutCityFragment = AboutCityFragment.newInstance();
         aboutCityFragment.setArguments(bundle);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -369,8 +466,38 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     @Override
+    public void showComments(ResultCommentList resultCommentList) {
+
+    }
+
+    @Override
+    public void sendCommentMessage(ResultCommentList resultCommentList) {
+
+    }
+
+    @Override
+    public void showHotelReserveList(ResultLodgingHotel resultLodgingHotel) {
+        if (resultLodgingHotel != null) {
+            ResultLodging resultLodgingHotelDetail = resultLodgingHotel.getResultLodging();
+            Intent intent = new Intent(getContext(), ReservationHotelDetailActivity.class);
+            intent.putExtra("resultLodgingHotelDetail", (Serializable) resultLodgingHotelDetail);
+            Date todayDate = new Date();
+
+            intent.putExtra("startOfTravel", todayDate);
+            intent.putExtra("durationTravel", Constants.durationTravel);
+            intent.putExtra("todayDate", todayDate);
+            startActivity(intent);
+        }
+    }
+
+    @Override
     public void showError(String message) {
         Toast.makeText(getContext(), "مقصد مورد نظر یافت نشد", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void commentResult(String message) {
+
     }
 
     @Override
@@ -439,6 +566,15 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         }
     }
 
+    @Override
+    public void ShowAttractionLists(ShowAttractionListMore getAttractionList) {
+        List<ResultAttractionList> resultLodgings = getAttractionList.getResultAttractionList();
+        Intent intentA = new Intent(getContext(), ShowAttractionListMoreActivity.class);
+        intentA.putExtra("attractionsList", (Serializable) resultLodgings);
+        intentA.putExtra("nextOffset", getAttractionList.getStatistics().getOffsetNext());
+        startActivity(intentA);
+    }
+
     private void setViewPagerEvent(List<HomeEvent> homeEvents) {
         ShowHomeEventAdapter showHomeEventAdapter = new ShowHomeEventAdapter(getContext(), getActivity(), homeEvents);
         eventsViewPager.setAdapter(showHomeEventAdapter);
@@ -461,20 +597,32 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         recyclerItinerary.setAdapter(homeItineraryAdapter);
     }
 
-    private void setViewPagerLodging(List<HomeLodging> homeLodgings) {
+    private void setViewPagerLodging(final List<HomeLodging> homeLodgings) {
         HomeReservationHotelAdapter horizontalAdapter = new HomeReservationHotelAdapter(getActivity(), this, homeLodgings, getContext(), R.layout.content_home_best_hotel_show);
         LinearLayoutManager horizontalLayoutManagaer
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        horizontal_recycler_view.setLayoutManager(horizontalLayoutManagaer);
-        horizontal_recycler_view.setAdapter(horizontalAdapter);
+        recyclerBestHotel.setLayoutManager(horizontalLayoutManagaer);
+        recyclerBestHotel.setAdapter(horizontalAdapter);
+        recyclerBestHotel.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, final int position) {
+                reservationHotelListPresenter.getHotelReserve("full", String.valueOf(homeLodgings.get(position).getLodgingId()), "20", "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+            }
+        }));
     }
 
-    private void setViewPagerAttraction(List<HomeAttraction> homeAttractions) {
+    private void setViewPagerAttraction(final List<HomeAttraction> homeAttractions) {
         AttractionHomeAdapter attractionHomeAdapter = new AttractionHomeAdapter(homeAttractions, getContext());
         LinearLayoutManager horizontalLayoutManagaer
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerBestAttraction.setLayoutManager(horizontalLayoutManagaer);
         recyclerBestAttraction.setAdapter(attractionHomeAdapter);
+        recyclerBestAttraction.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, final int position) {
+                attractionListMorePresenter.getAttractionDetailNear("full", homeAttractions.get(position).getAttractionId(), "fa", "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+            }
+        }));
     }
 
     private void setSouvenir(List<HomeSouvenir> homeSouvenir) {
@@ -496,28 +644,39 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void setNamePicture(HomeInfo homeInfo, List<HomeImage> homeImage) {
-        if(!homeInfo.getId().equals("311")){
+        if (!homeInfo.getId().equals("311")) {
             txtWhereGo.setText(homeInfo.getTitle());
         }
 
         if (homeImage.get(0).getImgUrl() != null) {
-            Util.setImageView(homeImage.get(0).getImgUrl(), getContext(), imgHome);
+            Util.setImageView(homeImage.get(0).getImgUrl(), getContext(), imgHome, null);
         }
-
 
     }
 
     @Override
     public void showProgress() {
-        progressDialog = new ProgressDialog(getActivity(), R.style.AppTheme);
-        progressDialog.setIndeterminate(true);
-//        progressDialog.setMessage("لطفا منتظر بمانید");
-        progressDialog.show();
+        progressDialog = Util.showProgressDialog(getContext(), "لطفا منتظر بمانید", getActivity());
     }
 
     @Override
     public void dismissProgress() {
-        progressDialog.dismiss();
+        Util.dismissProgress(progressDialog);
+    }
+
+    @Override
+    public void ShowAttractionLists(ShowAttractionMoreList showAttractionList) {
+
+    }
+
+    @Override
+    public void showAttractionDetail(ShowAtractionDetailMore showAttractionFull) {
+        ResulAttraction resulAttraction = showAttractionFull.getResultAttractionFull().getResulAttraction();
+        List<ResultAttractionList> resultAttractions = (List<ResultAttractionList>) showAttractionFull.getResultAttractionFull().getResultAttractionList();
+        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+        intent.putExtra("resulAttraction", (Serializable) resulAttraction);
+        intent.putExtra("resultAttractionList", (Serializable) resultAttractions);
+        startActivity(intent);
     }
 
     @Override
@@ -586,7 +745,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                         getHomeResult(SelectedType, CityProvince.get(position).getId());
                         dismiss();
                     } else if (type == Constants.homeHotel) {
-                        getHotelResults(SelectedType, CityProvince.get(position).getId());
+                        getHotelResults(SelectedType, CityProvince.get(position).getId(), "");
                         dismiss();
                     }
                 }
@@ -596,9 +755,9 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
     }
 
-    private void getHotelResults(String destination, String selectId) {
-        if (destination .equals("city")) {
-            reservationPresenter.getLodgingList("list", selectId,"20","0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+    private void getHotelResults(String destination, String selectId, String typeOfHotel) {
+        if (destination.equals("city")) {
+            reservationPresenter.getLodgingList("list", selectId, Util.getTokenFromSharedPreferences(getContext()), "20", "0", Util.getAndroidIdFromSharedPreferences(getContext()), typeOfHotel);
         } else {
             Toast.makeText(getContext(), "شهر انتخاب شود", Toast.LENGTH_LONG).show();
         }

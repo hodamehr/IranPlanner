@@ -6,11 +6,11 @@ import android.widget.RelativeLayout;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.iranplanner.tourism.iranplanner.ui.presenter.Presenter;
 
-
 import entity.InterestResult;
 import entity.ResultCommentList;
 import entity.ResultItineraryAttractionList;
 import entity.ResultWidgetFull;
+import entity.ShowAttractionListItinerary;
 
 
 /**
@@ -32,6 +32,8 @@ public abstract class ItineraryContract extends Presenter<ItineraryContract.View
 
         void showAnimationWhenWaiting();
 
+        void showAttractionDay(ShowAttractionListItinerary showAttractionListItinerary);
+
         void setIntrestValue(InterestResult InterestResult);
 
         ///--------------map
@@ -44,6 +46,14 @@ public abstract class ItineraryContract extends Presenter<ItineraryContract.View
 
 
     public abstract void getItineraryAttractionList(String action, String lang, String id, String cid, String andId);
+
+
+    public abstract void getItineraryAttractionListDay(String action,
+                                                       String lang,
+                                                       String id,
+                                                       String cid,
+                                                       String andId
+    );
 
     public abstract void getItineraryCommentList(String action, String nId, String nType, String offset, String cid, String andId);
 

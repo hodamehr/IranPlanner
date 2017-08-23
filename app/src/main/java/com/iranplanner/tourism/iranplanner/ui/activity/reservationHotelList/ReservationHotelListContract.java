@@ -15,6 +15,9 @@ public abstract class ReservationHotelListContract {
         void showComplete();
 
 
+        void dismissProgress();
+
+        void showProgress();
     }
 
     public abstract void getHotelReserve(String action,

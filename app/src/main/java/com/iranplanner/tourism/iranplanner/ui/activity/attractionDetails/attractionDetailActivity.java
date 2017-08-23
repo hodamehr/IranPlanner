@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -33,11 +35,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.iranplanner.tourism.iranplanner.R;
-
-
+import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.di.model.App;
-import com.iranplanner.tourism.iranplanner.ui.activity.comment.CommentListActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.MapFullActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMoreContract;
+import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMorePresenter;
+import com.iranplanner.tourism.iranplanner.ui.activity.comment.CommentListActivity;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 
@@ -47,36 +50,35 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import entity.InterestResult;
 import entity.ItineraryLodgingCity;
+import entity.ResulAttraction;
+import entity.ResultAttractionList;
 import entity.ResultComment;
 import entity.ResultCommentList;
 import entity.ResultData;
-import entity.ResultItineraryAttraction;
 import entity.ResultWidget;
 import entity.ResultWidgetFull;
+import entity.ShowAtractionDetailMore;
+import entity.ShowAttractionMoreList;
 import tools.Constants;
 import tools.Util;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class attractionDetailActivity extends FragmentActivity implements OnMapReadyCallback , View.OnClickListener,AttractionDetailContract.View{
+public class attractionDetailActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener, AttractionDetailContract.View, AttractionListMoreContract.View {
     @Inject
     AttractionDetailPresenter attractionDetailPresenter;
+    @Inject
+    AttractionListMorePresenter attractionListMorePresenter;
     private GoogleMap mMap;
-    ResultItineraryAttraction attraction;
-    TextView attractionName, attractionPlace, textTimeDuration, textEntranceFee, attractionType, textBody;
+    ResulAttraction resulAttraction;
     Marker marker;
-    protected CTouchyWebView contentFullDescription;
-    ImageView imageTypeAttraction;
-    ImageView imageAttraction;
     SupportMapFragment mapFragment;
     Boolean showMore = true;
     String myData;
-    TextView txtOk, MoreInoText;
-    RelativeLayout ratingHolder, GroupHolder, interestingLayout, VisitedLayout, LikeLayout, changeDateHolder;
-    LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder,commentHolder;
-    ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, wishImg, triangleShowAttraction;
     boolean ratingHolderFlag = false;
     String rotateImage;
     RotateAnimation rotate;
@@ -86,57 +88,93 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     int LikeValue;
     int VisitedValue;
     int WishValue;
+//    RecyclerView recyclerBestAttraction;
+//
 
 
+    @InjectView(R.id.contentFullDescription)
+    CTouchyWebView contentFullDescription;
+    @InjectView(R.id.attractionName)
+    TextView attractionName;
+    @InjectView(R.id.attractionPlace)
+    TextView attractionPlace;
+    @InjectView(R.id.textTimeDuration)
+    TextView textTimeDuration;
+    @InjectView(R.id.textEntranceFee)
+    TextView textEntranceFee;
+    @InjectView(R.id.attractionType)
+    TextView attractionType;
+    @InjectView(R.id.imageTypeAttraction)
+    ImageView imageTypeAttraction;
+    @InjectView(R.id.imageAttraction)
+    ImageView imageAttraction;
+    @InjectView(R.id.commentHolder)
+    LinearLayout commentHolder;
+    @InjectView(R.id.rateHolder)
+    LinearLayout rateHolder;
+    @InjectView(R.id.doneHolder)
+    LinearLayout doneHolder;
+    @InjectView(R.id.nowVisitedHolder)
+    LinearLayout nowVisitedHolder;
+    @InjectView(R.id.beftorVisitedHolder)
+    LinearLayout beftorVisitedHolder;
+    @InjectView(R.id.dislikeHolder)
+    LinearLayout dislikeHolder;
+    @InjectView(R.id.okHolder)
+    LinearLayout okHolder;
+    @InjectView(R.id.likeHolder)
+    LinearLayout likeHolder;
+    @InjectView(R.id.bookmarkHolder)
+    LinearLayout bookmarkHolder;
+    @InjectView(R.id.ratingHolder)
+    RelativeLayout ratingHolder;
+    @InjectView(R.id.GroupHolder)
+    RelativeLayout GroupHolder;
+    @InjectView(R.id.interestingLayout)
+    RelativeLayout interestingLayout;
+    @InjectView(R.id.VisitedLayout)
+    RelativeLayout VisitedLayout;
+    @InjectView(R.id.LikeLayout)
+    RelativeLayout LikeLayout;
+    @InjectView(R.id.MoreInoText)
+    TextView MoreInoText;
+    @InjectView(R.id.bookmarkImg)
+    ImageView bookmarkImg;
+    @InjectView(R.id.doneImg)
+    ImageView doneImg;
+    @InjectView(R.id.dislikeImg)
+    ImageView dislikeImg;
+    @InjectView(R.id.okImg)
+    ImageView okImg;
+    @InjectView(R.id.likeImg)
+    ImageView likeImg;
+    @InjectView(R.id.rateImg)
+    ImageView rateImg;
+    @InjectView(R.id.beftorVisitedImg)
+    ImageView beftorVisitedImg;
+    @InjectView(R.id.nowVisitedImg)
+    ImageView nowVisitedImg;
+    @InjectView(R.id.wishImg)
+    ImageView wishImg;
+    @InjectView(R.id.triangleShowAttraction)
+    ImageView triangleShowAttraction;
+    @InjectView(R.id.recyclerBestAttraction)
+    RecyclerView recyclerBestAttraction;
     DaggerAtractionDetailComponent.Builder builder;
+    private List<ResultAttractionList> resultAttractionList;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
     private void findView() {
-        setContentView(R.layout.activity_attraction_detail);
-        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
-        MoreInoText = (TextView) findViewById(R.id.MoreInoText);
-        attractionName = (TextView) findViewById(R.id.attractionName);
-        attractionPlace = (TextView) findViewById(R.id.attractionPlace);
-        textTimeDuration = (TextView) findViewById(R.id.textTimeDuration);
-        textEntranceFee = (TextView) findViewById(R.id.textEntranceFee);
-        attractionType = (TextView) findViewById(R.id.attractionType);
-        imageTypeAttraction = (ImageView) findViewById(R.id.imageTypeAttraction);
-        imageAttraction = (ImageView) findViewById(R.id.imageAttraction);
-        commentHolder = (LinearLayout) findViewById(R.id.commentHolder);
-
-        rateHolder = (LinearLayout) findViewById(R.id.rateHolder);
-        doneHolder = (LinearLayout) findViewById(R.id.doneHolder);
-        nowVisitedHolder = (LinearLayout) findViewById(R.id.nowVisitedHolder);
-        beftorVisitedHolder = (LinearLayout) findViewById(R.id.beftorVisitedHolder);
-        dislikeHolder = (LinearLayout) findViewById(R.id.dislikeHolder);
-        okHolder = (LinearLayout) findViewById(R.id.okHolder);
-        likeHolder = (LinearLayout) findViewById(R.id.likeHolder);
-        bookmarkHolder = (LinearLayout) findViewById(R.id.bookmarkHolder);
-        ratingHolder = (RelativeLayout) findViewById(R.id.ratingHolder);
-        GroupHolder = (RelativeLayout) findViewById(R.id.GroupHolder);
-        interestingLayout = (RelativeLayout) findViewById(R.id.interestingLayout);
-        VisitedLayout = (RelativeLayout) findViewById(R.id.VisitedLayout);
-        LikeLayout = (RelativeLayout) findViewById(R.id.LikeLayout);
-        changeDateHolder = (RelativeLayout) findViewById(R.id.changeDateHolder);
-        txtOk = (TextView) findViewById(R.id.txtOk);
-        MoreInoText = (TextView) findViewById(R.id.MoreInoText);
-        bookmarkImg = (ImageView) findViewById(R.id.bookmarkImg);
-        doneImg = (ImageView) findViewById(R.id.doneImg);
-
-        dislikeImg = (ImageView) findViewById(R.id.dislikeImg);
-        okImg = (ImageView) findViewById(R.id.okImg);
-        likeImg = (ImageView) findViewById(R.id.likeImg);
-        rateImg = (ImageView) findViewById(R.id.rateImg);
-        beftorVisitedImg = (ImageView) findViewById(R.id.beftorVisitedImg);
-        nowVisitedImg = (ImageView) findViewById(R.id.nowVisitedImg);
-        wishImg = (ImageView) findViewById(R.id.wishImg);
-        triangleShowAttraction = (ImageView) findViewById(R.id.triangleShowAttraction);
-
+//        setContentView(R.layout.activity_attraction_detail);
+        setContentView(R.layout.fragment_attraction_detail);
+        ButterKnife.inject(this);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
     }
+
     private void overrideFont() {
         // for Override font
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
@@ -145,9 +183,10 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 .build()
         );
     }
-    private void setImageHolder(){
-        if (attraction.getItineraryImgUrl() != null) {
-            String url = attraction.getItineraryImgUrl();
+
+    private void setImageHolder() {
+        if (resulAttraction.getAttractionImgUrl() != null) {
+            String url = resulAttraction.getAttractionImgUrl();
             Glide.with(getApplicationContext())
                     .load(url)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -171,17 +210,21 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
             imageAttraction.setImageDrawable(null);
         }
     }
-    private void setAttractionTypeImage(){
-        if (attraction.getAttarctionItineraryTypeId().equals("2930")) {
-            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_mazhabi));
-        } else if (attraction.getAttarctionItineraryTypeId().equals("2931")) {
-            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_natural));
-        } else if (attraction.getAttarctionItineraryTypeId().equals("2932")) {
-            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_historical));
-        } else if (attraction.getAttarctionItineraryTypeId().equals("2933")) {
-            imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sport));
+
+    private void setAttractionTypeImage() {
+        if (resulAttraction.getAttractionItineraryTypeId() != null) {
+            if (resulAttraction.getAttractionItineraryTypeId().equals("2930")) {
+                imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_mazhabi));
+            } else if (resulAttraction.getAttractionItineraryTypeId().equals("2931")) {
+                imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_natural));
+            } else if (resulAttraction.getAttractionItineraryTypeId().equals("2932")) {
+                imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_historical));
+            } else if (resulAttraction.getAttractionItineraryTypeId().equals("2933")) {
+                imageTypeAttraction.setImageDrawable(getResources().getDrawable(R.mipmap.ic_sport));
+            }
         }
     }
+
     private void setWebViewContent(String myData) {
         contentFullDescription.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -198,6 +241,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         String myHtmlString = pish + myData + pas;
         contentFullDescription.loadDataWithBaseURL(null, myHtmlString, "text/html", "UTF-8", null);
     }
+
     private String getShowMoreString(String myData) {
         int count = 0;
         int position = 0;
@@ -207,33 +251,60 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         return myData.substring(0, position) + "...";
     }
 
+    private void getExtra() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+//        attraction = (entity.ResultItineraryAttraction) bundle.getSerializable("ResultItineraryAttraction");
+        resulAttraction = (ResulAttraction) bundle.getSerializable("resulAttraction");
+        resultAttractionList = (List<ResultAttractionList>) bundle.getSerializable("resultAttractionList");
+        resultWidget = (List<ResultWidget>) bundle.getSerializable("resultWidget");
+        if (resultWidget != null) {
+            setInterestResponce(resultWidget);
+        }
+    }
+
+    private void setNearAttraction(List<ResultAttractionList> resultAttractions) {
+        nearAttractionAdapter attractionHomeAdapter = new nearAttractionAdapter(resultAttractions, getApplicationContext());
+        LinearLayoutManager horizontalLayoutManagaer
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerBestAttraction.setLayoutManager(horizontalLayoutManagaer);
+        recyclerBestAttraction.setAdapter(attractionHomeAdapter);
+        recyclerBestAttraction.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                attractionListMorePresenter.getAttractionDetailNear("full", resulAttraction.getAttractionId(), "fa", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+
+            }
+        }));
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         findView();
         overrideFont();
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        attraction = (entity.ResultItineraryAttraction) bundle.getSerializable("ResultItineraryAttraction");
-        resultWidget = (List<ResultWidget>) bundle.getSerializable("resultWidget");
-        if(resultWidget!=null){
-            setInterestResponce(resultWidget);
+        getExtra();
+        setNearAttraction(resultAttractionList);
+        attractionName.setText(resulAttraction.getAttractionTitle());
+        attractionPlace.setText(resulAttraction.getProvinceTitle() + " - " + resulAttraction.getCityTitle());
+        if (resulAttraction.getAttractionEstimatedTime() != null) {
+            int totalMinute = Integer.parseInt(resulAttraction.getAttractionEstimatedTime());
+            Util.convertMinuteToHour(totalMinute, textTimeDuration);
         }
-        attractionName.setText(attraction.getAttractionTitle());
-        attractionPlace.setText(attraction.getProvinceTitle() + " - " + attraction.getCityTitle());
-        int totalMinute = Integer.parseInt(attraction.getAttarctionEstimatedTime());
-        Util.convertMinuteToHour(totalMinute, textTimeDuration);
-        setImageHolder();
-         myData = attraction.getAttarctionBody();
-        setWebViewContent(getShowMoreString(myData));
 
-        if (attraction.getAttractionPrice() == null) {
+        setImageHolder();
+        myData = resulAttraction.getAttractionBody();
+        if (myData != null) {
+            setWebViewContent(getShowMoreString(myData));
+        }
+
+        if (resulAttraction.getAttractionPrice() == null) {
             textEntranceFee.setText("رایگان");
         } else {
-            textEntranceFee.setText(Util.persianNumbers(attraction.getAttractionPrice().toString()) + "تومان");
+            textEntranceFee.setText(Util.persianNumbers(resulAttraction.getAttractionPrice().toString()) + "تومان");
         }
-        attractionType.setText(attraction.getAttarctionItineraryTypeTitle());
+        attractionType.setText(resulAttraction.getAttractionItineraryTypeTitle());
         setAttractionTypeImage();
 
         interestingLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -263,13 +334,14 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
 
         builder = DaggerAtractionDetailComponent.builder()
                 .netComponent(((App) getApplicationContext()).getNetComponent())
-                .attractionDetailModule(new AttractionDetailModule(this));
+                .attractionDetailModule(new AttractionDetailModule(this, this));
         builder.build().inject(this);
-        attractionDetailPresenter.getWidgetResult("nodeuser", attraction.getAttractionId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "attraction",Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+        attractionDetailPresenter.getWidgetResult("nodeuser", resulAttraction.getAttractionId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "attraction", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
 
 
     }
-    private void setInterestResponce( List<ResultWidget> resultWidget){
+
+    private void setInterestResponce(List<ResultWidget> resultWidget) {
         if (resultWidget.get(0).getWidgetBookmarkValue() != null && resultWidget.get(0).getWidgetBookmarkValue() == 1) {
             bookmarkImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_bookmarkgreen));
         }
@@ -306,21 +378,22 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         }
 
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setAllGesturesEnabled(false);
         mMap.getUiSettings().setMapToolbarEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(false);
-        attraction.getAttractionPositionLat();
-        attraction.getAttractionPositionOn();
-        float lan = Float.valueOf(attraction.getAttractionPositionLat());
-        float lon = Float.valueOf(attraction.getAttractionPositionOn());
+        resulAttraction.getAttractionPositionLat();
+        resulAttraction.getAttractionPositionLon();
+        float lan = Float.valueOf(resulAttraction.getAttractionPositionLat());
+        float lon = Float.valueOf(resulAttraction.getAttractionPositionLon());
         MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marker));
 
         marker = mMap.addMarker(markerOptions
                 .position(new LatLng(lan, lon))
-                .title(attraction.getCityTitle())
+                .title(resulAttraction.getCityTitle())
                 .snippet(":)"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lan, lon), 15.0f));
 
@@ -330,18 +403,18 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 Log.e("map is ckicked", "true");
                 Intent intent = new Intent(getApplicationContext(), MapFullActivity.class);
                 ItineraryLodgingCity i = new ItineraryLodgingCity();
-                i.setCityPositionLat(attraction.getAttractionPositionLat());
-                i.setCityPositionLon(attraction.getAttractionPositionOn());
+                i.setCityPositionLat(resulAttraction.getAttractionPositionLat());
+                i.setCityPositionLon(resulAttraction.getAttractionPositionLon());
                 List<ItineraryLodgingCity> lodgingCities = new ArrayList<ItineraryLodgingCity>();
                 lodgingCities.add(i);
                 intent.putExtra("lodgingCities", (Serializable) lodgingCities);
-                intent.putExtra("attraction", (Serializable) attraction);
+                intent.putExtra("resulAttraction", (Serializable) resulAttraction);
                 startActivity(intent);
             }
         });
     }
 
-     private void showProgressDialog() {
+    private void showProgressDialog() {
         progressDialog = new ProgressDialog(attractionDetailActivity.this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("لطفا منتظر بمانید");
@@ -355,7 +428,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
             case R.id.commentHolder:
                 showProgressDialog();
                 builder.build().inject(this);
-                attractionDetailPresenter.getAttractionCommentList("pagecomments", attraction.getAttractionId(), "attraction", "0",Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                attractionDetailPresenter.getAttractionCommentList("pagecomments", resulAttraction.getAttractionId(), "attraction", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
                 break;
             case R.id.MoreInoText:
                 if (showMore) {
@@ -363,9 +436,11 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                     MoreInoText.setText("مطلب کوتاه");
                     showMore = false;
                 } else {
-                    setWebViewContent(getShowMoreString(myData));
-                    MoreInoText.setText("بیشتر بخوانید");
-                    showMore = true;
+                    if (resulAttraction.getAttractionBody() != null) {
+                        setWebViewContent(getShowMoreString(myData));
+                        MoreInoText.setText("بیشتر بخوانید");
+                        showMore = true;
+                    }
                 }
 
                 break;
@@ -465,7 +540,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     private void OnClickedIntrestedWidget(String gType, String gValue, ImageView imageView) {
         if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
             attractionDetailPresenter.doWaitingAnimation(imageView);
-            attractionDetailPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "attraction", attraction.getAttractionId(), gType, gValue,Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+            attractionDetailPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "attraction", resulAttraction.getAttractionId(), gType, gValue, Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
 
         } else {
             Log.e("user is not login", "error");
@@ -561,14 +636,29 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 break;
             case "wishImg":
                 wishImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_wish_pink));
-               break;
+                break;
             default:
                 break;
         }
     }
 
     @Override
+    public void showComments(ResultCommentList resultCommentList) {
+
+    }
+
+    @Override
+    public void sendCommentMessage(ResultCommentList resultCommentList) {
+
+    }
+
+    @Override
     public void showError(String message) {
+
+    }
+
+    @Override
+    public void commentResult(String message) {
 
     }
 
@@ -578,11 +668,37 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     }
 
     @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void dismissProgress() {
+
+    }
+
+    @Override
+    public void ShowAttractionLists(ShowAttractionMoreList showAttractionList) {
+
+    }
+
+    @Override
+    public void showAttractionDetail(ShowAtractionDetailMore showAttractionFull) {
+        ResulAttraction resulAttraction = showAttractionFull.getResultAttractionFull().getResulAttraction();
+        List<ResultAttractionList> resultAttractions = (List<ResultAttractionList>) showAttractionFull.getResultAttractionFull().getResultAttractionList();
+        Intent intent = new Intent(this, attractionDetailActivity.class);
+        intent.putExtra("resulAttraction", (Serializable) resulAttraction);
+        intent.putExtra("resultAttractionList", (Serializable) resultAttractions);
+        startActivity(intent);
+    }
+
+
+    @Override
     public void showComment(ResultCommentList resultCommentList, String commentType) {
         List<ResultComment> resultComments = resultCommentList.getResultComment();
         Intent intent = new Intent(attractionDetailActivity.this, CommentListActivity.class);
         intent.putExtra("resultComments", (Serializable) resultComments);
-        intent.putExtra("attraction", (Serializable) attraction);
+        intent.putExtra("attraction", (Serializable) resulAttraction);
         intent.putExtra("nextOffset", resultCommentList.getStatistics().getOffsetNext().toString());
         intent.putExtra("fromWhere", commentType);
         startActivity(intent);

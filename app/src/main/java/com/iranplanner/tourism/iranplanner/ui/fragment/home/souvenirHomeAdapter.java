@@ -58,7 +58,7 @@ public class souvenirHomeAdapter extends RecyclerView.Adapter<souvenirHomeAdapte
         ImageView imageView = holder.imageViewIcon;
         textViewName.setText(homeSouvenirs.get(listPosition).getSouvenirsTitle());
         if (homeSouvenirs.get(listPosition).getImgUrl() != null) {
-            Util.setImageView(String.valueOf(homeSouvenirs.get(listPosition).getImgUrl()), context, imageView);
+            Util.setImageView(String.valueOf(homeSouvenirs.get(listPosition).getImgUrl()), context, imageView,null);
         }
     }
 
