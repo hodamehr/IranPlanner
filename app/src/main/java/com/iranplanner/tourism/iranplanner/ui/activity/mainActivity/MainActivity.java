@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -20,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 //import com.digits.sdk.android.AuthCallback;
@@ -68,6 +70,8 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
 
     protected static Typeface YEKAN;
 
+    boolean doubleBackToExitPressedOnce = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +79,7 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         Bundle extras = getIntent().getExtras();
         homeResult = (GetHomeResult) extras.getSerializable("HomeResult");
         ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
-        TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,homeResult);
+        TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this, homeResult);
         if (viewPager != null)
             viewPager.setAdapter(pagerAdapter);
 
@@ -125,8 +129,24 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     @Override
     public void onBackPressed() {
         //If the event returned false, then call the super.
-        if (currentTab == null || !currentTab.onBackPressed())
-            super.onBackPressed();
+        if (currentTab == null || !currentTab.onBackPressed()) {
+//            super.onBackPressed();
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        }
     }
 
     @Override
@@ -217,10 +237,6 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
 //        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 //        ft.commit();
     }
-
-
-
-
 
 
 }

@@ -193,8 +193,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     RelativeLayout souvenirHomeHolder;
     @InjectView(R.id.TypeHotelHolder)
     RelativeLayout TypeHotelHolder;
-    @InjectView(R.id.provinceListHOlder)
-    LinearLayout provinceListHOlder;
     @InjectView(R.id.hotelHolderGrouping)
     RelativeLayout hotelHolderGrouping;
     @InjectView(R.id.hotelTraditionalHolderGrouping)
@@ -530,10 +528,10 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
 
         if (resultHomes.get(0).getHomeCountryProvince().size() != 0) {
-            provinceListHOlder.setVisibility(View.VISIBLE);
+//            provinceListHOlder.setVisibility(View.VISIBLE);
             setListProvince(resultHomes.get(0).getHomeCountryProvince());
         } else {
-            provinceListHOlder.setVisibility(View.GONE);
+//            provinceListHOlder.setVisibility(View.GONE);
 
         }
         if (resultHomes.get(0).getHomeSouvenirs().size() != 0) {
@@ -587,6 +585,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         recyclerViewProvinceShow.setLayoutManager(mLayoutManager);
         HomeProvinceListAdapter homeProvinceAdapter = new HomeProvinceListAdapter(getActivity(), this, homeCountryProvince, getContext(), R.layout.content_province_list);
         recyclerViewProvinceShow.setAdapter(homeProvinceAdapter);
+        recyclerViewProvinceShow.setNestedScrollingEnabled(false);
     }
 
     private void setItinerary(List<HomeItinerary> homeItineraries) {
@@ -882,6 +881,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     private void hideToolbarIcons() {
         toolbarToggle.setVisibility(View.GONE);
         toolbarBack.setVisibility(View.GONE);
+        toolbarToggleLeft.setVisibility(View.GONE);
     }
 
 }
