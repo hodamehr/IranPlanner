@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -581,8 +582,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void setListProvince(List<HomeCountryProvince> homeCountryProvince) {
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerViewProvinceShow.setLayoutManager(mLayoutManager);
+        recyclerViewProvinceShow.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
         HomeProvinceListAdapter homeProvinceAdapter = new HomeProvinceListAdapter(getActivity(), this, homeCountryProvince, getContext(), R.layout.content_province_list);
         recyclerViewProvinceShow.setAdapter(homeProvinceAdapter);
         recyclerViewProvinceShow.setNestedScrollingEnabled(false);

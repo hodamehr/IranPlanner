@@ -44,8 +44,9 @@ public class HomeProvinceListAdapter extends RecyclerView.Adapter<HomeProvinceLi
 
     @Override
     public void onBindViewHolder(final HomeProvinceListAdapter.ViewHolder viewHolder, int i) {
-               viewHolder.txtProvinceName.setText(itineraries.get(i).getProvinceTitle());
+        viewHolder.txtProvinceName.setText(itineraries.get(i).getProvinceTitle());
     }
+
     @Override
     public long getItemId(int position) {
         return position;
@@ -59,19 +60,11 @@ public class HomeProvinceListAdapter extends RecyclerView.Adapter<HomeProvinceLi
     public class ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener */ {
         private TextView txtProvinceName;
 
-
         public ViewHolder(View view) {
             super(view);
             txtProvinceName = (TextView) view.findViewById(R.id.txtProvinceName);
-
-
         }
-
     }
-
-
-
-
 }
 
 
