@@ -7,9 +7,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity;
 import com.iranplanner.tourism.iranplanner.R;
@@ -55,6 +57,10 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
+
+        //Load Background Image
+        Glide.with(this).load(R.drawable.splash_bg_blur).centerCrop().override(600, 400).into((ImageView) findViewById(R.id.registerBgIv));
+
         ButterKnife.inject(this);
         input_tel.setFocusable(true);
         _signupButton.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +84,7 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
         ResultUserRegister result = resultRegister.getResultUserRegister();
         if (result.getStatus().equals("Succesfull")) {
             Toast.makeText(getApplicationContext(), "حساب کاربری با موفقیت انجام شد", Toast.LENGTH_LONG).show();
-            Util.saveDataINShareprefrence(getApplicationContext(),editText.getText().toString(), "کاربر", "", result.getUserUid().toString());
+            Util.saveDataINShareprefrence(getApplicationContext(), editText.getText().toString(), "کاربر", "", result.getUserUid().toString());
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.putExtra("viewpager_position", 0);
@@ -128,7 +134,7 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
     public void signup() {
         Log.d(TAG, "Signup");
         if (!validate()) {
-            Toast.makeText(getApplicationContext(),"اشکال در مقادیر ورودی",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "اشکال در مقادیر ورودی", Toast.LENGTH_SHORT).show();
             _signupButton.setEnabled(true);
             return;
         }
@@ -146,7 +152,7 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
                 .registerModule(new RegisterModule(this))
                 .build().inject(this);
         RegisterReqSend registerReqSend = new RegisterReqSend("register", email, password, name, lastName, gender, Util.getTokenFromSharedPreferences(getApplicationContext()), phoneNumber, Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
-        registerPresenter.getRegisterLoginResult(registerReqSend,Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+        registerPresenter.getRegisterLoginResult(registerReqSend, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
     }
 
     public boolean validate() {
@@ -157,7 +163,6 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
         String password = passwordText.getText().toString();
         String passwordRepeat = input_password_repeat.getText().toString();
         String phoneNumber = input_tel.getText().toString();
-
 
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -209,7 +214,7 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
                 input_tel.setError(message);
                 valid = false;
             }
-        }else if(TextUtils.isEmpty(phoneNumber)){
+        } else if (TextUtils.isEmpty(phoneNumber)) {
             String message = "ثبت شماره تلفن اجباری است";
             input_tel.setError(message);
             valid = false;

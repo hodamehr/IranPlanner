@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/accountHolder"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/light_blue"
-    >
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/loginBgIv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -17,13 +20,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_blue"
             android:orientation="vertical"
             android:paddingBottom="@dimen/padding_larg"
             android:paddingLeft="@dimen/padding_larg"
             android:paddingRight="@dimen/padding_larg"
             android:paddingTop="@dimen/padding_big">
-
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -38,10 +39,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:text="پیام"
-                    android:visibility="gone"
                     android:singleLine="false"
-                    />
+                    android:text="پیام"
+                    android:visibility="gone" />
 
             </android.support.design.widget.TextInputLayout>
             <!-- Email Label -->
@@ -86,9 +86,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="کلمه عبور"
-                        android:inputType="textPassword"
+                        android:inputType="textPassword" />
 
-                        />
                 </android.support.design.widget.TextInputLayout>
 
                 <TextView
@@ -113,7 +112,7 @@
                     android:padding="@dimen/padding_short"
                     android:text="کلمه عبور را فراموش کرده اید؟"
                     android:textColor="@color/grey"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
@@ -129,16 +128,11 @@
                 android:paddingRight="@dimen/padding_larg"
                 android:paddingTop="@dimen/margin_standard">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/padding_standard"
-                    android:background="@drawable/corner_layout">
-
                     <com.google.android.gms.common.SignInButton
                         android:id="@+id/btnSignInGoogle"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"></com.google.android.gms.common.SignInButton>
+                        android:layout_marginBottom="@dimen/padding_standard"
+                        android:layout_height="match_parent"/>
                     <!-- <TextView
                          android:id="@+id/google"
                          style="@style/SmallText"
@@ -160,7 +154,6 @@
                          android:layout_toRightOf="@+id/google"
                          android:layout_marginLeft="@dimen/padding_short"
                          />-->
-                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/link_signup"
@@ -177,4 +170,4 @@
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>

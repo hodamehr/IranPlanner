@@ -14,10 +14,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -87,8 +89,7 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         Bundle extras = getIntent().getExtras();
-         HomeResult = (GetHomeResult) extras.getSerializable("HomeResult");
-
+        HomeResult = (GetHomeResult) extras.getSerializable("HomeResult");
 
         ButterKnife.inject(this);
         if (Util.getUseRIdFromShareprefrence(getApplicationContext()) == null || Util.getUseRIdFromShareprefrence(getApplicationContext()) == "") {
@@ -101,6 +102,9 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
             accountInputHolder = (LinearLayout) findViewById(R.id.accountInputHolder);
             loginCommand.setText("");
             signupInputHolder = (LinearLayout) findViewById(R.id.signupInputHolder);
+
+            //Load Background Image
+            Glide.with(this).load(R.drawable.splash_bg_blur).centerCrop().override(600, 400).into((ImageView) findViewById(R.id.loginBgIv));
 
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.default_web_client_id))

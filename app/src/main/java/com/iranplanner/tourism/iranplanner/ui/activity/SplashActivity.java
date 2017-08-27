@@ -71,6 +71,7 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        //Load Background Image
         Glide.with(this).load(R.drawable.splash_bg_blur).centerCrop().override(600, 400).into((ImageView) findViewById(R.id.splashBgIv));
 
         init();
