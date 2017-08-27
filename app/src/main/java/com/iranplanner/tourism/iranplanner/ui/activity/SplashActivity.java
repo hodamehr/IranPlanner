@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMorePresenter;
@@ -45,7 +46,7 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
     @Inject
     HomePresenter homePresenter;
 
-    private ImageView ivLogo, ivLogoType, ivLogoInner;
+    private ImageView ivLogo, ivLogoType, ivLogoInner, ivBackground;
     private TextView tvInfo, tvWebSite;
     private View vLogoContainer, vLogoInfoContainer, vFellows;
     private boolean isAnimationDone = false;
@@ -69,6 +70,10 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        ivBackground = (ImageView) findViewById(R.id.splashBgIv);
+        Glide.with(this).load(R.drawable.splash_bg).centerCrop().override(600, 400).into(ivBackground);
+
         if (!Util.isNetworkAvailable(getApplicationContext())) {
             CustomMessage customMessage = new CustomMessage(this, "عدم دسترسی به اینترنت");
             customMessage.show();
@@ -108,9 +113,11 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
         vLogoContainer = findViewById(R.id.splashLogoContainer);
         vFellows = findViewById(R.id.splashFellowView);
 
+        //Move the ui Objects to their new Places and wait for Translation Animation
         vLogoContainer.setY(-100f);
         vFellows.setY(150f);
 
+        //Reset View's Alpha to 0
         tvWebSite.setAlpha(0f);
         ivLogo.setAlpha(0f);
         vLogoContainer.setAlpha(0f);
@@ -143,6 +150,7 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
         rotation.setStartOffset(1500);
         ivLogoInner.startAnimation(rotation);
 
+        //Handle Network Stuff With Delay To have a nice and smooth Animation on elements
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -8,12 +8,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -37,7 +39,6 @@ import server.Config;
  * Created by Hoda on 10/01/2017.
  */
 public class Util {
-
 
     public static boolean isNetworkAvailable(Context context) {
 //            ConnectivityManager connectivityManager
@@ -163,8 +164,10 @@ public class Util {
         String regId = pref.getString("regId", null);
         return regId;
     }
+
     ProgressDialog progressDialog;
-    public static final ProgressDialog showProgressDialog(Context context, /*ProgressDialog progressDialog,*/String message , Activity activity) {
+
+    public static final ProgressDialog showProgressDialog(Context context, /*ProgressDialog progressDialog,*/String message, Activity activity) {
         ProgressDialog progressDialog = new ProgressDialog(activity);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(message);
@@ -173,11 +176,13 @@ public class Util {
         progressDialog.setCanceledOnTouchOutside(false);
         return progressDialog;
     }
+
     public static void dismissProgress(ProgressDialog progressDialog) {
         if (progressDialog.isShowing() == true || progressDialog != null) {
             progressDialog.dismiss();
         }
     }
+
     public static final Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -252,7 +257,7 @@ public class Util {
             if (totalMinute == 0) {
                 textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf(hours)) + " ساعت ");
             } else {
-                textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf(hours)) + " ساعت و " + Util.persianNumbers(String.valueOf(totalMinute) ) + " دقیقه ");
+                textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf(hours)) + " ساعت و " + Util.persianNumbers(String.valueOf(totalMinute)) + " دقیقه ");
             }
         } else {
             textView.setText("طول بازدید: " + Util.persianNumbers(String.valueOf(totalMinute)) + " دقیقه ");
@@ -311,5 +316,9 @@ public class Util {
         return builder.toString();
     }
 
+    public static float dpToPx(Context context, int dp) {
+        Resources r = context.getResources();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
+    }
 
 }
