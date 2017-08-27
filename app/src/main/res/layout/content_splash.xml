@@ -9,92 +9,95 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_blue"
-        android:layout_above="@+id/relativeLayout"
-        android:layout_alignParentTop="true">
+        android:layout_above="@+id/splashFellowView"
+        android:layout_alignParentTop="true"
+        android:background="@color/main_blue">
 
-        <RelativeLayout
-            android:id="@+id/splashAnimHolder"
+        <!--
+            android:background="@drawable/corner_layout"
+            this attribute is used for defining the background-->
+
+        <LinearLayout
+            android:id="@+id/splashLogoInfoContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-          >
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/padding_standard"
+            android:paddingTop="@dimen/padding_standard">
 
-            <LinearLayout
-                android:id="@+id/relativeLayout2"
+            <ImageView
+                android:id="@+id/splashLogoTypeIv"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginBottom="@dimen/padding_short"
+                android:background="@drawable/pink"
+                android:paddingTop="@dimen/padding_standard" />
+
+            <TextView
+                android:id="@+id/splashInfoTv"
+                style="@style/StandardText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/corner_layout"
-                android:layout_marginBottom="130dp"
-                android:padding="@dimen/margin_standard">
+                android:gravity="right"
+                android:paddingTop="@dimen/padding_short"
+                android:text="سامانه جامع گردشگری ایران" />
+        </LinearLayout>
 
+        <RelativeLayout
+            android:id="@+id/splashLogoContainer"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_toLeftOf="@+id/splash_img"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/padding_standard"
-                    android:paddingTop="@dimen/padding_standard">
+            <ImageView
+                android:id="@+id/splashLogoIv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/ic_logo_pink" />
 
-                    <ImageView
-                        android:id="@+id/logotype"
-                        android:layout_width="120dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="right"
-                        android:layout_marginBottom="@dimen/padding_short"
-                        android:paddingTop="@dimen/padding_standard"
-                        android:background="@drawable/pink"/>
+            <ImageView
+                android:id="@+id/splashLogoInnerIv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_logo_inside" />
 
-                    <TextView
-                        android:id="@+id/textView"
-                        style="@style/StandardText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:paddingTop="@dimen/padding_short"
-                        android:text="سامانه جامع گردشگری ایران" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/splash_img"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_alignParentRight="true"
-                    android:background="@mipmap/ic_logo_pink" />
-            </LinearLayout>
         </RelativeLayout>
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_above="@+id/iranPlanner"
+            android:layout_above="@+id/splashIranPlannerWebSiteTv"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/margin_xshort"
             android:indeterminate="true"
-            android:indeterminateDrawable="@drawable/progress_splash" />
+            android:indeterminateDrawable="@drawable/progress_splash"
+            android:visibility="gone" />
 
         <TextView
-            android:id="@+id/iranPlanner"
+            android:id="@+id/splashIranPlannerWebSiteTv"
             style="@style/StandardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="www.iranplanner.com"
-            android:textColor="@color/dark_blue"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/margin_standard"/>
+            android:layout_marginBottom="8dp"
+            android:text="www.iranplanner.com"
+            android:textColor="@color/dark_blue" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
+        android:id="@+id/splashFellowView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:padding="@dimen/margin_short"
-        android:background="@color/white_">
+        android:layout_alignParentStart="true"
+        android:background="@color/white_"
+        android:padding="@dimen/margin_short">
 
         <LinearLayout
             android:layout_width="wrap_content"
