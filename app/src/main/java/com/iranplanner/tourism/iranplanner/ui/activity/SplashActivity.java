@@ -46,10 +46,9 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
     @Inject
     HomePresenter homePresenter;
 
-    private ImageView ivLogo, ivLogoType, ivLogoInner, ivBackground;
+    private ImageView ivLogo, ivLogoType, ivLogoInner;
     private TextView tvInfo, tvWebSite;
     private View vLogoContainer, vLogoInfoContainer, vFellows;
-    private boolean isAnimationDone = false;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -61,6 +60,7 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
                 Toast.makeText(getApplicationContext(),
                         "عدم دسترسی به اینترنت ", Toast.LENGTH_SHORT).show();
             } else {
+                proceed();
 //                StartAnimations();
             }
         }
@@ -71,16 +71,11 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        ivBackground = (ImageView) findViewById(R.id.splashBgIv);
-        Glide.with(this).load(R.drawable.splash_bg).centerCrop().override(600, 400).into(ivBackground);
+        Glide.with(this).load(R.drawable.splash_bg).centerCrop().override(600, 400).into((ImageView) findViewById(R.id.splashBgIv));
 
-        if (!Util.isNetworkAvailable(getApplicationContext())) {
-            CustomMessage customMessage = new CustomMessage(this, "عدم دسترسی به اینترنت");
-            customMessage.show();
-        } else {
-            init();
+        init();
 //            new LongOperation().execute("");
-            // we have internet connection, so it is save to connect to the internet here
+        // we have internet connection, so it is save to connect to the internet here
 //            new Handler().postDelayed(new Runnable() {
 //                @Override
 //                public void run() {
@@ -89,8 +84,7 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
 //                    finish();
 //                }
 //            },1500);
-//            StartAnimations();
-        }
+//            StartAnimations()
 
 //        ShowHomeResult("province", "309");
     }
@@ -151,12 +145,17 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
         ivLogoInner.startAnimation(rotation);
 
         //Handle Network Stuff With Delay To have a nice and smooth Animation on elements
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                proceed();
-            }
-        }, 2600);
+        if (!Util.isNetworkAvailable(getApplicationContext())) {
+            CustomMessage customMessage = new CustomMessage(this, "عدم دسترسی به اینترنت");
+            customMessage.show();
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    proceed();
+                }
+            }, 2600);
+        }
     }
 
     private void proceed() {
