@@ -169,7 +169,6 @@
                     android:layout_below="@+id/imageTypeAttraction2"
                     android:layout_centerHorizontal="true"
                     android:padding="5dp"
-
                     android:text="other" />
             </RelativeLayout>
         </LinearLayout>
@@ -195,7 +194,6 @@
             android:layout_height="300dp"
             android:layout_below="@+id/txtEventsTitle"
             android:layout_margin="@dimen/margin_xshort"
-
             app:cardCornerRadius="10dp">
 
             <RelativeLayout
@@ -211,10 +209,7 @@
                     android:id="@+id/EventsViewPager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                </com.iranplanner.tourism.iranplanner.standard.ClickableViewPager>
-
+                    android:layout_weight="1"/>
 
                 <me.relex.circleindicator.CircleIndicator
                     android:id="@+id/indicator"
@@ -222,7 +217,6 @@
                     android:layout_height="50dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true" />
-
 
             </RelativeLayout>
 
@@ -250,6 +244,7 @@
             android:paddingTop="@dimen/padding_standard"
             android:text="رویدادها" />
     </RelativeLayout>
+
     <!--hotelsTypeHolder-->
     <RelativeLayout
         android:id="@+id/hotelsTypeHolder"
@@ -376,9 +371,9 @@
                     android:background="@drawable/sonati"
                     android:scaleType="fitXY" />
             </RelativeLayout>
-
         </LinearLayout>
     </RelativeLayout>
+
     <!--HotelBestHolder-->
     <RelativeLayout
         android:id="@+id/viewPagerBestHolder"
@@ -458,15 +453,12 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-
             <RelativeLayout
-
                 android:id="@+id/attractionNaturalHolder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:translationZ="1dp">
-
 
                 <ImageView
                     android:id="@+id/imageAttractionNatural"
@@ -489,7 +481,6 @@
                     android:text="طبیعی" />
             </RelativeLayout>
 
-
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
@@ -501,7 +492,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:translationZ="1dp">
-
 
                 <ImageView
                     android:id="@+id/imagetxtAttractionHistorical"
@@ -523,7 +513,6 @@
                     android:padding="5dp"
                     android:text="تاریخی و فرهنگی" />
             </RelativeLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -534,16 +523,13 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-
             <RelativeLayout
-
                 android:id="@+id/attractionRelgonHolder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/dark_red"
                 android:translationZ="1dp">
-
 
                 <ImageView
                     android:id="@+id/imageAttractionRelgon"
@@ -566,7 +552,6 @@
                     android:text="مذهبی" />
             </RelativeLayout>
 
-
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
@@ -579,7 +564,6 @@
                 android:layout_weight="1"
                 android:background="@color/dark_red"
                 android:translationZ="1dp">
-
 
                 <ImageView
                     android:id="@+id/imagetxtAttractionSport"
@@ -601,9 +585,9 @@
                     android:padding="5dp"
                     android:text="تفریحی و ورزشی" />
             </RelativeLayout>
-
         </LinearLayout>
     </RelativeLayout>
+
     <!--viewPagerAttractionَBestHolder-->
     <RelativeLayout
         android:id="@+id/bestAttractionHolder"
@@ -656,7 +640,6 @@
             android:layout_below="@+id/txtItineraryTitle"
             android:focusable="false" />
 
-
         <TextView
             android:id="@+id/txtItineraryTitle"
             style="@style/StandardTitle"
@@ -683,7 +666,6 @@
             android:layout_below="@+id/txtlocalFoodTitle"
             android:focusable="false" />
 
-
         <TextView
             android:id="@+id/txtlocalFoodTitle"
             style="@style/StandardTitle"
@@ -692,7 +674,6 @@
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/margin_short"
             android:text="غذاهای محلی" />
-
 
     </RelativeLayout>
     <!--souvenirHolder-->
