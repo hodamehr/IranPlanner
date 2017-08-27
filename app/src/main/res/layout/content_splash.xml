@@ -46,7 +46,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:paddingTop="@dimen/padding_short"
-                android:text="سامانه جامع گردشگری ایران" />
+                android:text="سامانه جامع گردشگری ایران"
+                android:textColor="#f2f2f2"
+                android:textSize="13sp" />
         </LinearLayout>
 
         <RelativeLayout
@@ -60,7 +62,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerInParent="true"
-                android:background="@mipmap/ic_logo_pink" />
+                android:background="@drawable/ic_logo_back" />
 
             <ImageView
                 android:id="@+id/splashLogoInnerIv"
