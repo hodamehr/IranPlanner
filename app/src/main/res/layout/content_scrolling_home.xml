@@ -33,25 +33,25 @@
                     android:layout_height="35dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:paddingTop="@dimen/padding_short"
+                    android:padding="5dp"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_attraction" />
+                    android:src="@mipmap/ic_bed" />
 
                 <TextView
-                    android:id="@+id/txtTypeHotel"
+                    android:id="@+id/attractionType"
                     style="@style/StandardTextGrey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageTypeHotel"
                     android:layout_centerHorizontal="true"
                     android:padding="5dp"
-                    android:text="پرواز" />
+                    android:text="اقامت" />
             </RelativeLayout>
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@color/light_blue" />
+                android:background="@color/greySemilight" />
 
             <RelativeLayout
                 android:id="@+id/TypeAttractionHolder"
@@ -66,19 +66,18 @@
                     android:layout_height="35dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:paddingTop="@dimen/padding_short"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_accomodation" />
+                    android:padding="5dp"
+                    android:src="@mipmap/ic_flight_blue" />
 
                 <TextView
-                    android:id="@+id/attractionType"
+                    android:id="@+id/txtTypeHotel"
                     style="@style/StandardTextGrey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageTypeAttraction"
                     android:layout_centerHorizontal="true"
                     android:padding="5dp"
-                    android:text="اقامت" />
+                    android:text="پرواز" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -87,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/selectHoldetTop"
-            android:background="@color/light_blue" />
+            android:background="@color/greySemilight" />
 
         <LinearLayout
             android:id="@+id/hj2"
@@ -105,47 +104,14 @@
                 android:translationZ="1dp">
 
                 <ImageView
-                    android:id="@+id/imageTypeAttraction1"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:paddingTop="@dimen/padding_short"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/historical" />
-
-                <TextView
-                    android:id="@+id/attractionType1"
-                    style="@style/StandardTextGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imageTypeAttraction1"
-                    android:layout_centerHorizontal="true"
-                    android:padding="5dp"
-                    android:text="جاذبه" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/light_blue" />
-
-            <RelativeLayout
-                android:id="@+id/overlapImageHolder2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:translationZ="1dp">
-
-                <ImageView
                     android:id="@+id/imageTypeAttraction2"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:paddingTop="@dimen/padding_short"
+                    android:padding="5dp"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_calenderwhite"
+                    android:src="@mipmap/ic_itinerary_blue"
                     android:tint="@color/main_blue" />
 
                 <TextView
@@ -158,6 +124,39 @@
                     android:padding="5dp"
                     android:text="برنامه سفر" />
             </RelativeLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/greySemilight" />
+
+            <RelativeLayout
+                android:id="@+id/overlapImageHolder2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:translationZ="1dp">
+
+                <ImageView
+                    android:id="@+id/imageTypeAttraction1"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignEnd="@+id/attractionType1"
+                    android:layout_alignParentTop="true"
+                    android:padding="6dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_attraction_blue" />
+
+                <TextView
+                    android:id="@+id/attractionType1"
+                    style="@style/StandardTextGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageTypeAttraction1"
+                    android:layout_centerHorizontal="true"
+                    android:padding="5dp"
+                    android:text="جاذبه" />
+            </RelativeLayout>
         </LinearLayout>
 
         <View
@@ -165,7 +164,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/hj2"
-            android:background="@color/light_blue" />
+            android:background="@color/greySemilight" />
     </RelativeLayout>
     <!--viewPagerEventsHolder-->
 
