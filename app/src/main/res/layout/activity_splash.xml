@@ -6,9 +6,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-
     <include layout="@layout/content_splash" />
-
-
 
 </android.support.design.widget.CoordinatorLayout>

@@ -109,8 +109,8 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
         vFellows = findViewById(R.id.splashFellowView);
 
         //Move the ui Objects to their new Places and wait for Translation Animation
-        vLogoContainer.setY(-100f);
-        vFellows.setY(150f);
+        vLogoContainer.setY(-(Util.dpToPx(this, 100)));
+        vFellows.setY(Util.dpToPx(this, 100));
 
         //Reset View's Alpha to 0
         tvWebSite.setAlpha(0f);
@@ -126,15 +126,15 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
         ivLogoType.setVisibility(View.VISIBLE);
 
         //Downward Translation animations
-        vLogoContainer.animate().alpha(1).translationYBy(100f).setStartDelay(500).setDuration(500).start();
+        vLogoContainer.animate().alpha(1).translationYBy(Util.dpToPx(this, 100)).setStartDelay(500).setDuration(500).start();
         ivLogo.animate().alpha(1).setStartDelay(500).setDuration(500).start();
 
         //Separation Animations
-        vLogoInfoContainer.animate().alpha(1).translationXBy(-150f).setStartDelay(1300).setDuration(500).start();
-        vLogoContainer.animate().translationXBy(150f).setStartDelay(1300).setDuration(500).start();
+        vLogoInfoContainer.animate().alpha(1).translationXBy(-Util.dpToPx(this, 75)).setStartDelay(1300).setDuration(500).start();
+        vLogoContainer.animate().translationXBy(Util.dpToPx(this, 75)).setStartDelay(1300).setDuration(500).start();
 
         //Fellow Layout Upward Translation animations
-        vFellows.animate().translationYBy(-150).setStartDelay(1700).start();
+        vFellows.animate().translationYBy(-(Util.dpToPx(this, 100))).setStartDelay(1700).start();
 
         //WebSite TextView Alpha Animation
         tvWebSite.animate().alpha(1).setStartDelay(1700).setDuration(400).start();
@@ -253,11 +253,17 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
     }
 
     @Override
-    public void ShowHomeResult(GetHomeResult GetHomeResult) {
+    public void ShowHomeResult(final GetHomeResult GetHomeResult) {
+        //added this Handler to avoid the lag in Activity
+//        new Handler().post(new Runnable() {
+//            @Override
+//            public void run() {
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("HomeResult", GetHomeResult);
         startActivity(intent);
+//            }
+//        });
 //        SplashActivity.this.finish();
     }
 
