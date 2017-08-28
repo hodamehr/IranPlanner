@@ -290,18 +290,14 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         super.onCreate(savedInstanceState);
         final Bundle args = getArguments();
         homeResult = (GetHomeResult) args.getSerializable("HomeResult");
-
-
     }
 
     private void getAttractionResults() {
         getAttractionMore("");
-
     }
 
     private void getAttractionMore(String type) {
         homePresenter.getAttractionMore("search", "fa", selectId, "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), type);
-
     }
 
     @Override
@@ -310,8 +306,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             case R.id.aboutCityBtn:
                 showAboutCityOrProvince();
                 break;
-
-
             case R.id.attractionHistoricalHolder:
                 getAttractionMore(Constants.attractionHistoricalCode);
                 break;
@@ -320,7 +314,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 break;
             case R.id.attractionSportHolder:
                 getAttractionMore(Constants.attractionSortCode);
-
                 break;
             case R.id.attractionRelgonHolder:
                 getAttractionMore(Constants.attractionRelegonCode);
