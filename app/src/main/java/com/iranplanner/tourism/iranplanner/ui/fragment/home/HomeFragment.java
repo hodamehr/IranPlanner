@@ -212,6 +212,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     RelativeLayout attractionSportHolder;
     @InjectView(R.id.attractionRelgonHolder)
     RelativeLayout attractionRelgonHolder;
+    @InjectView(R.id.toolbarTitleParent)
+    LinearLayout toolbarTitleParent;
 
 
     public HomeFragment() {
@@ -405,12 +407,10 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         toolbarHeight = ((MainActivity) getActivity()).getSupportActionBar().getHeight();
         if (verticalOffset <= (-1) * appBarLayout.getTotalScrollRange() + toolbarHeight) {
             toolbar.setBackgroundColor(getResources().getColor(R.color.main_blue));
-            toolbarTitle.setVisibility(View.VISIBLE);
-
+            toolbarTitleParent.setVisibility(View.VISIBLE);
         } else if (verticalOffset > (-1) * appBarLayout.getTotalScrollRange() + toolbarHeight) {
             toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-            toolbarTitle.setVisibility(View.INVISIBLE);
-
+            toolbarTitleParent.setVisibility(View.INVISIBLE);
         }
     }
 

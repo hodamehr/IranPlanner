@@ -110,7 +110,7 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
 
         //Move the ui Objects to their new Places and wait for Translation Animation
         vLogoContainer.setY(-(Util.dpToPx(this, 100)));
-        vFellows.setY(Util.dpToPx(this, 100));
+        vFellows.setY(Util.dpToPx(this,40));
 
         //Reset View's Alpha to 0
         tvWebSite.setAlpha(0f);
@@ -134,7 +134,7 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
         vLogoContainer.animate().translationXBy(Util.dpToPx(this, 75)).setStartDelay(1300).setDuration(500).start();
 
         //Fellow Layout Upward Translation animations
-        vFellows.animate().translationYBy(-(Util.dpToPx(this, 100))).setStartDelay(1700).start();
+        vFellows.animate().translationYBy(-(Util.dpToPx(this, 40))).setStartDelay(1700).start();
 
         //WebSite TextView Alpha Animation
         tvWebSite.animate().alpha(1).setStartDelay(1700).setDuration(400).start();

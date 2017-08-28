@@ -44,9 +44,8 @@
             android:clickable="true"
             android:src="@mipmap/ic_search" />
 
-        <TextView
-            android:id="@+id/toolbarTitle"
-            style="@style/StandardText"
+        <LinearLayout
+            android:id="@+id/toolbarTitleParent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -55,9 +54,24 @@
             android:paddingBottom="@dimen/padding_short"
             android:paddingEnd="@dimen/padding_standard"
             android:paddingStart="@dimen/padding_standard"
-            android:paddingTop="@dimen/padding_short"
-            android:text="کجا برم ؟"
-            android:textColor="@color/white_" />
+            android:paddingTop="@dimen/padding_short">
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                style="@style/StandardText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=" کجابریم؟ "
+                android:textColor="@color/white_" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:tint="#f2f2f2"
+                android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
