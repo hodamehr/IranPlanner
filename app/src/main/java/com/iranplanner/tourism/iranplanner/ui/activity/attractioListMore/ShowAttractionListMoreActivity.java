@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,11 +33,12 @@ import entity.ResultAttractionList;
 import entity.ResultCommentList;
 import entity.ShowAtractionDetailMore;
 import entity.ShowAttractionFull;
+import entity.ShowAttractionListMore;
 import entity.ShowAttractionMoreList;
 import tools.Util;
 
 
-public class ShowAttractionListMoreActivity extends StandardActivity implements DataTransferInterface, AttractionListMoreContract.View {
+public class ShowAttractionListMoreActivity extends StandardActivity implements DataTransferInterface, AttractionListMoreContract.View, View.OnClickListener {
     private Context context;
     @Inject
     AttractionListMorePresenter attractionListMorePresenter;
@@ -48,6 +50,10 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
 
     @InjectView(R.id.attractionListRecyclerView)
     RecyclerView attractionRecyclerView;
+
+    //Added by Amin
+    private View filterToggle, mapToggle, filterView, filterShade, bottomPanelView;
+    private boolean isViewOpen = false;
 
     private void getExtra() {
         Intent intent = getIntent();
@@ -97,8 +103,100 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
             }
 //            }
         });
+
+        init();
     }
 
+    private void init() {
+        mapToggle = findViewById(R.id.attractionMapToggleView);
+
+        bottomPanelView = findViewById(R.id.attractionBottomPanelView);
+        filterView = findViewById(R.id.attractionFilterView);
+        filterToggle = findViewById(R.id.attractionFilterToggleView);
+        filterShade = findViewById(R.id.attractionPanelShadeView);
+
+        mapToggle.setOnClickListener(this);
+        filterToggle.setOnClickListener(this);
+        filterView.setOnClickListener(this);
+        filterShade.setOnClickListener(this);
+        bottomPanelView.setOnClickListener(this);
+
+        filterShade.setAlpha(0);
+        filterShade.setVisibility(View.GONE);
+
+        filterView.setY(Util.dpToPx(this, 300));
+
+    }
+
+    private void togglePanel() {
+        if (isViewOpen) {
+            closeFilterView();
+            return;
+        }
+        openFilterView();
+    }
+
+    private void openFilterView() {
+        filterToggle.setOnClickListener(null);
+
+        filterView.animate().translationYBy(-Util.dpToPx(this, 300)).setDuration(300).start();
+        bottomPanelView.animate().translationYBy(-Util.dpToPx(this, 300)).setDuration(300).start();
+        filterShade.setVisibility(View.VISIBLE);
+        filterShade.animate().alpha(0.7f).setDuration(300).start();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isViewOpen = true;
+                filterToggle.setOnClickListener(ShowAttractionListMoreActivity.this);
+            }
+        }, 300);
+    }
+
+    private void closeFilterView() {
+        filterToggle.setOnClickListener(null);
+        isViewOpen = false;
+
+        filterView.animate().translationYBy(Util.dpToPx(this, 300)).setDuration(300).start();
+        bottomPanelView.animate().translationYBy(Util.dpToPx(this, 300)).setDuration(300).start();
+        filterShade.animate().alpha(0).setDuration(300).start();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                filterToggle.setOnClickListener(ShowAttractionListMoreActivity.this);
+                filterShade.setVisibility(View.GONE);
+            }
+        }, 300);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.attractionMapToggleView:
+
+                break;
+            case R.id.attractionFilterToggleView:
+                togglePanel();
+                break;
+            case R.id.attractionFilterView:
+
+                break;
+            case R.id.attractionPanelShadeView:
+                togglePanel();
+                break;
+            default:
+
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isViewOpen)
+            closeFilterView();
+        else super.onBackPressed();
+    }
 
     private void buildAlertMessageNoGps(final int position) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
@@ -205,12 +303,11 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
     public void showAttractionDetail(ShowAtractionDetailMore showAttractionFull) {
 
         ResulAttraction resulAttraction = showAttractionFull.getResultAttractionFull().getResulAttraction();
-        List<ResultAttractionList >resultAttractions= (List<ResultAttractionList>) showAttractionFull.getResultAttractionFull().getResultAttractionList();
+        List<ResultAttractionList> resultAttractions = (List<ResultAttractionList>) showAttractionFull.getResultAttractionFull().getResultAttractionList();
         Intent intent = new Intent(this, attractionDetailActivity.class);
         intent.putExtra("resulAttraction", (Serializable) resulAttraction);
         intent.putExtra("resultAttractionList", (Serializable) resultAttractions);
         startActivity(intent);
 
     }
-
 }
