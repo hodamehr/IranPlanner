@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,6 +77,9 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
         LayoutShowProfileHolder.setOnClickListener(this);
         exitFromAccount.setOnClickListener(this);
         setLoginName();
+
+        initRequestStatusRecyclerView(view);
+
         return view;
     }
 
@@ -89,7 +95,7 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
             case R.id.btnEditProfile:
 //                requestGetUser();
 //                tagFrom = "editKey";
-                Intent intenta=new Intent(getActivity(), ScrollingActivity.class);
+                Intent intenta = new Intent(getActivity(), ScrollingActivity.class);
                 startActivity(intenta);
 
                 break;
@@ -104,6 +110,12 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
                 break;
 
         }
+    }
+
+    private void initRequestStatusRecyclerView(View view) {
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.settingRequestStatusRv);
+        recyclerView.setAdapter(new RequestStatusAdapter(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
     }
 
     private void clearSharedprefrence() {

@@ -60,7 +60,7 @@
                         android:paddingTop="@dimen/padding_short"
                         android:text="ویرایش پروفایل"
                         android:textColor="@color/white_"
-                        android:visibility="invisible"/>
+                        android:visibility="invisible" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -87,7 +87,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:src="@mipmap/ic_send_grey"
-                        android:visibility="invisible"/>
+                        android:visibility="invisible" />
 
                     <View
                         android:layout_width="match_parent"
@@ -117,12 +117,26 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:src="@mipmap/ic_send_grey"
-                        android:visibility="invisible"/>
+                        android:visibility="invisible" />
                 </RelativeLayout>
-
 
             </LinearLayout>
 
+            <TextView
+                style="@style/StandardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_standard"
+                android:text="وضعیت درخواستهای ارسال شده" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/settingRequestStatusRv"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_height="wrap_content">
+
+
+            </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
     </ScrollView>
