@@ -130,11 +130,11 @@
                         android:weightSum="4">
 
                         <ImageView
-                            android:id="@+id/test"
+                            android:id="@+id/homeNavHotelHolder"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/ic_air" />
+                            android:src="@mipmap/ic_bed" />
 
                         <View
                             android:layout_width="1dp"
@@ -142,10 +142,11 @@
                             android:background="@color/main_blue" />
 
                         <ImageView
+                            android:id="@+id/homeNavAttraction"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/ic_attraction" />
+                            android:src="@mipmap/ic_itinerary_blue" />
 
                         <View
                             android:layout_width="1dp"
@@ -153,10 +154,11 @@
                             android:background="@color/main_blue" />
 
                         <ImageView
+                            android:id="@+id/homeNavFlightAttraction"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/ic_attraction" />
+                            android:src="@mipmap/ic_flight_blue" />
 
                         <View
                             android:layout_width="1dp"
@@ -164,10 +166,11 @@
                             android:background="@color/main_blue" />
 
                         <ImageView
+                            android:id="@+id/homeNavPinAttraction"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/ic_attraction" />
+                            android:src="@mipmap/ic_attraction_blue" />
 
                     </LinearLayout>
 

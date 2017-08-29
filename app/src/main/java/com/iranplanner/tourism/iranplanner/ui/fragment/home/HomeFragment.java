@@ -248,6 +248,13 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         attractionSportHolder.setOnClickListener(this);
         attractionRelgonHolder.setOnClickListener(this);
         txtMoreTitleHotel.setOnClickListener(this);
+
+        //home nav views
+        rootView.findViewById(R.id.homeNavAttraction).setOnClickListener(this);
+        rootView.findViewById(R.id.homeNavPinAttraction).setOnClickListener(this);
+        rootView.findViewById(R.id.homeNavFlightAttraction).setOnClickListener(this);
+        rootView.findViewById(R.id.homeNavHotelHolder).setOnClickListener(this);
+
         mNavigationDrawerItemTitles = getResources().getStringArray(R.array.navigation_items);
         DaggerHomeComponent.builder().netComponent(((App) getContext().getApplicationContext()).getNetComponent())
                 .homeModule(new HomeModule(this, this, this, this))
@@ -318,11 +325,11 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             case R.id.attractionRelgonHolder:
                 getAttractionMore(Constants.attractionRelegonCode);
                 break;
-
             case R.id.txtMoreTitleAttraction:
                 getAttractionResults();
                 break;
             case R.id.TypeAttractionHolder:
+            case R.id.homeNavPinAttraction:
                 getAttractionResults();
                 break;
             case R.id.hotelHolderGrouping:
@@ -341,6 +348,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 getHotelResults(SelectedType, selectId, "");
                 break;
             case R.id.TypeHotelHolder:
+            case R.id.homeNavHotelHolder:
                 if (SelectedType != null && SelectedType.equals("city") && selectId != null) {
 //                    reservationPresenter.getLodgingList("list", selectId,  Util.getTokenFromSharedPreferences(getContext()), "20","0", Util.getAndroidIdFromSharedPreferences(getContext()),"");
                     getHotelResults(SelectedType, selectId, "");
