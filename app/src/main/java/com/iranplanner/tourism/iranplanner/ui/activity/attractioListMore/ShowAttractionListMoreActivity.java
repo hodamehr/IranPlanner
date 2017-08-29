@@ -76,6 +76,7 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
         attractionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new AttractionsMoreListAdapter(this, this, attractionsList, getApplicationContext(), R.layout.content_attraction_list);
+        attractionRecyclerView.addItemDecoration(new AttractionListMoreItemDecoration(this));
         attractionRecyclerView.setAdapter(adapter);
 
         attractionRecyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
