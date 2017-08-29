@@ -60,8 +60,8 @@
                         android:layout_centerInParent="true"
                         android:background="@drawable/button_corner_white"
                         android:gravity="center"
-                        android:paddingEnd="@dimen/padding_short"
-                        android:paddingStart="@dimen/padding_short">
+                        android:paddingEnd="@dimen/padding_standard"
+                        android:paddingStart="@dimen/padding_standard">
 
                         <TextView
                             android:id="@+id/txtWhereGo"
@@ -181,7 +181,6 @@
             </RelativeLayout>
         </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>
-
 
     <include
         layout="@layout/nav_layout"
