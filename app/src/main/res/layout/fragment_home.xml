@@ -130,11 +130,11 @@
                         android:weightSum="4">
 
                         <ImageView
-                            android:id="@+id/test"
+                            android:id="@+id/featureFlight"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/ic_air" />
+                            android:src="@mipmap/ic_flight_blue" />
 
                         <View
                             android:layout_width="1dp"
@@ -145,7 +145,8 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/ic_attraction" />
+                            android:src="@mipmap/ic_bed"
+                            android:id="@+id/featureBed"/>
 
                         <View
                             android:layout_width="1dp"
@@ -156,7 +157,8 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/ic_attraction" />
+                            android:src="@mipmap/ic_attraction_blue"
+                            android:id="@+id/featureAttraction"/>
 
                         <View
                             android:layout_width="1dp"
@@ -167,7 +169,8 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/ic_attraction" />
+                            android:src="@mipmap/ic_itinerary_blue"
+                            android:id="@+id/featureItinerary"/>
 
                     </LinearLayout>
 
