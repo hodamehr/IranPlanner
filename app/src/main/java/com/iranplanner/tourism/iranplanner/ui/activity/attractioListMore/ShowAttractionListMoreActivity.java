@@ -185,9 +185,6 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
             case R.id.attractionPanelShadeView:
                 togglePanel();
                 break;
-            default:
-
-                break;
         }
     }
 
