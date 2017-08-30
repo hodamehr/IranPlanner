@@ -4,6 +4,7 @@ import com.iranplanner.tourism.iranplanner.ui.presenter.Presenter;
 
 import entity.GetInfoReqSend;
 import entity.GetInfoResult;
+import entity.ResultReservationReqStatus;
 
 
 /**
@@ -20,7 +21,14 @@ public abstract class SettingContract extends Presenter<SettingContract.View> {
         void showProgress();
 
         void dismissProgress();
+        void showResultReservationReqStatus(ResultReservationReqStatus resultReservationReqStatus);
     }
 
     public abstract void getUserInfoPostResult(GetInfoReqSend getInfoReqSend, String cid, String androidId);
+
+    public abstract void getResultReservationReqStatus(String action,
+                                                       String type,
+                                                       String value,
+                                                       String cid,
+                                                       String androidId);
 }

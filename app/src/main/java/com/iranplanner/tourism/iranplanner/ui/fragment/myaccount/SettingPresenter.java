@@ -1,14 +1,14 @@
 package com.iranplanner.tourism.iranplanner.ui.fragment.myaccount;
 
 
-
-
 import javax.inject.Inject;
 
 import entity.GetInfoReqSend;
 import entity.GetInfoResult;
+import entity.ResultReservationReqStatus;
 import retrofit2.Retrofit;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -51,7 +51,6 @@ public class SettingPresenter extends SettingContract {
     }
 
 
-
     @Override
     public void getUserInfoPostResult(GetInfoReqSend getInfoReqSend, String cid, String androidId) {
         mView.showProgress();
@@ -80,11 +79,47 @@ public class SettingPresenter extends SettingContract {
                 });
     }
 
+    @Override
+    public void getResultReservationReqStatus(String action, String uid, String lang, String cid, String androidId) {
+        mView.showProgress();
+        retrofit.create(GetInfoService.class).getResultReservationReqStatus(action, uid, lang, cid, androidId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultReservationReqStatus>() {
+
+                    @Override
+                    public void onCompleted() {
+                        mView.dismissProgress();
+                        mView.showComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.dismissProgress();
+                        mView.showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(ResultReservationReqStatus resultReservationReqStatus) {
+                        mView.showResultReservationReqStatus(resultReservationReqStatus);
+                    }
+                });
+    }
+
     public interface GetInfoService {
 
-       @POST("api-user.php?action=getinfo")
-        Observable<GetInfoResult> getInfoUserPostResul(@Body GetInfoReqSend getInfoReqSend, @Query("cid") String token,
-                                                  @Query("andId") String androidId);
+        @POST("api-user.php?action=getinfo")
+        Observable<GetInfoResult> getInfoUserPostResul(@Body GetInfoReqSend getInfoReqSend,
+                                                       @Query("cid") String token,
+                                                       @Query("andId") String androidId);
+        //   https://api.parsdid.com/iranplanner/app/api-lodging.php?action=req_user_count&uid=792147600796866&lang=fa
 
+        @GET("api-lodging.php")
+        Observable<ResultReservationReqStatus> getResultReservationReqStatus(@Query("action") String action,
+                                                                             @Query("uid") String uid,
+                                                                             @Query("lang") String lang,
+                                                                             @Query("cid") String cid,
+                                                                             @Query("andId") String androidId);
     }
 }

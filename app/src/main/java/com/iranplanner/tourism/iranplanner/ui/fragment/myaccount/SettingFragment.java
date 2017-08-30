@@ -22,13 +22,17 @@ import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.iranplanner.tourism.iranplanner.ui.activity.editprofile.EditProfileActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.login.LoginActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.ScrollingActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus.HotelReservationStatusActivity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import entity.GetInfoReqSend;
 import entity.GetInfoResult;
+import entity.ResultReqCount;
+import entity.ResultReservationReqStatus;
 import server.Config;
 import tools.Util;
 
@@ -37,26 +41,30 @@ import tools.Util;
  */
 public class SettingFragment extends StandardFragment implements View.OnClickListener, SettingContract.View {
 
-    TextView txtProfileName, btnEditProfile;
+    TextView txtProfileName, btnEditProfile, txtHotelReservationStatus;
     RelativeLayout LayoutShowProfileHolder, exitFromAccount;
     @Inject
     SettingPresenter settingPresenter;
     private String tagFrom;
     ProgressDialog progressDialog;
-
+    String cid;
+    String andId;
+    String uid;
+    View view;
 
     public static SettingFragment newInstance() {
         SettingFragment fragment = new SettingFragment();
         return fragment;
     }
 
+    private void getSharedpreferences() {
+        cid = Util.getTokenFromSharedPreferences(getContext());
+        andId = Util.getAndroidIdFromSharedPreferences(getContext());
+        uid = Util.getUseRIdFromShareprefrence(getContext());
+    }
+
     private void requestGetUser() {
-        DaggerSettingComponent.builder().netComponent(((App) getActivity().getApplicationContext()).getNetComponent())
-                .settingModule(new SettingModule(this))
-                .build().inject(this);
-        String cid = Util.getTokenFromSharedPreferences(getContext());
-        String andId = Util.getAndroidIdFromSharedPreferences(getContext());
-        String uid = Util.getUseRIdFromShareprefrence(getContext());
+
         settingPresenter.getUserInfoPostResult(new GetInfoReqSend(uid), cid, andId);
     }
 
@@ -68,17 +76,21 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting, container, false);
+        view = inflater.inflate(R.layout.fragment_setting, container, false);
         txtProfileName = (TextView) view.findViewById(R.id.txtProfileName);
         btnEditProfile = (TextView) view.findViewById(R.id.btnEditProfile);
+        txtHotelReservationStatus = (TextView) view.findViewById(R.id.txtHotelReservationStatus);
         LayoutShowProfileHolder = (RelativeLayout) view.findViewById(R.id.LayoutShowProfileHolder);
         exitFromAccount = (RelativeLayout) view.findViewById(R.id.exitFromAccount);
         btnEditProfile.setOnClickListener(this);
         LayoutShowProfileHolder.setOnClickListener(this);
         exitFromAccount.setOnClickListener(this);
+        txtHotelReservationStatus.setOnClickListener(this);
         setLoginName();
-
-        initRequestStatusRecyclerView(view);
+        getSharedpreferences();
+        DaggerSettingComponent.builder().netComponent(((App) getActivity().getApplicationContext()).getNetComponent())
+                .settingModule(new SettingModule(this))
+                .build().inject(this);
 
         return view;
     }
@@ -87,6 +99,10 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
         if (!Util.getUseRIdFromShareprefrence(getContext()).equals("")) {
             txtProfileName.setText(Util.getUserNameFromShareprefrence(getContext()) + " خوش آمدید");
         }
+    }
+
+    private void getRerReservation() {
+        settingPresenter.getResultReservationReqStatus("req_user_count", uid, "fa", cid, andId);
     }
 
     public void onClick(View v) {
@@ -108,15 +124,14 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.txtHotelReservationStatus:
+                getRerReservation();
+                break;
 
         }
     }
 
-    private void initRequestStatusRecyclerView(View view) {
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.settingRequestStatusRv);
-        recyclerView.setAdapter(new RequestStatusAdapter(getContext()));
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-    }
+
 
     private void clearSharedprefrence() {
         SharedPreferences settings = getContext().getSharedPreferences(Config.SHARED_PREF_USER, Context.MODE_PRIVATE);
@@ -137,7 +152,6 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
         Log.e("complete", "get attraction list");
         if (progressDialog.isShowing()) {
             progressDialog.dismiss();
-
         }
     }
 
@@ -162,5 +176,19 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
     @Override
     public void dismissProgress() {
         progressDialog.dismiss();
+    }
+
+    @Override
+    public void showResultReservationReqStatus(ResultReservationReqStatus resultReservationReqStatus) {
+        List<ResultReqCount> resultReqCountList = resultReservationReqStatus.getResultReqCount();
+//        initRequestStatusRecyclerView(view, resultReqCountList);
+        Intent intent=new Intent(getActivity(), HotelReservationStatusActivity.class);
+        intent.putExtra("resultReqCountList", (Serializable) resultReqCountList);
+
+
+        startActivity(intent);
+
+
+
     }
 }

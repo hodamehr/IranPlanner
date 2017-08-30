@@ -119,24 +119,32 @@
                         android:src="@mipmap/ic_send_grey"
                         android:visibility="invisible" />
                 </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/HotelReservationStatusHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_standard"
+                    android:layout_marginTop="@dimen/margin_standard">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="وضعیت درخواستهای ارسال شده"
+                        android:id="@+id/txtHotelReservationStatus"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_send_grey"
+                        android:visibility="invisible" />
+                </RelativeLayout>
             </LinearLayout>
 
-            <TextView
-                style="@style/StandardTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_standard"
-                android:text="وضعیت درخواستهای ارسال شده" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/settingRequestStatusRv"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="20dp"
-                android:layout_height="wrap_content">
-
-
-            </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
     </ScrollView>

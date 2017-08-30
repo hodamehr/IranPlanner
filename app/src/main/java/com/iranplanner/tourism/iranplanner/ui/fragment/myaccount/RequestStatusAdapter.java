@@ -12,6 +12,9 @@ import android.widget.Toast;
 import com.iranplanner.tourism.iranplanner.R;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import entity.ResultReqCount;
 
 /**
  * Created by h.vahidimehr on 29/08/2017.
@@ -21,12 +24,13 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
 
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<String> statuses;
+//    private ArrayList<String> statuses;
+    private List<ResultReqCount> resultReqCountList;
 
-    public RequestStatusAdapter(Context context) {
+    public RequestStatusAdapter(Context context, List<ResultReqCount> resultReqCountList) {
         this.context = context;
         inflater = LayoutInflater.from(context);
-        statuses = getStatuses();
+        this.resultReqCountList =resultReqCountList;
     }
 
     @Override
@@ -41,13 +45,14 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        String current = statuses.get(position);
-        holder.setData(current, position);
+        String current = resultReqCountList.get(position).getReservationReqStatus().getStatusTitle();
+//        resultReqCountList.get(position).getReservationReqStatus().getStatusId()dgf
+        holder.setData(current, position,resultReqCountList.get(position).getReservationReqStatus().getStatusCount());
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return resultReqCountList.size();
     }
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -67,12 +72,12 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
             btnView.setOnClickListener(this);
         }
 
-        public void setData(String current, int position) {
-            if (position == 1)
+        public void setData(String current, int position,String count) {
+            if (position == 2)
                 btnPayment.setVisibility(View.VISIBLE);
             else btnPayment.setVisibility(View.GONE);
-
             tvTitle.setText(current);
+            tvCount.setText(count);
         }
 
         @Override
@@ -93,7 +98,7 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
 
         strings.add("درحال بررسی");
         strings.add("در انتظار پرداخت");
-        strings.add("پرداهت شده");
+        strings.add("پرداخت شده");
         strings.add("لغو شده");
 
         return strings;

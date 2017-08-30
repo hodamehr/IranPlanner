@@ -104,7 +104,7 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
         txtBirthdayValueShow = (TextView) findViewById(R.id.txtBirthdayValueShow);
         txtNewsValueShow = (TextView) findViewById(R.id.txtNewsValueShow);
         //----
-        if (from.equals("editKey") || from == null) {
+        if (from == null||from.equals("editKey")  ) {
             editProfileHolder.setVisibility(View.VISIBLE);
             showProfileHolder.setVisibility(View.GONE);
             btnOpenEditProfile.setVisibility(View.GONE);
