@@ -77,13 +77,13 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
     private String todayDate;
 
     private void showDialogNumber() {
-        CustomDialogNumberPicker cdd = new CustomDialogNumberPicker(this, 10, 1, "مدت زمان اقامت",null);
+        CustomDialogNumberPicker cdd = new CustomDialogNumberPicker(this, 10, 1, "مدت زمان اقامت", null);
         cdd.show();
         cdd.setDialogResult(new CustomDialogNumberPicker.OnDialogNumberPick() {
             @Override
             public void finish(int result) {
                 durationTravel = result;
-                txtDurationHotel.setText(Util.persianNumbers(result+"شب"));
+                txtDurationHotel.setText(Util.persianNumbers(result + "شب"));
             }
         });
     }
@@ -121,14 +121,16 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0) //check for scroll down
+                if (dy > 0 && loading) //check for scroll down
                 {
                     visibleItemCount = mLayoutManager.getChildCount();
                     totalItemCount = mLayoutManager.getItemCount();
                     pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                        reservationPresenter.getLodgingList("list", String.valueOf(resultLodgings.get(0).getLodgingCityId()), "20", nextOffset, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()),"");
+                        loading = false;
+                        reservationPresenter.getLodgingList("list", String.valueOf(resultLodgings.get(0).getLodgingCityId()), Util.getTokenFromSharedPreferences(getApplicationContext()), "20", nextOffset, Util.getAndroidIdFromSharedPreferences(getApplicationContext()), "");
+
                     }
                 }
             }
@@ -164,7 +166,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
 //                .reservationModule(new ReservationModule(this));
 //        builder.build().inject()
         getExtras();
-        txtDurationHotel.setText(Util.persianNumbers(durationTravel+"شب"));
+        txtDurationHotel.setText(Util.persianNumbers(durationTravel + "شب"));
         txtTypeHotel.setText(Utils.getSimpleDate(startOfTravel));
 
         setUpRecyclerView();
@@ -229,6 +231,8 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
             adapter.notifyDataSetChanged();
 //            waitingLoading.setVisibility(View.INVISIBLE);
             nextOffset = resultLodgingList.getStatistics().getOffsetNext().toString();
+            loading = false;
+
         }
     }
 
@@ -245,11 +249,10 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
 
     @Override
     public void showComplete() {
+        Util.dismissProgress(progressDialog);
+
 //        progressDialog.dismiss();
     }
-
-
-
 
 
     @Override
@@ -259,6 +262,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
 
     @Override
     public void dismissProgress() {
+
         Util.dismissProgress(progressDialog);
     }
 }

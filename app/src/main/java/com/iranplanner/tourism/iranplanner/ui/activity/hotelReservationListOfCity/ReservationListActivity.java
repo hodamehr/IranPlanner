@@ -9,19 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
-
-
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
-import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity;
-import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,7 +29,6 @@ import javax.inject.Inject;
 import entity.ResultItinerary;
 import entity.ResultLodging;
 import entity.ResultLodgingList;
-
 import tools.Util;
 
 /**
@@ -51,7 +46,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
     @Inject
     ReservationPresenter reservationPresenter;
     protected Toolbar toolbar;
-    ImageView toolbarBack,toolbarToggle;
+    ImageView toolbarBack, toolbarToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +84,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
                     @Override
                     public void onClick(View v) {
                         Log.e("reserve", "click");
-                        reservationPresenter.getLodgingList("list", itineraryData.getItineraryLodgingCity().get(position + 1).getCityId(),"20","0", Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()),"");
+                        reservationPresenter.getLodgingList("list", itineraryData.getItineraryLodgingCity().get(position + 1).getCityId(), Util.getTokenFromSharedPreferences(getApplicationContext()), "20", "0", Util.getAndroidIdFromSharedPreferences(getApplicationContext()), "");
                     }
                 });
 
@@ -98,22 +93,23 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         toolbarBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("ddd","dddddddddddddddddddddddddd");
+                Log.e("ddd", "dddddddddddddddddddddddddd");
             }
         });
 
     }
+
     void setupToolbar() {
         ((StandardActivity) this).setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         ((StandardActivity) this).getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbarToggle.setVisibility(View.GONE);
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_reservation_list;
     }
-
 
 
     @Override
