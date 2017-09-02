@@ -27,13 +27,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/padding_big"
                 android:gravity="right"
-                android:hint="به کجا"
+                android:hint="نام شهر یا استان"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
 
         </android.support.design.widget.TextInputLayout>
 
-        <TextView
+        <!--<TextView
             android:id="@+id/nearme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
             android:id="@+id/listd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/nearme"/>
+            android:layout_below="@id/nearme"/>-->
     </RelativeLayout>
 
     <LinearLayout

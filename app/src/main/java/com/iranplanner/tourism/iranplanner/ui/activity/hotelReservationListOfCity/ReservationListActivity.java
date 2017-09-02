@@ -3,6 +3,7 @@ package com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCi
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -52,6 +53,9 @@ public class ReservationListActivity extends StandardActivity implements DataTra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_list);
+
+        Log.e("Aw cmn", "this is the activity im talkin bout");
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reservationListRecyclerView);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -110,7 +114,6 @@ public class ReservationListActivity extends StandardActivity implements DataTra
     protected int getLayoutId() {
         return R.layout.activity_reservation_list;
     }
-
 
     @Override
     public void setValues(ArrayList<String> al) {

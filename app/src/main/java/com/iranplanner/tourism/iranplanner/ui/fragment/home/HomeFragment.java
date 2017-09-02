@@ -707,10 +707,9 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             super.onCreate(savedInstanceState);
             this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-//            requestWindowFeature(Window.FEATURE_NO_TITLE);
             setContentView(R.layout.dialog_home_search_location);
             AutoCompleteTextView autoTextWhere = (AutoCompleteTextView) findViewById(R.id.autoTextWhere);
-            listd = (ListView) findViewById(R.id.listd);
+//            listd = (ListView) findViewById(R.id.listd);
             no = (TextView) findViewById(R.id.txtNo);
             no.setOnClickListener(this);
             /*tempCityProvince =*/
@@ -721,7 +720,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-
                 case R.id.txtNo:
                     dismiss();
                     break;

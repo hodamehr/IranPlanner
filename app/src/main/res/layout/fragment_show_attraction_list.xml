@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.showAttractionList.ShowAttractionListFragment">
 
-
     <RelativeLayout
         android:id="@+id/viewDayNumber"
         android:layout_width="match_parent"

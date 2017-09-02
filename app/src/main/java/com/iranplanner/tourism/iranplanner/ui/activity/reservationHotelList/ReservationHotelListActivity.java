@@ -154,6 +154,8 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_list);
+
+        Log.e("Aw cmn", "this is the activity im talkin bout");
         ButterKnife.inject(this);
         DaggerReservationHotelListComponent.builder()
                 .netComponent(((App) getApplicationContext()).getNetComponent())

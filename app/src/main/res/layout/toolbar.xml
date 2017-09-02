@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     xmlns:local="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/main_blue"
+    android:contentInsetEnd="0dp"
+    android:contentInsetLeft="0dp"
+    android:contentInsetRight="0dp"
+    android:contentInsetStart="0dp"
     android:minHeight="?attr/actionBarSize"
+    app:contentInsetEnd="0dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetStart="0dp"
     local:layout_collapseMode="parallax"
     local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -32,7 +41,13 @@
             android:layout_centerInParent="true"
             android:layout_marginStart="@dimen/margin_standard"
             android:clickable="true"
-            android:src="@mipmap/ic_backward" />
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:tint="@color/white_" />
+
+        <!--
+            Set Visibility Of Search Icon to gone
+            bc there is no use for Search in this part
+        -->
 
         <ImageView
             android:id="@+id/toolbarToggleLeft"
@@ -42,7 +57,8 @@
             android:layout_centerInParent="true"
             android:layout_marginEnd="@dimen/margin_standard"
             android:clickable="true"
-            android:src="@mipmap/ic_search" />
+            android:src="@mipmap/ic_search"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/toolbarTitleParent"
@@ -68,8 +84,8 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:tint="#f2f2f2"
-                android:src="@drawable/ic_arrow_drop_down_black_24dp" />
+                android:src="@drawable/ic_arrow_drop_down_black_24dp"
+                android:tint="#f2f2f2" />
 
         </LinearLayout>
 
