@@ -214,6 +214,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     RelativeLayout attractionRelgonHolder;
     @InjectView(R.id.toolbarTitleParent)
     LinearLayout toolbarTitleParent;
+    @InjectView(R.id.txtEventsTitle)
+    TextView tvEventsTitle;
 
 
     public HomeFragment() {

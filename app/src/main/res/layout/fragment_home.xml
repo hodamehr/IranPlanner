@@ -143,11 +143,11 @@
                             android:background="@color/main_blue" />
 
                         <ImageView
-                            android:id="@+id/homeNavAttraction"
+                            android:id="@+id/homeNavFlightAttraction"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/ic_itinerary_blue" />
+                            android:src="@mipmap/ic_flight_blue" />
 
                         <View
                             android:layout_width="1dp"
@@ -155,11 +155,11 @@
                             android:background="@color/main_blue" />
 
                         <ImageView
-                            android:id="@+id/homeNavFlightAttraction"
+                            android:id="@+id/homeNavAttraction"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/ic_flight_blue" />
+                            android:src="@mipmap/ic_itinerary_blue" />
 
                         <View
                             android:layout_width="1dp"

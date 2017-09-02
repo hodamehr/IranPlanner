@@ -6,7 +6,8 @@
     android:layout_alignParentEnd="true"
     android:layout_alignParentStart="true"
     android:layout_alignParentTop="true"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    android:layoutDirection="rtl">
 
     <RelativeLayout
         android:id="@+id/SelectHolder"
@@ -249,7 +250,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/margin_short"
-            android:text="دسته بندی اقامت گاه ها" />
+            android:text="دسته بندی اقامتگاه ها" />
 
         <LinearLayout
             android:id="@+id/linearEventsHolderTop"
@@ -258,6 +259,31 @@
             android:layout_below="@+id/txtHotelTypeTitles"
             android:orientation="horizontal"
             android:weightSum="2">
+
+            <RelativeLayout
+                android:id="@+id/hotelHolderGrouping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_xxshort"
+                android:layout_weight="1">
+
+                <TextView
+                    style="@style/StandardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="هتل"
+                    android:textColor="@color/white_"
+                    android:translationZ="1dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/hotel"
+                    android:scaleType="fitXY" />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/hotelَAppartementHolderGrouping"
@@ -282,6 +308,17 @@
                     android:scaleType="fitXY" />
             </RelativeLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearEventsHolderBottom"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@+id/linearEventsHolderTop"
+            android:layout_marginTop="@dimen/margin_xshort"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
             <RelativeLayout
                 android:id="@+id/hotelBoomgardiHolderGrouping"
                 android:layout_width="wrap_content"
@@ -302,39 +339,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/boomgardi"
-                    android:scaleType="fitXY" />
-            </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearEventsHolderBottom"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_below="@+id/linearEventsHolderTop"
-            android:layout_marginTop="@dimen/margin_xshort"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <RelativeLayout
-                android:id="@+id/hotelHolderGrouping"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_xxshort"
-                android:layout_weight="1">
-
-                <TextView
-                    style="@style/StandardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="هتل"
-                    android:textColor="@color/white_"
-                    android:translationZ="1dp" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/hotel"
                     android:scaleType="fitXY" />
             </RelativeLayout>
 
@@ -459,10 +463,10 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
+                        android:layout_alignStart="@+id/txtAttractionNatural"
                         android:paddingTop="@dimen/padding_short"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_accomodation" />
+                        android:src="@drawable/ic_attraction_nature" />
 
                     <TextView
                         android:id="@+id/txtAttractionNatural"
@@ -497,7 +501,7 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="@dimen/padding_short"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_accomodation" />
+                        android:src="@drawable/ic_attraction_historical" />
 
                     <TextView
                         android:id="@+id/txtAttractionHistorical"
@@ -540,7 +544,7 @@
                         android:layout_centerHorizontal="true"
                         android:paddingTop="@dimen/padding_short"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_accomodation" />
+                        android:src="@drawable/ic_attraction_religious" />
 
                     <TextView
                         android:id="@+id/txtAttractionRelgon"
@@ -569,13 +573,12 @@
 
                     <ImageView
                         android:id="@+id/imagetxtAttractionSport"
-                        android:layout_width="35dp"
+                        android:layout_width="55dp"
                         android:layout_height="35dp"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:paddingTop="@dimen/padding_short"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_accomodation" />
+                        android:src="@drawable/ic_attraction_sport" />
 
                     <TextView
                         android:id="@+id/txtAttractionSport"
