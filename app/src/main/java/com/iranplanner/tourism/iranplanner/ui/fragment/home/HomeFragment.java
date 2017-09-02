@@ -233,7 +233,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             scroller.setOnScrollChangeListener(this);
         }
         aboutCityBtn.setOnClickListener(this);
-        txtWhereGo.setOnClickListener(this);
         txtMoreTitleAttraction.setOnClickListener(this);
         TypeAttractionHolder.setOnClickListener(this);
         TypeHotelHolder.setOnClickListener(this);
@@ -242,6 +241,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         hotelBoomgardiHolderGrouping.setOnClickListener(this);
         hotelTraditionalHolderGrouping.setOnClickListener(this);
 
+        rootView.findViewById(R.id.homeFragmentWhereToView).setOnClickListener(this);
 
         attractionHistoricalHolder.setOnClickListener(this);
         attractionNaturalHolder.setOnClickListener(this);
@@ -363,7 +363,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 //                onClickShowProvince(card_view_province_list);
 //                break;
 
-            case R.id.txtWhereGo:
+            case R.id.homeFragmentWhereToView:
                 openCustomSearchDialog(Constants.homeSearch);
                 frameLayout.setVisibility(View.INVISIBLE);
                 break;
@@ -853,7 +853,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-        toolbarTitle.setOnClickListener(new View.OnClickListener() {
+        toolbarTitleParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openCustomSearchDialog(Constants.homeSearch);
