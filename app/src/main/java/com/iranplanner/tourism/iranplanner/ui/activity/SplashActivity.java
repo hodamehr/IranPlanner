@@ -1,19 +1,19 @@
 package com.iranplanner.tourism.iranplanner.ui.activity;
 
-import android.animation.Animator;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,21 +50,9 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
     private TextView tvInfo, tvWebSite;
     private View vLogoContainer, vLogoInfoContainer, vFellows;
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
-            WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-            if (!wifiManager.isWifiEnabled()) {
+    private UpdateReceiver receiver = new UpdateReceiver();
 
-                Toast.makeText(getApplicationContext(),
-                        "عدم دسترسی به اینترنت ", Toast.LENGTH_SHORT).show();
-            } else {
-                proceed();
-//                StartAnimations();
-            }
-        }
-    }
+    private CustomMessage customMessage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,25 +63,18 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
         Glide.with(this).load(R.drawable.splash_bg_blur).centerCrop().override(600, 400).into((ImageView) findViewById(R.id.splashBgIv));
 
         init();
-//            new LongOperation().execute("");
-        // we have internet connection, so it is save to connect to the internet here
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Intent i=new Intent(SplashActivity.this,LoginActivity.class);
-//                    startActivity(i);
-//                    finish();
-//                }
-//            },1500);
-//            StartAnimations()
-
-//        ShowHomeResult("province", "309");
     }
-
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_splash;
+    }
+
+    private boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        //should check null because in airplane mode it will be null
+        return (netInfo != null && netInfo.isConnected());
     }
 
     private void init() {
@@ -110,7 +91,7 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
 
         //Move the ui Objects to their new Places and wait for Translation Animation
         vLogoContainer.setY(-(Util.dpToPx(this, 100)));
-        vFellows.setY(Util.dpToPx(this,40));
+        vFellows.setY(Util.dpToPx(this, 40));
 
         //Reset View's Alpha to 0
         tvWebSite.setAlpha(0f);
@@ -144,66 +125,16 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
         rotation.setRepeatCount(Animation.INFINITE);
         rotation.setStartOffset(1500);
         ivLogoInner.startAnimation(rotation);
-
-        //Handle Network Stuff With Delay To have a nice and smooth Animation on elements
-        if (!Util.isNetworkAvailable(getApplicationContext())) {
-            CustomMessage customMessage = new CustomMessage(this, "عدم دسترسی به اینترنت");
-            customMessage.show();
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    proceed();
-                }
-            }, 2600);
-        }
     }
 
     private void proceed() {
-        getHomeResult("country", "311");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getHomeResult("country", "311");
+            }
+        }, 2600);
     }
-
-//    private void StartAnimations() {
-//        Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
-//        anim.reset();
-//        RelativeLayout mainLinearLayout = (RelativeLayout) findViewById(R.id.ll_main);
-//        mainLinearLayout.clearAnimation();
-//        mainLinearLayout.startAnimation(anim);
-//
-//        anim = AnimationUtils.loadAnimation(this, R.anim.translate);
-//        anim.reset();
-//        ImageView iv = (ImageView) findViewById(R.id.splash_img);
-//        RelativeLayout splashAnimHolder = (RelativeLayout) findViewById(R.id.splashAnimHolder);
-//        iv.clearAnimation();
-//        iv.startAnimation(anim);
-//
-//        splashTread = new Thread() {
-//            @Override
-//            public void run() {
-//                try {
-//
-//                    int waited = 0;
-//                    // Splash screen pause time
-//                    while (waited < 3500) {
-//                        sleep(100);
-//                        waited += 100;
-//                    }
-//                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                    startActivity(intent);
-//                    SplashActivity.this.finish();
-//                } catch (InterruptedException e) {
-//                    // do nothing
-//                } finally {
-//                    SplashActivity.this.finish();
-//                }
-//
-//            }
-//        };
-//        splashTread.start();
-//
-//    }
-
 
     private void getHomeResult(String destination, String selectId) {
 
@@ -213,8 +144,56 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
         String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
         String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
         homePresenter.getHome("home", destination, selectId, cid, andId);
-//        StartAnimations();
+    }
 
+    @Override
+    public void ShowHomeResult(final GetHomeResult GetHomeResult) {
+        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra("HomeResult", GetHomeResult);
+        startActivity(intent);
+    }
+
+    public class UpdateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connectivityManager = (ConnectivityManager)
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            boolean isConnected = activeNetInfo != null && activeNetInfo.isConnectedOrConnecting();
+            if (isConnected)
+                Log.e("NET", "connected  " + isConnected);
+            else Log.e("NET", "not connected  " + isConnected);
+
+            if (Util.isNetworkAvailable(context)) {
+                if (customMessage != null)
+                    customMessage.hide();
+                proceed();
+            } else
+                showMessage();
+        }
+    }
+
+    private void showMessage() {
+        customMessage = new CustomMessage(this, "عدم دسترسی به اینترنت");
+        customMessage.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(receiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(receiver);
     }
 
     @Override
@@ -250,21 +229,6 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
     @Override
     public void showComplete() {
         SplashActivity.this.finish();
-    }
-
-    @Override
-    public void ShowHomeResult(final GetHomeResult GetHomeResult) {
-        //added this Handler to avoid the lag in Activity
-//        new Handler().post(new Runnable() {
-//            @Override
-//            public void run() {
-        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra("HomeResult", GetHomeResult);
-        startActivity(intent);
-//            }
-//        });
-//        SplashActivity.this.finish();
     }
 
     @Override
