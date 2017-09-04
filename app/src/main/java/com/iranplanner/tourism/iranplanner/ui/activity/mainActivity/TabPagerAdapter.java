@@ -33,7 +33,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     };
     private StandardFragment currentTab;
     //    StandardFragment
-    private final String[] mTabsTitle = {"جستجو", "حساب من","خانه"};
+    private final String[] mTabsTitle = {"برنامه سفر", "حساب من","خانه"};
 
     public TabPagerAdapter(FragmentManager fm, Context context, GetHomeResult homeResult) {
         super(fm);

@@ -7,8 +7,20 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class HomeNeighborCity  implements Serializable{
+    @SerializedName("img_url")
+    @Expose
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     @SerializedName("item_id")
+
     @Expose
     private String itemId;
     @SerializedName("name")

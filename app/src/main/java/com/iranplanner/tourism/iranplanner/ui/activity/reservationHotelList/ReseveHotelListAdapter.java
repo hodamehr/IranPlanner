@@ -59,7 +59,7 @@ public class ReseveHotelListAdapter extends RecyclerView.Adapter<ReseveHotelList
         viewHolder.txtHotelName.setText(resultLodgings.get(i).getLodgingName());
         viewHolder.txtType.setText(resultLodgings.get(i).getLodgingTypeTitle());
         viewHolder.txtShowPercent.setText(Util.persianNumbers(resultLodgings.get(i).getLodgingRoomPriceRuleDetail().getLodgingRoomPriceDetailValue())+"تخفیف تا");
-//        viewHolder.txtStartPrice.setText(resultLodgings.get(i).getLodgingRoomPriceDetail().get(0).getLodgingRoomMinPrice());
+        viewHolder.txtStartPrice.setText(resultLodgings.get(i).getLodgingRoomPriceDetail().get(0).getLodgingRoomMinPrice()+"شروع قیمت از");
 
 //        viewHolder.txtPrice.setText("شروع قیمت از"+ Utils.persianNumbers(String.valueOf(resultLodgings.get(i).getLodgingRoomPriceDetail().get(0).getLodgingRoomMinPrice()/10))+" تومان");
         if(resultLodgings.get(i).getLodgingRoomPriceRuleDetail().getLodgingRoomPriceDetailType().equals("percent")){

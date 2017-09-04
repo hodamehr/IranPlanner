@@ -100,14 +100,14 @@
             android:weightSum="2">
 
             <RelativeLayout
-                android:id="@+id/overlapImageHolder1"
+                android:id="@+id/overlapImageItineraryHolder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:translationZ="1dp">
 
                 <ImageView
-                    android:id="@+id/imageTypeAttraction2"
+                    android:id="@+id/imageTypeItinerary"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_alignParentTop="true"
@@ -118,11 +118,11 @@
                     android:tint="@color/main_blue" />
 
                 <TextView
-                    android:id="@+id/attractionType2"
+                    android:id="@+id/ItineraryType"
                     style="@style/StandardTextGrey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/imageTypeAttraction2"
+                    android:layout_below="@+id/imageTypeItinerary"
                     android:layout_centerHorizontal="true"
                     android:padding="5dp"
                     android:text="برنامه سفر" />
@@ -708,13 +708,38 @@
             android:layout_marginBottom="@dimen/margin_short"
             android:text="سوغاتی" />
     </RelativeLayout>
+
+    <!--cityHolder-->
+    <RelativeLayout
+        android:id="@+id/cityHomeHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/souvenirHomeHolder"
+        android:padding="@dimen/padding_standard"
+        android:visibility="visible">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtCityrTitle" />
+
+        <TextView
+            android:id="@+id/txtCityrTitle"
+            style="@style/StandardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="@dimen/margin_short"
+            android:text="شهرهای مجاور" />
+    </RelativeLayout>
     <!--listProvince-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewProvinceShow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/souvenirHomeHolder"
+        android:layout_below="@+id/cityHomeHolder"
         android:layout_margin="15dp" />
 
     <!--<LinearLayout

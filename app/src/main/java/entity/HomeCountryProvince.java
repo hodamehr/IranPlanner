@@ -7,6 +7,17 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class HomeCountryProvince implements Serializable{
+    @SerializedName("img_url")
+    @Expose
+    private String ImageUrl;
+
+    public String getImageUrl() {
+        return ImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        ImageUrl = imageUrl;
+    }
 
     @SerializedName("province_id")
     @Expose

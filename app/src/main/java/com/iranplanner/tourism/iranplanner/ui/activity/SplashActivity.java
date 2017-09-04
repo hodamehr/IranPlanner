@@ -28,11 +28,13 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.home.DaggerHomeComponent;
 import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomeContract;
 import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomeModule;
 import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomePresenter;
+import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchPresenter;
 
 import javax.inject.Inject;
 
 import entity.GetHomeResult;
 import entity.ResultCommentList;
+import entity.ResultItineraryList;
 import entity.ResultLodgingHotel;
 import entity.ResultLodgingList;
 import entity.ShowAtractionDetailMore;
@@ -41,7 +43,7 @@ import entity.ShowAttractionMoreList;
 import tools.CustomMessage;
 import tools.Util;
 
-public class SplashActivity extends StandardActivity implements HomeContract.View, ReservationContract.View, AttractionListMorePresenter.View, ReservationHotelListPresenter.View {
+public class SplashActivity extends StandardActivity implements MainSearchPresenter.View,HomeContract.View, ReservationContract.View, AttractionListMorePresenter.View, ReservationHotelListPresenter.View {
     Thread splashTread;
     @Inject
     HomePresenter homePresenter;
@@ -139,7 +141,7 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
     private void getHomeResult(String destination, String selectId) {
 
         DaggerHomeComponent.builder().netComponent(((App) getApplicationContext().getApplicationContext()).getNetComponent())
-                .homeModule(new HomeModule(this, this, this, this))
+                .homeModule(new HomeModule(this, this, this, this,this))
                 .build().inject(this);
         String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
         String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
@@ -213,6 +215,11 @@ public class SplashActivity extends StandardActivity implements HomeContract.Vie
 
     @Override
     public void showHotelReserveList(ResultLodgingHotel resultLodgingHotel) {
+
+    }
+
+    @Override
+    public void showItineraries(ResultItineraryList resultItineraryList, String typeOfSearch) {
 
     }
 

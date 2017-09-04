@@ -14,6 +14,8 @@ public abstract class MainSearchContract {
         void showError(String message);
 
         void showComplete();
+        void showProgress();
+        void dismissProgress();
     }
 
 

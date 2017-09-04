@@ -29,6 +29,7 @@ public class MainSearchPresenter extends MainSearchContract {
     @Override
     public void loadItineraryFromCity(String action, String lang, String from, String limit, String offset, String to, String cid,
                                       String andID) {
+        mView.showProgress();
 
         retrofit.create(ItineraryService.class)
                 .getItinerariesFromCity(action, lang, from, limit, offset, to, cid, andID).subscribeOn(Schedulers.io())
@@ -38,11 +39,13 @@ public class MainSearchPresenter extends MainSearchContract {
 
                     @Override
                     public void onCompleted() {
+                        mView.dismissProgress();
                         mView.showComplete();
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        mView.dismissProgress();
                         mView.showError(e.getMessage());
                     }
 

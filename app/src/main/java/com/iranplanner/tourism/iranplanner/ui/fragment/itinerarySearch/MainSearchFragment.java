@@ -275,6 +275,16 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         progressDialog.dismiss();
     }
 
+    @Override
+    public void showProgress() {
+        progressDialog = Util.showProgressDialog(getContext(), "لطفا منتظر بمانید", getActivity());
+    }
+
+    @Override
+    public void dismissProgress() {
+        Util.dismissProgress(progressDialog);
+    }
+
     public class GPSTracker extends Service implements LocationListener {
 
         private final Context mContext;
