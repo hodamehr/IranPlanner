@@ -155,7 +155,6 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_list);
 
-        Log.e("Aw cmn", "this is the activity im talkin bout");
         ButterKnife.inject(this);
         DaggerReservationHotelListComponent.builder()
                 .netComponent(((App) getApplicationContext()).getNetComponent())
@@ -168,8 +167,8 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
 //                .reservationModule(new ReservationModule(this));
 //        builder.build().inject()
         getExtras();
-        txtDurationHotel.setText(Util.persianNumbers(durationTravel + "شب"));
-        txtTypeHotel.setText(Utils.getSimpleDate(startOfTravel));
+        txtDurationHotel.setText(" به مدت " + Util.persianNumbers(durationTravel + " شب "));
+        txtTypeHotel.setText("از " + Utils.getSimpleDate(startOfTravel));
 
         setUpRecyclerView();
         setupToolbar();
