@@ -98,9 +98,9 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         city_city_layout = (LinearLayout) view.findViewById(R.id.city_city_layout);
         city_layout = (LinearLayout) view.findViewById(R.id.city_layout);
         province_layout = (LinearLayout) view.findViewById(R.id.province_layout);
-        events_layout = (LinearLayout) view.findViewById(R.id.events_layout);
-        cell_title_view_events = (FrameLayout) view.findViewById(R.id.cell_title_view_events);
-        cell_title_view_theme = (FrameLayout) view.findViewById(R.id.cell_title_view_theme);
+//        events_layout = (LinearLayout) view.findViewById(R.id.events_layout);
+//        cell_title_view_events = (FrameLayout) view.findViewById(R.id.cell_title_view_events);
+//        cell_title_view_theme = (FrameLayout) view.findViewById(R.id.cell_title_view_theme);
         //province
         textProvience = (AutoCompleteTextView) view.findViewById(R.id.textProvience);
         searchOk_provience = (Button) view.findViewById(R.id.searchOk_provience);
@@ -140,8 +140,8 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         // -------------attach click listener to folding cell
         folding_cell_city.setOnClickListener(this);
         searchOk_city.setOnClickListener(this);
-        cell_title_view_events.setOnClickListener(this);
-        cell_title_view_theme.setOnClickListener(this);
+//        cell_title_view_events.setOnClickListener(this);
+//        cell_title_view_theme.setOnClickListener(this);
         return view;
     }
 
@@ -250,12 +250,12 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
                 hideKeyBoard();
                 showProvience();
                 break;
-            case R.id.cell_title_view_theme:
-                Toast.makeText(getContext(), "به زودی ", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.cell_title_view_events:
-                Toast.makeText(getContext(), "به زودی ", Toast.LENGTH_SHORT).show();
-                break;
+//            case R.id.cell_title_view_theme:
+//                Toast.makeText(getContext(), "به زودی ", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.cell_title_view_events:
+//                Toast.makeText(getContext(), "به زودی ", Toast.LENGTH_SHORT).show();
+//                break;
         }
     }
 
