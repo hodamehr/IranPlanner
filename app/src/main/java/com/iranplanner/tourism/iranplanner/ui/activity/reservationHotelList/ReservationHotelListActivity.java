@@ -57,10 +57,10 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     private ProgressBar waitingLoading;
     private boolean loading = true;
-    @InjectView(R.id.toolbarBack)
-    ImageView toolbarBack;
-    @InjectView(R.id.toolbarToggle)
-    ImageView toolbarToggle;
+//    @InjectView(R.id.toolbarBack)
+//    ImageView toolbarBack;
+//    @InjectView(R.id.toolbarToggle)
+//    ImageView toolbarToggle;
     @InjectView(R.id.TypeAttractionHolder)
     RelativeLayout typeAttractionHolder;
     @InjectView(R.id.holderDate)
@@ -172,7 +172,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
 
         setUpRecyclerView();
         setupToolbar();
-        toolbarBack.setOnClickListener(this);
+//        toolbarBack.setOnClickListener(this);
         holderDate.setOnClickListener(this);
         typeAttractionHolder.setOnClickListener(this);
     }
@@ -185,7 +185,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
     void setupToolbar() {
         ((StandardActivity) this).setSupportActionBar(toolbar);
         ((StandardActivity) this).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbarToggle.setVisibility(View.GONE);
+//        toolbarToggle.setVisibility(View.GONE);
     }
 
     @Override

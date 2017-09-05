@@ -64,8 +64,8 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
         startOfTravel = (Date) extras.getSerializable("startOfTravel");
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbarBack = (ImageView) findViewById(R.id.toolbarBack);
-        toolbarToggle = (ImageView) findViewById(R.id.toolbarToggle);
+//        toolbarBack = (ImageView) findViewById(R.id.toolbarBack);
+//        toolbarToggle = (ImageView) findViewById(R.id.toolbarToggle);
 
         setupToolbar();
         adapter = new ReseveDateListAdapter(ReservationListActivity.this, this, itineraryData, getApplicationContext(), R.layout.fragment_itinerary_item, startOfTravel);
@@ -107,7 +107,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         ((StandardActivity) this).setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
         ((StandardActivity) this).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbarToggle.setVisibility(View.GONE);
+//        toolbarToggle.setVisibility(View.GONE);
     }
 
     @Override

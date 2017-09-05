@@ -19,6 +19,7 @@ import com.iranplanner.tourism.iranplanner.R;
 
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
+import com.iranplanner.tourism.iranplanner.ui.activity.SplashActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.editprofile.EditProfileActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.login.LoginActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.ScrollingActivity;
@@ -121,7 +122,7 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
                 break;
             case R.id.exitFromAccount:
                 clearSharedprefrence();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                Intent intent = new Intent(getActivity(), SplashActivity.class);
                 startActivity(intent);
                 break;
             case R.id.txtHotelReservationStatus:

@@ -1,5 +1,6 @@
 package com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,6 +49,7 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
 
     @Inject
     MainSearchPresenter mainPresenter;
+    private ProgressDialog progressDialog;
 
     private Context context;
     private RecyclerView recyclerView;
@@ -212,6 +214,16 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
 //        Toast.makeText(getContext(), "complete", Toast.LENGTH_LONG).show();
         loading = true;
         waitingLoading.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showProgress() {
+        progressDialog = Util.showProgressDialog(getContext(), "لطفا منتظر بمانید", getActivity());
+    }
+
+    @Override
+    public void dismissProgress() {
+        Util.dismissProgress(progressDialog);
     }
 
     class MyThread extends Thread {

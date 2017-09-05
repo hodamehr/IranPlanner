@@ -12,6 +12,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
@@ -54,6 +55,8 @@ import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.Rese
 import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListPresenter;
 import com.iranplanner.tourism.iranplanner.ui.fragment.FirstItem;
 import com.iranplanner.tourism.iranplanner.ui.fragment.homeInfo.AboutCityFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchPresenter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -77,11 +80,14 @@ import entity.HomeInfo;
 import entity.HomeItinerary;
 import entity.HomeLocalfood;
 import entity.HomeLodging;
+import entity.HomeNeighborCity;
 import entity.HomeSouvenir;
 import entity.ResulAttraction;
 import entity.ResultAttractionList;
 import entity.ResultCommentList;
 import entity.ResultHome;
+import entity.ResultItinerary;
+import entity.ResultItineraryList;
 import entity.ResultLodging;
 import entity.ResultLodgingHotel;
 import entity.ResultLodgingList;
@@ -98,7 +104,8 @@ import tools.Util;
  */
 public class HomeFragment extends StandardFragment implements DataTransferInterface, View.OnClickListener,
         AppBarLayout.OnOffsetChangedListener, NestedScrollView.OnScrollChangeListener,
-        HomeContract.View, ReservationContract.View, AttractionListMorePresenter.View, ReservationHotelListPresenter.View {
+        HomeContract.View, ReservationContract.View, AttractionListMorePresenter.View, ReservationHotelListPresenter.View
+        , MainSearchPresenter.View {
 
     protected String[] mNavigationDrawerItemTitles;
     List<CityProvince> CityProvince;
@@ -113,6 +120,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     AttractionListMorePresenter attractionListMorePresenter;
     @Inject
     ReservationHotelListPresenter reservationHotelListPresenter;
+    @Inject
+    MainSearchPresenter mainSearchPresenter;
 //    protected TextView toolbarTitle;
 
     int width;
@@ -174,6 +183,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     RecyclerView recyclerItinerary;
     @InjectView(R.id.recyclerSouvenir)
     RecyclerView recyclerSouvenir;
+    @InjectView(R.id.recyclerCity)
+    RecyclerView recyclerCity;
     @InjectView(R.id.recyclerLocalFood)
     RecyclerView recyclerLocalFood;
     @InjectView(R.id.viewPagerEventsHolder)
@@ -216,6 +227,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     LinearLayout toolbarTitleParent;
     @InjectView(R.id.txtEventsTitle)
     TextView tvEventsTitle;
+    @InjectView(R.id.overlapImageItineraryHolder)
+    RelativeLayout overlapImageItineraryHolder;
 
 
     public HomeFragment() {
@@ -250,6 +263,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         attractionSportHolder.setOnClickListener(this);
         attractionRelgonHolder.setOnClickListener(this);
         txtMoreTitleHotel.setOnClickListener(this);
+        overlapImageItineraryHolder.setOnClickListener(this);
 
         //home nav views
         rootView.findViewById(R.id.homeNavAttraction).setOnClickListener(this);
@@ -259,7 +273,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
         mNavigationDrawerItemTitles = getResources().getStringArray(R.array.navigation_items);
         DaggerHomeComponent.builder().netComponent(((App) getContext().getApplicationContext()).getNetComponent())
-                .homeModule(new HomeModule(this, this, this, this))
+                .homeModule(new HomeModule(this, this, this, this, this))
                 .build().inject(this);
         setupToolbar();
         getfeatureHolderHight();
@@ -369,6 +383,25 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 openCustomSearchDialog(Constants.homeSearch);
                 frameLayout.setVisibility(View.INVISIBLE);
                 break;
+            case R.id.overlapImageItineraryHolder:
+                String offset = "0";
+
+                if (SelectedType != null && SelectedType.equals("city")) {
+                    Log.e("itinerary", "city clicked");
+                    mainSearchPresenter.loadItineraryFromCity("list", "fa", selectId, "20", offset, selectId, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+                }else if(SelectedType != null && SelectedType.equals("province")){
+                    mainSearchPresenter.loadItineraryFromProvince("searchprovince", selectId, offset, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+
+                }
+
+                else {
+                    ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.main_view_pager);
+                    viewPager.setCurrentItem(0);
+
+                }
+                break;
+
+
         }
     }
 
@@ -493,6 +526,29 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     @Override
+    public void showItineraries(ResultItineraryList resultItineraryList, String typeOfSearch) {
+
+        List<ResultItinerary> data = resultItineraryList.getResultItinerary();
+        ItineraryListFragment itineraryListFragment = new ItineraryListFragment();
+
+        bundle.putSerializable("resuliItineraryList", (Serializable) data);
+        bundle.putString("fromWhere", typeOfSearch);
+        bundle.putString("nextOffset", resultItineraryList.getStatistics().getOffsetNext().toString());
+        bundle.putString("provinceId", "");
+        bundle.putString("attractionId", "");
+        if (typeOfSearch.equals("fromCityToCity")) {
+            bundle.putString("endCity", "");
+        } else {
+            bundle.putString("endCity", "");
+        }
+        itineraryListFragment.setArguments(bundle);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.containerHomeFragment, itineraryListFragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    @Override
     public void showError(String message) {
         Toast.makeText(getContext(), "مقصد مورد نظر یافت نشد", Toast.LENGTH_SHORT).show();
     }
@@ -566,6 +622,13 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             viewPagerEventsHolder.setVisibility(View.GONE);
 
         }
+        if (resultHomes.get(0).getHomeNeighborCity().size() != 0) {
+            recyclerCity.setVisibility(View.VISIBLE);
+            setViewPagerNeighborCity(resultHomes.get(0).getHomeNeighborCity());
+        } else {
+            viewPagerEventsHolder.setVisibility(View.GONE);
+
+        }
     }
 
     @Override
@@ -582,6 +645,14 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         eventsViewPager.setAdapter(showHomeEventAdapter);
         indicator.setViewPager(eventsViewPager);
         eventsViewPager.setCurrentItem(2);
+    }
+
+    private void setViewPagerNeighborCity(List<HomeNeighborCity> homeNeighborCity) {
+        showNeiborCityHomeAdapter attractionHomeAdapter = new showNeiborCityHomeAdapter(homeNeighborCity, getContext());
+        LinearLayoutManager horizontalLayoutManagaer
+                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerCity.setLayoutManager(horizontalLayoutManagaer);
+        recyclerCity.setAdapter(attractionHomeAdapter);
     }
 
     private void setListProvince(List<HomeCountryProvince> homeCountryProvince) {
@@ -642,7 +713,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerLocalFood.setLayoutManager(horizontalLayoutManagaer);
         recyclerLocalFood.setAdapter(attractionHomeAdapter);
-
     }
 
     private void setNamePicture(HomeInfo homeInfo, List<HomeImage> homeImage) {
@@ -867,22 +937,22 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 /**
                  * This Feature is Temporarily Disabled bc The Main navigation refactor coming up
                  */
-//                mDrawerLayout.openDrawer(GravityCompat.END);
+                mDrawerLayout.openDrawer(GravityCompat.START);
             }
         });
 
         //this method is used to hide toolbar drawables & I don't know why exactly
-        hideToolbarIcons();
+//        hideToolbarIcons();
 
         buildVersion = Build.VERSION.SDK_INT;
 
         Log.i("hi", String.valueOf(buildVersion));
     }
 
-    private void hideToolbarIcons() {
-        toolbarToggle.setVisibility(View.GONE);
-        toolbarBack.setVisibility(View.GONE);
-        toolbarToggleLeft.setVisibility(View.GONE);
-    }
+//    private void hideToolbarIcons() {
+//        toolbarToggle.setVisibility(View.GONE);
+//        toolbarBack.setVisibility(View.GONE);
+//        toolbarToggleLeft.setVisibility(View.GONE);
+//    }
 
 }
