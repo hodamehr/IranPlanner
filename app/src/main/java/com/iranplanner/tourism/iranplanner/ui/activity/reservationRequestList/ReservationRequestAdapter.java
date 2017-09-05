@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.iranplanner.tourism.iranplanner.R;
 
@@ -47,12 +48,21 @@ public class ReservationRequestAdapter extends RecyclerView.Adapter<ReservationR
 
     public class Holder extends RecyclerView.ViewHolder {
 
+        private ResultReservationReqList current;
+        private TextView tvRequestCode, tvTimeDuration, tvTypeRoom, tvCityName, tvAttractionName;
+
         public Holder(View itemView) {
             super(itemView);
+            tvRequestCode = (TextView) itemView.findViewById(R.id.txtRequestCode);
+            tvTimeDuration = (TextView) itemView.findViewById(R.id.textTimeDuration);
+            tvTypeRoom = (TextView) itemView.findViewById(R.id.txtTypeRoome);
+            tvCityName = (TextView) itemView.findViewById(R.id.txtCityName);
+            tvAttractionName = (TextView) itemView.findViewById(R.id.attraction_name);
         }
 
         public void setData(ResultReservationReqList current) {
-
+            this.current = current;
+            tvAttractionName.setText(current.getRequest().getReqLodgingTitle());
         }
     }
 }

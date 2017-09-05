@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -70,9 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/attraction_name"
-
                     android:paddingBottom="@dimen/margin_xshort">
-
 
                     <TextView
                         android:id="@+id/textCityName"
@@ -95,18 +93,15 @@
                         android:scaleType="centerCrop"
                         android:text="نوع اتاق" />
 
-
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/cityNameHolderz"
                     android:layout_width="wrap_content"
-
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/imageTextAttractionHolder1"
                     android:layout_below="@+id/cityNameHolder"
                     android:paddingBottom="@dimen/margin_xshort">
-
 
                     <TextView
                         android:id="@+id/textTimeDuration"
@@ -115,7 +110,6 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/txtRequestCode"
-
                         android:maxLines="1"
                         android:text="12000033" />
 
@@ -129,14 +123,11 @@
                         android:layout_marginRight="5dp"
                         android:text="کد درخواست" />
 
-
                 </RelativeLayout>
 
             </RelativeLayout>
 
-
         </RelativeLayout>
-
 
     </RelativeLayout>
 
@@ -156,7 +147,6 @@
             android:layout_below="@+id/attraction_name"
             android:paddingBottom="@dimen/margin_xshort">
 
-
             <TextView
                 android:id="@+id/txtDate"
                 style="@style/SmallText"
@@ -164,7 +154,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/imageDate"
-
                 android:maxLines="1"
                 android:text="از چهارشنبه تا شنبه" />
 
@@ -178,7 +167,6 @@
                 android:layout_marginRight="5dp"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_pinblack" />
-
 
         </RelativeLayout>
 
@@ -195,7 +183,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/txtstatusRequest"
-
                 android:layout_alignBottom="@+id/txtstatusRequest"
                 android:layout_alignParentEnd="true"
                 android:maxLines="1"
@@ -207,7 +194,6 @@
                 style="@style/SmallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_alignBottom="@+id/imagestatusRequest"
                 android:layout_toEndOf="@+id/imagestatusRequest"
                 android:maxLines="1"
@@ -224,7 +210,6 @@
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_pinblack" />
 
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -240,7 +225,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/txtstatusRequest"
-
                 android:layout_alignBottom="@+id/txtstatusRequest"
                 android:layout_alignParentEnd="true"
                 android:maxLines="1"
@@ -252,7 +236,6 @@
                 style="@style/SmallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_alignBottom="@+id/imagestatusRequest"
                 android:layout_toEndOf="@+id/imagestatusRequestDate"
                 android:maxLines="1"
@@ -270,7 +253,6 @@
                 android:src="@mipmap/ic_pinblack"
                 android:visibility="invisible" />
 
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -286,7 +268,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/txtHeadName"
-
                 android:layout_alignBottom="@+id/txtHeadName"
                 android:layout_alignParentEnd="true"
                 android:maxLines="1"
@@ -298,7 +279,6 @@
                 style="@style/SmallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_alignBottom="@+id/imagestatusRequest"
                 android:layout_toEndOf="@+id/imageHeadName"
                 android:maxLines="1"
@@ -314,8 +294,7 @@
                 android:layout_marginRight="5dp"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_pinblack" />
-
-
+            ++
         </RelativeLayout>
     </RelativeLayout>
 
