@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
@@ -18,7 +19,6 @@ import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractionDetails.attractionDetailActivity;
-import com.iranplanner.tourism.iranplanner.ui.activity.showAttraction.ShowAttractionActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,8 +32,6 @@ import entity.ResulAttraction;
 import entity.ResultAttractionList;
 import entity.ResultCommentList;
 import entity.ShowAtractionDetailMore;
-import entity.ShowAttractionFull;
-import entity.ShowAttractionListMore;
 import entity.ShowAttractionMoreList;
 import tools.Util;
 
@@ -47,6 +45,7 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
     LinearLayoutManager mLayoutManager;
     List<ResultAttractionList> attractionsList;
     String nextOffset;
+    Toolbar toolbar;
 
     @InjectView(R.id.attractionListRecyclerView)
     RecyclerView attractionRecyclerView;
@@ -60,6 +59,22 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
         Bundle bundle = intent.getExtras();
         attractionsList = (List<ResultAttractionList>) bundle.getSerializable("attractionsList");
         nextOffset = bundle.getString("nextOffset");
+    }
+
+    private void setToolbar() {
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("لیست جاذبه ها");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
@@ -126,7 +141,7 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
         filterShade.setVisibility(View.GONE);
 
         filterView.setY(Util.dpToPx(this, 300));
-
+        setToolbar();
     }
 
     private void togglePanel() {

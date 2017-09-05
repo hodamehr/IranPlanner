@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -936,22 +937,22 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 /**
                  * This Feature is Temporarily Disabled bc The Main navigation refactor coming up
                  */
-//                mDrawerLayout.openDrawer(GravityCompat.END);
+                mDrawerLayout.openDrawer(GravityCompat.START);
             }
         });
 
         //this method is used to hide toolbar drawables & I don't know why exactly
-        hideToolbarIcons();
+//        hideToolbarIcons();
 
         buildVersion = Build.VERSION.SDK_INT;
 
         Log.i("hi", String.valueOf(buildVersion));
     }
 
-    private void hideToolbarIcons() {
-        toolbarToggle.setVisibility(View.GONE);
-        toolbarBack.setVisibility(View.GONE);
-        toolbarToggleLeft.setVisibility(View.GONE);
-    }
+//    private void hideToolbarIcons() {
+//        toolbarToggle.setVisibility(View.GONE);
+//        toolbarBack.setVisibility(View.GONE);
+//        toolbarToggleLeft.setVisibility(View.GONE);
+//    }
 
 }

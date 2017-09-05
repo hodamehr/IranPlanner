@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -47,6 +48,13 @@
                         android:id="@+id/imgHotel"/>
 
                 </RelativeLayout>
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/transparent"
+                    android:elevation="4dp"
+                    app:layout_collapseMode="pin"></android.support.v7.widget.Toolbar>
             </android.support.design.widget.CollapsingToolbarLayout>
 
 
@@ -67,9 +75,10 @@
 <!--toolar-->
 
 
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar" />
+            <!--<include-->
+                <!--android:id="@+id/toolbar"-->
+                <!--layout="@layout/toolbar" />-->
+
 
 
 
