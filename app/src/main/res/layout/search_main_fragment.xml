@@ -4,31 +4,29 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:layoutDirection="rtl">
 
     <ScrollView
-
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="4">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <!-- itinerary city to city-->
             <LinearLayout
                 android:id="@+id/city_city_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_height="wrap_content">
 
                 <com.ramotion.foldingcell.FoldingCell
                     android:id="@+id/folding_cell_City_City"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/pink">
+                    android:layout_height="match_parent"
+                    android:background="@color/teal300">
 
                     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         xmlns:tools="http://schemas.android.com/tools"
@@ -46,10 +44,9 @@
                             android:orientation="vertical">
 
                             <RelativeLayout
-
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/pink_1"
+                                android:background="@color/teal300"
                                 android:paddingLeft="@dimen/padding_standard"
                                 android:paddingRight="@dimen/padding_standard">
 
@@ -73,8 +70,6 @@
                                     android:layout_centerVertical="true"
                                     android:layout_margin="5dp"
                                     android:src="@mipmap/ic_iran_gardi" />
-
-
                             </RelativeLayout>
 
                             <android.support.design.widget.TextInputLayout
@@ -112,10 +107,7 @@
                                     android:gravity="right"
                                     android:hint="به شهر"
                                     android:imeOptions="actionDone"
-                                    android:inputType="text"
-
-
-                                    />
+                                    android:inputType="text" />
                             </android.support.design.widget.TextInputLayout>
 
                             <android.support.v7.widget.AppCompatButton
@@ -125,7 +117,7 @@
                                 android:layout_margin="@dimen/padding_24"
                                 android:background="@drawable/button_corner_pink_stroke"
                                 android:text="جستجو"
-                                android:textColor="@color/pink" />
+                                android:textColor="@color/teal300" />
 
                         </LinearLayout>
 
@@ -137,10 +129,9 @@
                         android:layout_height="wrap_content">
 
                         <RelativeLayout
-
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/pink_1"
+                            android:background="@color/teal300"
                             android:padding="@dimen/padding_standard">
 
                             <TextView
@@ -163,8 +154,6 @@
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dp"
                                 android:src="@mipmap/ic_iran_gardi" />
-
-
                         </RelativeLayout>
                     </FrameLayout>
                 </com.ramotion.foldingcell.FoldingCell>
@@ -173,14 +162,13 @@
             <LinearLayout
                 android:id="@+id/city_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_height="wrap_content">
 
                 <com.ramotion.foldingcell.FoldingCell
                     android:id="@+id/folding_cell_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/pink_2">
+                    android:background="@color/teal500">
 
                     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         xmlns:tools="http://schemas.android.com/tools"
@@ -200,7 +188,7 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/pink_2"
+                                android:background="@color/teal500"
                                 android:paddingLeft="@dimen/padding_standard"
                                 android:paddingRight="@dimen/padding_standard">
 
@@ -255,7 +243,7 @@
                                 android:layout_margin="@dimen/padding_24"
                                 android:background="@drawable/button_corner_pink_stroke"
                                 android:text="جستجو"
-                                android:textColor="@color/pink"                                />
+                                android:textColor="@color/teal500" />
 
                         </LinearLayout>
 
@@ -271,7 +259,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/imgItineraryListMore"
-                            android:background="@color/pink"
+                            android:background="@color/teal500"
                             android:padding="@dimen/padding_standard">
 
                             <TextView
@@ -304,14 +292,13 @@
             <LinearLayout
                 android:id="@+id/province_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_height="wrap_content">
 
                 <com.ramotion.foldingcell.FoldingCell
                     android:id="@+id/folding_cell_province"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/pink_3">
+                    android:background="@color/teal700">
 
                     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         xmlns:tools="http://schemas.android.com/tools"
@@ -332,7 +319,7 @@
                                 android:id="@+id/fgddd"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/pink_3"
+                                android:background="@color/teal700"
                                 android:paddingLeft="@dimen/padding_standard"
                                 android:paddingRight="@dimen/padding_standard">
 
@@ -388,7 +375,7 @@
                                 android:background="@drawable/button_corner_pink_stroke"
                                 android:padding="12dp"
                                 android:text="جستجو"
-                                android:textColor="@color/pink" />
+                                android:textColor="@color/teal700" />
 
                         </LinearLayout>
 
@@ -404,10 +391,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/imgItineraryListMore"
-                            android:background="@color/pink_3"
+                            android:background="@color/teal700"
                             android:padding="@dimen/padding_standard">
 
                             <TextView
+                                android:id="@+id/itinerary_name"
+                                style="@style/StandardText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_margin="5dp"
+                                android:layout_toEndOf="@+id/itinerartMoreShare"
+                                android:maxLines="1"
+                                android:text="برنامه سفرهای استان گردی"
+                                android:textColor="#fdfdfb" />
+
+                            <!--<TextView
                                 android:id="@+id/itinerary_name"
                                 style="@style/StandardText"
                                 android:layout_width="wrap_content"
@@ -417,13 +416,13 @@
                                 android:layout_toStartOf="@+id/itinerartMoreShare"
                                 android:maxLines="1"
                                 android:text="برنامه سفرهای استان گردی"
-                                android:textColor="#fdfdfb" />
+                                android:textColor="#fdfdfb" />-->
 
                             <ImageView
                                 android:id="@+id/itinerartMoreShare"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentStart="true"
                                 android:layout_centerVertical="true"
                                 android:layout_margin="5dp"
                                 android:src="@mipmap/ic_ostan_gardi" />
@@ -437,14 +436,13 @@
             <LinearLayout
                 android:id="@+id/attraction_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_height="wrap_content">
 
                 <com.ramotion.foldingcell.FoldingCell
                     android:id="@+id/folding_cell_attraction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/pink_4">
+                    android:background="@color/teal900">
 
                     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                         xmlns:tools="http://schemas.android.com/tools"
@@ -464,7 +462,7 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@color/pink_4"
+                                android:background="@color/teal900"
                                 android:paddingLeft="@dimen/padding_standard"
                                 android:paddingRight="@dimen/padding_standard">
 
@@ -541,9 +539,7 @@
                                 android:layout_marginTop="24dp"
                                 android:background="@drawable/button_corner_pink_stroke"
                                 android:text="جستجو"
-                                android:textColor="@color/pink"
-
-                                />
+                                android:textColor="@color/teal900" />
 
                         </LinearLayout>
 
@@ -558,7 +554,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/imgItineraryListMore"
-                            android:background="@color/pink_4"
+                            android:background="@color/teal900"
                             android:padding="@dimen/padding_standard">
 
                             <TextView
@@ -587,7 +583,10 @@
                     </FrameLayout>
                 </com.ramotion.foldingcell.FoldingCell>
             </LinearLayout>
-            <!--events-->
+
+            <!--Some Commented Folding Cell Here-->
+
+            <!--events--><!--
             <LinearLayout
                 android:id="@+id/events_layout"
                 android:layout_width="match_parent"
@@ -720,8 +719,8 @@
                     </FrameLayout>
 
                 </com.ramotion.foldingcell.FoldingCell>
-            </LinearLayout>
-            <!--eventscopy-->
+            </LinearLayout>-->
+            <!--eventscopy--><!--
             <LinearLayout
                 android:id="@+id/theme_layout"
                 android:layout_width="match_parent"
@@ -854,7 +853,7 @@
                     </FrameLayout>
 
                 </com.ramotion.foldingcell.FoldingCell>
-            </LinearLayout>
+            </LinearLayout>-->
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
