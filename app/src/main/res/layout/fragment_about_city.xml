@@ -135,7 +135,12 @@ tools:context=".ui.activity.mainActivity.MainActivity">
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
-                android:id="@+id/imgHotel"/>
+                android:id="@+id/img"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/actionBarSize"
+                android:background="@drawable/dark_shadow"
+                android:layout_alignParentBottom="true"/>
 
         </RelativeLayout>
         <android.support.v7.widget.Toolbar
@@ -157,6 +162,7 @@ tools:context=".ui.activity.mainActivity.MainActivity">
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@color/white_"
     >
 
     <include layout="@layout/content_scrolling_aboutcity" />

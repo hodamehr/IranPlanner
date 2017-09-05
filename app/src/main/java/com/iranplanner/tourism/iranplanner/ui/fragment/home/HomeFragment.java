@@ -420,6 +420,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     private void showAboutCityOrProvince() {
         Bundle bundle = new Bundle();
         bundle.putSerializable("homeInfo", resultHomes.get(0).getHomeInfo());
+
+        bundle.putSerializable("url", resultHomes.get(0).getHomeImages().get(0).getImgUrl());
         AboutCityFragment aboutCityFragment = AboutCityFragment.newInstance();
         aboutCityFragment.setArguments(bundle);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
