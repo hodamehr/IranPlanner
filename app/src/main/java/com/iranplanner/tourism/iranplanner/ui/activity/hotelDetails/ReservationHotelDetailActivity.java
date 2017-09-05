@@ -108,6 +108,7 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
 
     @Inject
     AttractionListMorePresenter attractionListMorePresenter;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -263,7 +264,7 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
         todayDate = bundle.getString("todayDate");
         String s = (startOfTravel != null) ? Utils.getSimpleDate(startOfTravel) : Utils.getSimpleDateMilli(Long.valueOf(todayDate));
         txtDateCheckIn.setText(s);
-        txtDurationHotel.setText(Util.persianNumbers(String.valueOf(durationTravel)) + " شب");
+        txtDurationHotel.setText("به مدت "+Util.persianNumbers(String.valueOf(durationTravel)) + " شب");
     }
 
     private void showDialogNumber() {
@@ -285,6 +286,7 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
         findView();
         overrideFont();
         getExtras();
+
         txtHotelName.setText(resultLodgingHotelDetail.getLodgingName());
         txtHotelType.setText("نوع مرکز اقامتی: " + resultLodgingHotelDetail.getLodgingTypeTitle());
         txtAddress.setText(resultLodgingHotelDetail.getLodgingAddress());
