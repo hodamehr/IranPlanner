@@ -8,6 +8,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class ReservationRequestList implements Serializable {
 
+    public static final String INTENT_KEY_RESULT_RESERVATION = "intent_key_reservation";
+
     @SerializedName("Status")
     @Expose
     private Status status;

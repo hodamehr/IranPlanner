@@ -16,7 +16,6 @@
 
     <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE"/> -->
     <application
-
         android:name=".di.model.App"
         android:allowBackup="true"
         android:fullBackupContent="true"
@@ -35,21 +34,26 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.login.LoginActivity"
             android:screenOrientation="portrait">
-            <!-- <intent-filter>
+
+            <!--
+             <intent-filter>
                  <action android:name="android.intent.action.MAIN" />
 
                  <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>-->
+             </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".ui.activity.mainActivity.MainActivity"
-            android:screenOrientation="portrait" />   <activity
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.reqestHotelStatus.HotelReservationStatusActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -148,7 +152,8 @@
         <activity
             android:name=".ui.activity.ScrollingActivityttest"
             android:label="@string/title_activity_scrolling_activityttest"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.activity.reservationRequestList.ReservationRequestActivity"></activity>
     </application>
 
 </manifest>
