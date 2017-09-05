@@ -1,4 +1,4 @@
-package com.iranplanner.tourism.iranplanner.ui.fragment.myaccount;
+package com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -62,14 +62,11 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
         public Holder(View itemView) {
             super(itemView);
             btnPayment = (Button) itemView.findViewById(R.id.requestStatusRowPaymentBtn);
-            btnView = (Button) itemView.findViewById(R.id.requestStatusRowViewBtn);
             tvTitle = (TextView) itemView.findViewById(R.id.requestStatusRowTitleTv);
             tvCount = (TextView) itemView.findViewById(R.id.requestStatusRowCountTv);
-
             btnPayment.setVisibility(View.GONE);
-
             btnPayment.setOnClickListener(this);
-            btnView.setOnClickListener(this);
+//            btnView.setOnClickListener(this);
         }
 
         public void setData(String current, int position,String count) {
@@ -86,9 +83,7 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
                 case R.id.requestStatusRowPaymentBtn:
                     Toast.makeText(context, "Pay for SomeThing", Toast.LENGTH_SHORT).show();
                     break;
-                case R.id.requestStatusRowViewBtn:
-                    Toast.makeText(context, "View SomeThing", Toast.LENGTH_SHORT).show();
-                    break;
+
             }
         }
     }

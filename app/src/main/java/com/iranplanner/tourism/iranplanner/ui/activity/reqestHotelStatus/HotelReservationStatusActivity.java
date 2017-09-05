@@ -2,27 +2,34 @@ package com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
+import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
-import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMoreContract;
-import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.RequestStatusAdapter;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
-import entity.ResultReqCount;
+import javax.inject.Inject;
 
-import static com.iranplanner.tourism.iranplanner.R.id.container;
+import butterknife.ButterKnife;
+import entity.ReservationRequestList;
+import entity.ResultReqCount;
+import tools.Util;
 
 /**
  * Created by h.vahidimehr on 30/08/2017.
  */
 
-public class HotelReservationStatusActivity extends StandardActivity {
+public class HotelReservationStatusActivity extends StandardActivity
+        implements HotelReservationStatusContract.View {
+    @Inject
+    HotelReservationStatusListPresenter hotelReservationStatusListPresenter;
     List<ResultReqCount> resultReqCountList;
+
     private void getExtras() {
         Bundle extras = getIntent().getExtras();
         resultReqCountList = (List<ResultReqCount>) extras.getSerializable("resultReqCountList");
@@ -35,6 +42,10 @@ public class HotelReservationStatusActivity extends StandardActivity {
         ButterKnife.inject(this);
         getExtras();
         initRequestStatusRecyclerView(resultReqCountList);
+        DaggerHotelReservationStatusListComponent.builder()
+                .netComponent(((App) getApplicationContext()).getNetComponent())
+                .hotelReservationStatusListModule(new HotelReservationStatusListModule(this))
+                .build().injectHotelReservationStatusActivity(this);
     }
 
     @Override
@@ -42,9 +53,49 @@ public class HotelReservationStatusActivity extends StandardActivity {
         return R.layout.activity_status_reservation_hotel;
     }
 
-    private void initRequestStatusRecyclerView( List<ResultReqCount> resultReqCountList) {
+    private void initRequestStatusRecyclerView(final List<ResultReqCount> resultReqCountList) {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.settingRequestStatusRv);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new RequestStatusAdapter(getApplicationContext(), resultReqCountList));
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+        recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, final int position) {
+                String offset = "0";
+                if (resultReqCountList.get(position).getReservationReqStatus().getStatusCount() != "0") {
+                    //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_list&lang=fa&uid=792147600796866&type=1
+
+                    hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list","fa", "792147600796866","1", "20", offset, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                }
+
+            }
+        }));
+    }
+
+    @Override
+    public void showHotelReservationStatusList(ReservationRequestList reservationRequestList) {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public void showComplete() {
+
+    }
+
+    @Override
+    public void dismissProgress() {
+
+    }
+
+    @Override
+    public void showProgress() {
+
     }
 }

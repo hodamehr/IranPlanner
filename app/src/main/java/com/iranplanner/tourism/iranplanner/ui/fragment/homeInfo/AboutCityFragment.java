@@ -2,6 +2,8 @@ package com.iranplanner.tourism.iranplanner.ui.fragment.homeInfo;
 
 
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import com.coinpany.core.android.widget.CTouchyWebView;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
+import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity;
 
 import entity.HomeInfo;
 
@@ -20,10 +23,11 @@ public class AboutCityFragment extends StandardFragment {
     protected CTouchyWebView contentFullDescription;
 
     HomeInfo homeInfo;
+    Toolbar toolbar;
     public AboutCityFragment() {
         super();
     }
-
+    
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
@@ -32,6 +36,12 @@ public class AboutCityFragment extends StandardFragment {
         View rootView = inflater.inflate(R.layout.fragment_about_city, container, false);
         contentFullDescription = (CTouchyWebView) rootView.findViewById(R.id.contentFullDescription);
          homeInfo= (HomeInfo) getArguments().getSerializable("homeInfo");
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.toolbar_layout);
+
+
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
+        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+        collapsingToolbarLayout.setTitle(homeInfo.getTitle());
         setWebViewContent(homeInfo.getBody());
         return rootView;
     }

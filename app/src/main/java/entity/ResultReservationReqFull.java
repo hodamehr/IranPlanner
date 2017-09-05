@@ -1,0 +1,33 @@
+
+package entity;
+
+import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+public class ResultReservationReqFull {
+
+    @SerializedName("request")
+    @Expose
+    private Request request;
+    @SerializedName("request_history")
+    @Expose
+    private List<RequestHistory> requestHistory = null;
+
+    public Request getRequest() {
+        return request;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
+    }
+
+    public List<RequestHistory> getRequestHistory() {
+        return requestHistory;
+    }
+
+    public void setRequestHistory(List<RequestHistory> requestHistory) {
+        this.requestHistory = requestHistory;
+    }
+
+}
