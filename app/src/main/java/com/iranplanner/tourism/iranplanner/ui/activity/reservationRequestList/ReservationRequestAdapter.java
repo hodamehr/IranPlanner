@@ -62,6 +62,10 @@ public class ReservationRequestAdapter extends RecyclerView.Adapter<ReservationR
 
         public void setData(ResultReservationReqList current) {
             this.current = current;
+            tvRequestCode.setText(current.getRequest().getReqLodgingId());
+            tvTimeDuration.setText(current.getRequest().getReqDateFrom());
+            tvTypeRoom.setText(current.getRequest().getReqRoomTitle());
+            //where the hell is city name :|
             tvAttractionName.setText(current.getRequest().getReqLodgingTitle());
         }
     }

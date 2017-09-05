@@ -5,10 +5,15 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity;
 
 import java.util.List;
 
@@ -59,6 +64,14 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reservationRequestRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new ReservationRequestAdapter(this, resultReservationReqList));
+        recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, final int position) {
+                reservationRequestFullPresenter.getReservationRequestFull("req_user_full", "fa", "792147600796866", "1115026211657201", "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+            }
+        }));
+
+
     }
 
     @Override
@@ -74,7 +87,10 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
 
     @Override
     public void showReservationRequestFull(ReservationRequestFull reservationRequestFull) {
-//hi amin!!!!
+        //hi amin!!!!
+        //create a new acutuvty
+        //esmesh chi bashe har chi delet mikhad bezart adadach
+        Log.d("holy crap", reservationRequestFull.getStatus().getMessage());
     }
 
     @Override
