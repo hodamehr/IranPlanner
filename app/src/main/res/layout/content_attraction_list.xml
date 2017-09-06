@@ -125,7 +125,6 @@
                                     android:layout_width="wrap_content"
 
                                     android:layout_height="wrap_content"
-                                    android:layout_alignStart="@+id/imageTextAttractionHolder1"
                                     android:layout_below="@+id/cityNameHolder"
                                     android:paddingBottom="@dimen/margin_xshort">
 
@@ -159,7 +158,6 @@
                                     android:id="@+id/typeAttractionHolder"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignStart="@+id/imageTextAttractionHolder1"
                                     android:layout_below="@+id/cityNameHolderz"
                                     android:paddingBottom="@dimen/margin_xshort">
 

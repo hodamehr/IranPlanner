@@ -98,7 +98,6 @@
                     android:id="@+id/cityNameHolderz"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/imageTextAttractionHolder1"
                     android:layout_below="@+id/cityNameHolder"
                     android:paddingBottom="@dimen/margin_xshort">
 
@@ -143,7 +142,6 @@
             android:id="@+id/dateHolder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/attraction_name"
             android:paddingBottom="@dimen/margin_xshort">
 
             <TextView
@@ -161,7 +159,6 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/textCityName"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:scaleType="centerCrop"
@@ -203,7 +200,6 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/textCityName"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:scaleType="centerCrop"
@@ -223,8 +219,6 @@
                 style="@style/SmallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/txtstatusRequest"
-                android:layout_alignBottom="@+id/txtstatusRequest"
                 android:layout_alignParentEnd="true"
                 android:maxLines="1"
                 android:text="در حال تایید"
@@ -235,7 +229,6 @@
                 style="@style/SmallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imagestatusRequest"
                 android:layout_toEndOf="@+id/imagestatusRequestDate"
                 android:maxLines="1"
                 android:text="از چهارشنبه" />
@@ -245,7 +238,6 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/textCityName"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:scaleType="centerCrop"
@@ -278,8 +270,6 @@
                 style="@style/SmallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imagestatusRequest"
-                android:layout_toEndOf="@+id/imageHeadName"
                 android:maxLines="1"
                 android:text="df" />
 
@@ -288,7 +278,6 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/textCityName"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:scaleType="centerCrop"
