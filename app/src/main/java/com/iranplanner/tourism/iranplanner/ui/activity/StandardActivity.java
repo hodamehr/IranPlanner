@@ -32,6 +32,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public abstract class StandardActivity extends AppCompatActivity {
     LocaleUtils localeUtils=new LocaleUtils();
 
+    public static final String TAG = "DEBUG::::";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

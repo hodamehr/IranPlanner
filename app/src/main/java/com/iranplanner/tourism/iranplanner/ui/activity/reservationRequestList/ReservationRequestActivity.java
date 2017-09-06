@@ -15,6 +15,7 @@ import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,15 +37,12 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
 
         init(getExtras());
         initToolbar();
+
         DaggerReservationRequestFullComponent.builder()
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .reservationRequestFullModule(new ReservationRequestFullModule(this))
                 .build().injectReservationRequestActivity(this);
 //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_full&lang=fa&uid=792147600796866&id=1115026211657201
-        String offset = "0";
-        reservationRequestFullPresenter.getReservationRequestFull("req_user_full", "fa", "792147600796866", "1115026211657201", "20", offset, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
-
-
     }
 
     private List<ResultReservationReqList> getExtras() {
@@ -67,11 +65,10 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
+                Log.d("thisis amin ", "clicked");
                 reservationRequestFullPresenter.getReservationRequestFull("req_user_full", "fa", "792147600796866", "1115026211657201", "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
             }
         }));
-
-
     }
 
     @Override
@@ -87,15 +84,15 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
 
     @Override
     public void showReservationRequestFull(ReservationRequestFull reservationRequestFull) {
-        //hi amin!!!!
-        //create a new acutuvty
-        //esmesh chi bashe har chi delet mikhad bezart adadach
-        Log.d("holy crap", reservationRequestFull.getStatus().getMessage());
+        Log.e(TAG, "showReservationRequestFull");
+        Intent intent = new Intent(ReservationRequestActivity.this, ReservationRequestDetailActivity.class);
+        intent.putExtra(ReservationRequestList.INTENT_KEY_RESULT_RESERVATION, (Serializable) reservationRequestFull.getResultReservationReqFull());
+        startActivity(intent);
     }
 
     @Override
     public void showError(String message) {
-
+        Log.e(TAG, message + " ERROR");
     }
 
     @Override
