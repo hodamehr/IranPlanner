@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/margin_short"
+    android:layout_marginStart="@dimen/margin_short"
+    android:layout_marginTop="@dimen/margin_short"
+    android:layoutDirection="rtl"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -15,7 +19,6 @@
             android:id="@+id/imageTextAttractionHolder1"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="@dimen/margin_standard"
             android:layout_alignParentStart="true">
 
             <ProgressBar
@@ -30,8 +33,7 @@
                 android:id="@+id/ImageAttraction"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="@dimen/margin_short"
-                android:src="@drawable/emam2"/>
+                android:src="@drawable/emam2" />
 
         </RelativeLayout>
 
@@ -129,161 +131,4 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/infoHolder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageTextAttractionHolder"
-        android:paddingEnd="@dimen/padding_standard"
-        android:paddingStart="@dimen/padding_standard"
-        android:visibility="gone">
-
-        <RelativeLayout
-            android:id="@+id/dateHolder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/margin_xshort">
-
-            <TextView
-                android:id="@+id/txtDate"
-                style="@style/SmallText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/imageDate"
-                android:maxLines="1"
-                android:text="از چهارشنبه تا شنبه" />
-
-            <ImageView
-                android:id="@+id/imageDate"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_pinblack" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/statusRequestHolder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/dateHolder"
-            android:paddingBottom="@dimen/margin_xshort">
-
-            <TextView
-                android:id="@+id/txtstatusRequestValue"
-                style="@style/SmallText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/txtstatusRequest"
-                android:layout_alignBottom="@+id/txtstatusRequest"
-                android:layout_alignParentEnd="true"
-                android:maxLines="1"
-                android:text="در حال تایید"
-                android:layout_toEndOf="@+id/txtstatusRequest" />
-
-            <TextView
-                android:id="@+id/txtstatusRequest"
-                style="@style/SmallText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imagestatusRequest"
-                android:layout_toEndOf="@+id/imagestatusRequest"
-                android:maxLines="1"
-                android:text="از چهارشنبه" />
-
-            <ImageView
-                android:id="@+id/imagestatusRequest"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_pinblack" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/statusRequestHolderDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/statusRequestHolder"
-            android:paddingBottom="@dimen/margin_xshort">
-
-            <TextView
-                android:id="@+id/txtstatusRequestValueDate"
-                style="@style/SmallText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:maxLines="1"
-                android:text="در حال تایید"
-                android:layout_toEndOf="@+id/txtstatusRequestDate" />
-
-            <TextView
-                android:id="@+id/txtstatusRequestDate"
-                style="@style/SmallText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/imagestatusRequestDate"
-                android:maxLines="1"
-                android:text="از چهارشنبه" />
-
-            <ImageView
-                android:id="@+id/imagestatusRequestDate"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_pinblack"
-                android:visibility="invisible" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/headNameHolder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/statusRequestHolderDate"
-            android:paddingBottom="@dimen/margin_xshort">
-
-            <TextView
-                android:id="@+id/txtHeadNameValue"
-                style="@style/SmallText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/txtHeadName"
-                android:layout_alignBottom="@+id/txtHeadName"
-                android:layout_alignParentEnd="true"
-                android:maxLines="1"
-                android:text="ddd"
-                android:layout_toEndOf="@+id/txtHeadName" />
-
-            <TextView
-                android:id="@+id/txtHeadName"
-                style="@style/SmallText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text="df" />
-
-            <ImageView
-                android:id="@+id/imageHeadName"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_pinblack" />
-            ++
-        </RelativeLayout>
-    </RelativeLayout>
-
-</RelativeLayout>
+</android.support.v7.widget.CardView>

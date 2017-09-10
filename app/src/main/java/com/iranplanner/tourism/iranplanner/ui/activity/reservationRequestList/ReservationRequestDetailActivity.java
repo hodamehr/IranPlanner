@@ -32,7 +32,6 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         getExtras();
         init();
         initToolbar();
-
     }
 
     private void init() {

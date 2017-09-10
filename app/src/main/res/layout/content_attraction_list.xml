@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ScrollView
@@ -13,7 +12,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view_itinerary"
@@ -30,8 +28,8 @@
                         android:id="@+id/imageTextAttractionHolder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true">
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true">
 
                         <RelativeLayout
                             android:id="@+id/imageTextAttractionHolder1"
@@ -46,14 +44,12 @@
                                 android:layout_centerInParent="true"
                                 android:translationZ="1dp" />
 
-
                             <ImageView
                                 android:id="@+id/ImageAttraction"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
                                 android:layout_marginStart="@dimen/margin_standard"
-                                android:layout_marginTop="@dimen/margin_short"
-                               />
+                                android:layout_marginTop="@dimen/margin_short" />
 
                         </RelativeLayout>
 
@@ -91,9 +87,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/attraction_name"
-
                                     android:paddingBottom="@dimen/margin_xshort">
-
 
                                     <TextView
                                         android:id="@+id/textCityName"
@@ -102,7 +96,6 @@
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:layout_toEndOf="@+id/imageCityName"
-
                                         android:maxLines="1"
                                         android:text="textCityName" />
 
@@ -117,17 +110,14 @@
                                         android:scaleType="centerCrop"
                                         android:src="@mipmap/ic_pinblack" />
 
-
                                 </RelativeLayout>
 
                                 <RelativeLayout
                                     android:id="@+id/cityNameHolderz"
                                     android:layout_width="wrap_content"
-
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/cityNameHolder"
                                     android:paddingBottom="@dimen/margin_xshort">
-
 
                                     <TextView
                                         android:id="@+id/textTimeDuration"
@@ -136,7 +126,6 @@
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:layout_toEndOf="@+id/imageTimeDuration"
-
                                         android:maxLines="1"
                                         android:text="textCityName" />
 
@@ -151,7 +140,6 @@
                                         android:scaleType="centerCrop"
                                         android:src="@mipmap/ic_duration_time_grey" />
 
-
                                 </RelativeLayout>
 
                                 <RelativeLayout
@@ -160,7 +148,6 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/cityNameHolderz"
                                     android:paddingBottom="@dimen/margin_xshort">
-
 
                                     <TextView
                                         android:id="@+id/textType"
@@ -183,13 +170,10 @@
                                         android:scaleType="centerCrop"
                                         android:src="@mipmap/ic_duration_time_grey" />
 
-
                                 </RelativeLayout>
                             </RelativeLayout>
 
-
                         </RelativeLayout>
-
 
                     </RelativeLayout>
 
@@ -202,89 +186,6 @@
                         android:paddingLeft="@dimen/margin_standard"
                         android:paddingRight="@dimen/margin_standard">
 
-                        <!--<LinearLayout-->
-                        <!--android:id="@+id/navigateBtn"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentRight="true"-->
-                        <!--android:layout_alignParentTop="true"-->
-                        <!--android:background="?android:attr/selectableItemBackground"-->
-                        <!--android:gravity="center"-->
-                        <!--android:orientation="vertical"-->
-                        <!--android:paddingLeft="@dimen/padding_standard"-->
-                        <!--android:paddingRight="@dimen/padding_standard">-->
-
-                        <!--<ImageView-->
-                        <!--android:id="@+id/imageGps"-->
-                        <!--android:layout_width="35dp"-->
-                        <!--android:layout_height="35dp"-->
-                        <!--android:scaleType="centerCrop"-->
-                        <!--android:src="@mipmap/ic_duration_bluee" />-->
-
-                        <!--<TextView-->
-                        <!--android:id="@+id/textGps"-->
-                        <!--style="@style/SmallText"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:maxLines="1"-->
-                        <!--android:text="مسیریابی" />-->
-
-                        <!--</LinearLayout>-->
-
-                        <!--<LinearLayout-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentTop="true"-->
-                        <!--android:layout_centerInParent="true"-->
-                        <!--android:gravity="center"-->
-                        <!--android:orientation="vertical"-->
-                        <!--android:visibility="gone">-->
-
-                        <!--<ImageView-->
-                        <!--android:id="@+id/imageTimeOpen"-->
-                        <!--android:layout_width="35dp"-->
-                        <!--android:layout_height="35dp"-->
-                        <!--android:scaleType="centerCrop"-->
-                        <!--android:src="@mipmap/ic_duration_time_blue" />-->
-
-                        <!--<TextView-->
-                        <!--android:id="@+id/textTimeOpen"-->
-                        <!--style="@style/SmallText"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:maxLines="1"-->
-                        <!--android:text="باز است" />-->
-                        <!--</LinearLayout>-->
-
-                        <!--<LinearLayout-->
-                        <!--android:id="@+id/moreInfoHolder"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentLeft="true"-->
-                        <!--android:layout_alignParentTop="true"-->
-                        <!--android:background="?android:attr/selectableItemBackground"-->
-                        <!--android:gravity="center"-->
-                        <!--android:orientation="vertical"-->
-                        <!--android:paddingLeft="@dimen/padding_standard"-->
-                        <!--android:paddingRight="@dimen/padding_standard">-->
-
-                        <!--<ImageView-->
-                        <!--android:id="@+id/imageMore"-->
-                        <!--android:layout_width="35dp"-->
-                        <!--android:layout_height="35dp"-->
-                        <!--android:scaleType="centerCrop"-->
-                        <!--android:src="@mipmap/ic_info_blue_new" />-->
-
-                        <!--<TextView-->
-                        <!--android:id="@+id/textMore"-->
-                        <!--style="@style/SmallText"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:maxLines="1"-->
-                        <!--android:text="بیشتر" />-->
-
-
-                        <!--</LinearLayout>-->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -314,16 +215,9 @@
                                 android:text="اطلاعات بیشتر"
                                 android:textColor="@color/dark_blue" />
                         </LinearLayout>
-
                     </RelativeLayout>
                 </RelativeLayout>
-
-
             </android.support.v7.widget.CardView>
-
-
         </LinearLayout>
-
-
     </ScrollView>
 </LinearLayout>

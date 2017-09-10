@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <!-- <uses-permission android:name="android.permission.READ_PHONE_STATE"/> -->
     <application
         android:name=".di.model.App"
         android:allowBackup="true"
@@ -40,16 +39,7 @@
         </activity>
         <activity
             android:name=".ui.activity.login.LoginActivity"
-            android:screenOrientation="portrait">
-
-            <!--
-             <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
-
-                 <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
-            -->
-        </activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.mainActivity.MainActivity"
             android:screenOrientation="portrait" />
@@ -68,9 +58,6 @@
         <activity
             android:name=".ui.activity.notifyActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.StandardActivity"
-            android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.ScrollingActivity" />
         <activity
             android:name=".ui.activity.hotelReservationListOfCity.ReservationListActivity"
@@ -84,12 +71,6 @@
         <activity
             android:name=".ui.activity.register.RegisterActivity"
             android:screenOrientation="portrait" />
-        <!-- <activity android:name=".activity.SearchCityCityActivity" /> -->
-        <!-- App Indexing. See https://g.co/AppIndexing/AndroidStudio for more information. -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-
         <activity
             android:name=".ui.activity.moreItemItinerary.MoreItemItineraryActivity"
             android:label="@string/title_activity_maps"
@@ -145,16 +126,16 @@
             android:name="io.fabric.ApiKey"
             android:value="99164a3830139c22424702ada3eeee9501d88ab9" />
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity
             android:name=".ui.activity.ScrollingActivity1"
             android:label="@string/title_activity_scrolling1"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".ui.activity.ScrollingActivityttest"
-            android:label="@string/title_activity_scrolling_activityttest"
-            android:theme="@style/AppTheme" />
         <activity android:name=".ui.activity.reservationRequestList.ReservationRequestActivity" />
-        <activity android:name=".ui.activity.reservationRequestList.ReservationRequestDetailActivity"></activity>
+        <activity android:name=".ui.activity.reservationRequestList.ReservationRequestDetailActivity"/>
     </application>
 
 </manifest>
