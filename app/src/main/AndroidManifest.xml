@@ -39,7 +39,7 @@
         </activity>
         <activity
             android:name=".ui.activity.login.LoginActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.mainActivity.MainActivity"
             android:screenOrientation="portrait" />
@@ -125,7 +125,6 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="99164a3830139c22424702ada3eeee9501d88ab9" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -135,7 +134,8 @@
             android:label="@string/title_activity_scrolling1"
             android:theme="@style/AppTheme" />
         <activity android:name=".ui.activity.reservationRequestList.ReservationRequestActivity" />
-        <activity android:name=".ui.activity.reservationRequestList.ReservationRequestDetailActivity"/>
+        <activity android:name=".ui.activity.reservationRequestList.ReservationRequestDetailActivity" />
+        <activity android:name=".ui.activity.event.EventListActivity"></activity>
     </application>
 
 </manifest>

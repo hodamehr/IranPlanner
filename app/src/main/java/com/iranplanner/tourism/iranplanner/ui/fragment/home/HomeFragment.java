@@ -47,6 +47,7 @@ import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMorePresenter;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.ShowAttractionListMoreActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractionDetails.attractionDetailActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.event.EventListActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelDetails.ReservationHotelDetailActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationContract;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationPresenter;
@@ -57,6 +58,8 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.FirstItem;
 import com.iranplanner.tourism.iranplanner.ui.fragment.homeInfo.AboutCityFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchPresenter;
+
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -188,9 +191,11 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     @InjectView(R.id.recyclerLocalFood)
     RecyclerView recyclerLocalFood;
     @InjectView(R.id.viewPagerEventsHolder)
-    RelativeLayout viewPagerEventsHolder;
+    LinearLayout viewPagerEventsHolder;
     @InjectView(R.id.hotelsTypeHolder)
     RelativeLayout hotelsTypeHolder;
+    @InjectView(R.id.tvEventShowAll)
+    TextView tvEventShowAll;
     @InjectView(R.id.viewPagerBestHolder)
     RelativeLayout viewPagerBestHolder;
     @InjectView(R.id.attracttionTypeHolder)
@@ -264,6 +269,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         attractionRelgonHolder.setOnClickListener(this);
         txtMoreTitleHotel.setOnClickListener(this);
         overlapImageItineraryHolder.setOnClickListener(this);
+
+        tvEventShowAll.setOnClickListener(this);
 
         //home nav views
         rootView.findViewById(R.id.homeNavAttraction).setOnClickListener(this);
@@ -400,7 +407,9 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
                 }
                 break;
-
+            case R.id.tvEventShowAll:
+                startActivity(new Intent(getActivity(), EventListActivity.class));
+                break;
 
         }
     }
