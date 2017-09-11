@@ -1,19 +1,22 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.event;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
 import java.util.ArrayList;
 
 import entity.HomeEvent;
 
-public class EventListActivity extends StandardActivity {
+public class EventListActivity extends StandardActivity implements RecyclerItemOnClickListener.OnItemClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,12 @@ public class EventListActivity extends StandardActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setAdapter(new EventListAdapter(getEvents(), this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(this, this));
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        startActivity(new Intent(EventListActivity.this, EventActivity.class));
     }
 
     private ArrayList<HomeEvent> getEvents() {

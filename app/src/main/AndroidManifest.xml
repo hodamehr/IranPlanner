@@ -135,7 +135,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".ui.activity.reservationRequestList.ReservationRequestActivity" />
         <activity android:name=".ui.activity.reservationRequestList.ReservationRequestDetailActivity" />
-        <activity android:name=".ui.activity.event.EventListActivity"></activity>
+        <activity android:name=".ui.activity.event.EventListActivity" />
+        <activity android:name=".ui.activity.event.EventActivity"></activity>
     </application>
 
 </manifest>
