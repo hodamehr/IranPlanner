@@ -1,5 +1,6 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -32,6 +33,7 @@ public class HotelReservationStatusActivity extends StandardActivity
     @Inject
     HotelReservationStatusListPresenter hotelReservationStatusListPresenter;
     List<ResultReqCount> resultReqCountList;
+    private ProgressDialog progress;
 
     private void getExtras() {
         Bundle extras = getIntent().getExtras();
@@ -70,7 +72,7 @@ public class HotelReservationStatusActivity extends StandardActivity
                 if (resultReqCountList.get(position).getReservationReqStatus().getStatusCount() != "0") {
                     //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_list&lang=fa&uid=792147600796866&type=1
 
-                    hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", "792147600796866", "1", "20", offset, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                    hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), String.valueOf(position), "20", offset, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
                 }
 
             }
@@ -98,11 +100,11 @@ public class HotelReservationStatusActivity extends StandardActivity
 
     @Override
     public void dismissProgress() {
-
+        Util.dismissProgress(progress);
     }
 
     @Override
     public void showProgress() {
-
+        progress = Util.showProgressDialog(getApplicationContext(), "لطفا منتظر بمانید", this);
     }
 }

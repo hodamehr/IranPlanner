@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -60,6 +61,7 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     protected Toolbar toolbar;
     protected CharSequence mDrawerTitle;
     protected CharSequence mTitle;
+    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
 
     protected ImageView toolbarToggle;
     protected ImageView toolbarToggleLeft;
@@ -71,6 +73,9 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     protected static Typeface YEKAN;
 
     boolean doubleBackToExitPressedOnce = false;
+    private ViewPager viewPager                 ;
+    private TabPagerAdapter pagerAdapter;
+    TabLayout mainTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +83,12 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         Bundle extras = getIntent().getExtras();
         homeResult = (GetHomeResult) extras.getSerializable("HomeResult");
-        ViewPager viewPager = (ViewPager) findViewById(R.id.main_view_pager);
-        TabPagerAdapter pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this, homeResult);
+         viewPager   = (ViewPager) findViewById(R.id.main_view_pager);
+         pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this, homeResult);
         if (viewPager != null)
             viewPager.setAdapter(pagerAdapter);
 
-        TabLayout mainTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+         mainTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         if (mainTabLayout != null) {
             mainTabLayout.setupWithViewPager(viewPager);
             for (int i = 0; i < mainTabLayout.getTabCount(); i++) {
@@ -109,6 +114,7 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
 //        ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setOffscreenPageLimit(3);
+
     }
 
 //    private void initDrawer() {
@@ -129,24 +135,29 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     @Override
     public void onBackPressed() {
         //If the event returned false, then call the super.
-        if (currentTab == null || !currentTab.onBackPressed()) {
+//        if (currentTab == null || !currentTab.onBackPressed()) {
+////            super.onBackPressed();
+//            if (doubleBackToExitPressedOnce) {
+//                super.onBackPressed();
+//                return;
+//            }
+//
+//            this.doubleBackToExitPressedOnce = true;
+//            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+//
+//            new Handler().postDelayed(new Runnable() {
+//
+//                @Override
+//                public void run() {
+//                    doubleBackToExitPressedOnce = false;
+//                }
+//            }, 2000);
+//        }
+        StandardFragment fragment = (StandardFragment)pagerAdapter.getItem(viewPager.getCurrentItem());
+        // Fragment should return boolean according to app requirements after processing back key
+//        if (!fragment.handleBackKey()) {
 //            super.onBackPressed();
-            if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
-                return;
-            }
-
-            this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-
-            new Handler().postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-                    doubleBackToExitPressedOnce = false;
-                }
-            }, 2000);
-        }
+//        }
     }
 
     @Override

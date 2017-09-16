@@ -59,8 +59,6 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.homeInfo.AboutCityFragmen
 import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchPresenter;
 
-import org.w3c.dom.Text;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -125,8 +123,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     ReservationHotelListPresenter reservationHotelListPresenter;
     @Inject
     MainSearchPresenter mainSearchPresenter;
-//    protected TextView toolbarTitle;
-
+    //    protected TextView toolbarTitle;
+    List<HomeNeighborCity> homeNeighborCity;
     int width;
     int height;
     boolean anim = false;
@@ -396,12 +394,10 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 if (SelectedType != null && SelectedType.equals("city")) {
                     Log.e("itinerary", "city clicked");
                     mainSearchPresenter.loadItineraryFromCity("list", "fa", selectId, "20", offset, selectId, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
-                }else if(SelectedType != null && SelectedType.equals("province")){
+                } else if (SelectedType != null && SelectedType.equals("province")) {
                     mainSearchPresenter.loadItineraryFromProvince("searchprovince", selectId, offset, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
 
-                }
-
-                else {
+                } else {
                     ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.main_view_pager);
                     viewPager.setCurrentItem(0);
 
@@ -576,8 +572,9 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
     @Override
     public void ShowHomeResult(GetHomeResult getHomeResult) {
-
+        b = true;
         resultHomes = getHomeResult.getResultHome();
+        toolbarTitleSetName(resultHomes.get(0).getHomeInfo().getTitle(), resultHomes.get(0).getHomeInfo().getId());
         setNamePicture(resultHomes.get(0).getHomeInfo(), resultHomes.get(0).getHomeImages());
         if (resultHomes.get(0).getHomeLodging().size() != 0) {
             hotelsTypeHolder.setVisibility(View.VISIBLE);
@@ -633,9 +630,10 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             viewPagerEventsHolder.setVisibility(View.GONE);
 
         }
+        homeNeighborCity=resultHomes.get(0).getHomeNeighborCity();
         if (resultHomes.get(0).getHomeNeighborCity().size() != 0) {
             recyclerCity.setVisibility(View.VISIBLE);
-            setViewPagerNeighborCity(resultHomes.get(0).getHomeNeighborCity());
+            setViewPagerNeighborCity();
         } else {
             viewPagerEventsHolder.setVisibility(View.GONE);
 
@@ -658,19 +656,41 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         eventsViewPager.setCurrentItem(2);
     }
 
-    private void setViewPagerNeighborCity(List<HomeNeighborCity> homeNeighborCity) {
-        showNeiborCityHomeAdapter attractionHomeAdapter = new showNeiborCityHomeAdapter(homeNeighborCity, getContext());
+    boolean b = true;
+
+    private void setViewPagerNeighborCity() {
+        showNeiborCityHomeAdapter attractionHomeAdapter = new showNeiborCityHomeAdapter(getActivity(), this, homeNeighborCity, getContext(), R.layout.content_home_best_hotel_show);
         LinearLayoutManager horizontalLayoutManagaer
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+
         recyclerCity.setLayoutManager(horizontalLayoutManagaer);
+        attractionHomeAdapter.notifyDataSetChanged();
         recyclerCity.setAdapter(attractionHomeAdapter);
+        recyclerCity.invalidate();
+        recyclerCity.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, final int position) {
+                if (b) {
+
+                    getHomeResult("city", homeNeighborCity.get(position).getItemId());
+                    b = false;
+                }
+            }
+        }));
     }
 
-    private void setListProvince(List<HomeCountryProvince> homeCountryProvince) {
+    private void setListProvince(final List<HomeCountryProvince> homeCountryProvince) {
         recyclerViewProvinceShow.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
         HomeProvinceListAdapter homeProvinceAdapter = new HomeProvinceListAdapter(getActivity(), this, homeCountryProvince, getContext(), R.layout.content_province_list);
         recyclerViewProvinceShow.setAdapter(homeProvinceAdapter);
         recyclerViewProvinceShow.setNestedScrollingEnabled(false);
+        recyclerViewProvinceShow.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, final int position) {
+                getHomeResult("province", homeCountryProvince.get(position).getProvinceId());
+            }
+        }));
     }
 
     private void setItinerary(List<HomeItinerary> homeItineraries) {
@@ -821,7 +841,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     selectId = CityProvince.get(position).getId();
                     SelectedType = CityProvince.get(position).getType();
-                    toolbarTitle.setText(CityProvince.get(position).getTitle());
+
+//                    toolbarTitleSetName(CityProvince.get(position).getTitle(),"");
                     if (type == Constants.homeSearch) {
                         getHomeResult(SelectedType, CityProvince.get(position).getId());
                         dismiss();
@@ -850,6 +871,12 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         String andId = Util.getAndroidIdFromSharedPreferences(getContext());
         homePresenter.getHome("home", destination, selectId, cid, andId);
 
+    }
+
+    private void toolbarTitleSetName(String name, String homeInfoId) {
+        if (!homeInfoId.equals("311")) {
+            toolbarTitle.setText(name);
+        }
     }
 
     void setupToolbar() {

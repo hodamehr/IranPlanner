@@ -20,19 +20,18 @@ public class ResultRoom implements Serializable {
         this.okConfirmChange = okConfirmChange;
     }
 
-    @SerializedName("selectedNationality")
-
-    @Expose
-    private String selectedNationality;
-
-
-    public String getSelectedNationality() {
-        return selectedNationality;
-    }
-
-    public void setSelectedNationality(String selectedNationality) {
-        this.selectedNationality = selectedNationality;
-    }
+//    @SerializedName("selectedNationality")
+//    @Expose
+//    private String selectedNationality;
+//
+//
+//    public String getSelectedNationality() {
+//        return selectedNationality;
+//    }
+//
+//    public void setSelectedNationality(String selectedNationality) {
+//        this.selectedNationality = selectedNationality;
+//    }
 
     public String getSelectedAddNumbers() {
         return selectedAddNumbers;
@@ -46,6 +45,17 @@ public class ResultRoom implements Serializable {
    @Expose
     private String selectedAddNumbers;
 
+    @SerializedName("selected_foreign")
+    @Expose
+    private String selectedForeign;
+
+    public String getSelectedForeign() {
+        return selectedForeign;
+    }
+
+    public void setSelectedForeign(String selectedForeign) {
+        this.selectedForeign = selectedForeign;
+    }
 
     @SerializedName("head_name")
     @Expose

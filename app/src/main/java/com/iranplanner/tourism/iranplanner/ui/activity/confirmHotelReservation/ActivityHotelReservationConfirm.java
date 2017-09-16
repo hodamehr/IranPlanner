@@ -1,9 +1,9 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.confirmHotelReservation;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -11,12 +11,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.di.model.App;
+import com.iranplanner.tourism.iranplanner.standard.ClickableViewPager;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus.HotelReservationStatusActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.showRoom.ShowRoomActivity;
+import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingContract;
+import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingPresenter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,10 +30,15 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import entity.GetInfoResult;
 import entity.ReqLodgingReservation;
 import entity.RequestLodgingReservationMain;
+import entity.ReservationRequestComplete;
+import entity.ReservationRequestDeleteRoom;
 import entity.ResultLodging;
 import entity.ResultLodgingReservation;
+import entity.ResultReqCount;
+import entity.ResultReservationReqStatus;
 import entity.ResultRoom;
 import tools.CustomDialogNumberPicker;
 import tools.Util;
@@ -38,7 +47,7 @@ import tools.Util;
  * Created by HoDA on 8/5/2017.
  */
 
-public class ActivityHotelReservationConfirm extends StandardActivity implements DataTransferInterface, View.OnClickListener, ConfirmHotelContract.View, HotelReservationConfirmListAdapter.GoBackInterface {
+public class ActivityHotelReservationConfirm extends StandardActivity implements DataTransferInterface, View.OnClickListener, ConfirmHotelContract.View, SettingContract.View/*, HotelReservationConfirmListAdapter.GoBackInterface*/ {
     private HotelReservationConfirmListAdapter adapter;
     LinearLayoutManager mLayoutManager;
     List<ResultRoom> ResultRooms;
@@ -54,19 +63,17 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
     String textPhoneAddress;
     @Inject
     ConfirmHotelPresenter confirmHotelPresenter;
-    //    RecyclerView recyclerView;
-//    RelativeLayout hotelReservationOkHolder;
     Map<Integer, Integer> selectedRooms;
-
-    @InjectView(R.id.reservationListRecyclerView)
-    RecyclerView recyclerView;
-    @InjectView(R.id.hotelReservationOkHolder)
-    RelativeLayout hotelReservationOkHolder;
-    @InjectView(R.id.txtNumber)
-    TextView txtNumber;
+    ProgressDialog progressDialog;
+    @Inject
+    SettingPresenter settingPresenter;
+    @InjectView(R.id.pager)
+    ClickableViewPager pager;
     List<ReqLodgingReservation> ReqLodgingReservationList;
+    View viewAdapter;
+    ConfirmReservationViewPagerAdapter confirmReservationViewPagerAdapter;
 
-    private void getExtra(){
+    private void getExtra() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         ResultRooms = (List<ResultRoom>) bundle.getSerializable("ResultRooms");
@@ -83,23 +90,66 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_room);
+//        setContentView(R.layout.activity_show_room);
         ButterKnife.inject(this);
         getExtra();
+        DaggerConfirmHotelComponent.builder().netComponent(((App) getApplicationContext().getApplicationContext()).getNetComponent())
+                .confirmHotelModule(new ConfirmHotelModule(this, this))
+                .build().injectConfirmHotel(this);
         ReqLodgingReservationList = new ArrayList<ReqLodgingReservation>();
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
 
-        hotelReservationOkHolder.setOnClickListener(this);
-        adapter = new HotelReservationConfirmListAdapter(durationTravel, startOfTravel, ActivityHotelReservationConfirm.this, this, getApplicationContext(), R.layout.activity_reservation_room_detail, selectedRooms, ResultRooms, this);
-        recyclerView.setAdapter(adapter);
-        mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
+        confirmReservationViewPagerAdapter = new ConfirmReservationViewPagerAdapter(getApplicationContext(), this, ResultRooms, durationTravel, startOfTravel);
+        pager.setAdapter(confirmReservationViewPagerAdapter);
+        confirmReservationViewPagerAdapter.setOnItemClickListener(new ConfirmReservationViewPagerAdapter.OnItemClickViewPagerListener() {
             @Override
-            public void onItemClick(View view, final int position) {
-//                chooseHolder = (RelativeLayout) view.findViewById(R.id.chooseHolder);
+            public void onItemClick(int position, String viewName, entity.ResultRoom room, View view) {
+                viewAdapter = view;
+                if (viewName.equals("nextHolder")) {
+                    pager.setCurrentItem(position + 1, true);
+
+                } else if (viewName.equals("txtOkRoom")) {
+//                    getRequestMain(position,room);
+                    requestConfirmHotel(getRequestMain(position, room));
+                } else if (viewName.equals("okEndHolder")) {
+                    //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=complete_bundle&id=1505305421080358&uid=642148896888068
+                    String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
+                    String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
+                    confirmHotelPresenter.getReservationRequestComplete("complete_bundle", bundleId, Util.getUseRIdFromShareprefrence(getApplicationContext()), cid, andId);
+                } else if (viewName.equals("roomDelete")) {
+                    String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
+                    String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
+                    confirmHotelPresenter.getReservationRequestDeleteRoom("complete_bundle", bundleId, Util.getUseRIdFromShareprefrence(getApplicationContext()), cid, andId);
+                }
+            }
+        });
+
+//        recyclerView.setHasFixedSize(true);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+//        recyclerView.setLayoutManager(layoutManager);
+//
+//        hotelReservationOkHolder.setOnClickListener(this);
+//        adapter = new HotelReservationConfirmListAdapter(durationTravel, startOfTravel, ActivityHotelReservationConfirm.this, this, getApplicationContext(), R.layout.activity_reservation_room_detail, selectedRooms, ResultRooms, this);
+//        recyclerView.setAdapter(adapter);
+//        mLayoutManager = new LinearLayoutManager(getApplicationContext());
+//        recyclerView.setLayoutManager(mLayoutManager);
+//        recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, final int position) {
+//                TextView txtOkRoom = (TextView) view.findViewById(R.id.txtOkRoom);
+//
+//                txtOkRoom.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Log.e("oktext clicked", "yes");
+//
+//                        if (!ResultRooms.get(position).getOkConfirmChange()) {
+//                            getRequestMain(position);
+//                            requestConfirmHotel(resultLodgingReservation);
+//                        } else {
+//                            Toast.makeText(getApplicationContext(), "سرپرست اتاق ها وارد نشده است", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                });
 //                txtNumberRoom = (TextView) view.findViewById(R.id.txtNumberRoom);
 //                chooseHolder.setOnClickListener(new View.OnClickListener() {
 //                    @Override
@@ -108,16 +158,14 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
 //                    }
 //                });
 
-            }
-        }));
+//            }
+//        }));
 
 
     }
 
     private void requestConfirmHotel(ResultLodgingReservation resultLodgingReservation) {
-        DaggerConfirmHotelComponent.builder().netComponent(((App) getApplicationContext().getApplicationContext()).getNetComponent())
-                .confirmHotelModule(new ConfirmHotelModule(this))
-                .build().injectConfirmHotel(this);
+
         String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
         String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
         confirmHotelPresenter.sendRequestReservation(resultLodgingReservation, cid, andId);
@@ -133,7 +181,7 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
         cdd.setDialogResult(new CustomDialogNumberPicker.OnDialogNumberPick() {
             @Override
             public void finish(int result) {
-                txtNumberRoom.setText(String.valueOf(result));
+//                txtNumberRoom.setText(String.valueOf(result));
                 selectedRooms.put(position, result);
                 sums();
             }
@@ -145,12 +193,13 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
         for (Integer number : selectedRooms.values()) {
             sumationRoomsd = sumationRoomsd + number;
         }
-        txtNumber.setText(sumationRoomsd + "");
+//        txtNumber.setText(sumationRoomsd + "");
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_room_list;
+        return R.layout.activity_show_room_viewpager;
+
     }
 
     @Override
@@ -171,12 +220,12 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
                         fillComplete = false;
                     }
                 }
-                if (fillComplete) {
-                    getRequestMain();
-                    requestConfirmHotel(resultLodgingReservation);
-                }else {
-                    Toast.makeText(getApplicationContext(),"سرپرست اتاق ها وارد نشده است",Toast.LENGTH_LONG).show();
-                }
+//                if (fillComplete) {
+//                    getRequestMain(0,null);
+//                    requestConfirmHotel(resultLodgingReservation);
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "سرپرست اتاق ها وارد نشده است", Toast.LENGTH_LONG).show();
+//                }
                 break;
         }
 
@@ -184,7 +233,7 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
 
     ResultLodgingReservation resultLodgingReservation;
 
-    private void getRequestMain() {
+    private ResultLodgingReservation getRequestMain(int position, ResultRoom room) {
         resultLodgingReservation = new ResultLodgingReservation();
         resultLodgingReservation.setReqBundleId(bundleId);
         resultLodgingReservation.setReqHeadEmail(edtEmailReservation);
@@ -195,60 +244,72 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
         resultLodgingReservation.setReqLodgingDateCount(String.valueOf(durationTravel));
         resultLodgingReservation.setReqLodgingId(String.valueOf(resultLodgingHotelDetail.getLodgingId()));
         resultLodgingReservation.setReqUid(Util.getUseRIdFromShareprefrence(getApplicationContext()));
-        List<ReqLodgingReservation> reqLodgingReservations = getRequest();
+        List<ReqLodgingReservation> reqLodgingReservations = getRequest(position, room);
         if (reqLodgingReservations.size() != 0) {
             resultLodgingReservation.setReqLodgingReservation(reqLodgingReservations);
         }
+        return resultLodgingReservation;
     }
 
-    private List<ReqLodgingReservation> getRequest() {
+    private List<ReqLodgingReservation> getRequest(int position, ResultRoom resultRoom) {
         ReqLodgingReservationList.clear();
 
 
+//        for (ResultRoom resultRoom : ResultRooms) {
 
-        int c = 0;
-
-            for (ResultRoom resultRoom : ResultRooms) {
-
-                ReqLodgingReservation reqLodgingReservation = new ReqLodgingReservation();
-                reqLodgingReservation.setReqRoomNo(c + "");
-                reqLodgingReservation.setReqRoomId(c + "");
-                reqLodgingReservation.setReqRoomReqId(bundleId + c + "");
-                reqLodgingReservation.setReqRoomId(resultRoom.getRoomId());
-                reqLodgingReservation.setReqRoomBundleId(bundleId);
-                reqLodgingReservation.setReqRoomLodgingId(resultRoom.getRoomLodgingId());
-                reqLodgingReservation.setReqRoomNameFirst("d");//(resultRoom.getHeadName());
-                reqLodgingReservation.setReqRoomNameLast("dd");//(resultRoom.getHeadLastName());
-                reqLodgingReservation.setReqRoomNation((resultRoom.getSelectedNationality() == "0") ? "ir" : "for");
-                reqLodgingReservation.setReqRoomExtraCount(resultRoom.getSelectedAddNumbers());
-                reqLodgingReservation.setReqRoomPricePerson(resultRoom.getRoomPriceAdPeople());
-                reqLodgingReservation.setReqRoomPriceNet(resultRoom.getLodgingRoomPrice());
-
-                reqLodgingReservation.setReqRoomPriceHalfIn((resultRoom.getHalfIn() != null && resultRoom.getHalfIn()) ? resultRoom.getRoomPriceHalfboardIn() : "0");
-
-                reqLodgingReservation.setReqRoomPriceHalfOut((resultRoom.getHalfOut() != null && resultRoom.getHalfOut()) ? resultRoom.getRoomPriceHalfboardOut() : "0");
-
-                int a = Integer.valueOf(resultRoom.getRoom_price_final()) * durationTravel;
-                int b = Integer.valueOf(resultRoom.getRoomPrice()) * durationTravel;
-                reqLodgingReservation.setReqRoomPriceCalc(String.valueOf(Integer.valueOf(resultRoom.getRoom_price_final()) * durationTravel));
-                reqLodgingReservation.setReqRoomPriceFinal(resultRoom.getRoom_price_final());
-                reqLodgingReservation.setReqRoomPriceDiscount(String.valueOf(b - a));
-                c++;
-                ReqLodgingReservationList.add(reqLodgingReservation);
-            }
+        ReqLodgingReservation reqLodgingReservation = new ReqLodgingReservation();
+        reqLodgingReservation.setReqRoomNo(position + "");
+        reqLodgingReservation.setReqRoomId(position + "");
+        reqLodgingReservation.setReqRoomReqId(bundleId + position + "");
+        reqLodgingReservation.setReqRoomId(resultRoom.getRoomId());
+        reqLodgingReservation.setReqRoomBundleId(bundleId);
+        reqLodgingReservation.setReqRoomLodgingId(resultRoom.getRoomLodgingId());
+        reqLodgingReservation.setReqRoomNameFirst(resultRoom.getHeadName());
+        reqLodgingReservation.setReqRoomNameLast(resultRoom.getHeadLastName());
+        reqLodgingReservation.setReqRoomNation((resultRoom.getSelectedForeign() == "0") ? "ir" : "for");
+        reqLodgingReservation.setReqRoomExtraCount(resultRoom.getSelectedAddNumbers() != null ? resultRoom.getSelectedAddNumbers() : "0");
+        reqLodgingReservation.setReqRoomHalfIn((resultRoom.getHalfIn() != null &&
+                resultRoom.getHalfIn()) ? "1" : "0");
+        reqLodgingReservation.setReqRoomHalfOut((resultRoom.getHalfOut() != null && resultRoom.getHalfOut()) ? "1" : "0");
 
 
+        ReqLodgingReservationList.add(reqLodgingReservation);
         return ReqLodgingReservationList;
     }
 
     @Override
     public void showHotelReservationResult(RequestLodgingReservationMain loginResult) {
+        pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+        ((TextView) viewAdapter.findViewById(R.id.txtOkRoom)).setText("ویرایش");
+    }
+
+    @Override
+    public void showReservationRequestComplete(ReservationRequestComplete reservationRequestComplete) {
+        if (reservationRequestComplete.getStatus().getStatus() == 200) {
+            String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
+            String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
+            settingPresenter.getResultReservationReqStatus("req_user_count", Util.getUseRIdFromShareprefrence(getApplicationContext()), "fa", cid, andId);
+        }
+    }
+
+    @Override
+    public void showReservationRequestDeleteRoom(ReservationRequestDeleteRoom reservationRequestDeleteRoom) {
+        if (reservationRequestDeleteRoom.getStatus().getStatus() == 200) {
+            ResultRooms.remove(0);
+            confirmReservationViewPagerAdapter.notifyDataSetChanged();
+            Log.e("delete", "room");
+        }
+    }
+
+
+    @Override
+    public void showInfoUserResult(GetInfoResult infoResult) {
 
     }
 
     @Override
     public void showError(String message) {
-
+        Toast.makeText(getApplicationContext(), "در عملیات ثبت اتاق اشکالی بوجود آمده است", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -258,12 +319,20 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
 
     @Override
     public void showProgress() {
-
+        progressDialog = Util.showProgressDialog(getApplicationContext(), "لطفا منتظر بمانید", this);
     }
 
     @Override
     public void dismissProgress() {
+        Util.dismissProgress(progressDialog);
+    }
 
+    @Override
+    public void showResultReservationReqStatus(ResultReservationReqStatus resultReservationReqStatus) {
+        Intent intent = new Intent(getApplicationContext(), HotelReservationStatusActivity.class);
+        List<ResultReqCount> resultReqCountList = resultReservationReqStatus.getResultReqCount();
+        intent.putExtra("resultReqCountList", (Serializable) resultReqCountList);
+        startActivity(intent);
     }
 
     @Override
@@ -275,8 +344,4 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
         startActivity(intent);
     }
 
-    @Override
-    public void clearList() {
-        onBackPressed();
-    }
 }

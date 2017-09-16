@@ -73,13 +73,19 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
     String bundleId;
     private ProgressDialog progressDialog;
 
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        finish();
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation_register_room_activity);
         ButterKnife.inject(this);
         getExtra();
-        bundleId = CreateBundle();
+
         edtNameReservation.setText(Util.getUserNameFromShareprefrence(getApplicationContext()));
         edtEmailReservation.setText(Util.getEmailFromShareprefrence(getApplicationContext()));
 
@@ -90,7 +96,7 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
         ShowRoomHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validate()) {
+//                if (validate()) {
 
                     Intent intentReservationRegisterRoom = new Intent(getApplicationContext(), ActivityHotelReservationConfirm.class);
                     intentReservationRegisterRoom.putExtra("selectedRooms", (Serializable) selectedRooms);
@@ -105,9 +111,9 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
                     intentReservationRegisterRoom.putExtra("edtLastNameReservation", edtLastNameReservation.getText().toString());
                     intentReservationRegisterRoom.putExtra("textPhoneAddress", textPhoneAddress.getText().toString());
                     startActivity(intentReservationRegisterRoom);
-                } else {
-                    Toast.makeText(getApplicationContext(), "مقادیر وارد شده صحیح نیست", Toast.LENGTH_LONG).show();
-                }
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "مقادیر وارد شده صحیح نیست", Toast.LENGTH_LONG).show();
+//                }
             }
         });
     }
@@ -166,6 +172,7 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
         final Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         startOfTravel = (Date) bundle.getSerializable("startOfTravel");
+        bundleId =  bundle.getString("bundleId");
         durationTravel = 0;
         durationTravel = (int) bundle.getSerializable("durationTravel");
         ResultRooms = (List<ResultRoom>) bundle.getSerializable("ResultRooms");

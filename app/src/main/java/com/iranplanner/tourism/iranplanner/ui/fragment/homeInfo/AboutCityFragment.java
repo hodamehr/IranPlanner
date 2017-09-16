@@ -29,7 +29,7 @@ public class AboutCityFragment extends StandardFragment {
     public AboutCityFragment() {
         super();
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,

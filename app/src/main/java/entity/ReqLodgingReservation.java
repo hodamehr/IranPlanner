@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class ReqLodgingReservation implements Serializable{
+public class ReqLodgingReservation implements Serializable {
 
     @SerializedName("req_room_no")
     @Expose
@@ -41,30 +41,28 @@ public class ReqLodgingReservation implements Serializable{
     @SerializedName("req_room_desciption")
     @Expose
     private String reqRoomDesciption;
-    @SerializedName("req_room_price_net")
+    @SerializedName("req_room_half_out")
     @Expose
-    private String reqRoomPriceNet;
-    @SerializedName("req_room_price_person")
+    private String reqRoomHalfOut;
+    @SerializedName("req_room_half_in")
     @Expose
-    private String reqRoomPricePerson;
-    @SerializedName("req_room_price_person_sum")
-    @Expose
-    private String reqRoomPricePersonSum;
-    @SerializedName("req_room_price_half_in")
-    @Expose
-    private String reqRoomPriceHalfIn;
-    @SerializedName("req_room_price_half_out")
-    @Expose
-    private String reqRoomPriceHalfOut;
-    @SerializedName("req_room_price_discount")
-    @Expose
-    private String reqRoomPriceDiscount;
-    @SerializedName("req_room_price_calc")
-    @Expose
-    private String reqRoomPriceCalc;
-    @SerializedName("req_room_price_final")
-    @Expose
-    private String reqRoomPriceFinal;
+    private String reqRoomHalfIn;
+
+    public String getReqRoomHalfOut() {
+        return reqRoomHalfOut;
+    }
+
+    public void setReqRoomHalfOut(String reqRoomHalfOut) {
+        this.reqRoomHalfOut = reqRoomHalfOut;
+    }
+
+    public String getReqRoomHalfIn() {
+        return reqRoomHalfIn;
+    }
+
+    public void setReqRoomHalfIn(String reqRoomHalfIn) {
+        this.reqRoomHalfIn = reqRoomHalfIn;
+    }
 
     public String getReqRoomNo() {
         return reqRoomNo;
@@ -152,70 +150,6 @@ public class ReqLodgingReservation implements Serializable{
 
     public void setReqRoomDesciption(String reqRoomDesciption) {
         this.reqRoomDesciption = reqRoomDesciption;
-    }
-
-    public String getReqRoomPriceNet() {
-        return reqRoomPriceNet;
-    }
-
-    public void setReqRoomPriceNet(String reqRoomPriceNet) {
-        this.reqRoomPriceNet = reqRoomPriceNet;
-    }
-
-    public String getReqRoomPricePerson() {
-        return reqRoomPricePerson;
-    }
-
-    public void setReqRoomPricePerson(String reqRoomPricePerson) {
-        this.reqRoomPricePerson = reqRoomPricePerson;
-    }
-
-    public String getReqRoomPricePersonSum() {
-        return reqRoomPricePersonSum;
-    }
-
-    public void setReqRoomPricePersonSum(String reqRoomPricePersonSum) {
-        this.reqRoomPricePersonSum = reqRoomPricePersonSum;
-    }
-
-    public String getReqRoomPriceHalfIn() {
-        return reqRoomPriceHalfIn;
-    }
-
-    public void setReqRoomPriceHalfIn(String reqRoomPriceHalfIn) {
-        this.reqRoomPriceHalfIn = reqRoomPriceHalfIn;
-    }
-
-    public String getReqRoomPriceHalfOut() {
-        return reqRoomPriceHalfOut;
-    }
-
-    public void setReqRoomPriceHalfOut(String reqRoomPriceHalfOut) {
-        this.reqRoomPriceHalfOut = reqRoomPriceHalfOut;
-    }
-
-    public String getReqRoomPriceDiscount() {
-        return reqRoomPriceDiscount;
-    }
-
-    public void setReqRoomPriceDiscount(String reqRoomPriceDiscount) {
-        this.reqRoomPriceDiscount = reqRoomPriceDiscount;
-    }
-
-    public String getReqRoomPriceCalc() {
-        return reqRoomPriceCalc;
-    }
-
-    public void setReqRoomPriceCalc(String reqRoomPriceCalc) {
-        this.reqRoomPriceCalc = reqRoomPriceCalc;
-    }
-
-    public String getReqRoomPriceFinal() {
-        return reqRoomPriceFinal;
-    }
-
-    public void setReqRoomPriceFinal(String reqRoomPriceFinal) {
-        this.reqRoomPriceFinal = reqRoomPriceFinal;
     }
 
 }

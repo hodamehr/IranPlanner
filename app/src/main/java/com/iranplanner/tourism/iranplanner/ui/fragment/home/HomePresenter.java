@@ -61,7 +61,6 @@ public class HomePresenter extends HomeContract {
                     @Override
                     public void onCompleted() {
                         mView.showComplete();
-                        mView.dismissProgress();
 
                     }
 
@@ -74,6 +73,7 @@ public class HomePresenter extends HomeContract {
 
                     @Override
                     public void onNext(GetHomeResult getHomeResult) {
+                        mView.dismissProgress();
                         mView.ShowHomeResult(getHomeResult);
                     }
                 });

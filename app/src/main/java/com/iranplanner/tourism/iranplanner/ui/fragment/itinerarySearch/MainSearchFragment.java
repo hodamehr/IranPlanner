@@ -261,7 +261,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
 
     @Override
     public void showError(String message) {
-        progressDialog.dismiss();
+
         if (message.contains("Unable to resolve host ") || message.contains("Software caused connection abort")) {
             Toast.makeText(getContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
         }
@@ -272,7 +272,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
 
     @Override
     public void showComplete() {
-        progressDialog.dismiss();
+
     }
 
     @Override
@@ -510,14 +510,14 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         return provinces;
     }
 
-    private void showProgressDialog() {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("لطفا منتظر بمانید");
-        progressDialog.show();
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
-    }
+//    private void showProgressDialog() {
+//        progressDialog = new ProgressDialog(getContext());
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage("لطفا منتظر بمانید");
+//        progressDialog.show();
+//        progressDialog.setCancelable(false);
+//        progressDialog.setCanceledOnTouchOutside(false);
+//    }
 
     public String returnProvinceId(AutoCompleteTextView textView, List<Province> provinceList) {
 
@@ -525,7 +525,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
             Log.e("Province", p.getProvinceName());
             if (p.getProvinceName().equals(textView.getText().toString())) {
                 provinceId = p.getProvinceId();
-                showProgressDialog();
+//                showProgressDialog();
             }
         }
         return provinceId;
@@ -599,7 +599,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         ft.commit();
         cityEnd = "";
         checkfragment = true;
-        progressDialog.dismiss();
+//        progressDialog.dismiss();
     }
 
 
@@ -611,7 +611,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         if (cityFromAttraction != null && attractionEnd != null) {
             String offset = "0";
             mainPresenter.loadItineraryFromAttraction("searchattractioncity", "fa", cityFromAttraction, "10", offset, attractionEnd, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
-            showProgressDialog();
+//            showProgressDialog();
         } else {
             Toast.makeText(getActivity(), "نام شهر یا جاذبه ثبت نشده است", Toast.LENGTH_SHORT).show();
         }
@@ -625,7 +625,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         if (cityFrom != null) {
             String offset = "0";
             mainPresenter.loadItineraryFromCity("list", "fa", cityFrom, "20", offset, cityEnd, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
-            showProgressDialog();
+//            showProgressDialog();
         } else {
             Toast.makeText(getActivity(), "لطفا نام شهر را اصلاح کنید", Toast.LENGTH_SHORT).show();
         }
@@ -644,7 +644,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
 //                  getItinerary(cityCityFrom, "0", false, cityEnd);
             String offset = "0";
             mainPresenter.loadItineraryFromCity("list", "fa", cityCityFrom, "20", offset, cityEnd, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
-            showProgressDialog();
+//            showProgressDialog();
 
         } else {
             Toast.makeText(getActivity(), "لطفا نام شهر را اصلاح کنید", Toast.LENGTH_SHORT).show();

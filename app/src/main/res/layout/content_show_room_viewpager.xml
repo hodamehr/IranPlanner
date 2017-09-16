@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--  <android.support.v7.widget.View
+          android:id="@+id/reservationListRecyclerView"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_above="@+id/hotelReservationOkHolder"
+          android:layout_below="@+id/app_bar"></android.support.v7.widget.View>-->
+    <com.iranplanner.tourism.iranplanner.standard.ClickableViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"       >
+
+    </com.iranplanner.tourism.iranplanner.standard.ClickableViewPager>
+</LinearLayout>

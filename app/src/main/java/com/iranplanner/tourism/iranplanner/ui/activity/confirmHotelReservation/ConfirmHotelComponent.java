@@ -6,6 +6,8 @@ import com.iranplanner.tourism.iranplanner.di.model.CustomScope;
 import com.iranplanner.tourism.iranplanner.ui.activity.login.LoginActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.login.LoginModule;
 import com.iranplanner.tourism.iranplanner.ui.fragment.LoginFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingModule;
 
 import dagger.Component;
 

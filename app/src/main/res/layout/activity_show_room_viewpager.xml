@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/main_blue"
+            app:layout_collapseMode="pin"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        </android.support.v7.widget.Toolbar>
+
+        <!--<android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:background="@color/green"
+            android:scrollbars="horizontal" />-->
+    </android.support.design.widget.AppBarLayout>
+<!--    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+        android:layout_below="@+id/app_bar"
+        android:layout_above="@+id/ShowRoomHolder"
+        android:fillViewport="true">-->
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/app_bar"
+      android:layout_above="@+id/ShowRoomHolder">
+        <include layout="@layout/content_show_room_viewpager"/></LinearLayout>
+<!--
+    </android.support.v4.widget.NestedScrollView>
+-->
+
+    <RelativeLayout
+        android:id="@+id/ShowRoomHolder"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buttonBottom"
+        android:layout_alignParentBottom="true"
+        android:background="@color/green"
+        android:visibility="gone"
+
+        >
+        <RelativeLayout
+            android:id="@+id/hotelReservationOkHolder"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/buttonBottom"
+            android:layout_alignParentBottom="true"
+            android:clickable="true"
+            >
+
+            <TextView
+                android:id="@+id/roomReservationBtn"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/txtNumber"
+                android:background="@color/green"
+                android:text="تایید مشخصات این اتاق "
+                android:textAlignment="center"
+                android:textColor="@color/white_" />
+
+            <ImageView
+                android:id="@+id/txtNumber"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/buttonBottom"
+                android:background="@color/greenpress"
+                android:paddingEnd="@dimen/padding_standard"
+                android:paddingStart="@dimen/padding_standard"
+
+                android:textColor="@color/white_"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:src="@mipmap/ic_arow_left"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

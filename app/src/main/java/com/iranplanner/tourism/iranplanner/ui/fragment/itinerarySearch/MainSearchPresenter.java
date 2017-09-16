@@ -51,6 +51,7 @@ public class MainSearchPresenter extends MainSearchContract {
 
                     @Override
                     public void onNext(ResultItineraryList resultItineraryList) {
+                        mView.dismissProgress();
                         mView.showItineraries(resultItineraryList, "fromCityToCity");
                     }
                 });
@@ -78,6 +79,8 @@ public class MainSearchPresenter extends MainSearchContract {
                     @Override
                     public void onNext(ResultItineraryList resultItineraryList) {
                         mView.showItineraries(resultItineraryList, "fromProvince");
+                        mView.dismissProgress();
+
                     }
                 });
     }
@@ -104,6 +107,8 @@ public class MainSearchPresenter extends MainSearchContract {
                     @Override
                     public void onNext(ResultItineraryList resultItineraryList) {
                         mView.showItineraries(resultItineraryList, "fromAttraction");
+                        mView.dismissProgress();
+
 
 
                     }

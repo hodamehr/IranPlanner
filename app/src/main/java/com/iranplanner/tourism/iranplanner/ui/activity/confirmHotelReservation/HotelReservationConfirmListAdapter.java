@@ -84,7 +84,12 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
         viewHolder.edtHeadNameReservation.setText(resultRooms.get(position).getHeadName());
         viewHolder.txtDiscount.setText(resultRooms.get(position).getRoomPricePromotion());
         viewHolder.endPrice.setText((roomPricefinal * durationTravel) - priceHalfOutPrice - priceHalfInPrice + (roomCapacityExtraPrice * durationTravel * selectAddPeople) + "تومان");
+        viewHolder.txtOkRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
 //        changeBtnOKConfirm(viewHolder, position);
 
 
@@ -236,39 +241,51 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        resultRooms.get(position).setSelectedNationality(0 + "");
-        setVisibleHalfBoard(viewHolder, position);
-        setDefaultValue(viewHolder, position);
-        setChangeAddPerson(viewHolder, position);
-        setChangeNationalityPerson(viewHolder, position);
-        setChangeHalfBoard(viewHolder, position);
-        setHeadNameReservation(viewHolder, position);
-        setHeadLastNameReservation(viewHolder, position);
+
+
+
+            resultRooms.get(position).setSelectedForeign(0 + "");
+            setVisibleHalfBoard(viewHolder, position);
+            setDefaultValue(viewHolder, position);
+            setChangeAddPerson(viewHolder, position);
+            setChangeNationalityPerson(viewHolder, position);
+            setChangeHalfBoard(viewHolder, position);
+            setHeadNameReservation(viewHolder, position);
+            setHeadLastNameReservation(viewHolder, position);
 //        setConfirmAllChanges(viewHolder,position);
 //        setConfirmAllChanges(viewHolder, position);
-        viewHolder.txtOkRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean a = checkInfo(viewHolder, position);
-                if (resultRooms.get(position).getOkConfirmChange() != null && !resultRooms.get(position).getOkConfirmChange() && a) {
-                    resultRooms.get(position).setHeadName(viewHolder.edtHeadNameReservation.getText().toString());
-                    resultRooms.get(position).setHeadLastName(viewHolder.edtHeadLastNameReservation.getText().toString());
-                    resultRooms.get(position).setOkConfirmChange(true);
-                    notifyDataSetChanged();
-                    Log.e("notifyDataSetChanged", "true");
-                    if (resultRooms.get(position).getOkConfirmChange()) {
-                        view.setBackgroundColor(context.getResources().getColor(R.color.green));
-                    }
+//        viewHolder.txtOkRoom.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                boolean a = checkInfo(viewHolder, position);
+//                if (resultRooms.get(position).getOkConfirmChange() != null && !resultRooms.get(position).getOkConfirmChange() && a) {
+//                    resultRooms.get(position).setHeadName(viewHolder.edtHeadNameReservation.getText().toString());
+//                    resultRooms.get(position).setHeadLastName(viewHolder.edtHeadLastNameReservation.getText().toString());
+//                    resultRooms.get(position).setOkConfirmChange(true);
+//                    notifyDataSetChanged();
+//                    Log.e("notifyDataSetChanged", "true");
+//                    if (resultRooms.get(position).getOkConfirmChange()) {
+//                        view.setBackgroundColor(context.getResources().getColor(R.color.green));
+//                    }
+//                }
+//            }
+//        });
+            viewHolder.roomDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteRoom(position);
                 }
-            }
-        });
-        viewHolder.roomDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteRoom(position);
-            }
-        });
-    }
+            });
+
+//        if(currentposition==position){
+//            viewHolder.itemView.setVisibility(View.VISIBLE);
+//        }else {
+//            viewHolder.itemView.setVisibility(View.GONE);
+//
+//        }
+        }
+
+
 
     private boolean checkInfo(ViewHolder viewHolder, int position) {
         boolean validate = true;
@@ -300,6 +317,11 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
 
     @Override
     public int getItemCount() {
+//        if(resultRooms.size()>0){
+//            return 1;
+//        }else {
+//            return 0;
+//        }
         return resultRooms.size();
     }
 
@@ -326,7 +348,7 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
             public void finish(int result) {
                 selectAddPeople = result;
                 txtaddPersonValue.setText((result == 0) ? "ایرانی" : "خارجی");
-                resultRooms.get(position).setSelectedNationality(result + "");
+                resultRooms.get(position).setSelectedForeign(result + "");
                 changeBtnOKConfirm(viewHolder, position);
                 notifyDataSetChanged();
             }

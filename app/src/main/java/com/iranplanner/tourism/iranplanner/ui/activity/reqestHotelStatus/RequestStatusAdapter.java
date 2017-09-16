@@ -24,13 +24,13 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
 
     private Context context;
     private LayoutInflater inflater;
-//    private ArrayList<String> statuses;
+    //    private ArrayList<String> statuses;
     private List<ResultReqCount> resultReqCountList;
 
     public RequestStatusAdapter(Context context, List<ResultReqCount> resultReqCountList) {
         this.context = context;
         inflater = LayoutInflater.from(context);
-        this.resultReqCountList =resultReqCountList;
+        this.resultReqCountList = resultReqCountList;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
 //            btnView.setOnClickListener(this);
         }
 
-        public void setData(String current, int position,String count) {
+        public void setData(String current, int position, String count) {
             if (position == 2)
                 btnPayment.setVisibility(View.VISIBLE);
             else btnPayment.setVisibility(View.GONE);
