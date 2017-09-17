@@ -58,7 +58,7 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
         getSupportActionBar().setTitle("نتیجه");
     }
 
-    private void init(List<ResultReservationReqList> resultReservationReqList) {
+    private void init(final List<ResultReservationReqList> resultReservationReqList) {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reservationRequestRv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new ReservationRequestAdapter(this, resultReservationReqList));
@@ -66,7 +66,7 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
             @Override
             public void onItemClick(View view, final int position) {
                 Log.d("thisis amin ", "clicked");
-                reservationRequestFullPresenter.getReservationRequestFull("req_user_full", "fa", "792147600796866", "1115026211657201", "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                reservationRequestFullPresenter.getReservationRequestFull("req_user_full", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), resultReservationReqList.get(position).getRequest().getReqId(), "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
             }
         }));
     }

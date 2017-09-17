@@ -24,7 +24,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/padding_short">
+            android:padding="@dimen/padding_short"
+            android:background="@color/greyLight">
 
             <RelativeLayout
                 android:id="@+id/imageHolder"
@@ -44,7 +45,7 @@
                     android:id="@+id/imgHotelList"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
-                    android:background="@color/greyLight"
+                    android:background="@color/white_"
                     android:scaleType="centerCrop" />
 
             </RelativeLayout>
@@ -239,7 +240,7 @@
                     android:layout_marginBottom="@dimen/padding_short">
 
                     <TextView
-                        android:id="@+id/txtCapacity"
+                        android:id="@+id/txtReqNumber"
                         style="@style/StandardTextGrey"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -630,7 +631,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/roomType1"
                         android:layout_marginTop="@dimen/margin_standard"
-                        android:background="@drawable/button_corner_green_stroke"
+                        android:background="@drawable/button_corner_grey_stroke"
                         android:orientation="vertical"
                         android:padding="@dimen/padding_short">
 
@@ -654,7 +655,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
-                                android:text="هزینه شبهای اقامت: " />
+                                android:text="@string/price_hotel"
+                                android:textColor="@color/dark_blue"/>
 
 
                         </RelativeLayout>
@@ -672,7 +674,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@+id/imageTypeHotea1"
-                                android:text="20 تومان" />
+                                />
 
                             <TextView
                                 android:id="@+id/imageTypeHotea1"
@@ -680,7 +682,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignBottom="@+id/txtAddPeople"
                                 android:layout_alignParentStart="true"
-                                android:text="نفراضافه: " />
+                                android:text="@string/additve_person"
+                                android:textColor="@color/dark_blue"/>
 
 
                         </RelativeLayout>
@@ -698,14 +701,15 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@+id/imageTypeHotea2"
-                                android:text="10 تومان" />
+                                />
 
                             <TextView
                                 android:id="@+id/imageTypeHotea2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
-                                android:text="تعجیل در ورود- تاخیر در خروج: " />
+                                android:text="@string/halfinout"
+                                android:textColor="@color/dark_blue"/>
 
 
                         </RelativeLayout>
@@ -714,7 +718,8 @@
                             android:id="@+id/holderDatea3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/margin_short">
+                            android:padding="@dimen/margin_short"
+                            >
 
                             <TextView
                                 android:id="@+id/txtDiscount"
@@ -723,15 +728,16 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@+id/imageTypeHotea3"
-                                android:text="20 تومان"
-                                android:textColor="@color/dark_red" />
+
+                                android:textColor="@color/dark_red"
+                               />
 
                             <TextView
                                 android:id="@+id/imageTypeHotea3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
-                                android:text="تخفیف شما: "
+                                android:text="@string/discount"
                                 android:textColor="@color/dark_red" />
 
 
@@ -773,7 +779,8 @@
                         android:paddingTop="@dimen/padding_short"
                         android:text="تایید مشخصات"
                         android:textAlignment="center"
-                        android:textColor="@color/white_" />
+                        android:textColor="@color/white_"
+                        style="@style/StandardTitle" />
                 </RelativeLayout>
                 <!--
                                 </android.support.v7.widget.CardView>
@@ -784,7 +791,8 @@
                 android:id="@+id/nextHolder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/changeDateTimeHolder">
+                android:layout_below="@+id/changeDateTimeHolder"
+                android:layout_alignParentEnd="true">
 
                 <ImageView
                     android:id="@+id/imageArrow"
@@ -803,20 +811,27 @@
 
             <RelativeLayout
                 android:id="@+id/okEndHolder"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/changeDateTimeHolder"
                 android:layout_centerHorizontal="true"
-                android:visibility="gone">
+                android:layout_marginTop="@dimen/margin_short"
+              android:visibility="invisible"
+                >
 
 
                 <TextView
                     android:id="@+id/txtOkEnd"
                     style="@style/StandardTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:text="تایید نهایی" />
+                    android:text="@string/final_step_reservation"
+                    android:textAlignment="center"
+                    android:textColor="@color/white_"
+                    android:background="@drawable/button_corner_blue"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:padding="@dimen/padding_short"/>
             </RelativeLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>

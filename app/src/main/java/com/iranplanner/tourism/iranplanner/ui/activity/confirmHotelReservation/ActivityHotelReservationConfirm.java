@@ -70,7 +70,7 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
     @InjectView(R.id.pager)
     ClickableViewPager pager;
     List<ReqLodgingReservation> ReqLodgingReservationList;
-    View viewAdapter;
+    View viewAdapter, viewEnds;
     ConfirmReservationViewPagerAdapter confirmReservationViewPagerAdapter;
 
     private void getExtra() {
@@ -100,24 +100,25 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
 
         confirmReservationViewPagerAdapter = new ConfirmReservationViewPagerAdapter(getApplicationContext(), this, ResultRooms, durationTravel, startOfTravel);
         pager.setAdapter(confirmReservationViewPagerAdapter);
+        pager.setCurrentItem(ResultRooms.size() - 1);
         confirmReservationViewPagerAdapter.setOnItemClickListener(new ConfirmReservationViewPagerAdapter.OnItemClickViewPagerListener() {
             @Override
-            public void onItemClick(int position, String viewName, entity.ResultRoom room, View view) {
+            public void onItemClick(int position, String viewName, entity.ResultRoom room, View view, View viewEnd) {
                 viewAdapter = view;
+                viewEnds = viewEnd;
+                String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
+                String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
                 if (viewName.equals("nextHolder")) {
-                    pager.setCurrentItem(position + 1, true);
+                    pager.setCurrentItem(position - 1, true);
 
                 } else if (viewName.equals("txtOkRoom")) {
 //                    getRequestMain(position,room);
                     requestConfirmHotel(getRequestMain(position, room));
                 } else if (viewName.equals("okEndHolder")) {
-                    //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=complete_bundle&id=1505305421080358&uid=642148896888068
-                    String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
-                    String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
+
                     confirmHotelPresenter.getReservationRequestComplete("complete_bundle", bundleId, Util.getUseRIdFromShareprefrence(getApplicationContext()), cid, andId);
                 } else if (viewName.equals("roomDelete")) {
-                    String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
-                    String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
+
                     confirmHotelPresenter.getReservationRequestDeleteRoom("complete_bundle", bundleId, Util.getUseRIdFromShareprefrence(getApplicationContext()), cid, andId);
                 }
             }
@@ -279,8 +280,11 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
 
     @Override
     public void showHotelReservationResult(RequestLodgingReservationMain loginResult) {
-        pager.setCurrentItem(pager.getCurrentItem() + 1, true);
+        pager.setCurrentItem(pager.getCurrentItem()  , true);
         ((TextView) viewAdapter.findViewById(R.id.txtOkRoom)).setText("ویرایش");
+        if (0==pager.getCurrentItem()) {
+            viewEnds.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

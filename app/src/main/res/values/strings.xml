@@ -107,6 +107,12 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_scrolling_activityttest">ScrollingActivityttest</string>
+    <string name="price_hotel">هزینه اقامت در این اتاق </string>
+    <string name="additve_person">هزینه نفراضافه </string>
+    <string name="halfin_halfout">تعجیل در ورود- تاخیر در خروج </string>
+    <string name="discount">تخفیف شما:</string>
+    <string name="halfinout">تعجیل در ورود- تاخیر در خروج </string>
+    <string name="final_step_reservation"> تایید نهایی و ارسال درخواست</string>
 
     <string-array name="nationality">
         <item>ایرانی</item>
