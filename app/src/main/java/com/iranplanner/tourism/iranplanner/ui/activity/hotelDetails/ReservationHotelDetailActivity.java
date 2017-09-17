@@ -283,6 +283,8 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.e("ReservationHotelDetail", "Damn Son");
+
         findView();
         overrideFont();
         getExtras();

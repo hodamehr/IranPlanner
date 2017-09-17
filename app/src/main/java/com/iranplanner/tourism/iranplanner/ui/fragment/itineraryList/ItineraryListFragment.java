@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,8 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
 
     private boolean loading = true;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
+
+    private TextView tvSearch ;
 
     private void checkFromWhereGetBundle() {
         Bundle bundle = getArguments();
@@ -173,6 +176,16 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
                 }
             }
 
+        });
+
+        tvSearch = (TextView) view.findViewById(R.id.txtSearch);
+
+        tvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+                Log.e("heytag", "clicked");
+            }
         });
 
         return view;

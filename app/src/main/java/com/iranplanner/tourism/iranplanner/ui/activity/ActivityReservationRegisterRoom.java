@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -85,6 +86,8 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
         setContentView(R.layout.reservation_register_room_activity);
         ButterKnife.inject(this);
         getExtra();
+
+        Log.e("ReservationRegisterRoom", "Damn Son");
 
         edtNameReservation.setText(Util.getUserNameFromShareprefrence(getApplicationContext()));
         edtEmailReservation.setText(Util.getEmailFromShareprefrence(getApplicationContext()));

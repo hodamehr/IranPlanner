@@ -54,7 +54,7 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_list);
 
-        Log.e("Aw cmn", "this is the activity im talkin bout");
+        Log.e("ReservationListActivity", "Damn Son");
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reservationListRecyclerView);
         recyclerView.setHasFixedSize(true);

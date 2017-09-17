@@ -109,6 +109,9 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_show_room);
+
+        Log.e("ShowRoomActivity", "Damn Son");
+
         ButterKnife.inject(this);
         ReqLodgingReservationList = new ArrayList<ReqLodgingReservation>();
 

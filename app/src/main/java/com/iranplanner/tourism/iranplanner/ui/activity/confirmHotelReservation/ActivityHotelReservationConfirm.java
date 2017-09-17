@@ -91,6 +91,9 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_show_room);
+
+        Log.e("HotelReservationConfirm", "Damn Son");
+
         ButterKnife.inject(this);
         getExtra();
         DaggerConfirmHotelComponent.builder().netComponent(((App) getApplicationContext().getApplicationContext()).getNetComponent())

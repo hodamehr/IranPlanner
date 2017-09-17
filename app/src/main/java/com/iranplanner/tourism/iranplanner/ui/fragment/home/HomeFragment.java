@@ -233,6 +233,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     @InjectView(R.id.overlapImageItineraryHolder)
     RelativeLayout overlapImageItineraryHolder;
 
+    private String cityName = "city name";
 
     public HomeFragment() {
         super();
@@ -502,9 +503,9 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         intent.putExtra("startOfTravel", startOfTravel);
         intent.putExtra("durationTravel", 3);
         intent.putExtra("todayDate", resultLodgingList.getStatistics().getDateNow());
+        intent.putExtra("cityName" , cityName);
 
         startActivity(intent);
-
     }
 
     @Override
@@ -528,6 +529,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             intent.putExtra("startOfTravel", todayDate);
             intent.putExtra("durationTravel", Constants.durationTravel);
             intent.putExtra("todayDate", todayDate);
+            intent.putExtra("cityName", cityName);
             startActivity(intent);
         }
     }
@@ -845,8 +847,10 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 //                    toolbarTitleSetName(CityProvince.get(position).getTitle(),"");
                     if (type == Constants.homeSearch) {
                         getHomeResult(SelectedType, CityProvince.get(position).getId());
+                        cityName = CityProvince.get(position).getTitle();
                         dismiss();
                     } else if (type == Constants.homeHotel) {
+                        cityName = CityProvince.get(position).getTitle();
                         getHotelResults(SelectedType, CityProvince.get(position).getId(), "");
                         dismiss();
                     }

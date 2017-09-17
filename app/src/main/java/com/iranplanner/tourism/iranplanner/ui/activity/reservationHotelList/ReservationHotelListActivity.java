@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -57,16 +58,10 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     private ProgressBar waitingLoading;
     private boolean loading = true;
-//    @InjectView(R.id.toolbarBack)
-//    ImageView toolbarBack;
-//    @InjectView(R.id.toolbarToggle)
-//    ImageView toolbarToggle;
     @InjectView(R.id.TypeAttractionHolder)
     RelativeLayout typeAttractionHolder;
     @InjectView(R.id.holderDate)
     RelativeLayout holderDate;
-    @InjectView(R.id.toolbar)
-    Toolbar toolbar;
     @InjectView(R.id.reservationListRecyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.txtTypeHote)
@@ -74,30 +69,71 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
     @InjectView(R.id.txtDurationHotel)
     TextView txtDurationHotel;
     private String nextOffset;
-    private String todayDate;
+    private String todayDate , cityName;
 
-    private void showDialogNumber() {
-        CustomDialogNumberPicker cdd = new CustomDialogNumberPicker(this, 10, 1, "مدت زمان اقامت", null);
-        cdd.show();
-        cdd.setDialogResult(new CustomDialogNumberPicker.OnDialogNumberPick() {
-            @Override
-            public void finish(int result) {
-                durationTravel = result;
-                txtDurationHotel.setText(Util.persianNumbers(result + "شب"));
-            }
-        });
+    private Toolbar toolbar;
+
+    //Added by Amin
+    private View filterToggle, mapToggle, filterView, filterShade, bottomPanelView;
+    private boolean isViewOpen = false;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_reservation_list);
+
+        ButterKnife.inject(this);
+        DaggerReservationHotelListComponent.builder()
+                .netComponent(((App) getApplicationContext()).getNetComponent())
+                .reservationHotelListModule(new ReservationHotelListModule(this, this))
+                .build().injectReservationHotelList(this);
+
+        getExtras();
+        txtDurationHotel.setText(" به مدت " + Util.persianNumbers(durationTravel + " شب "));
+        txtTypeHotel.setText("از " + Utils.getSimpleDate(startOfTravel));
+
+        setUpRecyclerView();
+        setupToolbar();
+//        toolbarBack.setOnClickListener(this);
+        holderDate.setOnClickListener(this);
+        typeAttractionHolder.setOnClickListener(this);
+
+        init();
     }
 
-    private void showDialogDate() {
-        CustomDialogDate customDialogDate = new CustomDialogDate(this);
-        customDialogDate.show();
-        customDialogDate.setDialogDateResult(new CustomDialogDate.OnDialogDatePick() {
-            @Override
-            public void finish(Date result) {
-                startOfTravel = result;
-                txtTypeHotel.setText(Utils.getSimpleDate(result));
-            }
-        });
+    private void init() {
+
+        mapToggle = findViewById(R.id.reservationMapToggleView);
+
+        bottomPanelView = findViewById(R.id.reservationBottomPanelView);
+        filterView = findViewById(R.id.reservationFilterView);
+        filterToggle = findViewById(R.id.reservationFilterToggleView);
+        filterShade = findViewById(R.id.reservationPanelShadeView);
+
+        mapToggle.setOnClickListener(this);
+        filterToggle.setOnClickListener(this);
+        filterView.setOnClickListener(this);
+        filterShade.setOnClickListener(this);
+        bottomPanelView.setOnClickListener(this);
+
+        filterShade.setAlpha(0);
+        filterShade.setVisibility(View.GONE);
+
+        filterView.setY(Util.dpToPx(this, 300));
+    }
+
+
+    private void getExtras() {
+        Bundle extras = getIntent().getExtras();
+
+        resultLodgings = (List<ResultLodging>) extras.getSerializable("resultLodgings");
+        startOfTravel = (Date) extras.getSerializable("startOfTravel");
+
+        durationTravel = (int) extras.getSerializable("durationTravel");
+        nextOffset = extras.getString("nextOffset");
+        todayDate = extras.getString("todayDate");
+        cityName = extras.getString("cityName");
+
     }
 
     private void setUpRecyclerView() {
@@ -138,54 +174,41 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
         });
     }
 
-    private void getExtras() {
-        Bundle extras = getIntent().getExtras();
-
-        resultLodgings = (List<ResultLodging>) extras.getSerializable("resultLodgings");
-        startOfTravel = (Date) extras.getSerializable("startOfTravel");
-
-        durationTravel = (int) extras.getSerializable("durationTravel");
-        nextOffset = extras.getString("nextOffset");
-        todayDate = extras.getString("todayDate");
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reservation_list);
-
-        ButterKnife.inject(this);
-        DaggerReservationHotelListComponent.builder()
-                .netComponent(((App) getApplicationContext()).getNetComponent())
-                .reservationHotelListModule(new ReservationHotelListModule(this, this))
-                .build().injectReservationHotelList(this);
-
-//
-//        builder = DaggerReservationComponent.builder()
-//                .netComponent(((App) getApplicationContext()).getNetComponent())
-//                .reservationModule(new ReservationModule(this));
-//        builder.build().inject()
-        getExtras();
-        txtDurationHotel.setText(" به مدت " + Util.persianNumbers(durationTravel + " شب "));
-        txtTypeHotel.setText("از " + Utils.getSimpleDate(startOfTravel));
-
-        setUpRecyclerView();
-        setupToolbar();
-//        toolbarBack.setOnClickListener(this);
-        holderDate.setOnClickListener(this);
-        typeAttractionHolder.setOnClickListener(this);
-    }
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_reservation_list;
     }
 
+    private void showDialogNumber() {
+        CustomDialogNumberPicker cdd = new CustomDialogNumberPicker(this, 10, 1, "مدت زمان اقامت", null);
+        cdd.show();
+        cdd.setDialogResult(new CustomDialogNumberPicker.OnDialogNumberPick() {
+            @Override
+            public void finish(int result) {
+                durationTravel = result;
+                txtDurationHotel.setText(Util.persianNumbers(result + "شب"));
+            }
+        });
+    }
+
+    private void showDialogDate() {
+        CustomDialogDate customDialogDate = new CustomDialogDate(this);
+        customDialogDate.show();
+        customDialogDate.setDialogDateResult(new CustomDialogDate.OnDialogDatePick() {
+            @Override
+            public void finish(Date result) {
+                startOfTravel = result;
+                txtTypeHotel.setText(Utils.getSimpleDate(result));
+            }
+        });
+    }
+
     void setupToolbar() {
-        ((StandardActivity) this).setSupportActionBar(toolbar);
-        ((StandardActivity) this).getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        toolbarToggle.setVisibility(View.GONE);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (!TextUtils.isEmpty(cityName))
+            getSupportActionBar().setTitle(cityName);
     }
 
     @Override
@@ -196,11 +219,9 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
             case R.id.holderDate:
                 showDialogDate();
                 break;
-
             case R.id.TypeAttractionHolder:
                 showDialogNumber();
                 break;
@@ -208,6 +229,12 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
                 Log.e("ddd", "toolbarback");
                 break;
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
@@ -239,20 +266,12 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
 
     @Override
     public void showError(String message) {
-//        progressDialog.dismiss();
-//        if (message.contains("Unable to resolve host ") || message.contains("Software caused connection abort")) {
-//            Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
-//        }
-//        if (message.contains("HTTP 400 BAD REQUEST")) {
-//            Toast.makeText(getApplicationContext(), "در این مسیر برنامه سفری یافت نشد", Toast.LENGTH_LONG).show();
-//        }
+
     }
 
     @Override
     public void showComplete() {
         Util.dismissProgress(progressDialog);
-
-//        progressDialog.dismiss();
     }
 
 
@@ -263,7 +282,6 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
 
     @Override
     public void dismissProgress() {
-
         Util.dismissProgress(progressDialog);
     }
 }

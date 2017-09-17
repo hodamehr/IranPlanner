@@ -99,6 +99,7 @@
         android:layout_alignParentBottom="true"
         android:background="#f2f2f2">
 
+        <include layout="@layout/fragment_filter"/>
 
     </RelativeLayout>
 

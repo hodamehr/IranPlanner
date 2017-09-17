@@ -18,14 +18,7 @@
         android:layout_above="@+id/tab_layout"
         android:layout_alignParentTop="true"
         android:layout_weight="1" />
-    <!--<FrameLayout-->
-    <!--android:id="@+id/frame_container"-->
-    <!--android:layout_height="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_above="@+id/tab_layout"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--/>-->
+
     <View
         android:id="@+id/tabLayoutElevator"
         android:layout_width="match_parent"

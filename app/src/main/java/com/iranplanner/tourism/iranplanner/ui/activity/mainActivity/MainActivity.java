@@ -73,7 +73,7 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     protected static Typeface YEKAN;
 
     boolean doubleBackToExitPressedOnce = false;
-    private ViewPager viewPager                 ;
+    private ViewPager viewPager;
     private TabPagerAdapter pagerAdapter;
     TabLayout mainTabLayout;
 
@@ -83,12 +83,12 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         Bundle extras = getIntent().getExtras();
         homeResult = (GetHomeResult) extras.getSerializable("HomeResult");
-         viewPager   = (ViewPager) findViewById(R.id.main_view_pager);
-         pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this, homeResult);
+        viewPager = (ViewPager) findViewById(R.id.main_view_pager);
+        pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), this, homeResult);
         if (viewPager != null)
             viewPager.setAdapter(pagerAdapter);
 
-         mainTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        mainTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         if (mainTabLayout != null) {
             mainTabLayout.setupWithViewPager(viewPager);
             for (int i = 0; i < mainTabLayout.getTabCount(); i++) {
@@ -107,7 +107,6 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         mainTabLayout.getTabAt(position).getCustomView().setSelected(true);
         currentTab = (StandardFragment) pagerAdapter.getItem(position);
         viewPager.setCurrentItem(position);
-
 
         Util.displayFirebaseRegId(this);
 
@@ -132,32 +131,10 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         return R.layout.activity_main;
     }
 
+
     @Override
     public void onBackPressed() {
-        //If the event returned false, then call the super.
-//        if (currentTab == null || !currentTab.onBackPressed()) {
-////            super.onBackPressed();
-//            if (doubleBackToExitPressedOnce) {
-//                super.onBackPressed();
-//                return;
-//            }
-//
-//            this.doubleBackToExitPressedOnce = true;
-//            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-//
-//            new Handler().postDelayed(new Runnable() {
-//
-//                @Override
-//                public void run() {
-//                    doubleBackToExitPressedOnce = false;
-//                }
-//            }, 2000);
-//        }
-        StandardFragment fragment = (StandardFragment)pagerAdapter.getItem(viewPager.getCurrentItem());
-        // Fragment should return boolean according to app requirements after processing back key
-//        if (!fragment.handleBackKey()) {
-//            super.onBackPressed();
-//        }
+        super.onBackPressed();
     }
 
     @Override
