@@ -84,10 +84,13 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
     @InjectView(R.id.holder)
     RelativeLayout holder;
     @InjectView(R.id.nextHolder)
-    RelativeLayout nextHolder; @InjectView(R.id.okEndHolder)
+    RelativeLayout nextHolder;
+    @InjectView(R.id.okEndHolder)
     RelativeLayout okEndHolder;
+    @InjectView(R.id.txtReqNumber)
+    TextView txtReqNumber;
     String name, family;
-
+    View viewHolder;
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
@@ -118,12 +121,12 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = (LayoutInflater) container.getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.content_room_reservation_fill, null);
-        ButterKnife.inject(this, view);
+        viewHolder = inflater.inflate(R.layout.content_room_reservation_fill, null);
+        ButterKnife.inject(this, viewHolder);
         roomCapacityExtraPrice = 0;
 
         setDefaultValue(position);
-        ((ViewPager) container).addView(view, 0);
+        ((ViewPager) container).addView(viewHolder, 0);
         addPerHolderHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,11 +145,11 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
         txtOkRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (resultRooms.get(position).getHeadLastName() != null && !resultRooms.get(position).getHeadLastName().equals("") && resultRooms.get(position).getHeadName() != null && !resultRooms.get(position).getHeadName() .equals("")) {
+                if (resultRooms.get(position).getHeadLastName() != null && !resultRooms.get(position).getHeadLastName().equals("") && resultRooms.get(position).getHeadName() != null && !resultRooms.get(position).getHeadName().equals("")) {
 //                    resultRooms.get(position).setHeadName(edtHeadNameReservation.getText().toString());
 //                    resultRooms.get(position).setHeadLastName(edtHeadLastNameReservation.getText().toString());
                     if (mOnItemClickListener != null) {
-                        mOnItemClickListener.onItemClick(position, "txtOkRoom", resultRooms.get(position),view);
+                        mOnItemClickListener.onItemClick(position, "txtOkRoom", resultRooms.get(position), view,viewHolder.findViewById(R.id.okEndHolder));
                     }
                 } else {
                     Toast.makeText(context, "مشخصات سرپرست اتاق وارد نشده است", Toast.LENGTH_LONG).show();
@@ -158,7 +161,7 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(position, "nextHolder", null,view);
+                    mOnItemClickListener.onItemClick(position, "nextHolder", null, view,(View) okEndHolder);
                 }
             }
         });
@@ -166,7 +169,7 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(position, "okEndHolder", null,view);
+                    mOnItemClickListener.onItemClick(position, "okEndHolder", null, view,okEndHolder);
                 }
             }
         });
@@ -176,7 +179,7 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
 //                resultRooms.remove(position);
 //                notifyDataSetChanged();
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(position, "roomDelete", null,view);
+                    mOnItemClickListener.onItemClick(position, "roomDelete", null, view , okEndHolder);
                 }
             }
         });
@@ -210,9 +213,10 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
             public void onClick(View view) {
                 EditText editTextName = (EditText) view.findViewById(R.id.edtHeadNameReservation);
                 name = editTextName.getText().toString().trim();
-                if(!name.equals("")){
-                resultRooms.get(position).setHeadName(name);
-                notifyDataSetChanged();}
+                if (!name.equals("")) {
+                    resultRooms.get(position).setHeadName(name);
+                    notifyDataSetChanged();
+                }
 
             }
         });
@@ -281,7 +285,7 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
 //                }
             }
         });
-        return view;
+        return viewHolder;
     }
 
 
@@ -291,9 +295,9 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
     }
 
     private void setDefaultValue(final int position) {
-        if(position==resultRooms.size()-1){
+        if(position==0){
             nextHolder.setVisibility(View.GONE);
-            okEndHolder.setVisibility(View.VISIBLE);
+//            okEndHolder.setVisibility(View.VISIBLE);
         }
         name = (resultRooms.get(position).getHeadName() != null) && resultRooms.get(position).getHeadName().equals("") ? resultRooms.get(position).getHeadName() : "";
         family = (resultRooms.get(position).getHeadLastName() != null && resultRooms.get(position).getHeadLastName().equals("")) ? resultRooms.get(position).getHeadLastName() : "";
@@ -308,19 +312,19 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
         priceHalfInPrice = (resultRooms.get(position).getHalfIn() != null && resultRooms.get(position).getHalfIn()) ? Integer.valueOf(resultRooms.get(position).getRoomPriceHalfboardIn()) : 0;
         priceHalfOutPrice = (resultRooms.get(position).getHalfOut() != null && resultRooms.get(position).getHalfOut()) ? Integer.valueOf(resultRooms.get(position).getRoomPriceHalfboardOut()) : 0;
         roomType.setText(resultRooms.get(position).getRoomTitle());
-        txtPrice.setText(roomPricefinal * durationTravel + "");
+        txtPrice.setText(" " + roomPricefinal * durationTravel + " ");
         selectAddPeople = (resultRooms.get(position).getSelectedAddNumbers() != null) ? Integer.valueOf(resultRooms.get(position).getSelectedAddNumbers()) : 0;
 
 
-        txtAddPeople.setText(roomCapacityExtraPrice * durationTravel * selectAddPeople + "");
+        txtAddPeople.setText(" " + roomCapacityExtraPrice * durationTravel * selectAddPeople + " ");
         edtHeadNameReservation.setText(resultRooms.get(position).getHeadName());
         edtHeadLastNameReservation.setText(resultRooms.get(position).getHeadLastName());
-        txtDiscount.setText(resultRooms.get(position).getRoomPriceDifference());
+        txtDiscount.setText(" " + resultRooms.get(position).getRoomPriceDifference() + " ");
         setVisibleHalfBoard(position);
         endPrice.setText((roomPricefinal * durationTravel) + priceHalfOutPrice + priceHalfInPrice + (roomCapacityExtraPrice * durationTravel * selectAddPeople) + "تومان");
         checkHalfOut.setChecked((resultRooms.get(position).getHalfOut() != null) ? resultRooms.get(position).getHalfOut() : false);
         checkHalfIn.setChecked((resultRooms.get(position).getHalfIn() != null) ? resultRooms.get(position).getHalfIn() : false);
-        txtaddPersonValue.setText((resultRooms.get(position).getSelectedAddNumbers() != null) ? resultRooms.get(position).getSelectedAddNumbers() + "نفراضافه" : "نفراضافه");
+        txtaddPersonValue.setText((resultRooms.get(position).getSelectedAddNumbers() != null) ? resultRooms.get(position).getSelectedAddNumbers() + " نفراضافه " : "نفراضافه");
         txtNationalityValue.setText((resultRooms.get(position).getSelectedForeign() != null && resultRooms.get(position).getSelectedForeign().equals("0")) ? "ایرانی" : "خارجی");
     }
 
@@ -331,13 +335,13 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
             holder.setVisibility(View.VISIBLE);
         }
         if (resultRooms.get(position).getHalfIn() != null && resultRooms.get(position).getHalfOut() != null && resultRooms.get(position).getHalfIn() && resultRooms.get(position).getHalfOut()) {
-            txthalfInPrice.setText(priceHalfOutPrice + priceHalfInPrice + "");
+            txthalfInPrice.setText(" " + priceHalfOutPrice + priceHalfInPrice + " ");
         } else if (resultRooms.get(position).getHalfIn() != null && resultRooms.get(position).getHalfIn()) {
-            txthalfInPrice.setText(priceHalfInPrice + "");
+            txthalfInPrice.setText(" " + priceHalfInPrice + " ");
         } else if (resultRooms.get(position).getHalfOut() != null && resultRooms.get(position).getHalfOut()) {
-            txthalfInPrice.setText(priceHalfOutPrice + "");
+            txthalfInPrice.setText(" " + priceHalfOutPrice + " ");
         } else {
-            txthalfInPrice.setText("");
+            txthalfInPrice.setText(" ");
         }
     }
 
@@ -371,7 +375,7 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
 
 
     public interface OnItemClickViewPagerListener {
-        void onItemClick(int position, String viewName, entity.ResultRoom room,View view);
+        void onItemClick(int position, String viewName, entity.ResultRoom room, View view,View viewEnd);
     }
 
     public void setOnItemClickListener(OnItemClickViewPagerListener onItemClickListener) {
