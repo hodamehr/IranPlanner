@@ -192,14 +192,12 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
             case R.id.attractionMapToggleView:
 
                 break;
+            case R.id.attractionPanelShadeView:
             case R.id.attractionFilterToggleView:
                 togglePanel();
                 break;
             case R.id.attractionFilterView:
 
-                break;
-            case R.id.attractionPanelShadeView:
-                togglePanel();
                 break;
         }
     }
@@ -321,6 +319,5 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
         intent.putExtra("resulAttraction", (Serializable) resulAttraction);
         intent.putExtra("resultAttractionList", (Serializable) resultAttractions);
         startActivity(intent);
-
     }
 }

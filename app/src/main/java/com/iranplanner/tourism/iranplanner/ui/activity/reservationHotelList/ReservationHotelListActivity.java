@@ -3,6 +3,7 @@ package com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +21,7 @@ import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.ShowAttractionListMoreActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelDetails.ReservationHotelDetailActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationContract;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationPresenter;
@@ -120,6 +122,48 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
         filterShade.setVisibility(View.GONE);
 
         filterView.setY(Util.dpToPx(this, 300));
+    }
+
+    private void togglePanel() {
+        if (isViewOpen) {
+            closeFilterView();
+            return;
+        }
+        openFilterView();
+    }
+
+    private void openFilterView() {
+        filterToggle.setOnClickListener(null);
+
+        filterView.animate().translationYBy(-Util.dpToPx(this, 300)).setDuration(300).start();
+        bottomPanelView.animate().translationYBy(-Util.dpToPx(this, 300)).setDuration(300).start();
+        filterShade.setVisibility(View.VISIBLE);
+        filterShade.animate().alpha(0.7f).setDuration(300).start();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isViewOpen = true;
+                filterToggle.setOnClickListener(ReservationHotelListActivity.this);
+            }
+        }, 300);
+    }
+
+    private void closeFilterView() {
+        filterToggle.setOnClickListener(null);
+        isViewOpen = false;
+
+        filterView.animate().translationYBy(Util.dpToPx(this, 300)).setDuration(300).start();
+        bottomPanelView.animate().translationYBy(Util.dpToPx(this, 300)).setDuration(300).start();
+        filterShade.animate().alpha(0).setDuration(300).start();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                filterToggle.setOnClickListener(ReservationHotelListActivity.this);
+                filterShade.setVisibility(View.GONE);
+            }
+        }, 300);
     }
 
 
@@ -228,6 +272,18 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
             case R.id.toolbarBack:
                 Log.e("ddd", "toolbarback");
                 break;
+            case R.id.reservationMapToggleView:
+
+                break;
+            case R.id.reservationFilterToggleView:
+                togglePanel();
+                break;
+            case R.id.reservationFilterView:
+
+                break;
+            case R.id.reservationPanelShadeView:
+                togglePanel();
+                break;
         }
     }
 
@@ -235,6 +291,13 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isViewOpen)
+            closeFilterView();
+        else super.onBackPressed();
     }
 
     @Override
