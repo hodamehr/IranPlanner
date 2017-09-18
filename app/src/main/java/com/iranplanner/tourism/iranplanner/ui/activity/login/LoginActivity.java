@@ -215,6 +215,7 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
 //                Intent intent = new Intent(getContext(), SignupActivity.class);
 //                startActivity(intent);
                     Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                    intent.putExtra("HomeResult", HomeResult);
                     startActivity(intent);
                 }
             });

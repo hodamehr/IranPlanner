@@ -23,6 +23,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import entity.GetHomeResult;
 import entity.RegisterReqSend;
 import entity.ResultRegister;
 import entity.ResultUserRegister;
@@ -49,15 +50,17 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
 
-
+    GetHomeResult HomeResult;
     @Inject
     RegisterPresenter registerPresenter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-
+        Bundle extras = getIntent().getExtras();
+        HomeResult = (GetHomeResult) extras.getSerializable("HomeResult");
         //Load Background Image
         Glide.with(this).load(R.drawable.splash_bg_blur).centerCrop().override(600, 400).into((ImageView) findViewById(R.id.registerBgIv));
 
@@ -87,6 +90,7 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
             Util.saveDataINShareprefrence(getApplicationContext(), editText.getText().toString(), "کاربر", "", result.getUserUid().toString());
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("HomeResult", HomeResult);
             intent.putExtra("viewpager_position", 0);
             startActivity(intent);
             finish();

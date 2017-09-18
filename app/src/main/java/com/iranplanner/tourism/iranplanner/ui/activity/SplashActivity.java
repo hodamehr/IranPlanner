@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.crash.FirebaseCrash;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMorePresenter;
@@ -225,7 +226,8 @@ public class SplashActivity extends StandardActivity implements MainSearchPresen
 
     @Override
     public void showError(String message) {
-        SplashActivity.this.finish();
+        FirebaseCrash.report(new Exception("App Name :  non-fatal error"));
+//        SplashActivity.this.finish();
     }
 
     @Override
