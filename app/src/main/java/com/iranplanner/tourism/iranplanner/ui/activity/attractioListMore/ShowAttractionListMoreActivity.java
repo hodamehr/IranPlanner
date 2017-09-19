@@ -19,6 +19,7 @@ import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractionDetails.attractionDetailActivity;
+import com.iranplanner.tourism.iranplanner.ui.filterManager.FilterManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -142,6 +143,14 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
 
         filterView.setY(Util.dpToPx(this, 300));
         setToolbar();
+
+        //tempo code is here dude watch out
+        FilterManager filterManager = new FilterManager(findViewById(R.id.container));
+        filterManager.enableSort();
+        filterManager.enablePriceRange();
+        filterManager.enablePlaceType();
+        filterManager.enablePlaceRate();
+
     }
 
     private void togglePanel() {
@@ -190,7 +199,6 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.attractionMapToggleView:
-
                 break;
             case R.id.attractionPanelShadeView:
             case R.id.attractionFilterToggleView:
@@ -312,7 +320,6 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
 
     @Override
     public void showAttractionDetail(ShowAtractionDetailMore showAttractionFull) {
-
         ResulAttraction resulAttraction = showAttractionFull.getResultAttractionFull().getResulAttraction();
         List<ResultAttractionList> resultAttractions = (List<ResultAttractionList>) showAttractionFull.getResultAttractionFull().getResultAttractionList();
         Intent intent = new Intent(this, attractionDetailActivity.class);

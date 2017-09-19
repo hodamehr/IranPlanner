@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:background="@color/background"
     android:baselineAligned="false"
-    android:layoutDirection="rtl"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- RadioGroup Section -->
+        <!-- Sort Section -->
 
         <android.support.v7.widget.CardView
             android:id="@+id/cardviewSort"
@@ -39,43 +38,43 @@
                     android:text="مرتب سازی بر اساس" />
 
                 <RadioGroup
+                    android:id="@+id/filterSortRg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/margin_standard"
                     android:layout_marginRight="@dimen/margin_standard"
-                    android:gravity="right"
                     android:orientation="vertical">
 
                     <RadioButton
-                        android:id="@+id/radioDiscountMax"
+                        android:id="@+id/filterSortMostSaleRb"
                         style="@style/StandardText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="بیشترین تخفیف" />
 
                     <RadioButton
-                        android:id="@+id/radioCountMin"
+                        android:id="@+id/filterSortMinPriceRb"
                         style="@style/StandardText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="کمترین قیمت" />
 
                     <RadioButton
-                        android:id="@+id/radioCountMax"
+                        android:id="@+id/filterSortMostPriceRb"
                         style="@style/StandardText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="بیشترین قیمت" />
 
                     <RadioButton
-                        android:id="@+id/radioRateMax"
+                        android:id="@+id/filterSortRateMostRb"
                         style="@style/StandardText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="بیشترین درجه" />
 
                     <RadioButton
-                        android:id="@+id/radioRateMin"
+                        android:id="@+id/filterSortMinRateRb"
                         style="@style/StandardText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -88,7 +87,6 @@
         <!-- Price Section With SeekBar and Stuff -->
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cardviewPrice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="10dp"
@@ -117,7 +115,7 @@
                     android:padding="@dimen/margin_short">
 
                     <SeekBar
-                        android:id="@+id/priceBar"
+                        android:id="@+id/filterPriceSeekBar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layoutDirection="ltr" />
@@ -127,7 +125,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_below="@+id/priceBar"
+                        android:layout_below="@+id/filterPriceSeekBar"
                         android:text="بیشترین" />
 
                     <TextView
@@ -135,7 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_below="@+id/priceBar"
+                        android:layout_below="@+id/filterPriceSeekBar"
                         android:text="کمترین" />
                 </RelativeLayout>
             </RelativeLayout>
@@ -144,7 +142,6 @@
         <!-- Staying Place Type® -->
 
         <android.support.v7.widget.CardView
-            android:id="@+id/card_view_itinerary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="10dp"
@@ -157,7 +154,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/type_name"
                     style="@style/StandardTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -165,7 +161,7 @@
                     android:text="نوع مرکز اقامتی" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxHotel"
+                    android:id="@+id/filterTypeHotelCb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
@@ -173,7 +169,7 @@
                     android:text="هتل" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxpApartmentHotel"
+                    android:id="@+id/filterTypeApartementCb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
@@ -181,7 +177,7 @@
                     android:text="هتل آپارتمان" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxpLocalHouse"
+                    android:id="@+id/filterTypeLocalCb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
@@ -189,7 +185,7 @@
                     android:text="اقامتگاه بومگردی" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxpTraditionalHotel"
+                    android:id="@+id/filterTypeTraditionalCb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
@@ -201,7 +197,6 @@
         <!-- Staying Place Rate -->
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cardviewRate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="10dp"
@@ -214,17 +209,14 @@
                 android:paddingBottom="@dimen/padding_short">
 
                 <TextView
-                    android:id="@+id/Rate_name"
                     style="@style/StandardTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_margin="@dimen/margin_standard"
-                    android:gravity="right"
                     android:text="درجه مرکز اقامتی" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxstar5"
+                    android:id="@+id/filterRate5StarCb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
@@ -232,7 +224,7 @@
                     android:text="پنج ستاره" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxstar4"
+                    android:id="@+id/filterRate4StarCb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
@@ -240,7 +232,7 @@
                     android:text="چهار ستاره" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxstar3"
+                    android:id="@+id/filterRate3StarCb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
@@ -248,7 +240,7 @@
                     android:text="سه ستاره" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxstar2"
+                    android:id="@+id/filterRate2StarCb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
@@ -256,7 +248,7 @@
                     android:text="دو ستاره" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxstar1"
+                    android:id="@+id/filterRate1StarCb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
@@ -264,7 +256,7 @@
                     android:text="یک ستاره" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxstar0"
+                    android:id="@+id/filterRate0StarCb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_standard"
