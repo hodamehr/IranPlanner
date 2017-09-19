@@ -19,7 +19,10 @@ import com.bumptech.glide.request.target.Target;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import entity.ResultLodging;
 import tools.Util;
@@ -58,33 +61,39 @@ public class ReseveHotelListAdapter extends RecyclerView.Adapter<ReseveHotelList
 
         viewHolder.txtHotelName.setText(resultLodgings.get(i).getLodgingName());
         viewHolder.txtType.setText(resultLodgings.get(i).getLodgingTypeTitle());
-        viewHolder.txtShowPercent.setText(Util.persianNumbers(resultLodgings.get(i).getLodgingRoomPriceRuleDetail().getLodgingRoomPriceDetailValue())+"تخفیف تا");
-        viewHolder.txtStartPrice.setText("شروع قیمت از" + " : " +resultLodgings.get(i).getLodgingRoomPriceDetail().get(0).getLodgingRoomMinPrice());
+        viewHolder.txtShowPercent.setText(Util.persianNumbers(resultLodgings.get(i).getLodgingRoomPriceRuleDetail().getLodgingRoomPriceDetailValue()) + "تخفیف تا");
+
+        int price = resultLodgings.get(i).getLodgingRoomPriceDetail().get(0).getLodgingRoomMinPrice()/10;
+
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        String s = formatter.format(price);
+
+        viewHolder.txtStartPrice.setText("شروع قیمت از" + " : " + s + " تومان ");
 
 //        viewHolder.txtPrice.setText("شروع قیمت از"+ Utils.persianNumbers(String.valueOf(resultLodgings.get(i).getLodgingRoomPriceDetail().get(0).getLodgingRoomMinPrice()/10))+" تومان");
-        if(resultLodgings.get(i).getLodgingRoomPriceRuleDetail().getLodgingRoomPriceDetailType().equals("percent")){
+        if (resultLodgings.get(i).getLodgingRoomPriceRuleDetail().getLodgingRoomPriceDetailType().equals("percent")) {
 //            viewHolder.txtShowPercent.setVisibility(View.VISIBLE);
 //            viewHolder.txtShowPercent.setText(Utils.persianNumbers( resultLodgings.get(i).getLodgingRoomPriceRuleDetail().getLodgingRoomPriceDetailValue()));
         }
-        if (resultLodgings.get(i).getLodgingRateInt()==1) {
+        if (resultLodgings.get(i).getLodgingRateInt() == 1) {
             viewHolder.starHolder.setVisibility(View.VISIBLE);
             viewHolder.imgStar1.setVisibility(View.VISIBLE);
-        }else if(resultLodgings.get(i).getLodgingRateInt()==2){
+        } else if (resultLodgings.get(i).getLodgingRateInt() == 2) {
             viewHolder.starHolder.setVisibility(View.VISIBLE);
             viewHolder.imgStar1.setVisibility(View.VISIBLE);
             viewHolder.imgStar2.setVisibility(View.VISIBLE);
-        }else if(resultLodgings.get(i).getLodgingRateInt()==3){
+        } else if (resultLodgings.get(i).getLodgingRateInt() == 3) {
             viewHolder.starHolder.setVisibility(View.VISIBLE);
             viewHolder.imgStar1.setVisibility(View.VISIBLE);
             viewHolder.imgStar2.setVisibility(View.VISIBLE);
             viewHolder.imgStar3.setVisibility(View.VISIBLE);
-        }else if(resultLodgings.get(i).getLodgingRateInt()==4){
+        } else if (resultLodgings.get(i).getLodgingRateInt() == 4) {
             viewHolder.starHolder.setVisibility(View.VISIBLE);
             viewHolder.imgStar1.setVisibility(View.VISIBLE);
             viewHolder.imgStar2.setVisibility(View.VISIBLE);
             viewHolder.imgStar3.setVisibility(View.VISIBLE);
             viewHolder.imgStar4.setVisibility(View.VISIBLE);
-        }else if(resultLodgings.get(i).getLodgingRateInt()==5){
+        } else if (resultLodgings.get(i).getLodgingRateInt() == 5) {
             viewHolder.starHolder.setVisibility(View.VISIBLE);
             viewHolder.imgStar1.setVisibility(View.VISIBLE);
             viewHolder.imgStar2.setVisibility(View.VISIBLE);
@@ -135,7 +144,7 @@ public class ReseveHotelListAdapter extends RecyclerView.Adapter<ReseveHotelList
         private ImageView imgItineraryListMore;
         private ImageView imgStar1, imgStar2, imgStar3, imgStar4, imgStar5;
         RelativeLayout starHolder;
-        private TextView txtHotelName, txtType,txtPrice,txtShowPercent,txtStartPrice;
+        private TextView txtHotelName, txtType, txtPrice, txtShowPercent, txtStartPrice;
         private ProgressBar imageLoading;
 
 
