@@ -1,639 +1,277 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/background"
     android:baselineAligned="false"
+    android:layoutDirection="rtl"
     android:orientation="vertical">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- RadioGroup Section -->
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardviewSort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:cardCornerRadius="10dp"
+            app:cardUseCompatPadding="true">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/cardviewSort"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="10dp"
-                app:cardUseCompatPadding="true">
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_short">
 
-
-                <RelativeLayout
+                <TextView
+                    android:id="@+id/sortName"
+                    style="@style/StandardTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true">
+                    android:layout_margin="@dimen/margin_standard"
+                    android:text="مرتب سازی بر اساس" />
 
-                    <TextView
-                        android:id="@+id/sortName"
-                        style="@style/StandardTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="@dimen/margin_standard"
-                        android:gravity="right"
-                        android:text="مرتب سازی بر اساس" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/sortName"
-                        android:gravity="right"
-                        android:orientation="horizontal"
-                        android:paddingBottom="@dimen/margin_xshort"
-                        android:paddingRight="@dimen/margin_standard">
-
-                        <RadioGroup
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/margin_standard"
-                            android:layout_marginRight="@dimen/margin_standard"
-                            android:gravity="right"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:id="@+id/DiscountMaxHolder"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <RadioButton
-                                    android:id="@+id/radioDiscountMax"
-                                    style="@style/StandardText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true" />
-
-                                <TextView
-                                    android:id="@+id/txtDiscountMax"
-                                    style="@style/StandardText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_toLeftOf="@+id/radioDiscountMax"
-                                    android:text="بیشترین تخفیف"
-                                    android:textColor="@color/grey" />
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/countMinHolder"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <RadioButton
-                                    android:id="@+id/radioCountMin"
-                                    style="@style/StandardText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true" />
-
-                                <TextView
-                                    android:id="@+id/txtcountMin"
-                                    style="@style/StandardText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_toLeftOf="@+id/radioCountMin"
-                                    android:text="کمترین قیمت"
-                                    android:textColor="@color/grey" />
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/CountCountMax"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <RadioButton
-                                    android:id="@+id/radioCountMax"
-                                    style="@style/StandardText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true" />
-
-                                <TextView
-                                    android:id="@+id/txtDiscountMin"
-                                    style="@style/StandardText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_toLeftOf="@+id/radioCountMax"
-                                    android:text="بیشترین قیمت"
-                                    android:textColor="@color/grey" />
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/RateMaxHolder"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <RadioButton
-                                    android:id="@+id/radioRateMax"
-                                    style="@style/StandardText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true" />
-
-                                <TextView
-                                    android:id="@+id/txtRateMax"
-                                    style="@style/StandardText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_toLeftOf="@+id/radioRateMax"
-                                    android:text="بیشترین درجه"
-                                    android:textColor="@color/grey" />
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/RateMinHolder"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <RadioButton
-                                    android:id="@+id/radioRateMin"
-                                    style="@style/StandardText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true" />
-
-                                <TextView
-                                    android:id="@+id/txtRateMin"
-                                    style="@style/StandardText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_toLeftOf="@+id/radioRateMin"
-                                    android:text="کمترین درجه"
-                                    android:textColor="@color/grey" />
-
-                            </RelativeLayout>
-                        </RadioGroup>
-                    </RelativeLayout>
-                </RelativeLayout>
-
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/cardviewPrice"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="10dp"
-                app:cardUseCompatPadding="true">
-
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true">
-
-                    <TextView
-                        android:id="@+id/priceName"
-                        style="@style/StandardTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="@dimen/margin_standard"
-                        android:gravity="right"
-                        android:text="محدوده قیمت" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/priceName"
-                        android:gravity="right"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/margin_short">
-
-                        <SeekBar
-                            android:id="@+id/priceBar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:id="@+id/txtPriceBarMax"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_below="@+id/priceBar"
-                            android:text="بیشترین" />
-
-                        <TextView
-                            android:id="@+id/txtPriceBarMin"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_below="@+id/priceBar"
-                            android:text="کمترین" />
-                    </RelativeLayout>
-                </RelativeLayout>
-
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/card_view_itinerary"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="10dp"
-                app:cardUseCompatPadding="true">
-
-                <RelativeLayout
+                <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/margin_short">
+                    android:layout_marginLeft="@dimen/margin_standard"
+                    android:layout_marginRight="@dimen/margin_standard"
+                    android:gravity="right"
+                    android:orientation="vertical">
 
-
-                    <RelativeLayout
-                        android:id="@+id/imageTextAttractionHolder"
-                        android:layout_width="match_parent"
+                    <RadioButton
+                        android:id="@+id/radioDiscountMax"
+                        style="@style/StandardText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:background="?android:attr/selectableItemBackground">
+                        android:text="بیشترین تخفیف" />
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_toRightOf="@+id/ImageAttraction">
+                    <RadioButton
+                        android:id="@+id/radioCountMin"
+                        style="@style/StandardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="کمترین قیمت" />
 
-                            <TextView
-                                android:id="@+id/type_name"
-                                style="@style/StandardTitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_margin="@dimen/margin_standard"
-                                android:gravity="right"
-                                android:text="نوع مرکز اقامتی" />
+                    <RadioButton
+                        android:id="@+id/radioCountMax"
+                        style="@style/StandardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="بیشترین قیمت" />
 
-                            <RelativeLayout
-                                android:id="@+id/cityNameHolder"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/type_name"
-                                android:gravity="right"
-                                android:orientation="horizontal"
-                                android:padding="@dimen/margin_standard"
-                                android:paddingBottom="@dimen/margin_xshort"
-                                android:paddingRight="@dimen/margin_standard">
+                    <RadioButton
+                        android:id="@+id/radioRateMax"
+                        style="@style/StandardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="بیشترین درجه" />
 
+                    <RadioButton
+                        android:id="@+id/radioRateMin"
+                        style="@style/StandardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="کمترین درجه" />
 
-                                <RelativeLayout
-                                    android:id="@+id/discountMaxHolder"
-                                    android:layout_width="wrap_content"
+                </RadioGroup>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/margin_standard"
-                                    android:layout_marginRight="@dimen/margin_standard">
+        <!-- Price Section With SeekBar and Stuff -->
 
-                                    <TextView
-                                        android:id="@+id/txtNews1"
-                                        style="@style/SmallText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_alignParentBottom="true"
-                                        android:layout_toLeftOf="@+id/checkBoxHotel"
-                                        android:layout_toStartOf="@+id/checkBoxHotel"
-                                        android:text="هتل"
-                                        android:textColor="@color/grey" />
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardviewPrice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="10dp"
+            app:cardUseCompatPadding="true">
 
-                                    <CheckBox
-                                        android:id="@+id/checkBoxHotel"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="15dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:src="@mipmap/ic_checked_blue" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-                                </RelativeLayout>
-
-
-                                <RelativeLayout
-                                    android:id="@+id/ApartmentHotelHolder"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@+id/discountMaxHolder"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="@dimen/margin_standard"
-                                    android:layout_marginRight="@dimen/margin_standard"
-                                    android:layout_marginTop="@dimen/margin_standard">
-
-                                    <TextView
-                                        style="@style/SmallText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_toLeftOf="@+id/checkBoxpApartmentHotel"
-                                        android:text="هتل آپارتمان"
-                                        android:textColor="@color/grey" />
-
-                                    <CheckBox
-                                        android:id="@+id/checkBoxpApartmentHotel"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="15dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:src="@mipmap/ic_checked_blue" />
-
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/LocalHouseHolder"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_below="@+id/ApartmentHotelHolder"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="@dimen/margin_standard"
-                                    android:layout_marginRight="@dimen/margin_standard"
-                                    android:layout_marginTop="@dimen/margin_standard">
-
-                                    <TextView
-                                        style="@style/SmallText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_toLeftOf="@+id/checkBoxpLocalHouse"
-                                        android:text="اقامتگاه بومگردی"
-                                        android:textColor="@color/grey" />
-
-                                    <CheckBox
-                                        android:id="@+id/checkBoxpLocalHouse"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="15dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:src="@mipmap/ic_checked_blue" />
-
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/TraditionalHotelHolder"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_below="@+id/LocalHouseHolder"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="@dimen/margin_standard"
-                                    android:layout_marginRight="@dimen/margin_standard"
-                                    android:layout_marginTop="@dimen/margin_standard">
-
-                                    <TextView
-                                        android:id="@+id/txtNews"
-                                        style="@style/SmallText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_toLeftOf="@+id/checkBoxpTraditionalHotel"
-                                        android:text="هتل سنتی"
-                                        android:textColor="@color/grey" />
-
-                                    <CheckBox
-                                        android:id="@+id/checkBoxpTraditionalHotel"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="15dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:src="@mipmap/ic_checked_blue" />
-
-                                </RelativeLayout>
-                            </RelativeLayout>
-                        </RelativeLayout>
-
-                    </RelativeLayout>
-
-                </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/cardviewRate"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="10dp"
-                app:cardUseCompatPadding="true">
-
+                <TextView
+                    android:id="@+id/priceName"
+                    style="@style/StandardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="@dimen/margin_standard"
+                    android:text="محدوده قیمت" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true">
+                    android:layout_below="@+id/priceName"
+                    android:gravity="right"
+                    android:layoutDirection="rtl"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/margin_short">
+
+                    <SeekBar
+                        android:id="@+id/priceBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="ltr" />
 
                     <TextView
-                        android:id="@+id/Rate_name"
-                        style="@style/StandardTitle"
+                        android:id="@+id/txtPriceBarMax"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="@dimen/margin_standard"
-                        android:gravity="right"
-                        android:text="درجه مرکز اقامتی" />
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/priceBar"
+                        android:text="بیشترین" />
 
-                    <RelativeLayout
+                    <TextView
+                        android:id="@+id/txtPriceBarMin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/Rate_name"
-                        android:gravity="right"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/margin_standard">
-
-                        <RelativeLayout
-                            android:id="@+id/starHolder"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:gravity="right"
-                            android:orientation="horizontal"
-                            android:paddingBottom="@dimen/margin_xshort"
-                            android:paddingRight="@dimen/margin_short">
-
-
-                            <RelativeLayout
-                                android:id="@+id/star5Holder"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/margin_standard"
-                                android:layout_marginRight="@dimen/margin_standard">
-
-                                <TextView
-                                    style="@style/SmallText"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_toLeftOf="@+id/checkBoxstar5"
-                                    android:text="پنج ستاره"
-                                    android:textColor="@color/grey" />
-
-                                <CheckBox
-                                    android:id="@+id/checkBoxstar5"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="15dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-                                    android:src="@mipmap/ic_checked_blue" />
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/star4Holder"
-                                android:layout_width="wrap_content"
-
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/star5Holder"
-                                android:layout_marginLeft="@dimen/margin_standard"
-                                android:layout_marginRight="@dimen/margin_standard"
-                                android:layout_marginTop="@dimen/margin_standard">
-
-                                <TextView
-                                    style="@style/SmallText"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_toLeftOf="@+id/checkBoxstar4"
-                                    android:text="چهار ستاره"
-                                    android:textColor="@color/grey" />
-
-                                <CheckBox
-                                    android:id="@+id/checkBoxstar4"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="15dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-                                    android:src="@mipmap/ic_checked_blue" />
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/star3Holder"
-                                android:layout_width="wrap_content"
-
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/star4Holder"
-                                android:layout_marginLeft="@dimen/margin_standard"
-                                android:layout_marginRight="@dimen/margin_standard"
-                                android:layout_marginTop="@dimen/margin_standard">
-
-                                <TextView
-                                    style="@style/SmallText"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_toLeftOf="@+id/checkBoxstar3"
-                                    android:text="سه ستاره"
-                                    android:textColor="@color/grey" />
-
-                                <CheckBox
-                                    android:id="@+id/checkBoxstar3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="15dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-                                    android:src="@mipmap/ic_checked_blue" />
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/star2Holder"
-                                android:layout_width="wrap_content"
-
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/star3Holder"
-                                android:layout_marginLeft="@dimen/margin_standard"
-                                android:layout_marginRight="@dimen/margin_standard"
-                                android:layout_marginTop="@dimen/margin_standard">
-
-                                <TextView
-                                    style="@style/SmallText"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_toLeftOf="@+id/checkBoxstar2"
-                                    android:text="دو ستاره"
-                                    android:textColor="@color/grey" />
-
-                                <CheckBox
-                                    android:id="@+id/checkBoxstar2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="15dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-                                    android:src="@mipmap/ic_checked_blue" />
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/star1Holder"
-                                android:layout_width="wrap_content"
-
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/star2Holder"
-                                android:layout_marginLeft="@dimen/margin_standard"
-                                android:layout_marginRight="@dimen/margin_standard"
-                                android:layout_marginTop="@dimen/margin_standard">
-
-                                <TextView
-                                    style="@style/SmallText"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_toLeftOf="@+id/checkBoxstar1"
-                                    android:text="یک ستاره"
-                                    android:textColor="@color/grey" />
-
-                                <CheckBox
-                                    android:id="@+id/checkBoxstar1"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="15dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-                                    android:src="@mipmap/ic_checked_blue" />
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/star0Holder"
-                                android:layout_width="wrap_content"
-
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/star1Holder"
-                                android:layout_marginLeft="@dimen/margin_standard"
-                                android:layout_marginRight="@dimen/margin_standard"
-                                android:layout_marginTop="@dimen/margin_standard">
-
-                                <TextView
-                                    style="@style/SmallText"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_toLeftOf="@+id/checkBoxstar0"
-                                    android:text="بدون ستاره"
-                                    android:textColor="@color/grey" />
-
-                                <CheckBox
-                                    android:id="@+id/checkBoxstar0"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="15dp"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-                                    android:src="@mipmap/ic_checked_blue" />
-
-                            </RelativeLayout>
-                        </RelativeLayout>
-                    </RelativeLayout>
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/priceBar"
+                        android:text="کمترین" />
                 </RelativeLayout>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
+        <!-- Staying Place Type® -->
 
-            </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_itinerary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="10dp"
+            app:cardUseCompatPadding="true">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/type_name"
+                    style="@style/StandardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_standard"
+                    android:text="نوع مرکز اقامتی" />
 
+                <CheckBox
+                    android:id="@+id/checkBoxHotel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    android:src="@mipmap/ic_checked_blue"
+                    android:text="هتل" />
 
-    </ScrollView>
+                <CheckBox
+                    android:id="@+id/checkBoxpApartmentHotel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    android:src="@mipmap/ic_checked_blue"
+                    android:text="هتل آپارتمان" />
 
-</LinearLayout>
+                <CheckBox
+                    android:id="@+id/checkBoxpLocalHouse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    android:src="@mipmap/ic_checked_blue"
+                    android:text="اقامتگاه بومگردی" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxpTraditionalHotel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    android:src="@mipmap/ic_checked_blue"
+                    android:text="هتل سنتی" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- Staying Place Rate -->
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardviewRate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="10dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_short">
+
+                <TextView
+                    android:id="@+id/Rate_name"
+                    style="@style/StandardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/margin_standard"
+                    android:gravity="right"
+                    android:text="درجه مرکز اقامتی" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxstar5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    android:src="@mipmap/ic_checked_blue"
+                    android:text="پنج ستاره" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxstar4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    android:src="@mipmap/ic_checked_blue"
+                    android:text="چهار ستاره" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxstar3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    android:src="@mipmap/ic_checked_blue"
+                    android:text="سه ستاره" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxstar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    android:src="@mipmap/ic_checked_blue"
+                    android:text="دو ستاره" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxstar1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    android:src="@mipmap/ic_checked_blue"
+                    android:text="یک ستاره" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxstar0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard"
+                    android:src="@mipmap/ic_checked_blue"
+                    android:text="بدون ستاره" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</ScrollView>
