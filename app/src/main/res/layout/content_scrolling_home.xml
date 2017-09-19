@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,6 +11,7 @@
     android:layout_alignParentTop="true"
     android:descendantFocusability="blocksDescendants"
     android:layoutDirection="rtl">
+
 
     <RelativeLayout
         android:id="@+id/SelectHolder"
@@ -28,27 +32,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:translationZ="1dp">
+                android:translationZ="1dp"
+                android:layout_marginTop="@dimen/margin_short"
+                android:layout_marginBottom="@dimen/margin_short"
+                >
 
                 <ImageView
                     android:id="@+id/imageTypeHotel"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="@dimen/height35"
+                    android:layout_height="@dimen/height35"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:padding="5dp"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/ic_bed" />
 
                 <TextView
                     android:id="@+id/attractionType"
-                    style="@style/StandardTextGrey"
+                    style="@style/StandardText14grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageTypeHotel"
                     android:layout_centerHorizontal="true"
-                    android:padding="5dp"
-                    android:text="اقامت" />
+                    android:padding="@dimen/margin_xshort"
+                    android:text="@string/accomodation" />
             </RelativeLayout>
 
             <View
@@ -61,26 +67,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:translationZ="1dp">
+                android:translationZ="1dp"
+                android:layout_marginTop="@dimen/margin_short"
+                android:layout_marginBottom="@dimen/margin_short"
+
+                >
 
                 <ImageView
                     android:id="@+id/imageTypeAttraction"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="@dimen/height35"
+                    android:layout_height="@dimen/height35"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:padding="5dp"
                     android:src="@mipmap/ic_flight_blue" />
 
                 <TextView
                     android:id="@+id/txtTypeHotel"
-                    style="@style/StandardTextGrey"
+                    style="@style/StandardText14grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageTypeAttraction"
                     android:layout_centerHorizontal="true"
-                    android:padding="5dp"
-                    android:text="پرواز" />
+                    android:padding="@dimen/margin_xshort"
+                    android:text="@string/flight" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -104,28 +113,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:translationZ="1dp">
+                android:translationZ="1dp"
+                android:layout_marginTop="@dimen/margin_short"
+                android:layout_marginBottom="@dimen/margin_short"
+                >
 
                 <ImageView
                     android:id="@+id/imageTypeItinerary"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="@dimen/height35"
+                    android:layout_height="@dimen/height35"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:padding="5dp"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/ic_itinerary_blue"
                     android:tint="@color/main_blue" />
 
                 <TextView
                     android:id="@+id/ItineraryType"
-                    style="@style/StandardTextGrey"
+                    style="@style/StandardText14grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageTypeItinerary"
                     android:layout_centerHorizontal="true"
-                    android:padding="5dp"
-                    android:text="برنامه سفر" />
+                    android:padding="@dimen/margin_xshort"
+                    android:text="@string/itinerary" />
             </RelativeLayout>
 
             <View
@@ -138,27 +149,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:translationZ="1dp">
+                android:translationZ="1dp"
+                android:layout_marginTop="@dimen/margin_short"
+                android:layout_marginBottom="@dimen/margin_short"
+                >
 
                 <ImageView
                     android:id="@+id/imageTypeAttraction1"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_alignEnd="@+id/attractionType1"
+                    android:layout_width="@dimen/height35"
+                    android:layout_height="@dimen/height35"
                     android:layout_alignParentTop="true"
-                    android:padding="6dp"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_attraction_blue" />
+                    android:src="@mipmap/ic_attraction_blue"
+                    android:layout_centerHorizontal="true"/>
 
                 <TextView
                     android:id="@+id/attractionType1"
-                    style="@style/StandardTextGrey"
+                    style="@style/StandardText14grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageTypeAttraction1"
                     android:layout_centerHorizontal="true"
-                    android:padding="5dp"
-                    android:text="جاذبه" />
+                    android:padding="@dimen/margin_xshort"
+                    android:text="@string/attraction" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -194,27 +207,28 @@
                 android:layout_marginBottom="@dimen/margin_short"
                 android:gravity="center"
                 android:paddingTop="@dimen/padding_standard"
-                android:text="رویدادها" />
+                android:text="@string/events" />
 
             <TextView
                 android:id="@+id/tvEventShowAll"
-                style="@style/StandardText"
+                style="@style/SmallText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginBottom="@dimen/margin_short"
                 android:gravity="center"
                 android:paddingTop="@dimen/padding_standard"
-                android:text="مشاهده ی همه ی رویدادها" />
+                android:text="@string/more_event"
+                android:textColor="@color/main_blue" />
 
         </RelativeLayout>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="@dimen/home_event_height"
             android:layout_below="@+id/txtEventsTitle"
             android:layout_margin="@dimen/margin_xshort"
-            app:cardCornerRadius="10dp">
+            app:cardCornerRadius="@dimen/corner_radius">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -229,7 +243,9 @@
                     android:id="@+id/EventsViewPager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
 
                 <me.relex.circleindicator.CircleIndicator
                     android:id="@+id/indicator"
@@ -258,12 +274,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/margin_short"
-            android:text="دسته بندی اقامتگاه ها" />
+            android:text="@string/home_title_hotel_cat" />
 
         <LinearLayout
             android:id="@+id/linearEventsHolderTop"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/home_hotel_cat_height"
             android:layout_below="@+id/txtHotelTypeTitles"
             android:orientation="horizontal"
             android:weightSum="2">
@@ -280,7 +296,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="هتل"
+                    android:text="@string/hotel"
                     android:textColor="@color/white_"
                     android:translationZ="1dp" />
 
@@ -339,7 +355,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="بوم گردی"
+                    android:text="@string/eco_hotel"
                     android:textColor="@color/white_"
                     android:translationZ="1dp" />
 
@@ -362,7 +378,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="مهمانسرا"
+                    android:text="@string/traditional_hotel"
                     android:textColor="@color/white_"
                     android:translationZ="1dp" />
 
@@ -415,7 +431,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/margin_short"
-            android:text="اقامتگاه های پربازدید" />
+            android:text="@string/most_visited_hotel" />
 
         <TextView
             android:id="@+id/txtMoreTitleHotel"
@@ -424,7 +440,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:text="هتل های بیشتر"
+            android:text="@string/more_hotel"
             android:textColor="@color/main_blue" />
     </RelativeLayout>
 
@@ -444,7 +460,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/margin_short"
-            android:text="دسته بندی جاذبه ها" />
+            android:text="@string/attraction_cat" />
 
         <LinearLayout
             android:id="@+id/linearAttractionHolderTop"
@@ -483,8 +499,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageAttractionNatural"
                         android:layout_centerHorizontal="true"
-                        android:padding="5dp"
-                        android:text="طبیعی" />
+                        android:padding="@dimen/margin_xshort"
+                        android:text="@string/nature" />
                 </RelativeLayout>
 
             </android.support.v7.widget.CardView>
@@ -518,8 +534,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imagetxtAttractionHistorical"
                         android:layout_centerHorizontal="true"
-                        android:padding="5dp"
-                        android:text="تاریخی و فرهنگی" />
+                        android:padding="@dimen/margin_xshort"
+                        android:text="@string/historical_cultural" />
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
@@ -546,8 +562,8 @@
 
                     <ImageView
                         android:id="@+id/imageAttractionRelgon"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="@dimen/height35"
+                        android:layout_height="@dimen/height35"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:paddingTop="@dimen/padding_short"
@@ -561,8 +577,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imageAttractionRelgon"
                         android:layout_centerHorizontal="true"
-                        android:padding="5dp"
-                        android:text="مذهبی" />
+                        android:padding="@dimen/margin_xshort"
+                        android:text="@string/religious" />
                 </RelativeLayout>
 
             </android.support.v7.widget.CardView>
@@ -570,7 +586,7 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="2dp"
+                android:layout_margin="@dimen/margin_xxshort"
                 android:layout_weight="1">
 
                 <RelativeLayout
@@ -582,7 +598,7 @@
                     <ImageView
                         android:id="@+id/imagetxtAttractionSport"
                         android:layout_width="55dp"
-                        android:layout_height="35dp"
+                        android:layout_height="@dimen/height35"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:paddingTop="@dimen/padding_short"
@@ -595,8 +611,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imagetxtAttractionSport"
                         android:layout_centerHorizontal="true"
-                        android:padding="5dp"
-                        android:text="تفریحی و ورزشی" />
+                        android:padding="@dimen/margin_xshort"
+                        android:text="@string/sport" />
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
@@ -625,7 +641,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/margin_short"
-            android:text="جاذبه های گردشگری" />
+            android:text="@string/attraction" />
 
         <TextView
             android:id="@+id/txtMoreTitleAttraction"
@@ -634,7 +650,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:text="جاذبه های بیشتر"
+            android:text="@string/more_attraction"
             android:textColor="@color/main_blue" />
     </RelativeLayout>
 
@@ -661,7 +677,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/margin_short"
-            android:text="برنامه سفرها" />
+            android:text="@string/itinerary" />
 
     </RelativeLayout>
     <!--ItineraryHolder-->
@@ -687,7 +703,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/margin_short"
-            android:text="غذاهای محلی" />
+            android:text="@string/local_food" />
 
     </RelativeLayout>
     <!--souvenirHolder-->
@@ -712,7 +728,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/margin_short"
-            android:text="سوغاتی" />
+            android:text="@string/souvenir" />
     </RelativeLayout>
 
     <!--cityHolder-->
@@ -737,7 +753,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/margin_short"
-            android:text="شهرهای مجاور" />
+            android:text="@string/near_city" />
     </RelativeLayout>
     <!--listProvince-->
 
@@ -778,3 +794,4 @@
     -->
 
 </RelativeLayout>
+</ScrollView>

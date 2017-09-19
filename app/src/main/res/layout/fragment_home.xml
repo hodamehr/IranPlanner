@@ -33,16 +33,25 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
+                    android:layout_height="wrap_content"
+                    >
+                    <ImageView
+                        android:id="@+id/imgHomed"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/padding_big"
+                        android:background="@drawable/dark_shadow"
+                        android:layout_alignParentBottom="true"
+                        android:translationZ="1dp"
+                        />
                     <ImageView
                         android:id="@+id/imgHome"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/zz"
+                        android:layout_height="@dimen/home_photo_height"
                         android:fitsSystemWindows="true"
                         android:scaleType="centerCrop"
                         app:layout_collapseMode="parallax" />
+
+
 
                     <Button
                         android:id="@+id/aboutCityBtn"
@@ -52,7 +61,9 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginBottom="@dimen/margin_standard"
                         android:layout_marginEnd="@dimen/margin_standard"
-                        android:text="درباره این سرزمین" />
+                        android:text="درباره"
+                        android:background="@color/transparent"
+                        />
 
                     <LinearLayout
                         android:id="@+id/homeFragmentWhereToView"
