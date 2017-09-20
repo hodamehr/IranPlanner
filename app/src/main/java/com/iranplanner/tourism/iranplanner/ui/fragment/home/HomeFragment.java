@@ -381,10 +381,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 }
 
                 break;
-//            case R.id.btnShowProvince:
-//                onClickShowProvince(card_view_province_list);
-//                break;
-
             case R.id.homeFragmentWhereToView:
                 openCustomSearchDialog(Constants.homeSearch);
                 frameLayout.setVisibility(View.INVISIBLE);

@@ -151,6 +151,8 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
         filterManager.enablePlaceType();
         filterManager.enablePlaceRate();
 
+
+
     }
 
     private void togglePanel() {

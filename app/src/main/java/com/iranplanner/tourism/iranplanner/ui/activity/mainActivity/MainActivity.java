@@ -36,6 +36,7 @@ import com.iranplanner.tourism.iranplanner.di.model.ForceUpdateChecker;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
 import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
+import com.iranplanner.tourism.iranplanner.ui.downloader.FileDownloadHelper;
 import com.iranplanner.tourism.iranplanner.ui.fragment.FirstItem;
 import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomeFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchFragment;
@@ -113,7 +114,6 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
 //        ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setOffscreenPageLimit(3);
-
     }
 
 //    private void initDrawer() {
@@ -130,7 +130,6 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     protected int getLayoutId() {
         return R.layout.activity_main;
     }
-
 
     @Override
     public void onBackPressed() {

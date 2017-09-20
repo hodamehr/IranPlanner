@@ -91,6 +91,8 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'com.google.dagger:dagger:2.10'
     compile 'javax.inject:javax.inject:1'
+    // Downloader library :
+    compile 'org.wlf:FileDownloader:0.3.2'
     compile 'me.relex:circleindicator:1.2.2@aar'
 //    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
