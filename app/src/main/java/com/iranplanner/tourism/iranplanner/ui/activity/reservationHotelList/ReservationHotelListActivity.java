@@ -25,6 +25,7 @@ import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.ShowAtt
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelDetails.ReservationHotelDetailActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationContract;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationPresenter;
+import com.iranplanner.tourism.iranplanner.ui.filterManager.FilterManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -60,13 +61,13 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     private ProgressBar waitingLoading;
     private boolean loading = true;
-    @InjectView(R.id.TypeAttractionHolder)
-    RelativeLayout typeAttractionHolder;
+    @InjectView(R.id.TypeDurationHolder)
+    RelativeLayout typeDurationHolder;
     @InjectView(R.id.holderDate)
     RelativeLayout holderDate;
     @InjectView(R.id.reservationListRecyclerView)
     RecyclerView recyclerView;
-    @InjectView(R.id.txtTypeHote)
+    @InjectView(R.id.txtDateCheckIn)
     TextView txtTypeHotel;
     @InjectView(R.id.txtDurationHotel)
     TextView txtDurationHotel;
@@ -84,6 +85,8 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_list);
 
+        Log.e(TAG, "this is reservation hotel list activity ");
+
         ButterKnife.inject(this);
         DaggerReservationHotelListComponent.builder()
                 .netComponent(((App) getApplicationContext()).getNetComponent())
@@ -96,11 +99,18 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
 
         setUpRecyclerView();
         setupToolbar();
-//        toolbarBack.setOnClickListener(this);
+
         holderDate.setOnClickListener(this);
-        typeAttractionHolder.setOnClickListener(this);
+        typeDurationHolder.setOnClickListener(this);
 
         init();
+
+        //tempo code is here dude watch out
+        FilterManager filterManager = new FilterManager(findViewById(R.id.container));
+        filterManager.enableSort();
+        filterManager.enablePriceRange();
+        filterManager.enablePlaceType();
+        filterManager.enablePlaceRate();
     }
 
     private void init() {
@@ -210,7 +220,6 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         loading = false;
                         reservationPresenter.getLodgingList("list", String.valueOf(resultLodgings.get(0).getLodgingCityId()), Util.getTokenFromSharedPreferences(getApplicationContext()), "20", nextOffset, Util.getAndroidIdFromSharedPreferences(getApplicationContext()), "");
-
                     }
                 }
             }
@@ -230,7 +239,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
             @Override
             public void finish(int result) {
                 durationTravel = result;
-                txtDurationHotel.setText(Util.persianNumbers(result + "شب"));
+                txtDurationHotel.setText(" به مدت " + Util.persianNumbers(result + " شب "));
             }
         });
     }
@@ -242,7 +251,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
             @Override
             public void finish(Date result) {
                 startOfTravel = result;
-                txtTypeHotel.setText(Utils.getSimpleDate(result));
+                txtTypeHotel.setText("از " + Utils.getSimpleDate(result));
             }
         });
     }
@@ -266,7 +275,7 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
             case R.id.holderDate:
                 showDialogDate();
                 break;
-            case R.id.TypeAttractionHolder:
+            case R.id.TypeDurationHolder:
                 showDialogNumber();
                 break;
             case R.id.toolbarBack:

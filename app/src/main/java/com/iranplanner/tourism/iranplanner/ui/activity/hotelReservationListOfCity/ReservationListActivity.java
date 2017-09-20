@@ -19,6 +19,7 @@ import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListActivity;
+import com.iranplanner.tourism.iranplanner.ui.filterManager.FilterManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -53,8 +54,6 @@ public class ReservationListActivity extends StandardActivity implements DataTra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_list);
-
-        Log.e("ReservationListActivity", "Damn Son");
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reservationListRecyclerView);
         recyclerView.setHasFixedSize(true);

@@ -11,8 +11,7 @@
         android:id="@+id/reservationListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_below="@+id/changeDateTimeHolder" />
+        android:layout_below="@+id/selectHoldetTop" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -27,107 +26,88 @@
 
     <!--Date Information Layout-->
 
-    <RelativeLayout
-        android:id="@+id/changeDateTimeHolder"
+    <LinearLayout
+        android:id="@+id/selectHoldetTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar">
+        android:orientation="horizontal"
+        android:layout_below="@+id/toolbar"
+        android:weightSum="2">
 
-        <LinearLayout
-            android:id="@+id/selectHoldetTop"
+        <RelativeLayout
+            android:id="@+id/TypeAttractionHolder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:translationZ="1dp">
 
             <RelativeLayout
-                android:id="@+id/TypeAttractionHolder1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:translationZ="5dp">
-
-                <RelativeLayout
-                    android:id="@+id/holderDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/margin_short">
-
-                    <TextView
-                        android:id="@+id/txtTypeHote"
-                        style="@style/StandardTextGrey"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/margin_short"
-                        android:layout_toEndOf="@+id/imageTypeHote"
-                        android:text="تاریخ" />
-
-                    <ImageView
-                        android:id="@+id/imageTypeHote"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentStart="true"
-                        android:src="@drawable/calendar" />
-
-                </RelativeLayout>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/greySemilight" />
-
-            <RelativeLayout
-                android:id="@+id/TypeAttractionHolder"
-                android:layout_width="match_parent"
+                android:id="@+id/holderDate"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:translationZ="1dp">
+                android:padding="@dimen/margin_short">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/txtDateCheckIn"
+                    style="@style/StandardTextGrey"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="@dimen/margin_standard"
-                    android:padding="@dimen/margin_short">
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/margin_short"
+                    android:layout_toLeftOf="@+id/imageTypeHote"
+                    android:text="تاریخ" />
 
-                    <TextView
-                        android:id="@+id/txtDurationHotel"
-                        style="@style/StandardTextGrey"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/margin_short"
-                        android:layout_toEndOf="@+id/imageTypeHotel"
-                        android:text="duration" />
+                <ImageView
+                    android:id="@+id/imageTypeHote"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/calendar" />
 
-                    <ImageView
-                        android:id="@+id/imageTypeHotel"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentStart="true"
-                        android:src="@drawable/duration" />
-
-                </RelativeLayout>
             </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/greyLight" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <View
-            android:id="@+id/toolbarFeatureElevation"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_below="@+id/divider"
-            android:background="@drawable/toolbar_elevation" />
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/greySemilight" />
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/TypeDurationHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:translationZ="1dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="@dimen/margin_standard"
+                android:padding="@dimen/margin_short">
+
+                <TextView
+                    android:id="@+id/txtDurationHotel"
+                    style="@style/StandardTextGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/margin_short"
+                    android:layout_toLeftOf="@+id/imageTypeHotel"
+                    android:text="به مدت 5 شب" />
+
+                <ImageView
+                    android:id="@+id/imageTypeHotel"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/duration" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
 
     <!--This is the Shade View-->
 
@@ -136,6 +116,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
+        android:visibility="gone"
         android:background="#000" />
 
 
@@ -201,6 +182,8 @@
         android:layout_height="300dp"
         android:layout_alignParentBottom="true"
         android:background="#f2f2f2">
+
+        <include layout="@layout/fragment_filter"/>
 
     </RelativeLayout>
 

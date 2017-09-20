@@ -143,16 +143,6 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
 
         filterView.setY(Util.dpToPx(this, 300));
         setToolbar();
-
-        //tempo code is here dude watch out
-        FilterManager filterManager = new FilterManager(findViewById(R.id.container));
-        filterManager.enableSort();
-        filterManager.enablePriceRange();
-        filterManager.enablePlaceType();
-        filterManager.enablePlaceRate();
-
-
-
     }
 
     private void togglePanel() {
