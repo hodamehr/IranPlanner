@@ -139,7 +139,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     @InjectView(R.id.SelectHolder)
     RelativeLayout SelectHolder;
     @InjectView(R.id.aboutCityBtn)
-    Button aboutCityBtn;
+    RelativeLayout aboutCityBtn;
     @InjectView(R.id.imgHome)
     ImageView imgHome;
     @InjectView(R.id.toolbarBack)

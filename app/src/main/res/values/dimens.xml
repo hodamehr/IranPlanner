@@ -21,5 +21,12 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="radius_corner">5dp</dimen>
     <dimen name="buttonBottom">60dp</dimen>
+    <dimen name="height35">30dp</dimen>
+    <dimen name="home_event_height">300dp</dimen>
+    <dimen name="corner_radius">10dp</dimen>
+    <dimen name="home_hotel_cat_height">100dp</dimen>
+    <dimen name="home_photo_height">300dp</dimen>
+    <dimen name="height20">20dp</dimen>
+
 
 </resources>
