@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -58,6 +59,7 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.FirstItem;
 import com.iranplanner.tourism.iranplanner.ui.fragment.homeInfo.AboutCityFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchPresenter;
+import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.AboutUsDialog;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -172,8 +174,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     NestedScrollView scroller;
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
-    @InjectView(R.id.left_drawer)
-    ListView mDrawerList;
+    //    @InjectView(R.id.left_drawer)
+//    ListView mDrawerList;
     @InjectView(R.id.recyclerViewProvinceShow)
     RecyclerView recyclerViewProvinceShow;
     @InjectView(R.id.recyclerBestHotel)
@@ -287,6 +289,10 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         showDrawer();
 //        ShowHomeResult("country", "311");
         ShowHomeResult(homeResult);
+
+        //Initializing the navigation layout
+        initNav(rootView.findViewById(R.id.nav_layout));
+
         return rootView;
     }
 
@@ -308,6 +314,43 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             }
         });
     }
+
+    private void initNav(View view) {
+        View root = view.findViewById(R.id.nav_layout);
+
+        root.findViewById(R.id.navAboutUsTv).setOnClickListener(navClickListener);
+        root.findViewById(R.id.navContactUsTv).setOnClickListener(navClickListener);
+        root.findViewById(R.id.navCommentTv).setOnClickListener(navClickListener);
+        root.findViewById(R.id.navRecommendTv).setOnClickListener(navClickListener);
+
+    }
+
+    private View.OnClickListener navClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.navAboutUsTv:
+                    new Handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            AboutUsDialog dialog = new AboutUsDialog(getActivity());
+                            dialog.show();
+                        }
+                    });
+                    break;
+                case R.id.navContactUsTv:
+
+                    break;
+                case R.id.navCommentTv:
+
+                    break;
+                case R.id.navRecommendTv:
+
+                    break;
+            }
+            hideDrawer();
+        }
+    };
 
     public static HomeFragment newInstance(GetHomeResult homeResult) {
         HomeFragment fragment = new HomeFragment();
@@ -500,7 +543,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         intent.putExtra("startOfTravel", startOfTravel);
         intent.putExtra("durationTravel", 3);
         intent.putExtra("todayDate", resultLodgingList.getStatistics().getDateNow());
-        intent.putExtra("cityName" , cityName);
+        intent.putExtra("cityName", cityName);
 
         startActivity(intent);
     }
@@ -629,7 +672,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             viewPagerEventsHolder.setVisibility(View.GONE);
 
         }
-        homeNeighborCity=resultHomes.get(0).getHomeNeighborCity();
+        homeNeighborCity = resultHomes.get(0).getHomeNeighborCity();
         if (resultHomes.get(0).getHomeNeighborCity().size() != 0) {
             recyclerCity.setVisibility(View.VISIBLE);
             setViewPagerNeighborCity();
@@ -931,67 +974,32 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         }
     }
 
+    private void hideDrawer(){
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
     private void showDrawer() {
-
-//      NavigationItemsAdapter adapter = new NavigationItemsAdapter
-//                (this, R.layout.nav_list_row, drawerItem);
-//        mDrawerList.setAdapter(adapter);
-//        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//
-//        toolbarToggle = (ImageView) findViewById(R.id.toolbarToggle);
-//        toolbarToggleLeft = (ImageView) findViewById(R.id.toolbarToggleLeft);
-//        toolbarToggle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                mDrawerLayout.openDrawer(GravityCompat.END);
-//
-//            }
-//        });
-        Data[] drawerItem = new Data[3];
-
-        drawerItem[0] = new Data(R.drawable.ic_google, "ایتم اول");
-        drawerItem[1] = new Data(R.drawable.ic_google, "ایتم دوم");
-        drawerItem[2] = new Data(R.drawable.ic_google, "ایتم سوم");
-
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-
-        NavigationItemsAdapter adapter = new NavigationItemsAdapter
-                (getContext(), R.layout.nav_list_row, drawerItem);
-        mDrawerList.setAdapter(adapter);
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         toolbarTitleParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openCustomSearchDialog(Constants.homeSearch);
-
             }
         });
 
         toolbarToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                 * This Feature is Temporarily Disabled bc The Main navigation refactor coming up
-                 */
                 mDrawerLayout.openDrawer(GravityCompat.START);
             }
         });
 
-        //this method is used to hide toolbar drawables & I don't know why exactly
-//        hideToolbarIcons();
-
         buildVersion = Build.VERSION.SDK_INT;
 
-        Log.i("hi", String.valueOf(buildVersion));
-    }
+        Log.i("Build Version : ", String.valueOf(buildVersion));
 
-//    private void hideToolbarIcons() {
-//        toolbarToggle.setVisibility(View.GONE);
-//        toolbarBack.setVisibility(View.GONE);
-//        toolbarToggleLeft.setVisibility(View.GONE);
-//    }
+
+    }
 }

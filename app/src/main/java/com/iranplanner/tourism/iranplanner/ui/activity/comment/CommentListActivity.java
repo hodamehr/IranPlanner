@@ -169,7 +169,7 @@ public class CommentListActivity extends StandardActivity implements DataTransfe
 
         );
         sendCommentBtn.setOnClickListener(new View.OnClickListener()
-
+                    //// TODO: 9/20/17 salam hoda chetori injaro ba farid barresi konnn
                                           {
                                               @Override
                                               public void onClick(View v) {
