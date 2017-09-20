@@ -2,15 +2,103 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
-        style="@style/StandardTitle"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/main_blue"
+        app:layout_collapseMode="pin"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+    </android.support.v7.widget.Toolbar>
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/unsend_request"
+    android:layout_marginTop="@dimen/margin_standard"
+    android:layout_marginLeft="@dimen/margin_standard"
+    android:layout_marginRight="@dimen/margin_standard"
+    />
+    <LinearLayout
+        android:id="@+id/imageTextAttractionHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_standard"
-        android:text="وضعیت درخواستهای ارسال شده" />
+        android:layout_marginBottom="@dimen/margin_short"
+       >
 
+        <RelativeLayout
+            android:id="@+id/imageTextAttractionHolder1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="@dimen/margin_standard"         >
+
+            <ProgressBar
+                android:id="@+id/imageLoading"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:translationZ="1dp" />
+
+            <ImageView
+                android:id="@+id/ImageAttraction"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="@dimen/margin_short"
+                android:src="@drawable/emam2" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/relativeLayout4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/margin_short"
+            android:layout_marginTop="@dimen/margin_short"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/hotelNameTv"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:layout_marginLeft="@dimen/margin_standard"
+                android:layout_marginRight="@dimen/margin_standard"
+                android:gravity="center_vertical"
+                 />
+
+            <TextView
+                android:id="@+id/hotelRoomNumberTv"
+                style="@style/SmallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:layout_marginLeft="@dimen/margin_standard"
+                android:layout_marginRight="@dimen/margin_standard"
+                android:gravity="center_vertical"
+                android:text="@string/room_quantity" />
+
+            <TextView
+                android:id="@+id/txtHotelDateReq"
+                style="@style/SmallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:layout_marginLeft="@dimen/margin_standard"
+                android:layout_marginRight="@dimen/margin_standard"
+                android:text="@string/date_request" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/settingRequestStatusRv"
         android:layout_width="match_parent"

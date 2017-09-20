@@ -139,7 +139,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     @InjectView(R.id.SelectHolder)
     RelativeLayout SelectHolder;
     @InjectView(R.id.aboutCityBtn)
-    Button aboutCityBtn;
+    RelativeLayout aboutCityBtn;
     @InjectView(R.id.imgHome)
     ImageView imgHome;
     @InjectView(R.id.toolbarBack)
@@ -234,6 +234,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     RelativeLayout overlapImageItineraryHolder;
 
     private String cityName = "city name";
+
 
     public HomeFragment() {
         super();
@@ -881,7 +882,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
     void setupToolbar() {
         ((StandardActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
+        toolbar.setBackground(getResources().getDrawable(R.drawable.dark_shadow_top));
+
         ((StandardActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbarHeight = ((MainActivity) getActivity()).getSupportActionBar().getHeight();
     }
@@ -992,5 +994,4 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 //        toolbarBack.setVisibility(View.GONE);
 //        toolbarToggleLeft.setVisibility(View.GONE);
 //    }
-
 }

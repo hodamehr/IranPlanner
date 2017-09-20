@@ -48,7 +48,7 @@ public class ReservationRequestDetailActivity extends StandardActivity {
                 Log.e("bundle", "webview");
                 String postData = "requestId=" + reqId;
                 String url = "https://iranplanner.com/reflection";
-                webView.postUrl(url, EncodingUtils.getBytes(postData, "BASE64"));
+//                webView.postUrl(url, EncodingUtils.getBytes(postData, "BASE64"));
             }
         });
     }

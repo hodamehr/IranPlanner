@@ -162,7 +162,8 @@
                     android:layout_toLeftOf="@id/imgProvince"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="استان dd" />
+                    android:layout_marginTop="@dimen/margin_short"
+                    android:layout_marginBottom="@dimen/margin_short"/>
 
             </LinearLayout>
 
