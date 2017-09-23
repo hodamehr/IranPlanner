@@ -20,17 +20,11 @@ import com.iranplanner.tourism.iranplanner.R;
 public class AboutUsDialog extends Dialog implements
         android.view.View.OnClickListener {
 
-    private Activity activity;
-    private Dialog dialog;
-
     private TextView tvContent;
     private ImageView ivLogo;
 
     public AboutUsDialog(Activity activity) {
         super(activity);
-        this.activity = activity;
-
-
     }
 
     @Override

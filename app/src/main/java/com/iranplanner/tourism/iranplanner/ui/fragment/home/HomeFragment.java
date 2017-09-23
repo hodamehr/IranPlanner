@@ -60,6 +60,7 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.homeInfo.AboutCityFragmen
 import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchPresenter;
 import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.AboutUsDialog;
+import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.NavigationFunctionsHelper;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -333,8 +334,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-                            AboutUsDialog dialog = new AboutUsDialog(getActivity());
-                            dialog.show();
+                            NavigationFunctionsHelper.getInstance(getActivity()).showAboutUsDialog();
                         }
                     });
                     break;
@@ -345,7 +345,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
                     break;
                 case R.id.navRecommendTv:
-
+                    NavigationFunctionsHelper.getInstance(getActivity()).sendShareIntent();
                     break;
             }
             hideDrawer();
@@ -974,7 +974,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         }
     }
 
-    private void hideDrawer(){
+    private void hideDrawer() {
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 
