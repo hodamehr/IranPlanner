@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:orientation="vertical"
+    tools:context="com.iranplanner.tourism.iranplanner.ui.navigationDrawer.ContactUsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="6dp"
+        android:background="@color/main_blue"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:gravity="center"
+                android:text="Map Comes Here" />
+
+            <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
+                <!--xmlns:tools="http://schemas.android.com/tools"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="220dp"-->
+                <!--android:id="@+id/thisShit"-->
+                <!--tools:context=".ui.navigationDrawer.ContactUsActivity"-->
+                <!--android:name="com.google.android.gms.maps.SupportMapFragment" />-->
+
+            <TextView
+                style="@style/StandardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding_standard"
+                android:paddingRight="@dimen/padding_standard"
+                android:text="@string/iranplanner_address" />
+
+            <TextView
+                style="@style/StandardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_standard"
+                android:paddingLeft="@dimen/padding_standard"
+                android:paddingRight="@dimen/padding_standard"
+                android:text="@string/iranplanner_email" />
+
+            <TextView
+                style="@style/StandardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding_standard"
+                android:paddingRight="@dimen/padding_standard"
+                android:text="@string/iranplanner_phone" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_standard"
+                android:hint="نام و نام خانوادگی">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/contactUsNameEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <EditText
+                android:id="@+id/contactUsMessageEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_standard"
+                android:layout_marginStart="@dimen/margin_standard"
+                android:background="@drawable/corner_layout"
+                android:hint="متن پیام"
+                android:minLines="3"
+                android:padding="@dimen/padding_short" />
+
+            <Button
+                android:id="@+id/contactUsSubmitBtn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="@dimen/margin_standard"
+                android:background="@color/main_blue"
+                android:text="ارسال پبام"
+                android:textColor="#f2f2f2" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

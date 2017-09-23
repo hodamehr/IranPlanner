@@ -60,6 +60,7 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.homeInfo.AboutCityFragmen
 import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchPresenter;
 import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.AboutUsDialog;
+import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.ContactUsActivity;
 import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.NavigationFunctionsHelper;
 
 import java.io.Serializable;
@@ -315,7 +316,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             }
         });
     }
-    
+
     private void initNav(View view) {
         View root = view.findViewById(R.id.nav_layout);
 
@@ -340,7 +341,12 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                     });
                     break;
                 case R.id.navContactUsTv:
-
+                    new Handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(getActivity(), ContactUsActivity.class));
+                        }
+                    });
                     break;
                 case R.id.navCommentTv:
 
