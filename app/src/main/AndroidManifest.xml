@@ -136,7 +136,8 @@
         <activity android:name=".ui.activity.reservationRequestList.ReservationRequestActivity" />
         <activity android:name=".ui.activity.reservationRequestList.ReservationRequestDetailActivity" />
         <activity android:name=".ui.activity.event.EventListActivity" />
-        <activity android:name=".ui.activity.event.EventActivity"></activity>
+        <activity android:name=".ui.activity.event.EventActivity" />
+        <activity android:name=".ui.tutorial.TutorialActivity"></activity>
     </application>
 
 </manifest>

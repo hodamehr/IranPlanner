@@ -315,7 +315,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             }
         });
     }
-
+    
     private void initNav(View view) {
         View root = view.findViewById(R.id.nav_layout);
 
@@ -334,7 +334,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-                            NavigationFunctionsHelper.getInstance(getActivity()).showAboutUsDialog();
+                            AboutUsDialog dialog = new AboutUsDialog(getActivity());
+                            dialog.show();
                         }
                     });
                     break;
