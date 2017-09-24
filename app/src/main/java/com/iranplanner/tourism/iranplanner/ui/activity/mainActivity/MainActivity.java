@@ -99,7 +99,7 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
                 }
             }
 
-        }
+        }g
 
         int position = 2;
 //        if (extras != null) {

@@ -8,6 +8,7 @@ import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.ui.tutorial.adapter.TutorialViewPagerAdapter;
 
 import static com.iranplanner.tourism.iranplanner.R.id.tutorialVp;
+import static com.iranplanner.tourism.iranplanner.R.id.viewpager;
 
 public class TutorialActivity extends AppCompatActivity {
 
@@ -19,11 +20,15 @@ public class TutorialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tutorial);
 
         init();
-
     }
 
     private void init() {
         viewPager = (ViewPager) findViewById(tutorialVp);
         viewPager.setAdapter(new TutorialViewPagerAdapter(getSupportFragmentManager()));
     }
+
+    public void nextPage() {
+        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, false);
+    }
+
 }
