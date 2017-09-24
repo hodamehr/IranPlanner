@@ -138,7 +138,8 @@
         <activity android:name=".ui.activity.event.EventListActivity" />
         <activity android:name=".ui.activity.event.EventActivity" />
         <activity android:name=".ui.tutorial.TutorialActivity" />
-        <activity android:name=".ui.navigationDrawer.ContactUsActivity"></activity>
+        <activity android:name=".ui.navigationDrawer.ContactUsActivity" />
+        <activity android:name=".ui.navigationDrawer.AboutUsActivity"></activity>
     </application>
 
 </manifest>

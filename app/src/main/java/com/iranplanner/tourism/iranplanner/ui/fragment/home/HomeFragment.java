@@ -59,6 +59,7 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.FirstItem;
 import com.iranplanner.tourism.iranplanner.ui.fragment.homeInfo.AboutCityFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchPresenter;
+import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.AboutUsActivity;
 import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.AboutUsDialog;
 import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.ContactUsActivity;
 import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.NavigationFunctionsHelper;
@@ -335,8 +336,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-                            AboutUsDialog dialog = new AboutUsDialog(getActivity());
-                            dialog.show();
+                            startActivity(new Intent(getActivity(), AboutUsActivity.class));
                         }
                     });
                     break;
