@@ -41,6 +41,7 @@ import com.iranplanner.tourism.iranplanner.ui.fragment.FirstItem;
 import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomeFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingFragment;
+import com.iranplanner.tourism.iranplanner.ui.tutorial.TutorialActivity;
 //import com.twitter.sdk.android.core.TwitterAuthConfig;
 //import com.twitter.sdk.android.core.TwitterCore;
 //import com.twitter.sdk.android.core.identity.TwitterAuthClient;
@@ -99,7 +100,9 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
                 }
             }
 
-        }g
+        }
+
+//        startActivity(new Intent(this, TutorialActivity.class));
 
         int position = 2;
 //        if (extras != null) {

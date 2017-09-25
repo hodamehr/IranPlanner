@@ -23,7 +23,7 @@ public class Car {
     private Context context;
     private View wholeVan;
 
-    public static final int TRAVEL_TIME = 2000;
+    private static final int TRAVEL_TIME = 2000;
 
     private int vanMovementWidth;
 

@@ -6,7 +6,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 
+import com.iranplanner.tourism.iranplanner.ui.tutorial.fragments.TutorialFragmentFour;
 import com.iranplanner.tourism.iranplanner.ui.tutorial.fragments.TutorialFragmentOne;
+import com.iranplanner.tourism.iranplanner.ui.tutorial.fragments.TutorialFragmentThree;
 import com.iranplanner.tourism.iranplanner.ui.tutorial.fragments.TutorialFragmentTwo;
 
 import java.util.ArrayList;
@@ -37,6 +39,8 @@ public class TutorialViewPagerAdapter extends FragmentPagerAdapter {
 
         fragments.add(new TutorialFragmentOne());
         fragments.add(new TutorialFragmentTwo());
+        fragments.add(new TutorialFragmentThree());
+        fragments.add(new TutorialFragmentFour());
 
         return fragments;
     }

@@ -26,7 +26,7 @@ public class TutorialFragmentOne extends Fragment implements View.OnClickListene
 
     private ImageView dotTopLeft, dotTopRight, dotBottomLeft, dotBottomRight, dotCenter;
     private ImageView pinLeft, pinCenter, pinRight;
-    private View wholeVan, pinDotParent;
+    private View wholeVan, container;
 
     private Car car;
 
@@ -51,7 +51,7 @@ public class TutorialFragmentOne extends Fragment implements View.OnClickListene
         pinCenter = (ImageView) view.findViewById(R.id.tutPicCenter);
         pinRight = (ImageView) view.findViewById(R.id.tutPinRight);
 
-        pinDotParent = view.findViewById(R.id.pinDotParentView);
+        container = view.findViewById(R.id.tutMasterContainer);
 
         dotTopRight.setAlpha(0f);
         dotTopLeft.setAlpha(0f);
@@ -116,7 +116,7 @@ public class TutorialFragmentOne extends Fragment implements View.OnClickListene
     }
 
     private void hideDots() {
-        pinDotParent.animate().alpha(0f).setDuration(1000);
+        container.animate().alpha(0f).setDuration(1000);
     }
 
     @Override

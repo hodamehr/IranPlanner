@@ -61,6 +61,11 @@ public class TutorialFragmentTwo extends Fragment implements View.OnClickListene
                 .duration(1000)
                 .playOn(hotel);
 
+        YoYo.with(Techniques.Pulse)
+                .duration(1500)
+                .repeat(YoYo.INFINITE)
+                .playOn(hotelText);
+
         YoYo.with(Techniques.SlideInDown)
                 .duration(1000)
                 .playOn(hotelText);
@@ -90,6 +95,7 @@ public class TutorialFragmentTwo extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
+        car.spinTheWheels();
         car.driveOut();
         container.animate().alpha(0f).setDuration(1000);
         new Handler().postDelayed(new Runnable() {
