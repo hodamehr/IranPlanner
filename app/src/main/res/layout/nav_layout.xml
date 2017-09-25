@@ -85,4 +85,20 @@
         android:textColor="#212121"
         android:textSize="18dp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="@dimen/margin_standard"
+        android:layout_marginStart="@dimen/margin_standard"
+        android:background="@color/blue700" />
+
+    <TextView
+        android:id="@+id/navTutorialTv"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="تور ایران پلنر"
+        android:textColor="#212121"
+        android:textSize="18dp" />
+
 </LinearLayout>

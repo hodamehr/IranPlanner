@@ -63,6 +63,7 @@ import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.AboutUsActivity;
 import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.AboutUsDialog;
 import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.ContactUsActivity;
 import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.NavigationFunctionsHelper;
+import com.iranplanner.tourism.iranplanner.ui.tutorial.TutorialActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -325,6 +326,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         root.findViewById(R.id.navContactUsTv).setOnClickListener(navClickListener);
         root.findViewById(R.id.navCommentTv).setOnClickListener(navClickListener);
         root.findViewById(R.id.navRecommendTv).setOnClickListener(navClickListener);
+        root.findViewById(R.id.navTutorialTv).setOnClickListener(navClickListener);
 
     }
 
@@ -353,6 +355,9 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                     break;
                 case R.id.navRecommendTv:
                     NavigationFunctionsHelper.getInstance(getActivity()).sendShareIntent();
+                    break;
+                case R.id.navTutorialTv:
+                    startActivity(new Intent(getActivity(), TutorialActivity.class));
                     break;
             }
             hideDrawer();
