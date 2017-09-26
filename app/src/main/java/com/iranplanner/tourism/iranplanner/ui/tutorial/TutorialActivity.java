@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.tutorial.adapter.TutorialViewPagerAdapter;
 
 import java.util.ArrayList;
@@ -15,9 +16,9 @@ import me.relex.circleindicator.CircleIndicator;
 import static com.iranplanner.tourism.iranplanner.R.id.tutorialVp;
 import static com.iranplanner.tourism.iranplanner.R.id.viewpager;
 
-public class TutorialActivity extends AppCompatActivity {
+public class TutorialActivity extends StandardActivity {
 
-    private ViewPager viewPager;
+    private NonSwipeAbleViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +28,13 @@ public class TutorialActivity extends AppCompatActivity {
         init();
     }
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_tutorial;
+    }
+
     private void init() {
-        viewPager = (ViewPager) findViewById(tutorialVp);
+        viewPager = (NonSwipeAbleViewPager) findViewById(R.id.tutorialVp);
         viewPager.setAdapter(new TutorialViewPagerAdapter(getSupportFragmentManager()));
 
         CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
@@ -36,7 +42,7 @@ public class TutorialActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<Integer> getDrawables(){
+    private ArrayList<Integer> getDrawables() {
         ArrayList<Integer> drawables = new ArrayList<>();
 
         drawables.add(R.drawable.ic_google);
