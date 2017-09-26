@@ -98,7 +98,7 @@ dependencies {
     compile 'javax.inject:javax.inject:1'
     compile 'org.wlf:FileDownloader:0.3.2'
     compile 'me.relex:circleindicator:1.2.2@aar'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+//    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
     provided 'javax.annotation:jsr250-api:1.0'
 

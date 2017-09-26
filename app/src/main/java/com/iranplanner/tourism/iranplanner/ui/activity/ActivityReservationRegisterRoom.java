@@ -108,8 +108,9 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
                     intentReservationRegisterRoom.putExtra("startOfTravel", startOfTravel);
                     intentReservationRegisterRoom.putExtra("durationTravel", durationTravel);
                     intentReservationRegisterRoom.putExtra("bundleId", bundleId);
+                intentReservationRegisterRoom.putExtra("BundleFrom", "ActivityReservationRegisterRoom");
 
-                    intentReservationRegisterRoom.putExtra("edtNameReservation", edtNameReservation.getText().toString());
+                intentReservationRegisterRoom.putExtra("edtNameReservation", edtNameReservation.getText().toString());
                     intentReservationRegisterRoom.putExtra("edtEmailReservation", edtEmailReservation.getText().toString());
                     intentReservationRegisterRoom.putExtra("edtLastNameReservation", edtLastNameReservation.getText().toString());
                     intentReservationRegisterRoom.putExtra("textPhoneAddress", textPhoneAddress.getText().toString());

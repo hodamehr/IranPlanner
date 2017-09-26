@@ -6,14 +6,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class ResultReservationReqStatus implements Serializable {
+public class ResultBundleStatus implements Serializable {
 
     @SerializedName("Status")
     @Expose
     private Status status;
-    @SerializedName("Result_req_count_bundle")
+    @SerializedName("Result_reservation_bundle_list")
     @Expose
-    private ResultReqCountBundle resultReqCountBundle;
+    private ResultReservationBundleList resultReservationBundleList;
     @SerializedName("Statistics")
     @Expose
     private Statistics statistics;
@@ -29,12 +29,12 @@ public class ResultReservationReqStatus implements Serializable {
         this.status = status;
     }
 
-    public ResultReqCountBundle getResultReqCountBundle() {
-        return resultReqCountBundle;
+    public ResultReservationBundleList getResultReservationBundleList() {
+        return resultReservationBundleList;
     }
 
-    public void setResultReqCountBundle(ResultReqCountBundle resultReqCountBundle) {
-        this.resultReqCountBundle = resultReqCountBundle;
+    public void setResultReservationBundleList(ResultReservationBundleList resultReservationBundleList) {
+        this.resultReservationBundleList = resultReservationBundleList;
     }
 
     public Statistics getStatistics() {

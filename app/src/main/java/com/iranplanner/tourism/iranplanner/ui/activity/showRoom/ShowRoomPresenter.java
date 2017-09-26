@@ -72,8 +72,8 @@ public class ShowRoomPresenter extends ShowRoomContract {
                     }
 
                     @Override
-                    public void onNext(RequestLodgingReservationMain loginResult) {
-                        mView.showHotelReservationResult(loginResult);
+                    public void onNext(RequestLodgingReservationMain requestLodgingReservationMain) {
+                        mView.showHotelReservationResult(requestLodgingReservationMain);
                     }
                 });
     }

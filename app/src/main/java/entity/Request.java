@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Request implements Serializable {
+public class Request implements Serializable{
 
     @SerializedName("req_bundle_order")
     @Expose
@@ -77,6 +77,9 @@ public class Request implements Serializable {
     @SerializedName("req_price_sum")
     @Expose
     private String reqPriceSum;
+    @SerializedName("request_price")
+    @Expose
+    private RequestPrice requestPrice;
 
     public String getReqBundleOrder() {
         return reqBundleOrder;
@@ -260,6 +263,14 @@ public class Request implements Serializable {
 
     public void setReqPriceSum(String reqPriceSum) {
         this.reqPriceSum = reqPriceSum;
+    }
+
+    public RequestPrice getRequestPrice() {
+        return requestPrice;
+    }
+
+    public void setRequestPrice(RequestPrice requestPrice) {
+        this.requestPrice = requestPrice;
     }
 
 }

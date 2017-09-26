@@ -18,6 +18,7 @@ import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus.HotelReservationStatusActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.showRoom.ShowRoomActivity;
 import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingContract;
+import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingPresenter;
 
 import java.io.Serializable;
@@ -37,6 +38,7 @@ import entity.ReservationRequestComplete;
 import entity.ReservationRequestDeleteRoom;
 import entity.ResultLodging;
 import entity.ResultLodgingReservation;
+import entity.ResultReqBundle;
 import entity.ResultReqCount;
 import entity.ResultReservationReqStatus;
 import entity.ResultRoom;
@@ -72,21 +74,40 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
     List<ReqLodgingReservation> ReqLodgingReservationList;
     View viewAdapter, viewEnds;
     ConfirmReservationViewPagerAdapter confirmReservationViewPagerAdapter;
+    entity.Bundle roomBundle;
+    private String bundleFrom;
 
     private void getExtra() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        ResultRooms = (List<ResultRoom>) bundle.getSerializable("ResultRooms");
-        selectedRooms = (Map<Integer, Integer>) bundle.getSerializable("selectedRooms");
-        resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
-        startOfTravel = (Date) bundle.getSerializable("startOfTravel");
-        durationTravel = (int) bundle.getSerializable("durationTravel");
-        bundleId = bundle.getString("bundleId");
-        edtNameReservation = bundle.getString("edtNameReservation");
-        edtEmailReservation = bundle.getString("edtEmailReservation");
-        edtLastNameReservation = bundle.getString("edtLastNameReservation");
-        textPhoneAddress = bundle.getString("textPhoneAddress");
+
+        bundleFrom = bundle.getString("BundleFrom");
+        if (bundleFrom.equals("ActivityReservationRegisterRoom")) {
+            ResultRooms = (List<ResultRoom>) bundle.getSerializable("ResultRooms");
+            selectedRooms = (Map<Integer, Integer>) bundle.getSerializable("selectedRooms");
+            resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
+            startOfTravel = (Date) bundle.getSerializable("startOfTravel");
+            durationTravel = (int) bundle.getSerializable("durationTravel");
+            bundleId = bundle.getString("bundleId");
+            edtNameReservation = bundle.getString("edtNameReservation");
+            edtEmailReservation = bundle.getString("edtEmailReservation");
+            edtLastNameReservation = bundle.getString("edtLastNameReservation");
+            textPhoneAddress = bundle.getString("textPhoneAddress");
+            roomBundle = (entity.Bundle) bundle.getSerializable("RoomBundle");
+        } else if (bundleFrom.equals("HotelReservationStatusActivity")) {
+            roomBundle = (entity.Bundle) bundle.getSerializable("RoomBundle");
+            ResultRooms = roomBundle.getResultRoom();
+            resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
+            startOfTravel = new Date(Long.valueOf(roomBundle.getBundleDateFrom()));
+            durationTravel = Integer.valueOf(roomBundle.getBundleDateCount());
+            bundleId = roomBundle.getBundleId();
+            edtNameReservation = "";
+            edtEmailReservation = "";
+            edtLastNameReservation = "";
+            textPhoneAddress = "";
+        }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -246,7 +267,12 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
         resultLodgingReservation.setReqHeadNameLast(edtLastNameReservation);
         resultLodgingReservation.setReqLodgingDateFrom(String.valueOf(startOfTravel.getTime()));
         resultLodgingReservation.setReqLodgingDateCount(String.valueOf(durationTravel));
-        resultLodgingReservation.setReqLodgingId(String.valueOf(resultLodgingHotelDetail.getLodgingId()));
+        if (bundleFrom.equals("ActivityReservationRegisterRoom")) {
+            resultLodgingReservation.setReqLodgingId(String.valueOf(resultLodgingHotelDetail.getLodgingId()));
+        } else if (bundleFrom.equals("HotelReservationStatusActivity")) {
+            resultLodgingReservation.setReqLodgingId(roomBundle.getBundleLodgingId());
+        }
+
         resultLodgingReservation.setReqUid(Util.getUseRIdFromShareprefrence(getApplicationContext()));
         List<ReqLodgingReservation> reqLodgingReservations = getRequest(position, room);
         if (reqLodgingReservations.size() != 0) {
@@ -283,9 +309,9 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
 
     @Override
     public void showHotelReservationResult(RequestLodgingReservationMain loginResult) {
-        pager.setCurrentItem(pager.getCurrentItem()  , true);
+        pager.setCurrentItem(pager.getCurrentItem(), true);
         ((TextView) viewAdapter.findViewById(R.id.txtOkRoom)).setText("ویرایش");
-        if (0==pager.getCurrentItem()) {
+        if (0 == pager.getCurrentItem()) {
             viewEnds.setVisibility(View.VISIBLE);
         }
     }
@@ -295,7 +321,7 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
         if (reservationRequestComplete.getStatus().getStatus() == 200) {
             String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
             String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
-            settingPresenter.getResultReservationReqStatus("req_user_count", Util.getUseRIdFromShareprefrence(getApplicationContext()), "fa", cid, andId);
+            settingPresenter.getResultReservationReqStatus("req_user_count_bundle", Util.getUseRIdFromShareprefrence(getApplicationContext()), "fa", cid, andId);
         }
     }
 
@@ -337,18 +363,26 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
     @Override
     public void showResultReservationReqStatus(ResultReservationReqStatus resultReservationReqStatus) {
         Intent intent = new Intent(getApplicationContext(), HotelReservationStatusActivity.class);
-        List<ResultReqCount> resultReqCountList = resultReservationReqStatus.getResultReqCount();
+        List<ResultReqCount> resultReqCountList = resultReservationReqStatus.getResultReqCountBundle().getResultReqCount();
+        List<ResultReqBundle> resultReqBundleList = resultReservationReqStatus.getResultReqCountBundle().getResultReqBundle();
         intent.putExtra("resultReqCountList", (Serializable) resultReqCountList);
+        intent.putExtra("resultReqBundleList", (Serializable) resultReqBundleList);
         startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(ActivityHotelReservationConfirm.this,
-                ShowRoomActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
+        if (bundleFrom.equals("ActivityReservationRegisterRoom")) {
+            Intent intent = new Intent(ActivityHotelReservationConfirm.this,
+                    ShowRoomActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        } else if (bundleFrom.equals("HotelReservationStatusActivity")) {
+            super.onBackPressed();
+        }
+
     }
+
 
 }

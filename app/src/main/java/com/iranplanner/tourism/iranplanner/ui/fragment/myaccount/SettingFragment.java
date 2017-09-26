@@ -32,6 +32,7 @@ import javax.inject.Inject;
 
 import entity.GetInfoReqSend;
 import entity.GetInfoResult;
+import entity.ResultReqBundle;
 import entity.ResultReqCount;
 import entity.ResultReservationReqStatus;
 import server.Config;
@@ -103,7 +104,7 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
     }
 
     private void getRerReservation() {
-        settingPresenter.getResultReservationReqStatus("req_user_count", uid, "fa", cid, andId);
+        settingPresenter.getResultReservationReqStatus("req_user_count_bundle", uid, "fa", cid, andId);
     }
 
     public void onClick(View v) {
@@ -181,15 +182,12 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
 
     @Override
     public void showResultReservationReqStatus(ResultReservationReqStatus resultReservationReqStatus) {
-        List<ResultReqCount> resultReqCountList = resultReservationReqStatus.getResultReqCount();
+        List<ResultReqCount> resultReqCountList = resultReservationReqStatus.getResultReqCountBundle().getResultReqCount();
+        List<ResultReqBundle> resultReqBundleList = resultReservationReqStatus.getResultReqCountBundle().getResultReqBundle();
 //        initRequestStatusRecyclerView(view, resultReqCountList);
         Intent intent=new Intent(getActivity(), HotelReservationStatusActivity.class);
         intent.putExtra("resultReqCountList", (Serializable) resultReqCountList);
-
-
+        intent.putExtra("resultReqBundleList", (Serializable) resultReqBundleList);
         startActivity(intent);
-
-
-
     }
 }

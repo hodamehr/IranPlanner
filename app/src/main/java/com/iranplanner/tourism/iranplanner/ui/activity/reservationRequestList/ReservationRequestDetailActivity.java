@@ -24,6 +24,7 @@ import java.util.List;
 
 import entity.ReservationRequestList;
 import entity.ResultReservationReqFull;
+import tools.Util;
 
 public class ReservationRequestDetailActivity extends StandardActivity {
 
@@ -46,9 +47,9 @@ public class ReservationRequestDetailActivity extends StandardActivity {
             @Override
             public void onClick(View view) {
                 Log.e("bundle", "webview");
-                String postData = "requestId=" + reqId;
+                String postData ="{"+" \"request_id\" "+": \""+reqId+"\" ,"+"\"uid\""+":\""+ Util.getUseRIdFromShareprefrence(getApplicationContext())+"\"}";
                 String url = "https://iranplanner.com/reflection";
-//                webView.postUrl(url, EncodingUtils.getBytes(postData, "BASE64"));
+                webView.postUrl(url, EncodingUtils.getBytes(postData, "BASE64"));
             }
         });
     }

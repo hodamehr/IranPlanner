@@ -4,6 +4,7 @@ package com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus;
 import javax.inject.Inject;
 
 import entity.ReservationRequestList;
+import entity.ResultBundleStatus;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -55,6 +56,34 @@ public class HotelReservationStatusListPresenter extends HotelReservationStatusC
                 });
     }
 
+    @Override
+    public void getHotelReservationBundleFull(String action, String lang, String uid, String bundleId, String cid, String andId) {
+        mView.showProgress();
+        retrofit.create(HotelReservationStatusLisService.class).getHotelReservationBundleFull(action, lang, uid, bundleId, cid, andId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultBundleStatus>() {
+
+                    @Override
+                    public void onCompleted() {
+                        mView.showComplete();
+                        mView.dismissProgress();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(e.getMessage());
+                        mView.dismissProgress();
+                    }
+
+                    @Override
+                    public void onNext(ResultBundleStatus resultBundleStatus) {
+                        mView.showHotelReservationBundleStatus(resultBundleStatus);
+                    }
+                });
+    }
+
 
     public interface HotelReservationStatusLisService {
         //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_list&lang=fa&uid=792147600796866&type=1
@@ -68,5 +97,13 @@ public class HotelReservationStatusListPresenter extends HotelReservationStatusC
                                                                          @Query("cid") String cid,
                                                                          @Query("andId") String andId);
 
+        //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_bundle_full&uid=792147600796866&lang=fa&id=12150158259660
+        @GET("api-reservation.php")
+        Observable<ResultBundleStatus> getHotelReservationBundleFull(@Query("action") String action,
+                                                                     @Query("lang") String lang,
+                                                                     @Query("uid") String uid,
+                                                                     @Query("id") String bundleId,
+                                                                     @Query("cid") String cid,
+                                                                     @Query("andId") String andId);
     }
 }

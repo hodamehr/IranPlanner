@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_standard"
+        android:layout_marginRight="@dimen/margin_standard"
+        android:layout_marginTop="@dimen/margin_standard"
+        android:text="@string/unsend_request" />
+
+    <LinearLayout
+        android:id="@+id/imageReqestHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTitle"
+        android:layout_marginBottom="@dimen/margin_short">
+
+        <RelativeLayout
+            android:id="@+id/imageTextAttractionHolder1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="@dimen/margin_standard">
+
+            <ProgressBar
+                android:id="@+id/imageLoading"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:translationZ="1dp" />
+
+            <ImageView
+                android:id="@+id/imageHotel"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="@dimen/margin_short"
+                android:src="@drawable/emam2" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/relativeLayout4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/margin_short"
+            android:layout_marginTop="@dimen/margin_short"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/hotelNameTv"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:layout_marginLeft="@dimen/margin_standard"
+                android:layout_marginRight="@dimen/margin_standard"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/hotelRoomNumberTv"
+                style="@style/SmallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:layout_marginLeft="@dimen/margin_standard"
+                android:layout_marginRight="@dimen/margin_standard"
+                android:gravity="center_vertical"
+                android:text="@string/room_quantity" />
+
+            <TextView
+                android:id="@+id/txtHotelDateReq"
+                style="@style/SmallText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:layout_marginLeft="@dimen/margin_standard"
+                android:layout_marginRight="@dimen/margin_standard"
+                android:text="@string/date_request" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_"
+        android:gravity="center"
+        android:weightSum="2"
+        android:layout_below="@+id/imageReqestHolder">
+
+        <Button
+            android:id="@+id/btnComplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/request_status_green_btn_selector"
+            android:text="تکمیل "
+            android:textColor="@color/textColorWhite" />
+
+        <Button
+            android:id="@+id/requestStatusRowPaymentBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/request_status_green_btn_selector"
+            android:text="تکمیل "
+            android:textColor="@color/textColorWhite" />
+    </LinearLayout>
+</RelativeLayout>

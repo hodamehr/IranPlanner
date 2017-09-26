@@ -262,9 +262,9 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
         startOfTravel = (Date) bundle.getSerializable("startOfTravel");
         durationTravel = (int) bundle.getSerializable("durationTravel");
         todayDate = bundle.getString("todayDate");
-        String s = (startOfTravel != null) ? Utils.getSimpleDate(startOfTravel) : Utils.getSimpleDateMilli(Long.valueOf(todayDate));
+        String s = (startOfTravel != null) ? Util.persianNumbers(Utils.getSimpleDate(startOfTravel)) : Util.persianNumbers(Utils.getSimpleDateMilli(Long.valueOf(todayDate)));
         txtDateCheckIn.setText(s);
-        txtDurationHotel.setText("به مدت "+Util.persianNumbers(String.valueOf(durationTravel)) + " شب");
+        txtDurationHotel.setText("به مدت " + Util.persianNumbers(String.valueOf(durationTravel)) + " شب");
     }
 
     private void showDialogNumber() {
@@ -282,8 +282,6 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Log.e("ReservationHotelDetail", "Damn Son");
 
         findView();
         overrideFont();
@@ -571,7 +569,7 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
             @Override
             public void finish(Date result) {
                 startOfTravel = result;
-                txtDateCheckIn.setText(Utils.getSimpleDate(result));
+                txtDateCheckIn.setText(Util.persianNumbers(Utils.getSimpleDate(result)));
             }
         });
     }

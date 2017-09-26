@@ -8,6 +8,53 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ResultRoom implements Serializable {
+
+
+    @SerializedName("req_bundle_order")
+    @Expose
+    private String reqBundleOrder;
+    @SerializedName("req_id")
+    @Expose
+    private String reqId;
+    @SerializedName("req_status")
+    @Expose
+    private String reqStatus;
+    @SerializedName("req_bundle_id")
+    @Expose
+    private String reqBundleId;
+
+    public String getReqBundleOrder() {
+        return reqBundleOrder;
+    }
+
+    public void setReqBundleOrder(String reqBundleOrder) {
+        this.reqBundleOrder = reqBundleOrder;
+    }
+
+    public String getReqId() {
+        return reqId;
+    }
+
+    public void setReqId(String reqId) {
+        this.reqId = reqId;
+    }
+
+    public String getReqStatus() {
+        return reqStatus;
+    }
+
+    public void setReqStatus(String reqStatus) {
+        this.reqStatus = reqStatus;
+    }
+
+    public String getReqBundleId() {
+        return reqBundleId;
+    }
+
+    public void setReqBundleId(String reqBundleId) {
+        this.reqBundleId = reqBundleId;
+    }
+
     @SerializedName("ok_confirm_change")
     @Expose
     private Boolean okConfirmChange;
@@ -19,19 +66,6 @@ public class ResultRoom implements Serializable {
     public void setOkConfirmChange(Boolean okConfirmChange) {
         this.okConfirmChange = okConfirmChange;
     }
-
-//    @SerializedName("selectedNationality")
-//    @Expose
-//    private String selectedNationality;
-//
-//
-//    public String getSelectedNationality() {
-//        return selectedNationality;
-//    }
-//
-//    public void setSelectedNationality(String selectedNationality) {
-//        this.selectedNationality = selectedNationality;
-//    }
 
     public String getSelectedAddNumbers() {
         return selectedAddNumbers;

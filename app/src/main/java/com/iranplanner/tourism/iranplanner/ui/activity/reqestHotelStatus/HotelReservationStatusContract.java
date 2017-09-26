@@ -2,6 +2,7 @@ package com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus;
 
 
 import entity.ReservationRequestList;
+import entity.ResultBundleStatus;
 import entity.ResultLodgingHotel;
 
 /**
@@ -10,6 +11,7 @@ import entity.ResultLodgingHotel;
 public abstract class HotelReservationStatusContract {
     public interface View {
         void showHotelReservationStatusList(ReservationRequestList reservationRequestList);
+        void showHotelReservationBundleStatus(ResultBundleStatus resultBundleStatus);
 
         void showError(String message);
 
@@ -21,7 +23,6 @@ public abstract class HotelReservationStatusContract {
     }
 
 
-
     public abstract void getHotelReservationStatusList(String action,
                                                        String lang,
                                                        String uid,
@@ -31,4 +32,10 @@ public abstract class HotelReservationStatusContract {
                                                        String cid,
                                                        String andId);
 
+    public abstract void getHotelReservationBundleFull(String action,
+                                                       String lang,
+                                                       String uid,
+                                                       String bundleId,
+                                                       String cid,
+                                                       String andId);
 }

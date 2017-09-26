@@ -114,8 +114,9 @@ public class SettingPresenter extends SettingContract {
                                                        @Query("cid") String token,
                                                        @Query("andId") String androidId);
         //   https://api.parsdid.com/iranplanner/app/api-lodging.php?action=req_user_count&uid=792147600796866&lang=fa
+//        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_count_bundle&uid=792147600796866&lang=faervation
 
-        @GET("api-lodging.php")
+        @GET("api-reservation.php")
         Observable<ResultReservationReqStatus> getResultReservationReqStatus(@Query("action") String action,
                                                                              @Query("uid") String uid,
                                                                              @Query("lang") String lang,
