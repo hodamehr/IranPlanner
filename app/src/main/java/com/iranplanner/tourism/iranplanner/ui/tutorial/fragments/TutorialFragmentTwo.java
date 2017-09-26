@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -28,6 +29,7 @@ public class TutorialFragmentTwo extends Fragment implements View.OnClickListene
     private Car car;
     private ImageView hotel, hotelText, grass;
     private View container;
+    private Button btnOk;
 
     @Nullable
     @Override
@@ -70,12 +72,14 @@ public class TutorialFragmentTwo extends Fragment implements View.OnClickListene
                 .duration(1000)
                 .playOn(hotelText);
 
+        showOkBtn();
     }
 
     private void initView(View view) {
         car = new Car(view.findViewById(R.id.tutWholeVanRl), getActivity());
 
-        view.findViewById(R.id.okBtn).setOnClickListener(this);
+        btnOk = (Button) view.findViewById(R.id.okBtn);
+        hideOkBtn();
 
         container = view.findViewById(R.id.tutMasterContainer);
 
@@ -91,6 +95,21 @@ public class TutorialFragmentTwo extends Fragment implements View.OnClickListene
         grass.bringToFront();
 
         grass.setTranslationY(100f);
+
+    }
+
+    private void hideOkBtnAnimate() {
+        btnOk.setOnClickListener(null);
+        btnOk.animate().translationYBy(Util.dpToPx(getContext(), 120)).setStartDelay(500);
+    }
+
+    private void hideOkBtn() {
+        btnOk.setTranslationY(Util.dpToPx(getContext(), 120));
+    }
+
+    private void showOkBtn() {
+        btnOk.setOnClickListener(this);
+        btnOk.animate().translationYBy(Util.dpToPx(getContext(), -120)).setStartDelay(2000);
     }
 
     @Override
@@ -98,6 +117,7 @@ public class TutorialFragmentTwo extends Fragment implements View.OnClickListene
         car.spinTheWheels();
         car.driveOut();
         container.animate().alpha(0f).setDuration(1000);
+        hideOkBtnAnimate();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

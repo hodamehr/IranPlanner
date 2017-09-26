@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -27,6 +28,7 @@ public class TutorialFragmentOne extends Fragment implements View.OnClickListene
     private ImageView dotTopLeft, dotTopRight, dotBottomLeft, dotBottomRight, dotCenter;
     private ImageView pinLeft, pinCenter, pinRight;
     private View wholeVan, container;
+    private Button btnOk;
 
     private Car car;
 
@@ -63,7 +65,8 @@ public class TutorialFragmentOne extends Fragment implements View.OnClickListene
         pinCenter.setAlpha(0f);
         pinRight.setAlpha(0f);
 
-        view.findViewById(R.id.okBtn).setOnClickListener(this);
+        btnOk = (Button) view.findViewById(R.id.okBtn);
+        hideOkBtn();
 
         car = new Car(view.findViewById(R.id.tutWholeVanRl), getActivity());
 
@@ -79,6 +82,8 @@ public class TutorialFragmentOne extends Fragment implements View.OnClickListene
         dotBottomLeft.animate().alpha(1).setDuration(800);
         dotBottomRight.animate().alpha(1).setDuration(800);
         dotCenter.animate().alpha(1).setDuration(800);
+
+        showOkBtn();
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -117,6 +122,21 @@ public class TutorialFragmentOne extends Fragment implements View.OnClickListene
 
     private void hideDots() {
         container.animate().alpha(0f).setDuration(1000);
+        hideOkBtnAnimate();
+    }
+
+    private void hideOkBtnAnimate() {
+        btnOk.setOnClickListener(null);
+        btnOk.animate().translationYBy(Util.dpToPx(getContext(), 120)).setStartDelay(500);
+    }
+
+    private void hideOkBtn() {
+        btnOk.setTranslationY(Util.dpToPx(getContext(), 120));
+    }
+
+    private void showOkBtn() {
+        btnOk.setOnClickListener(this);
+        btnOk.animate().translationYBy(Util.dpToPx(getContext(), -120)).setStartDelay(2000);
     }
 
     @Override

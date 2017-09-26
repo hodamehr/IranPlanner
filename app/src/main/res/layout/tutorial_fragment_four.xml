@@ -135,6 +135,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="ok!" />
+        android:background="@drawable/request_status_green_btn_selector"
+        android:layout_margin="10dp"
+        android:text="بریم سفر!"
+        android:textColor="#f2f2f2" />
 
 </RelativeLayout>

@@ -8,13 +8,13 @@
     <RelativeLayout
         android:id="@+id/tutMasterContainer"
         android:layout_width="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_height="320dp">
+        android:layout_height="320dp"
+        android:layout_alignParentTop="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_height="230dp">
+            android:layout_height="230dp"
+            android:layout_alignParentBottom="true">
 
             <RelativeLayout
                 android:id="@+id/pinDotParentView"
@@ -148,6 +148,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="ok!" />
+        android:layout_margin="10dp"
+        android:background="@drawable/request_status_green_btn_selector"
+        android:text="بریم سفر!"
+        android:textColor="#f2f2f2" />
 
 </RelativeLayout>

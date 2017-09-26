@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -25,6 +26,7 @@ public class TutorialFragmentThree extends Fragment implements View.OnClickListe
 
     private ImageView tent, trumpet;
     private Car car;
+    private Button btnOk;
 
     private View container;
 
@@ -46,7 +48,8 @@ public class TutorialFragmentThree extends Fragment implements View.OnClickListe
 
         container = view.findViewById(R.id.tutMasterContainer);
 
-        view.findViewById(R.id.okBtn).setOnClickListener(this);
+        btnOk = (Button) view.findViewById(R.id.okBtn);
+        hideOkBtn();
 
         tent.bringToFront();
         trumpet.bringToFront();
@@ -62,6 +65,7 @@ public class TutorialFragmentThree extends Fragment implements View.OnClickListe
         trumpet.setScaleY(0f);
 
         car = new Car(view.findViewById(R.id.tutWholeVanRl), getActivity());
+
     }
 
     private void init() {
@@ -81,6 +85,22 @@ public class TutorialFragmentThree extends Fragment implements View.OnClickListe
                         .playOn(trumpet);
             }
         }, 1000);
+
+        showOkBtn();
+    }
+
+    private void hideOkBtnAnimate() {
+        btnOk.setOnClickListener(null);
+        btnOk.animate().translationYBy(Util.dpToPx(getContext(), 120)).setStartDelay(500);
+    }
+
+    private void hideOkBtn() {
+        btnOk.setTranslationY(Util.dpToPx(getContext(), 120));
+    }
+
+    private void showOkBtn() {
+        btnOk.setOnClickListener(this);
+        btnOk.animate().translationYBy(Util.dpToPx(getContext(), -120)).setStartDelay(2000);
     }
 
     @Override
@@ -94,6 +114,7 @@ public class TutorialFragmentThree extends Fragment implements View.OnClickListe
     public void onClick(View view) {
         car.spinTheWheels();
         car.driveOut();
+        hideOkBtnAnimate();
         container.animate().alpha(0f).setDuration(1000);
         new Handler().postDelayed(new Runnable() {
             @Override

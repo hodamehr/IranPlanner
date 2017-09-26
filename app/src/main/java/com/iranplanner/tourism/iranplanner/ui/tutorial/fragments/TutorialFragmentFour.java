@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -24,6 +25,8 @@ public class TutorialFragmentFour extends Fragment {
 
     private Car car;
     private ImageView booth, curtain, giftTop, giftBelow, giftFeshfeshe;
+    private Button btnOk;
+
     private View boothContainer, giftContainer;
 
     private int feshfesheHeight, boothHeight, curtainHeight;
@@ -41,6 +44,9 @@ public class TutorialFragmentFour extends Fragment {
     private void initView(View view) {
 
         car = new Car(view.findViewById(R.id.tutWholeVanRl), getActivity());
+
+        btnOk = (Button) view.findViewById(R.id.okBtn);
+        hideOkBtn();
 
         booth = (ImageView) view.findViewById(R.id.tutBoothIv);
         curtain = (ImageView) view.findViewById(R.id.tutCurtainIv);
@@ -103,6 +109,22 @@ public class TutorialFragmentFour extends Fragment {
             }
         }, 2500);
 
+        showOkBtn();
+
+    }
+
+    private void hideOkBtnAnimate() {
+        btnOk.setOnClickListener(null);
+        btnOk.animate().translationYBy(Util.dpToPx(getContext(), 120)).setStartDelay(500);
+    }
+
+    private void hideOkBtn() {
+        btnOk.setTranslationY(Util.dpToPx(getContext(), 120));
+    }
+
+    private void showOkBtn() {
+//        btnOk.setOnClickListener(this);
+        btnOk.animate().translationYBy(Util.dpToPx(getContext(), -120)).setStartDelay(2000);
     }
 
     @Override
