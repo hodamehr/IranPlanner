@@ -1,7 +1,6 @@
 package com.iranplanner.tourism.iranplanner.ui.navigationDrawer;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 
 /**
@@ -33,7 +32,7 @@ public class NavigationFunctionsHelper {
     }
 
     public void showAboutUsDialog() {
-        new AboutUsDialog(context).show();
+        new AboutCityDialog(context).show();
     }
 
 

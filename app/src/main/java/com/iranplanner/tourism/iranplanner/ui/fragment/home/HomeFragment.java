@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,7 +31,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -56,11 +56,10 @@ import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity
 import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListPresenter;
 import com.iranplanner.tourism.iranplanner.ui.fragment.FirstItem;
-import com.iranplanner.tourism.iranplanner.ui.fragment.homeInfo.AboutCityFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchPresenter;
 import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.AboutUsActivity;
-import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.AboutUsDialog;
+import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.AboutCityDialog;
 import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.ContactUsActivity;
 import com.iranplanner.tourism.iranplanner.ui.navigationDrawer.NavigationFunctionsHelper;
 import com.iranplanner.tourism.iranplanner.ui.tutorial.TutorialActivity;
@@ -77,7 +76,6 @@ import autoComplet.ReadJsonCityProvince;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import entity.CityProvince;
-import entity.Data;
 import entity.GetHomeResult;
 import entity.HomeAttraction;
 import entity.HomeCountryProvince;
@@ -476,7 +474,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void showAboutCityOrProvince() {
-        Bundle bundle = new Bundle();
+        /*Bundle bundle = new Bundle();
         bundle.putSerializable("homeInfo", resultHomes.get(0).getHomeInfo());
 
         bundle.putSerializable("url", resultHomes.get(0).getHomeImages().get(0).getImgUrl());
@@ -485,7 +483,17 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.containerHomeFragment, aboutCityFragment);
         transaction.addToBackStack(null);
-        transaction.commit();
+        transaction.commit();*/
+
+        AboutCityDialog dialog = new AboutCityDialog(getActivity());
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        dialog.show();
+
+        dialog.setTitle(resultHomes.get(0).getHomeInfo().getTitle());
+        dialog.setImageResource(resultHomes.get(0).getHomeImages().get(0).getImgUrl());
+        dialog.setDesc(resultHomes.get(0).getHomeInfo().getBody());
+
     }
 
     private void onClickShowProvince(LinearLayout card_view_province) {
