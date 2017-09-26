@@ -3,10 +3,12 @@ package com.iranplanner.tourism.iranplanner.ui.fragment.showAttractionList;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -84,6 +86,12 @@ public class AttractionsListAdapterDay extends RecyclerView.Adapter<AttractionsL
             Glide.clear(viewHolder.ImageAttraction);
             viewHolder.ImageAttraction.setImageDrawable(null);
         }
+        viewHolder.attractionHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("attractionHolder","clicked");
+            }
+        });
     }
 
     @Override
@@ -97,6 +105,7 @@ public class AttractionsListAdapterDay extends RecyclerView.Adapter<AttractionsL
         private TextView textTimeDuration;
         private CircleImageView ImageAttraction;
         private Button navigateBtn;
+        private RelativeLayout attractionHolder;
 
 
         public ViewHolder(View view) {
@@ -106,7 +115,7 @@ public class AttractionsListAdapterDay extends RecyclerView.Adapter<AttractionsL
             textTimeDuration = (TextView) view.findViewById(R.id.textTimeDuration);
             ImageAttraction = (CircleImageView) view.findViewById(R.id.ImageAttraction);
             navigateBtn = (Button) view.findViewById(R.id.navigateBtn);
-
+            attractionHolder = (RelativeLayout) view.findViewById(R.id.attractionHolder);
         }
 
 

@@ -73,6 +73,8 @@ public class ShowAttractionListFragment extends StandardFragment implements Data
         attractionRecyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
+                final ResulAttraction resulAttraction = resultItineraryAttractionDays.get(position).getResulAttraction();
+                final List<ResultAttractionList> resultAttractionList = (List<ResultAttractionList>) resultItineraryAttractionDays.get(position).getResultAttractionList();
                 Button navigateBtn = (Button) view.findViewById(R.id.navigateBtn);
                 navigateBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -80,36 +82,20 @@ public class ShowAttractionListFragment extends StandardFragment implements Data
                         final LocationManager manager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
 
                         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                            // Call your Alert message
                             buildAlertMessageNoGps(position);
                         } else {
-                            openMapFull(position);
+                            openMapFull(position, resulAttraction);
                         }
-                    }
-                });
-
-                RelativeLayout imageTextAttractionHolder = (RelativeLayout) view.findViewById(R.id.imageTextAttractionHolder);
-                imageTextAttractionHolder.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-//                        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
-                        ResulAttraction resulAttraction = resultItineraryAttractionDays.get(position).getResulAttraction();
-                      List<ResultAttractionList >resultAttractionList= (List<ResultAttractionList>) resultItineraryAttractionDays.get(position).getResultAttractionList();
-                        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
-//                        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
-                        intent.putExtra("resulAttraction", (Serializable) resulAttraction);
-                        intent.putExtra("resultAttractionList", (Serializable) resultAttractionList);
-                        startActivity(intent);
                     }
                 });
                 Button moreInfoHolder = (Button) view.findViewById(R.id.moreInfoHolder);
                 moreInfoHolder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        ResultItineraryAttraction ResultItineraryAttraction = itineraryActionList.get(position);
-//                        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
-//                        intent.putExtra("ResultItineraryAttraction", (Serializable) ResultItineraryAttraction);
-//                        startActivity(intent);
+                        Intent intent = new Intent(getActivity(), attractionDetailActivity.class);
+                        intent.putExtra("resulAttraction", (Serializable) resulAttraction);
+                        intent.putExtra("resultAttractionList", (Serializable) resultAttractionList);
+                        startActivity(intent);
                     }
                 });
 
@@ -138,7 +124,6 @@ public class ShowAttractionListFragment extends StandardFragment implements Data
     }
 
 
-
     private void buildAlertMessageNoGps(final int position) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("مسیریاب شما فعال نیست، آیا تمایل به روشن کردن آن دارید؟")
@@ -165,7 +150,7 @@ public class ShowAttractionListFragment extends StandardFragment implements Data
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("map is ckicked", "true");
-        openMapFull(requestCode);
+        openMapFull(requestCode, null);
 //        if (resultCode == 1) {
 //            switch (requestCode) {
 //                case 1:
@@ -175,11 +160,15 @@ public class ShowAttractionListFragment extends StandardFragment implements Data
 //        }
     }
 
-    private void openMapFull(int position) {
+    private void openMapFull(int position, ResulAttraction resulAttraction) {
         Intent intent = new Intent(getContext(), MapFullActivity.class);
         ItineraryLodgingCity i = new ItineraryLodgingCity();
-        i.setCityPositionLat(itineraryActionList.get(position).getAttractionPositionLat());
-        i.setCityPositionLon(itineraryActionList.get(position).getAttractionPositionOn());
+//        i.setCityPositionLat(itineraryActionList.get(position).getAttractionPositionLat());
+        i.setCityPositionLat(resulAttraction.getAttractionPositionLat());
+        i.setCityPositionLon(resulAttraction.getAttractionPositionLon());
+//        i.setCityPositionLat(resultItineraryAttractionDays.get(0).getResultAttractionList().get(position).getResulAttraction().getAttractionPositionLat());
+//        i.setCityPositionLon(itineraryActionList.get(position).getAttractionPositionOn());
+//        i.setCityPositionLat(resultItineraryAttractionDays.get(0).getResultAttractionList().get(position).getResulAttraction().getAttractionPositionLon());
         List<ItineraryLodgingCity> lodgingCities = new ArrayList<ItineraryLodgingCity>();
         lodgingCities.add(i);
         intent.putExtra("lodgingCities", (Serializable) lodgingCities);

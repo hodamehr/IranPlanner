@@ -93,12 +93,12 @@ public class ReservationListActivity extends StandardActivity implements DataTra
 
             }
         }));
-        toolbarBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("ddd", "dddddddddddddddddddddddddd");
-            }
-        });
+//        toolbarBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.e("ddd", "dddddddddddddddddddddddddd");
+//            }
+//        });
 
     }
 
