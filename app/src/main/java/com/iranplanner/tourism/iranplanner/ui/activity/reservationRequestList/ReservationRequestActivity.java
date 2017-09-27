@@ -34,7 +34,6 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_request);
 
-
         init(getExtras());
         initToolbar();
 
@@ -65,7 +64,6 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-                Log.d("thisis amin ", "clicked");
                 reservationRequestFullPresenter.getReservationRequestFull("req_user_full", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), resultReservationReqList.get(position).getRequest().getReqId(), "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
             }
         }));

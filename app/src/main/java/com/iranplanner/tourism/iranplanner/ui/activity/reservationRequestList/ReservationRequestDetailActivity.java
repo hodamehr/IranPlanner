@@ -1,6 +1,7 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.reservationRequestList;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,7 +32,6 @@ public class ReservationRequestDetailActivity extends StandardActivity {
     private String hotelName, roomType, reqCode, startDueDate, reqStatus, reqDate, supervisorName, startPrice, off, finalPrice;
     private TextView tvHotelName, tvRoomTypeTv, tvReqCode, tvStartDueDate, tvReqStatus, tvReqDate, tvSupervisorName, tvStartPrice, tvOff, tvFinalPrice;
     private Button hotelPurchaseBtn;
-    private WebView webView;
     String reqId;
 
     @Override
@@ -41,7 +41,7 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         getExtras();
         init();
         initToolbar();
-        webView.setWebViewClient(new MyBrowser());
+        sendToBrowser();
 
         hotelPurchaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +49,7 @@ public class ReservationRequestDetailActivity extends StandardActivity {
                 Log.e("bundle", "webview");
                 String postData ="{"+" \"request_id\" "+": \""+reqId+"\" ,"+"\"uid\""+":\""+ Util.getUseRIdFromShareprefrence(getApplicationContext())+"\"}";
                 String url = "https://iranplanner.com/reflection";
-                webView.postUrl(url, EncodingUtils.getBytes(postData, "BASE64"));
+//                webView.postUrl(url, EncodingUtils.getBytes(postData, "BASE64"));
             }
         });
     }
@@ -65,7 +65,6 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         tvOff = (TextView) findViewById(R.id.hotelOffTv);
         tvFinalPrice = (TextView) findViewById(R.id.hotelFinalPriceTv);
         hotelPurchaseBtn = (Button) findViewById(R.id.hotelPurchaseBtn);
-        webView = (WebView) findViewById(R.id.webView);
         tvHotelName.setText(hotelName);
         tvRoomTypeTv.setText(roomType);
         tvReqCode.setText(reqCode);
@@ -119,6 +118,13 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(hotelName);
+    }
+
+    private void sendToBrowser(){
+        String url = "http://www.example.com";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
     @Override

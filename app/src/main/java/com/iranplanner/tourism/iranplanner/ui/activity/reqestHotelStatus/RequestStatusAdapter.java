@@ -24,13 +24,13 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
 
     private Context context;
     private LayoutInflater inflater;
-    //    private ArrayList<String> statuses;
     private List<ResultReqCount> resultReqCountList;
 
     public RequestStatusAdapter(Context context, List<ResultReqCount> resultReqCountList) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.resultReqCountList = resultReqCountList;
+        this.resultReqCountList.remove(0);
     }
 
     @Override
@@ -58,9 +58,11 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private Button btnPayment, btnView;
         private TextView tvTitle, tvCount;
+        private View itemView ;
 
         public Holder(View itemView) {
             super(itemView);
+            this.itemView = itemView;
             btnPayment = (Button) itemView.findViewById(R.id.requestStatusRowPaymentBtn);
             tvTitle = (TextView) itemView.findViewById(R.id.requestStatusRowTitleTv);
             tvCount = (TextView) itemView.findViewById(R.id.requestStatusRowCountTv);
@@ -86,16 +88,5 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
 
             }
         }
-    }
-
-    private ArrayList<String> getStatuses() {
-        ArrayList<String> strings = new ArrayList<>();
-
-        strings.add("درحال بررسی");
-        strings.add("در انتظار پرداخت");
-        strings.add("پرداخت شده");
-        strings.add("لغو شده");
-
-        return strings;
     }
 }

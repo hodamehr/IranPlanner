@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
@@ -52,12 +53,27 @@ public class HotelReservationStatusActivity extends StandardActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status_reservation_hotel);
         ButterKnife.inject(this);
+
+        initToolbar();
         getExtras();
         initRequestStatusRecyclerView(resultReqCountList, resultReqBundleList);
         DaggerHotelReservationStatusListComponent.builder()
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .hotelReservationStatusListModule(new HotelReservationStatusListModule(this))
                 .build().injectHotelReservationStatusActivity(this);
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("اقامتهای من");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
@@ -111,7 +127,7 @@ public class HotelReservationStatusActivity extends StandardActivity
     @Override
     public void showHotelReservationBundleStatus(ResultBundleStatus resultBundleStatus) {
         Intent intentReservationRegisterRoom = new Intent(getApplicationContext(), ActivityHotelReservationConfirm.class);
-        entity.Bundle bb= (entity.Bundle) resultBundleStatus.getResultReservationBundleList().getBundle();
+        entity.Bundle bb = (entity.Bundle) resultBundleStatus.getResultReservationBundleList().getBundle();
         intentReservationRegisterRoom.putExtra("RoomBundle", (Serializable) bb);
         intentReservationRegisterRoom.putExtra("BundleFrom", "HotelReservationStatusActivity");
         startActivity(intentReservationRegisterRoom);
