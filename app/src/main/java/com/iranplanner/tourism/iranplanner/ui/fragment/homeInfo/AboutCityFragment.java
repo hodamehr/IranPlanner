@@ -26,6 +26,7 @@ public class AboutCityFragment extends StandardFragment {
 
     HomeInfo homeInfo;
     Toolbar toolbar;
+
     public AboutCityFragment() {
         super();
     }
@@ -38,8 +39,8 @@ public class AboutCityFragment extends StandardFragment {
         View rootView = inflater.inflate(R.layout.fragment_about_city, container, false);
         contentFullDescription = (CTouchyWebView) rootView.findViewById(R.id.contentFullDescription);
         ImageView img = (ImageView) rootView.findViewById(R.id.img);
-         homeInfo= (HomeInfo) getArguments().getSerializable("homeInfo");
-        String url= (String) getArguments().getSerializable("url");
+        homeInfo = (HomeInfo) getArguments().getSerializable("homeInfo");
+        String url = (String) getArguments().getSerializable("url");
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.toolbar_layout);
 
         if (url != null) {
@@ -56,6 +57,7 @@ public class AboutCityFragment extends StandardFragment {
         AboutCityFragment fragment = new AboutCityFragment();
         return fragment;
     }
+
     private void setWebViewContent(String myData) {
         contentFullDescription.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

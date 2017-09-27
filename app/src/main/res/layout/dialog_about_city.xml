@@ -2,8 +2,6 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:background="#3E80B4"
     android:orientation="vertical">
 
     <ScrollView
@@ -37,15 +35,22 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/aboutCityDescTv"
+            <com.coinpany.core.android.widget.CTouchyWebView
+                android:id="@+id/aboutCityDescWebView"
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="@dimen/margin_standard"
                 android:layout_marginRight="@dimen/margin_standard"
                 android:layout_marginTop="@dimen/margin_standard"
+                android:textAppearance="@style/StandardTextGrey"
                 android:textColor="#212121" />
+
+            <Button
+                android:id="@+id/aboutCityCloseBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="بستن" />
 
         </LinearLayout>
 

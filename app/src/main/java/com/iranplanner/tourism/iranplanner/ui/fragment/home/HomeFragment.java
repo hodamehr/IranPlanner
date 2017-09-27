@@ -995,7 +995,12 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void hideDrawer() {
-        mDrawerLayout.closeDrawer(GravityCompat.START);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+            }
+        }, 1000);
     }
 
     private void showDrawer() {
