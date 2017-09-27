@@ -1,21 +1,21 @@
 package com.iranplanner.tourism.iranplanner.ui.navigationDrawer;
 
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.iranplanner.tourism.iranplanner.R;
-import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
-public class ContactUsActivity extends StandardActivity implements View.OnClickListener {
+public class ContactUsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
 
     private EditText etMessage;
     private TextInputEditText etName;
@@ -24,7 +24,6 @@ public class ContactUsActivity extends StandardActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_us);
-
         init();
     }
 
@@ -76,8 +75,7 @@ public class ContactUsActivity extends StandardActivity implements View.OnClickL
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_contact_us;
+    public void onMapReady(GoogleMap googleMap) {
     }
 
 }
