@@ -57,6 +57,7 @@ import tools.Util;
 
 
 public class MainSearchFragment extends StandardFragment implements MainSearchContract.View, View.OnClickListener/*, Callback<ResultItineraryList>*/ {
+    public static final String TAG_ITINERARY = "ioigbs";
     @Inject
     MainSearchPresenter mainPresenter;
 
@@ -594,7 +595,7 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
         }
         itineraryListFragment.setArguments(bundle);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.container, itineraryListFragment);
+        ft.replace(R.id.container, itineraryListFragment,TAG_ITINERARY);
         ft.addToBackStack(null);
         ft.commit();
         cityEnd = "";

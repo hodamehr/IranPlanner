@@ -33,12 +33,12 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     };
     private StandardFragment currentTab;
     //    StandardFragment
-    private final String[] mTabsTitle = {"برنامه سفر", "حساب من","خانه"};
+    private final String[] mTabsTitle = {"برنامه سفر", "حساب من", "خانه"};
 
     public TabPagerAdapter(FragmentManager fm, Context context, GetHomeResult homeResult) {
         super(fm);
         this.context = context;
-        this.homeResult=homeResult;
+        this.homeResult = homeResult;
     }
 
     public View getTabView(int position) {
@@ -50,25 +50,23 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         return view;
     }
 
+
+
     @Override
     public Fragment getItem(int pos) {
         currentTab = null;
         switch (pos) {
-
             case 0:
                 currentTab = MainSearchFragment.newInstance();
                 return currentTab;
-
             case 1:
                 currentTab = SettingFragment.newInstance();
                 return currentTab;
             case 2:
                 currentTab = HomeFragment.newInstance(homeResult);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("HomeResult",homeResult);
-
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("HomeResult", homeResult);
                 currentTab.setArguments(bundle);
-
                 return currentTab;
         }
         return null;

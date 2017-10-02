@@ -39,6 +39,7 @@ import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
 import com.iranplanner.tourism.iranplanner.ui.downloader.FileDownloadHelper;
 import com.iranplanner.tourism.iranplanner.ui.fragment.FirstItem;
 import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomeFragment;
+import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingFragment;
 import com.iranplanner.tourism.iranplanner.ui.tutorial.TutorialActivity;
@@ -136,7 +137,32 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        ItineraryListFragment fragment = (ItineraryListFragment) getSupportFragmentManager().findFragmentByTag(MainSearchFragment.TAG_ITINERARY);
+        if (fragment != null)
+            if (fragment.isVisible()) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                return;
+            }
+
+        if (viewPager.getCurrentItem() == 2) {
+
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "برای خروج مجددا کلیک کنید", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+
+        } else viewPager.setCurrentItem(2, true);
     }
 
     @Override
@@ -227,6 +253,4 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
 //        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 //        ft.commit();
     }
-
-
 }

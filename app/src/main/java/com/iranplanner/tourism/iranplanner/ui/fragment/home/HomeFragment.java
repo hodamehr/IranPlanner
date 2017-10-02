@@ -112,6 +112,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         HomeContract.View, ReservationContract.View, AttractionListMorePresenter.View, ReservationHotelListPresenter.View
         , MainSearchPresenter.View {
 
+    public static final String TAG_HOMEFRAGMENT = "homefragmnet";
+
     protected String[] mNavigationDrawerItemTitles;
     List<CityProvince> CityProvince;
     String selectId, SelectedType;
@@ -248,7 +250,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.inject(this, rootView);
         toolbarBack.setVisibility(View.GONE);
@@ -921,6 +922,12 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
             });
         }
+
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return super.onBackPressed();
 
     }
 

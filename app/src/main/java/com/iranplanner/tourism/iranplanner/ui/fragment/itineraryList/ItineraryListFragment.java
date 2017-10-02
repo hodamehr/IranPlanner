@@ -46,7 +46,7 @@ import tools.Util;
  * Created by h.vahidimehr on 10/01/2017.
  */
 
-public class ItineraryListFragment extends StandardFragment implements MainSearchContract.View,DataTransferInterface {
+public class ItineraryListFragment extends StandardFragment implements MainSearchContract.View, DataTransferInterface {
 
     @Inject
     MainSearchPresenter mainPresenter;
@@ -73,7 +73,7 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
     private boolean loading = true;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
 
-    private TextView tvSearch ;
+    private TextView tvSearch;
 
     private void checkFromWhereGetBundle() {
         Bundle bundle = getArguments();
@@ -192,7 +192,6 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
     }
 
 
-
     @Override
     public void showItineraries(ResultItineraryList resultItineraryList, String typeOfSearch) {
         loading = true;
@@ -213,7 +212,7 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
         if (message.contains("Unable to resolve host ") || message.contains("Software caused connection abort")) {
             Toast.makeText(getContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
         }
-        if(waitingLoading.isEnabled()){
+        if (waitingLoading.isEnabled()) {
             waitingLoading.setVisibility(View.INVISIBLE);
         }
 
@@ -232,6 +231,12 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
     @Override
     public void showProgress() {
         progressDialog = Util.showProgressDialog(getContext(), "لطفا منتظر بمانید", getActivity());
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        onBackPressed();
+        return false;
     }
 
     @Override
@@ -263,6 +268,7 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
 
         }
     }
+
     @Override
     public void setValues(ArrayList<String> al) {
         al.get(0);
