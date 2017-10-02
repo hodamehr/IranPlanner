@@ -5,9 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
@@ -38,6 +42,7 @@ import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.activity.MapFullActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMoreContract;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMorePresenter;
 import com.iranplanner.tourism.iranplanner.ui.activity.comment.CommentListActivity;
@@ -68,7 +73,7 @@ import tools.Util;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class attractionDetailActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener, AttractionDetailContract.View, AttractionListMoreContract.View {
+public class attractionDetailActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, AttractionDetailContract.View, AttractionListMoreContract.View {
     @Inject
     AttractionDetailPresenter attractionDetailPresenter;
     @Inject
@@ -88,14 +93,9 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
     int LikeValue;
     int VisitedValue;
     int WishValue;
-//    RecyclerView recyclerBestAttraction;
-//
-
 
     @InjectView(R.id.contentFullDescription)
     CTouchyWebView contentFullDescription;
-    @InjectView(R.id.attractionName)
-    TextView attractionName;
     @InjectView(R.id.attractionPlace)
     TextView attractionPlace;
     @InjectView(R.id.textTimeDuration)
@@ -286,7 +286,11 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         overrideFont();
         getExtra();
         setNearAttraction(resultAttractionList);
-        attractionName.setText(resulAttraction.getAttractionTitle());
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(resulAttraction.getAttractionTitle());
+
         attractionPlace.setText(resulAttraction.getProvinceTitle() + " - " + resulAttraction.getCityTitle());
         if (resulAttraction.getAttractionEstimatedTime() != null) {
             int totalMinute = Integer.parseInt(resulAttraction.getAttractionEstimatedTime());
@@ -339,6 +343,26 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
         attractionDetailPresenter.getWidgetResult("nodeuser", resulAttraction.getAttractionId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "attraction", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_attraction_detail,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menuAttractionLike:
+                Toast.makeText(this, "Liked!", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menuAttractionShare:
+                Toast.makeText(this, "Shared!", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void setInterestResponce(List<ResultWidget> resultWidget) {
