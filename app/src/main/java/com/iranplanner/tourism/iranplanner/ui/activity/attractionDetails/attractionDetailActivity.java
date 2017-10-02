@@ -446,7 +446,7 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                 break;
             case R.id.ratingHolder:
                 if (ratingHolderFlag) {
-                    translateUp();
+//                    translateUp();
                 }
                 break;
             case R.id.rateHolder:
@@ -454,10 +454,10 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                     VisitedLayout.setVisibility(View.INVISIBLE);
                     LikeLayout.setVisibility(View.VISIBLE);
                     rotateImage = "rateImg";
-                    translateDown();
+//                    translateDown();
                     break;
                 } else {
-                    translateUp();
+//                    translateUp();
                     break;
                 }
 
@@ -466,10 +466,10 @@ public class attractionDetailActivity extends FragmentActivity implements OnMapR
                     LikeLayout.setVisibility(View.INVISIBLE);
                     VisitedLayout.setVisibility(View.VISIBLE);
                     rotateImage = "doneImg";
-                    translateDown();
+//                    translateDown();
                     break;
                 } else {
-                    translateUp();
+//                    translateUp();
                     break;
                 }
 

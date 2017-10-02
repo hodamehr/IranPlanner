@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/interestingLayout"
-            android:background="@color/greyLight">
+            android:background="@color/greyLight"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/VisitedLayout"
@@ -214,7 +215,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:translationZ="1dp"
-                android:weightSum="5">
+                android:weightSum="5"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/commentHolder"
@@ -377,20 +379,23 @@
             android:layout_height="wrap_content"
             android:background="@color/white_"
 
-            android:layout_below="@+id/ratingHolder"
-            android:layout_toEndOf="@+id/viewPagerMore">
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+         >
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true">
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/overlapImageHolder">
 
                 <LinearLayout
                     android:id="@+id/cityNameHolder1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/cityNameHolder"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true">
 
                     <ImageView
                         android:id="@+id/imageCityName1"
@@ -415,9 +420,11 @@
                     android:id="@+id/cityNameHolder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
                     android:orientation="horizontal"
-                    android:paddingTop="@dimen/margin_short">
+                    android:paddingTop="@dimen/margin_short"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true">
 
                     <ImageView
                         android:id="@+id/imageCityName"
@@ -429,7 +436,7 @@
                     <TextView
                         android:id="@+id/textTimeDuration"
                         style="@style/StandardTextGrey"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:maxLines="1"
@@ -444,41 +451,43 @@
                 android:layout_height="30dp"
                 android:layout_centerHorizontal="true"
                 android:rotation="180"
-                android:src="@drawable/shape_triangle" />
+                android:src="@drawable/shape_triangle"
+                android:visibility="gone"/>
 
 
-            <RelativeLayout
+            <!--<RelativeLayout-->
 
-                android:id="@+id/overlapImageHolder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                <!--android:id="@+id/overlapImageHolder"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
 
-                android:adjustViewBounds="true"
-                android:translationZ="1dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true">
+                <!--android:adjustViewBounds="true"-->
+                <!--android:translationZ="1dp"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--&gt;-->
 
 
-                <ImageView
-                    android:id="@+id/imageTypeAttraction"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerHorizontal="true"
-                    android:paddingTop="@dimen/padding_short"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_natural" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/imageTypeAttraction"-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:paddingTop="@dimen/padding_short"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@mipmap/ic_natural" />-->
 
-                <TextView
-                    android:id="@+id/attractionType"
-                    style="@style/StandardTextGrey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imageTypeAttraction"
-                    android:layout_centerHorizontal="true"
-                    android:padding="5dp"
+                <!--<TextView-->
+                    <!--android:id="@+id/attractionType"-->
+                    <!--style="@style/StandardTextGrey"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@+id/imageTypeAttraction"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:padding="5dp"-->
 
-                    android:text="his" />
-            </RelativeLayout>
+                    <!--android:text="his" />-->
+            <!--</RelativeLayout>-->
 
 
         </RelativeLayout>
