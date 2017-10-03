@@ -4,12 +4,19 @@
     <item
         android:id="@+id/action_settings"
         android:title="dfdfdfd"
-        android:icon="@android:drawable/ic_dialog_dialer"
-        app:showAsAction="never"/>
+        android:icon="@mipmap/ic_attraction"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_email"
-        android:icon="@android:drawable/ic_dialog_email"
+        android:icon="@mipmap/ic_share"
         android:title="tring/action_email"
         app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_email1"
+        android:icon="@mipmap/ic_like_grey"
+        android:title="tring/action_email"
+        app:showAsAction="never"
+       />
 </menu>

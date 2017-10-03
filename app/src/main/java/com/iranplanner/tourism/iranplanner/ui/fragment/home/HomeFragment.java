@@ -238,6 +238,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     TextView tvEventsTitle;
     @InjectView(R.id.overlapImageItineraryHolder)
     RelativeLayout overlapImageItineraryHolder;
+    @InjectView(R.id.homeNavAttraction)
+    ImageView homeNavAttraction;
 
     private String cityName = "city name";
 
@@ -258,6 +260,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             scroller.setOnScrollChangeListener(this);
         }
         aboutCityBtn.setOnClickListener(this);
+        homeNavAttraction.setOnClickListener(this);
         txtMoreTitleAttraction.setOnClickListener(this);
         TypeAttractionHolder.setOnClickListener(this);
         TypeHotelHolder.setOnClickListener(this);
@@ -386,12 +389,27 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     private void getAttractionMore(String type) {
         homePresenter.getAttractionMore("search", "fa", selectId, "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), type);
     }
-
+    String offset = "0";
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.aboutCityBtn:
                 showAboutCityOrProvince();
+                break;
+            case R.id.homeNavAttraction:
+
+
+                if (SelectedType != null && SelectedType.equals("city")) {
+                    Log.e("itinerary", "city clicked");
+                    mainSearchPresenter.loadItineraryFromCity("list", "fa", selectId, "20", offset, selectId, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+                } else if (SelectedType != null && SelectedType.equals("province")) {
+                    mainSearchPresenter.loadItineraryFromProvince("searchprovince", selectId, offset, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+
+                } else {
+                    ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.main_view_pager);
+                    viewPager.setCurrentItem(0);
+
+                }
                 break;
             case R.id.attractionHistoricalHolder:
                 getAttractionMore(Constants.attractionHistoricalCode);
@@ -444,7 +462,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 frameLayout.setVisibility(View.INVISIBLE);
                 break;
             case R.id.overlapImageItineraryHolder:
-                String offset = "0";
 
                 if (SelectedType != null && SelectedType.equals("city")) {
                     Log.e("itinerary", "city clicked");
