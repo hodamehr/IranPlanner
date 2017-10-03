@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,67 +18,45 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/main_blue"
             app:layout_collapseMode="pin"
-            app:navigationIcon="?attr/homeAsUpIndicator"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/nestedScrollView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/reservationListRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/ShowRoomHolder"
-        android:layout_below="@+id/app_bar"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <include layout="@layout/content_show_room" />
-    </android.support.v4.widget.NestedScrollView>
-
-    <RelativeLayout
-        android:id="@+id/ShowRoomHolder"
+    <LinearLayout
+        android:id="@+id/hotelReservationOkHolder"
         android:layout_width="match_parent"
+        android:background="@color/greenpress"
         android:layout_height="@dimen/buttonBottom"
-        android:layout_alignParentBottom="true"
-        android:background="@color/green">
+        android:clickable="true">
 
-        <RelativeLayout
-            android:id="@+id/hotelReservationOkHolder"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/buttonBottom"
-            android:layout_alignParentBottom="true"
-            android:clickable="true">
+        <TextView
+            android:id="@+id/roomReservationBtn"
+            style="@style/StandardTitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/green"
+            android:gravity="center"
+            android:text="ادامه فرایند رزرواسیون"
+            android:textColor="@color/white_" />
 
-            <TextView
-                android:id="@+id/roomReservationBtn"
-                style="@style/StandardTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/txtNumber"
-                android:background="@color/green"
-                android:gravity="center"
-                android:text="ادامه فرایند رزرواسیون"
-                android:textAlignment="center"
-                android:textColor="@color/white_" />
+        <TextView
+            android:id="@+id/txtNumber"
+            style="@style/StandardText"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:background="@color/greenpress"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/white_" />
 
-            <TextView
-                android:id="@+id/txtNumber"
-                style="@style/StandardTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/buttonBottom"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@color/greenpress"
-                android:gravity="center"
-                android:paddingEnd="@dimen/padding_standard"
-                android:paddingStart="@dimen/padding_standard"
-                android:text="0"
-                android:textColor="@color/white_" />
-
-        </RelativeLayout>
-    </RelativeLayout>
-</RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

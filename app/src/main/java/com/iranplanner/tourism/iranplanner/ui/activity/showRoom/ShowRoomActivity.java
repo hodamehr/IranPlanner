@@ -2,14 +2,19 @@ package com.iranplanner.tourism.iranplanner.ui.activity.showRoom;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.di.model.App;
@@ -43,88 +48,52 @@ import tools.Util;
  */
 
 public class ShowRoomActivity extends StandardActivity implements ShowRoomContract.View, DataTransferInterface, View.OnClickListener {
-    private RoomListAdapter adapter;
-    LinearLayoutManager mLayoutManager;
-    List<ResultRoom> ResultRooms;
-    List<ResultRoom> newResultRooms;
-    Date startOfTravel;
-    int durationTravel;
-    RelativeLayout chooseHolder;
-    TextView txtNumberRoom, txtNumberChoose;
-    ResultLodging resultLodgingHotelDetail;
-    Set keys;
-    List<ReqLodgingReservation> ReqLodgingReservationList;
-    String bundleId;
+    private List<ResultRoom> ResultRooms, newResultRooms;
+    private Date startOfTravel;
+    private int durationTravel;
+    private RelativeLayout chooseHolder;
+    private TextView txtNumberRoom, txtNumberChoose;
+    private ResultLodging resultLodgingHotelDetail;
+    private Set keys;
+    private List<ReqLodgingReservation> ReqLodgingReservationList;
+    private ResultLodgingReservation resultLodgingReservation;
+    private String bundleId;
 
-    //    RecyclerView recyclerView;
-//    RelativeLayout hotelReservationOkHolder;
+    CustomDialogNumberPicker cdd;
 
     Map<Integer, Integer> selectedRooms;
     List<String> t;
 
-
     @InjectView(R.id.reservationListRecyclerView)
     RecyclerView recyclerView;
     @InjectView(R.id.hotelReservationOkHolder)
-    RelativeLayout hotelReservationOkHolder;
+    LinearLayout hotelReservationOkHolder;
     @InjectView(R.id.txtNumber)
     TextView txtNumber;
     @Inject
     ShowRoomPresenter showRoomPresenter;
 
-    private void getExtra() {
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        selectedRooms = new HashMap<>();
-        ResultRooms = (List<ResultRoom>) bundle.getSerializable("ResultRooms");
-        resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
-        startOfTravel = (Date) bundle.getSerializable("startOfTravel");
-        durationTravel = 0;
-        durationTravel = (int) bundle.getSerializable("durationTravel");
-    }
-
-    private void requestConfirmHotel(ResultLodgingReservation resultLodgingReservation) {
-        DaggerShowRoomComponent.builder().netComponent(((App) getApplicationContext().getApplicationContext()).getNetComponent())
-                .showRoomModule(new ShowRoomModule(this))
-                .build().injectShowRoom(this);
-        String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
-        String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
-        showRoomPresenter.sendRequestReservation(resultLodgingReservation, cid, andId);
-    }
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        finish();
-//    }
-
-    private String CreateBundle() {
-        Date date = new Date();
-        Random r = new Random();
-        int rand1 = r.nextInt(9 - 1 + 1) + 1;
-        int rand2 = r.nextInt(99 - 10 + 1) + 10;
-        return String.valueOf(date.getTime()) + String.valueOf(rand2) + String.valueOf(rand1);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_show_room);
-
-        Log.e("ShowRoomActivity", "Damn Son");
+        //setContentView(R.layout.activity_show_room);
 
         ButterKnife.inject(this);
-        ReqLodgingReservationList = new ArrayList<ReqLodgingReservation>();
-
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
         getExtra();
+        init();
+    }
+
+    private void init() {
+
+        ReqLodgingReservationList = new ArrayList<>();
 
         hotelReservationOkHolder.setOnClickListener(this);
-        adapter = new RoomListAdapter(ShowRoomActivity.this, this, ResultRooms, getApplicationContext(), R.layout.activity_reservation_room_detail);
+
+        //init recyclerView
+        RoomListAdapter adapter = new RoomListAdapter(ShowRoomActivity.this, this, ResultRooms, getApplicationContext(), R.layout.activity_reservation_room_detail);
         recyclerView.setAdapter(adapter);
-        mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
@@ -137,14 +106,30 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
                         showDialogNumber(position, txtNumberRoom, txtNumberChoose);
                     }
                 });
-
             }
         }));
 
         t = new ArrayList<>();
+
+        //init toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("لیست اتاقهای هتل");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        updateRoomCountTv("0");
     }
 
-    CustomDialogNumberPicker cdd;
+    private void getExtra() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        selectedRooms = new HashMap<>();
+        ResultRooms = (List<ResultRoom>) bundle.getSerializable("ResultRooms");
+        resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
+        startOfTravel = (Date) bundle.getSerializable("startOfTravel");
+        durationTravel = 0;
+        durationTravel = (int) bundle.getSerializable("durationTravel");
+    }
 
     private void showDialogNumber(final int position, final TextView txtNumberRoom, final TextView txtNumberChoose) {
         cdd = new CustomDialogNumberPicker(this, Integer.valueOf(ResultRooms.get(position).getRoomPriceQuantity()), 0, "تعداد اتاق های درخواستی", null);
@@ -152,11 +137,14 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
         cdd.setDialogResult(new CustomDialogNumberPicker.OnDialogNumberPick() {
             @Override
             public void finish(int result) {
-                txtNumberRoom.setText(String.valueOf(result));
+                txtNumberRoom.setText(Util.persianNumbers(String.valueOf(result)));
                 selectedRooms.put(position, result);
                 if (result != 0) {
-                    txtNumberChoose.setBackgroundColor(getResources().getColor(R.color.green));
-                    txtNumberRoom.setBackgroundColor(getResources().getColor(R.color.greenpress));
+                    txtNumberChoose.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
+                    txtNumberRoom.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.greenpress));
+                } else {
+                    txtNumberChoose.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.greyDarkTransparent));
+                    txtNumberRoom.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.grey));
                 }
                 sums();
                 ss();
@@ -164,12 +152,38 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
         });
     }
 
+    private void requestConfirmHotel(ResultLodgingReservation resultLodgingReservation) {
+        DaggerShowRoomComponent.builder().netComponent(((App) getApplicationContext().getApplicationContext()).getNetComponent())
+                .showRoomModule(new ShowRoomModule(this))
+                .build().injectShowRoom(this);
+        String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
+        String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
+        showRoomPresenter.sendRequestReservation(resultLodgingReservation, cid, andId);
+    }
+
+    private String CreateBundle() {
+        Date date = new Date();
+        Random r = new Random();
+        int rand1 = r.nextInt(9 - 1 + 1) + 1;
+        int rand2 = r.nextInt(99 - 10 + 1) + 10;
+        return String.valueOf(date.getTime()) + String.valueOf(rand2) + String.valueOf(rand1);
+    }
+
     private void sums() {
-        int sumationRoomsd = 0;
+        int sumRoomSd = 0;
         for (Integer number : selectedRooms.values()) {
-            sumationRoomsd = sumationRoomsd + number;
+            sumRoomSd += number;
         }
-        txtNumber.setText(sumationRoomsd + "");
+        updateRoomCountTv(String.valueOf(sumRoomSd));
+    }
+
+    private void updateRoomCountTv(String count) {
+
+        YoYo.with(Techniques.Tada)
+                .playOn(txtNumber);
+
+        String data = Util.persianNumbers(count) + "\n اتاق";
+        txtNumber.setText(data);
     }
 
     private void ss() {
@@ -179,8 +193,6 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
     private void tt() {
         newResultRooms = new ArrayList<>();
         for (Object key : keys) {
-
-            Log.e("D", "D");
             if (selectedRooms.containsKey(key)) {
 
 //                for (Integer integer : selectedRooms.values()) {
@@ -199,19 +211,9 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
 
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_room_list;
-    }
-
-    @Override
-    public void setValues(ArrayList<String> al) {
-        al.get(0);
-    }
-    ResultLodgingReservation resultLodgingReservation;
     private void getRequestMain() {
         resultLodgingReservation = new ResultLodgingReservation();
-        bundleId=CreateBundle();
+        bundleId = CreateBundle();
         resultLodgingReservation.setReqBundleId(bundleId);
         resultLodgingReservation.setReqHeadEmail("");
         resultLodgingReservation.setReqHeadMobile("");
@@ -221,13 +223,13 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
         resultLodgingReservation.setReqLodgingDateCount(String.valueOf(durationTravel));
         resultLodgingReservation.setReqLodgingId(String.valueOf(resultLodgingHotelDetail.getLodgingId()));
         resultLodgingReservation.setReqUid(Util.getUseRIdFromShareprefrence(getApplicationContext()));
-        List<ReqLodgingReservation> reqLodgingReservations = getRequest( newResultRooms);
+        List<ReqLodgingReservation> reqLodgingReservations = getRequest(newResultRooms);
         if (reqLodgingReservations.size() != 0) {
             resultLodgingReservation.setReqLodgingReservation(reqLodgingReservations);
         }
     }
 
-    private List<ReqLodgingReservation> getRequest(List<ResultRoom > ResultRooms) {
+    private List<ReqLodgingReservation> getRequest(List<ResultRoom> ResultRooms) {
         ReqLodgingReservationList.clear();
         int c = 0;
         for (ResultRoom resultRoom : ResultRooms) {
@@ -252,13 +254,11 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
             c++;
             ReqLodgingReservationList.add(reqLodgingReservation);
         }
-
-
         return ReqLodgingReservationList;
     }
+
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
             case R.id.hotelReservationOkHolder:
                 if (startOfTravel == null || durationTravel == 0) {
@@ -276,7 +276,7 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
 
     @Override
     public void showHotelReservationResult(RequestLodgingReservationMain requestLodgingReservationMain) {
-        if(requestLodgingReservationMain.getStatus().getStatus().intValue()==200){
+        if (requestLodgingReservationMain.getStatus().getStatus().intValue() == 200) {
             Intent intentReservationRegisterRoom = new Intent(getApplicationContext(), ActivityReservationRegisterRoom.class);
             intentReservationRegisterRoom.putExtra("selectedRooms", (Serializable) selectedRooms);
             intentReservationRegisterRoom.putExtra("ResultRooms", (Serializable) newResultRooms);
@@ -285,10 +285,25 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
             intentReservationRegisterRoom.putExtra("resultLodgingHotelDetail", (Serializable) resultLodgingHotelDetail);
             intentReservationRegisterRoom.putExtra("bundleId", bundleId);
             startActivity(intentReservationRegisterRoom);
-        }else {
-            Toast.makeText(getApplicationContext(),"قطع ارتباط با سرور",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "قطع ارتباط با سرور", Toast.LENGTH_LONG).show();
         }
+    }
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_show_room;
+    }
+
+    @Override
+    public void setValues(ArrayList<String> al) {
+        al.get(0);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override

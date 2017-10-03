@@ -60,7 +60,6 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
         this.startOfTravel = startOfTravel;
         this.durationTravel = durationTravel;
         this.listener = listener;
-
     }
 
     @Override
@@ -90,9 +89,6 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
 
             }
         });
-//        changeBtnOKConfirm(viewHolder, position);
-
-
     }
 
     private void changeBtnOKConfirm(ViewHolder viewHolder, int position) {
@@ -218,7 +214,6 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
         notifyDataSetChanged();
         if (resultRooms.size() == 0) {
             listener.clearList();
-
         }
     }
 
@@ -228,14 +223,14 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-            resultRooms.get(position).setSelectedForeign(0 + "");
-            setVisibleHalfBoard(viewHolder, position);
-            setDefaultValue(viewHolder, position);
-            setChangeAddPerson(viewHolder, position);
-            setChangeNationalityPerson(viewHolder, position);
-            setChangeHalfBoard(viewHolder, position);
-            setHeadNameReservation(viewHolder, position);
-            setHeadLastNameReservation(viewHolder, position);
+        resultRooms.get(position).setSelectedForeign(0 + "");
+        setVisibleHalfBoard(viewHolder, position);
+        setDefaultValue(viewHolder, position);
+        setChangeAddPerson(viewHolder, position);
+        setChangeNationalityPerson(viewHolder, position);
+        setChangeHalfBoard(viewHolder, position);
+        setHeadNameReservation(viewHolder, position);
+        setHeadLastNameReservation(viewHolder, position);
 //        setConfirmAllChanges(viewHolder,position);
 //        setConfirmAllChanges(viewHolder, position);
 //        viewHolder.txtOkRoom.setOnClickListener(new View.OnClickListener() {
@@ -254,12 +249,12 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
 //                }
 //            }
 //        });
-            viewHolder.roomDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    deleteRoom(position);
-                }
-            });
+        viewHolder.roomDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteRoom(position);
+            }
+        });
 
 //        if(currentposition==position){
 //            viewHolder.itemView.setVisibility(View.VISIBLE);
@@ -267,8 +262,7 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
 //            viewHolder.itemView.setVisibility(View.GONE);
 //
 //        }
-        }
-
+    }
 
 
     private boolean checkInfo(ViewHolder viewHolder, int position) {
@@ -282,30 +276,11 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
             viewHolder.edtHeadLastNameReservation.setError("نام و یا نام خانوادگی سرپرست وارد نشده است");
             validate = false;
         }
-//        if (!viewHolder.edtHeadNameReservation.getText().toString().equals("")) {
-//            resultRooms.get(position).setHeadName(viewHolder.edtHeadNameReservation.getText().toString());
-//            changeBtnOKConfirm(viewHolder, position);
-//        } else if (viewHolder.edtHeadNameReservation.getText().toString().equals("")) {
-//            viewHolder.edtHeadNameReservation.setError("نام سرپرست وارد نشده است");
-//            validate = false;
-//        }
-//        if (!viewHolder.edtHeadLastNameReservation.getText().toString().equals("")) {
-//            resultRooms.get(position).setHeadLastName(viewHolder.edtHeadLastNameReservation.getText().toString());
-//            changeBtnOKConfirm(viewHolder, position);
-//        } else if (viewHolder.edtHeadLastNameReservation.getText().toString().equals("")) {
-//            viewHolder.edtHeadLastNameReservation.setError("نام خانوادگی سرپرست وارد نشده است");
-//            validate = false;
-//        }
         return validate;
     }
 
     @Override
     public int getItemCount() {
-//        if(resultRooms.size()>0){
-//            return 1;
-//        }else {
-//            return 0;
-//        }
         return resultRooms.size();
     }
 
@@ -348,7 +323,6 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
         TextView txtPrice;
         @InjectView(R.id.txtAddPeople)
         TextView txtAddPeople;
-
         @InjectView(R.id.checkHalfIn)
         CheckBox checkHalfIn;
         @InjectView(R.id.checkHalfOut)
@@ -365,8 +339,6 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
         TextView endPrice;
         @InjectView(R.id.roomDelete)
         TextView roomDelete;
-
-
         @InjectView(R.id.edtHeadNameReservation)
         EditText edtHeadNameReservation;
         @InjectView(R.id.edtHeadLastNameReservation)
@@ -380,14 +352,11 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
         @InjectView(R.id.holder)
         RelativeLayout holder;
 
-
         public ViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
         }
     }
-
-
 }
 
 

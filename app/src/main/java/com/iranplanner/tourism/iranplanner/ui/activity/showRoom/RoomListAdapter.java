@@ -14,6 +14,7 @@ import com.coinpany.core.android.widget.Utils;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -27,26 +28,25 @@ import tools.Util;
  * Created by Hoda on 10/01/2017.
  */
 public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHolder> {
-    Context context;
-    int rowLayout;
-    DataTransferInterface dtInterface;
-    LayoutInflater inflater;
-    List<entity.ResultRoom> ResultRoom;
+    private Context context;
+    private int rowLayout;
+    private DataTransferInterface dtInterface;
+    private LayoutInflater inflater;
+    private List<entity.ResultRoom> ResultRoom;
 
 
-    public RoomListAdapter(Activity a, DataTransferInterface dtInterface, List<ResultRoom> ResultRoom, Context context, int rowLayout) {
+    public RoomListAdapter(Activity activity, DataTransferInterface dtInterface, List<ResultRoom> ResultRoom, Context context, int rowLayout) {
         this.ResultRoom = ResultRoom;
         this.context = context;
         this.rowLayout = rowLayout;
-        Activity activity = a;
         this.dtInterface = dtInterface;
-        inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = LayoutInflater.from(activity);
     }
 
 
     @Override
     public RoomListAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = inflater.from(viewGroup.getContext()).inflate(R.layout.activity_reservation_room_detail, viewGroup, false);
+        View view = inflater.inflate(R.layout.activity_reservation_room_detail, viewGroup, false);
         return new RoomListAdapter.ViewHolder(view);
     }
 
@@ -54,9 +54,9 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         viewHolder.roomType.setText(ResultRoom.get(position).getRoomTitle());
         if (ResultRoom.get(position).getRoomCapacityExtra() != null && !ResultRoom.get(position).getRoomCapacityExtra().equals("0")) {
-            viewHolder.txtCapacity.setText(ResultRoom.get(position).getRoomCapacityAdult() + " نفر +" + ResultRoom.get(position).getRoomCapacityExtra() + "نفر اضافه");
+            viewHolder.txtCapacity.setText(Util.persianNumbers(ResultRoom.get(position).getRoomCapacityAdult()) + " نفر +" + Util.persianNumbers(ResultRoom.get(position).getRoomCapacityExtra()) + "نفر اضافه");
         } else {
-            viewHolder.txtCapacity.setText(ResultRoom.get(position).getRoomCapacityAdult() + " نفر");
+            viewHolder.txtCapacity.setText(Util.persianNumbers(ResultRoom.get(position).getRoomCapacityAdult()) + " نفر");
         }
         viewHolder.BreakfastHolder.setVisibility(View.VISIBLE);
         List<LodgingRoomFacility> LodgingRoomFacility = ResultRoom.get(position).getLodgingRoomFacility();
@@ -74,33 +74,38 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHo
             for (LodgingRoomBed lodgingRoomBed : LodgingRoomBeds) {
                 if (index == 0) {
                     viewHolder.capacityRoomHolderDetail1.setVisibility(View.VISIBLE);
-                    viewHolder.txtCapacityRoomDetail1.setText(lodgingRoomBed.getRoomBedName() + " " + lodgingRoomBed.getRoomBedCount() + " عدد");
+                    viewHolder.txtCapacityRoomDetail1.setText(lodgingRoomBed.getRoomBedName() + " " + Util.persianNumbers(lodgingRoomBed.getRoomBedCount()) + " عدد");
                 }
                 if (index == 1) {
                     viewHolder.capacityRoomHolderDetail2.setVisibility(View.VISIBLE);
-                    viewHolder.txtCapacityRoomDetail2.setText(lodgingRoomBed.getRoomBedName() + " " + lodgingRoomBed.getRoomBedCount() + " عدد");
+                    viewHolder.txtCapacityRoomDetail2.setText(lodgingRoomBed.getRoomBedName() + " " + Util.persianNumbers(lodgingRoomBed.getRoomBedCount()) + " عدد");
                 }
                 if (index == 2) {
                     viewHolder.capacityRoomHolderDetail3.setVisibility(View.VISIBLE);
-                    viewHolder.txtCapacityRoomDetail3.setText(lodgingRoomBed.getRoomBedName() + " " + lodgingRoomBed.getRoomBedCount() + " عدد");
+                    viewHolder.txtCapacityRoomDetail3.setText(lodgingRoomBed.getRoomBedName() + " " + Util.persianNumbers(lodgingRoomBed.getRoomBedCount()) + " عدد");
                 }
                 if (index == 3) {
                     viewHolder.capacityRoomHolderDetail4.setVisibility(View.VISIBLE);
-                    viewHolder.txtCapacityRoomDetail4.setText(lodgingRoomBed.getRoomBedName() + " " + lodgingRoomBed.getRoomBedCount() + " عدد");
+                    viewHolder.txtCapacityRoomDetail4.setText(lodgingRoomBed.getRoomBedName() + " " + Util.persianNumbers(lodgingRoomBed.getRoomBedCount()) + " عدد");
                 }
                 index++;
-
             }
         }
-        viewHolder.txtPriceRoom.setText(Util.persianNumbers(String.valueOf(Long.decode(ResultRoom.get(position).getRoomPrice()) / 10)) + " تومان");
-        viewHolder.txtnewPrice.setText(ResultRoom.get(position).getRoomPricePromotion()!=null ? Util.persianNumbers(String.valueOf(Long.decode(ResultRoom.get(position).getRoomPricePromotion()) / 10)): "");
-        viewHolder.txtShowPercentPercentage.setText(ResultRoom.get(position).getRoomPriceDifferencePercent()!=null ? "تخفیف تا %"+Util.persianNumbers(ResultRoom.get(position).getRoomPriceDifferencePercent()): "");
-        viewHolder.chooseHolder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("test","teeeeeeeeeeeeeeeeeeest");
-            }
-        });
+
+        //create data for price and price after sale applied
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+
+        int roomPrice = Integer.valueOf(ResultRoom.get(position).getRoomPrice());
+        String roomPriceString = formatter.format(roomPrice);
+        String roomPriceStringFinal = "تخفیف: " + roomPriceString + "تومان ";
+        viewHolder.txtPriceRoom.setText(Util.persianNumbers(roomPriceStringFinal));
+
+        int roomPricePromotion = Integer.parseInt(ResultRoom.get(position).getRoomPricePromotion());
+        String roomPricePromotionString = formatter.format(roomPricePromotion);
+        String roomPricePromotionStringFinal = "قایل پرداخت: " + roomPricePromotionString + "تومان ";
+        viewHolder.txtnewPrice.setText(ResultRoom.get(position).getRoomPricePromotion() != null ? Util.persianNumbers(roomPricePromotionStringFinal) + "تومان" : "");
+
+        viewHolder.txtShowPercentPercentage.setText(ResultRoom.get(position).getRoomPriceDifferencePercent() != null ? "تخفیف تا %" + Util.persianNumbers(ResultRoom.get(position).getRoomPriceDifferencePercent()) : "");
     }
 
     @Override
@@ -108,7 +113,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHo
         return ResultRoom.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @InjectView(R.id.roomType)
         TextView roomType;
         @InjectView(R.id.txtCapacity)
@@ -143,15 +148,26 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.ViewHo
         RelativeLayout chooseHolder;
         @InjectView(R.id.txtNumberChoose)
         TextView txtNumberChoose;
-
+        @InjectView(R.id.txtNumberRoom)
+        TextView tvNumberRoom;
 
         public ViewHolder(View view) {
             super(view);
             ButterKnife.inject(this, view);
+
+            chooseHolder.setOnClickListener(this);
+            tvNumberRoom.setText(Util.persianNumbers("0"));
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.chooseHolder:
+
+                    break;
+            }
         }
     }
-
-
 }
 
 

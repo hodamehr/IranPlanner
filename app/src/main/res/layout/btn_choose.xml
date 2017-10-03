@@ -41,6 +41,4 @@
             android:textColor="@color/white_"/>
 
     </RelativeLayout>
-
-
 </LinearLayout>
