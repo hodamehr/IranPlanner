@@ -144,7 +144,7 @@ anim dialog
 
     <style name="ExpandedAppBar" parent="@android:style/TextAppearance.Medium">
         <item name="fontPath">fonts/IRANSansMobile_Medium.ttf</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#fff</item>
 
@@ -152,7 +152,7 @@ anim dialog
 
     <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
         <item name="fontPath">fonts/IRANSansMobile_Medium.ttf</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#fff</item>
     </style>
