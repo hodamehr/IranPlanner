@@ -31,6 +31,7 @@ import com.iranplanner.tourism.iranplanner.ui.activity.login.LoginActivity;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -331,6 +332,11 @@ public class Util {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.widthPixels;
+    }
+
+    public static String getPriceInToman(int price) {
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        return persianNumbers(formatter.format(price));
     }
 
 }
