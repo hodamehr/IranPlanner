@@ -66,7 +66,7 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("لیست جاذبه ها");
+            getSupportActionBar().setTitle("جاذبه های گردشگری");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }

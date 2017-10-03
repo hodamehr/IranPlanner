@@ -290,6 +290,7 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(resulAttraction.getAttractionTitle());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         attractionPlace.setText(resulAttraction.getProvinceTitle() + " - " + resulAttraction.getCityTitle());
         if (resulAttraction.getAttractionEstimatedTime() != null) {
@@ -341,8 +342,12 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
                 .attractionDetailModule(new AttractionDetailModule(this, this));
         builder.build().inject(this);
         attractionDetailPresenter.getWidgetResult("nodeuser", resulAttraction.getAttractionId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "attraction", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+    }
 
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override

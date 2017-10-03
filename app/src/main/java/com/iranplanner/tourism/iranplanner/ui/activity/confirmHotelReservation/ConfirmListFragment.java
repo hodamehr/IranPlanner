@@ -55,6 +55,4 @@ public class ConfirmListFragment extends StandardFragment  {
         View view = inflater.inflate(R.layout.fragment_show_attraction_list, container, false);
         return view;
     }
-
-
 }

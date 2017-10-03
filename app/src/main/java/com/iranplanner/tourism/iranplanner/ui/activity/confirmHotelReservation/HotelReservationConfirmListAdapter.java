@@ -129,9 +129,6 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                                                             if (start != 0 && (start == 0 && before == 0 && count == 1)) {
-//                                                                 sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
-//                                                             }
                 if (start != 0 || (start == 0 && before == 0 && count == 1)) {
                     changeBtnOKConfirm(viewHolder, position);
                 }
@@ -156,9 +153,6 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                                                             if (start != 0 && (start == 0 && before == 0 && count == 1)) {
-//                                                                 sendCommentBtn.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_send_grey));
-//                                                             }
                 if (start != 0 || (start == 0 && before == 0 && count == 1)) {
                     changeBtnOKConfirm(viewHolder, position);
                 }
@@ -175,8 +169,6 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
     }
 
     private void setChangeAddPerson(final ViewHolder viewHolder, final int position) {
-//        viewHolder.txtOkRoom.setBackground(context.getDrawable(R.drawable.button_corner_green_stroke));
-
         viewHolder.addPerHolderHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,8 +179,6 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
     }
 
     private void setChangeNationalityPerson(final ViewHolder viewHolder, final int position) {
-//        viewHolder.txtOkRoom.setBackground(context.getDrawable(R.drawable.button_corner_green_stroke));
-
         viewHolder.NationalHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,8 +189,6 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
     }
 
     private void setChangeHalfBoard(final ViewHolder viewHolder, final int position) {
-//        viewHolder.txtOkRoom.setBackground(context.getDrawable(R.drawable.button_corner_green_stroke));
-
         viewHolder.checkHalfIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -234,16 +222,12 @@ public class HotelReservationConfirmListAdapter extends RecyclerView.Adapter<Hot
         }
     }
 
-
     public interface GoBackInterface {
         public void clearList();
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-
-
-
             resultRooms.get(position).setSelectedForeign(0 + "");
             setVisibleHalfBoard(viewHolder, position);
             setDefaultValue(viewHolder, position);

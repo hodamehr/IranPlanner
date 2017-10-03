@@ -50,32 +50,26 @@ import tools.Util;
  */
 
 public class ActivityHotelReservationConfirm extends StandardActivity implements DataTransferInterface, View.OnClickListener, ConfirmHotelContract.View, SettingContract.View/*, HotelReservationConfirmListAdapter.GoBackInterface*/ {
-    private HotelReservationConfirmListAdapter adapter;
-    LinearLayoutManager mLayoutManager;
-    List<ResultRoom> ResultRooms;
-    Date startOfTravel;
-    int durationTravel;
-    RelativeLayout chooseHolder;
-    TextView txtNumberRoom;
-    ResultLodging resultLodgingHotelDetail;
-    String bundleId;
-    String edtNameReservation;
-    String edtEmailReservation;
-    String edtLastNameReservation;
-    String textPhoneAddress;
+    private List<ResultRoom> ResultRooms;
+    private Date startOfTravel;
+    private int durationTravel;
+    private RelativeLayout chooseHolder;
+    private TextView txtNumberRoom;
+    private ResultLodging resultLodgingHotelDetail;
+    private String bundleId, edtNameReservation, edtEmailReservation, edtLastNameReservation, textPhoneAddress, bundleFrom;
+    private Map<Integer, Integer> selectedRooms;
+    private ProgressDialog progressDialog;
+    private List<ReqLodgingReservation> ReqLodgingReservationList;
+    private View viewAdapter, viewEnds;
+    private ConfirmReservationViewPagerAdapter confirmReservationViewPagerAdapter;
+    private entity.Bundle roomBundle;
+
     @Inject
     ConfirmHotelPresenter confirmHotelPresenter;
-    Map<Integer, Integer> selectedRooms;
-    ProgressDialog progressDialog;
     @Inject
     SettingPresenter settingPresenter;
     @InjectView(R.id.pager)
     ClickableViewPager pager;
-    List<ReqLodgingReservation> ReqLodgingReservationList;
-    View viewAdapter, viewEnds;
-    ConfirmReservationViewPagerAdapter confirmReservationViewPagerAdapter;
-    entity.Bundle roomBundle;
-    private String bundleFrom;
 
     private void getExtra() {
         Intent intent = getIntent();
@@ -112,9 +106,6 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_show_room);
-
-        Log.e("HotelReservationConfirm", "Damn Son");
-
         ButterKnife.inject(this);
         getExtra();
         DaggerConfirmHotelComponent.builder().netComponent(((App) getApplicationContext().getApplicationContext()).getNetComponent())
@@ -383,6 +374,4 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
         }
 
     }
-
-
 }

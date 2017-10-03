@@ -23,25 +23,16 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <!--<android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
-            android:background="@color/green"
-            android:scrollbars="horizontal" />-->
     </android.support.design.widget.AppBarLayout>
+
     <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
+        android:layout_above="@+id/ShowRoomHolder"
         android:layout_below="@+id/app_bar"
-        android:layout_above="@+id/ShowRoomHolder">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <include layout="@layout/content_show_room" />
     </android.support.v4.widget.NestedScrollView>
@@ -51,9 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/buttonBottom"
         android:layout_alignParentBottom="true"
-        android:background="@color/green"
+        android:background="@color/green">
 
-        >
         <RelativeLayout
             android:id="@+id/hotelReservationOkHolder"
             android:layout_width="match_parent"
@@ -70,6 +60,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/txtNumber"
                 android:background="@color/green"
+                android:gravity="center"
                 android:text="ادامه فرایند رزرواسیون"
                 android:textAlignment="center"
                 android:textColor="@color/white_" />
@@ -82,14 +73,12 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:background="@color/greenpress"
+                android:gravity="center"
                 android:paddingEnd="@dimen/padding_standard"
                 android:paddingStart="@dimen/padding_standard"
-
                 android:text="0"
                 android:textColor="@color/white_" />
 
         </RelativeLayout>
-
-
     </RelativeLayout>
 </RelativeLayout>
