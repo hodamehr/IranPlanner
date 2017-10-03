@@ -283,7 +283,7 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
             intentReservationRegisterRoom.putExtra("startOfTravel", startOfTravel);
             intentReservationRegisterRoom.putExtra("durationTravel", durationTravel);
             intentReservationRegisterRoom.putExtra("resultLodgingHotelDetail", (Serializable) resultLodgingHotelDetail);
-            intentReservationRegisterRoom.putExtra("bundleId", bundleId);
+            intentReservationRegisterRoom.putExtra("bundleId", requestLodgingReservationMain.getResultLodgingReservation().getReqBundleId());
             startActivity(intentReservationRegisterRoom);
         } else {
             Toast.makeText(getApplicationContext(), "قطع ارتباط با سرور", Toast.LENGTH_LONG).show();
