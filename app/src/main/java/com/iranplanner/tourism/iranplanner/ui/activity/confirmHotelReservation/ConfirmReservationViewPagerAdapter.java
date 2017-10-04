@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import tools.CustomDialogNumberPicker;
+import tools.Util;
 
 /**
  * Created by h.vahidimehr on 19/02/2017.
@@ -69,6 +71,8 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
     TextView endPrice;
     @InjectView(R.id.roomDelete)
     TextView roomDelete;
+    @InjectView(R.id.selectHoldetHalf)
+    LinearLayout selectHoldetHalf;
 
 
     @InjectView(R.id.edtHeadNameReservation)
@@ -91,6 +95,8 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
     TextView txtReqNumber;
     String name, family;
     View viewHolder;
+    String bundleId;
+
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
@@ -107,12 +113,13 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
     }
 
 
-    public ConfirmReservationViewPagerAdapter(Context context, Activity activity, List<entity.ResultRoom> resultRooms, int durationTravel, Date startOfTravel) {
+    public ConfirmReservationViewPagerAdapter(Context context, Activity activity, List<entity.ResultRoom> resultRooms, int durationTravel, Date startOfTravel, String bundleId) {
         this.context = context;
         this.activity = activity;
         this.resultRooms = resultRooms;
         this.startOfTravel = startOfTravel;
         this.durationTravel = durationTravel;
+        this.bundleId = bundleId;
     }
 
 
@@ -149,7 +156,7 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
 //                    resultRooms.get(position).setHeadName(edtHeadNameReservation.getText().toString());
 //                    resultRooms.get(position).setHeadLastName(edtHeadLastNameReservation.getText().toString());
                     if (mOnItemClickListener != null) {
-                        mOnItemClickListener.onItemClick(position, "txtOkRoom", resultRooms.get(position), view,viewHolder.findViewById(R.id.okEndHolder));
+                        mOnItemClickListener.onItemClick(position, "txtOkRoom", resultRooms.get(position), view, viewHolder.findViewById(R.id.okEndHolder));
                     }
                 } else {
                     Toast.makeText(context, "مشخصات سرپرست اتاق وارد نشده است", Toast.LENGTH_LONG).show();
@@ -161,7 +168,7 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(position, "nextHolder", null, view,(View) okEndHolder);
+                    mOnItemClickListener.onItemClick(position, "nextHolder", null, view, (View) okEndHolder);
                 }
             }
         });
@@ -169,7 +176,7 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(position, "okEndHolder", null, view,okEndHolder);
+                    mOnItemClickListener.onItemClick(position, "okEndHolder", null, view, okEndHolder);
                 }
             }
         });
@@ -179,7 +186,7 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
 //                resultRooms.remove(position);
 //                notifyDataSetChanged();
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(position, "roomDelete", null, view , okEndHolder);
+                    mOnItemClickListener.onItemClick(position, "roomDelete", null, view, okEndHolder);
                 }
             }
         });
@@ -295,13 +302,14 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
     }
 
     private void setDefaultValue(final int position) {
-        if(position==0){
+        if (position == 0) {
             nextHolder.setVisibility(View.GONE);
 //            okEndHolder.setVisibility(View.VISIBLE);
         }
         name = (resultRooms.get(position).getHeadName() != null) && resultRooms.get(position).getHeadName().equals("") ? resultRooms.get(position).getHeadName() : "";
         family = (resultRooms.get(position).getHeadLastName() != null && resultRooms.get(position).getHeadLastName().equals("")) ? resultRooms.get(position).getHeadLastName() : "";
 
+        txtReqNumber.setText(bundleId != null ? Util.persianNumbers(bundleId) : "0");
 
         roomPricefinal = (resultRooms.get(position).getRoom_price_final() != null) ? Integer.valueOf(resultRooms.get(position).getRoom_price_final()) : 1;
         PriceHalfboardIn = (resultRooms.get(position).getRoomPriceHalfboardIn() != null) ? Integer.valueOf(resultRooms.get(position).getRoomPriceHalfboardIn()) : 0;
@@ -311,35 +319,36 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
         priceAddPeople = (resultRooms.get(position).getPriceAddPeople() != null) ? Integer.valueOf(resultRooms.get(position).getPriceAddPeople()) : 0;
         priceHalfInPrice = (resultRooms.get(position).getHalfIn() != null && resultRooms.get(position).getHalfIn()) ? Integer.valueOf(resultRooms.get(position).getRoomPriceHalfboardIn()) : 0;
         priceHalfOutPrice = (resultRooms.get(position).getHalfOut() != null && resultRooms.get(position).getHalfOut()) ? Integer.valueOf(resultRooms.get(position).getRoomPriceHalfboardOut()) : 0;
+
         roomType.setText(resultRooms.get(position).getRoomTitle());
-        txtPrice.setText(" " + roomPricefinal * durationTravel + " ");
+        txtPrice.setText(Util.persianNumbers(" " +Util.getPriceInToman( roomPricefinal * durationTravel )+ " تومان"));
         selectAddPeople = (resultRooms.get(position).getSelectedAddNumbers() != null) ? Integer.valueOf(resultRooms.get(position).getSelectedAddNumbers()) : 0;
 
 
-        txtAddPeople.setText(" " + roomCapacityExtraPrice * durationTravel * selectAddPeople + " ");
+        txtAddPeople.setText(Util.persianNumbers(" " + Util.getPriceInToman(roomCapacityExtraPrice * durationTravel * selectAddPeople )+ " تومان "));
         edtHeadNameReservation.setText(resultRooms.get(position).getHeadName());
         edtHeadLastNameReservation.setText(resultRooms.get(position).getHeadLastName());
-        txtDiscount.setText(" " + resultRooms.get(position).getRoomPriceDifference() + " ");
+        txtDiscount.setText(Util.persianNumbers(" " + Util.getPriceInToman(Integer.valueOf(resultRooms.get(position).getRoomPriceDifference())) + " تومان "));
         setVisibleHalfBoard(position);
-        endPrice.setText((roomPricefinal * durationTravel) + priceHalfOutPrice + priceHalfInPrice + (roomCapacityExtraPrice * durationTravel * selectAddPeople) + "تومان");
+        endPrice.setText(Util.persianNumbers(Util.getPriceInToman((roomPricefinal * durationTravel) + priceHalfOutPrice + priceHalfInPrice + (roomCapacityExtraPrice * durationTravel * selectAddPeople)) + "تومان"));
         checkHalfOut.setChecked((resultRooms.get(position).getHalfOut() != null) ? resultRooms.get(position).getHalfOut() : false);
         checkHalfIn.setChecked((resultRooms.get(position).getHalfIn() != null) ? resultRooms.get(position).getHalfIn() : false);
-        txtaddPersonValue.setText((resultRooms.get(position).getSelectedAddNumbers() != null) ? resultRooms.get(position).getSelectedAddNumbers() + " نفراضافه " : "نفراضافه");
+        txtaddPersonValue.setText((resultRooms.get(position).getSelectedAddNumbers() != null) ? Util.persianNumbers(resultRooms.get(position).getSelectedAddNumbers()) + " نفراضافه " : "نفراضافه");
         txtNationalityValue.setText((resultRooms.get(position).getSelectedForeign() != null && resultRooms.get(position).getSelectedForeign().equals("0")) ? "ایرانی" : "خارجی");
     }
 
 
     private void setVisibleHalfBoard(int position) {
 //        viewHolder.txtOkRoom.setBackground(context.getDrawable(R.drawable.button_corner_green_stroke));
-        if (resultRooms.get(position).getRoomPriceHalfboardIn() != null || resultRooms.get(position).getRoomPriceHalfboardOut() != null) {
+        if ((resultRooms.get(position).getRoomPriceHalfboardIn() != null && !resultRooms.get(position).getRoomPriceHalfboardIn().equals("0")) || (resultRooms.get(position).getRoomPriceHalfboardOut() != null && !resultRooms.get(position).getRoomPriceHalfboardOut().equals("0"))) {
             holder.setVisibility(View.VISIBLE);
         }
         if (resultRooms.get(position).getHalfIn() != null && resultRooms.get(position).getHalfOut() != null && resultRooms.get(position).getHalfIn() && resultRooms.get(position).getHalfOut()) {
-            txthalfInPrice.setText(" " + priceHalfOutPrice + priceHalfInPrice + " ");
+            txthalfInPrice.setText(Util.persianNumbers(" " + Util.getPriceInToman(priceHalfOutPrice + priceHalfInPrice) + " تومان"));
         } else if (resultRooms.get(position).getHalfIn() != null && resultRooms.get(position).getHalfIn()) {
-            txthalfInPrice.setText(" " + priceHalfInPrice + " ");
+            txthalfInPrice.setText(Util.persianNumbers(" " + Util.getPriceInToman(priceHalfInPrice )+ " تومان "));
         } else if (resultRooms.get(position).getHalfOut() != null && resultRooms.get(position).getHalfOut()) {
-            txthalfInPrice.setText(" " + priceHalfOutPrice + " ");
+            txthalfInPrice.setText(Util.persianNumbers(" " +Util.getPriceInToman( priceHalfOutPrice )+ " تومان"));
         } else {
             txthalfInPrice.setText(" ");
         }
@@ -375,7 +384,7 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
 
 
     public interface OnItemClickViewPagerListener {
-        void onItemClick(int position, String viewName, entity.ResultRoom room, View view,View viewEnd);
+        void onItemClick(int position, String viewName, entity.ResultRoom room, View view, View viewEnd);
     }
 
     public void setOnItemClickListener(OnItemClickViewPagerListener onItemClickListener) {

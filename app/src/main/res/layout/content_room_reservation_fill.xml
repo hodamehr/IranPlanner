@@ -283,7 +283,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/margin_xshort"
                         android:maxLines="1"
-                        android:text="حذف"
+                        android:text="حذف اتاق"
                         android:textColor="@color/dark_red" />
 
                     <!--<ImageView
@@ -307,7 +307,7 @@
                 android:layout_below="@+id/container"
                 android:layout_marginTop="@dimen/padding_standard"
                 android:background="@drawable/corner_layout"
-                android:padding="@dimen/padding_standard">
+                android:padding="@dimen/padding_standard"                   >
 
                 <TextView
                     android:id="@+id/txtTitle"
@@ -539,7 +539,7 @@
                         android:text="درخواست اقامت نیم روز" />
 
                     <LinearLayout
-                        android:id="@+id/selectHoldetTop2"
+                        android:id="@+id/selectHoldetHalf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/titleMidDay"
@@ -648,7 +648,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_toEndOf="@+id/imageTypeHotea"
-                                android:text="3000 تومان" />
+                                 />
 
                             <TextView
                                 android:id="@+id/imageTypeHotea"
@@ -792,21 +792,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/changeDateTimeHolder"
-                android:layout_alignParentEnd="true">
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true">
 
                 <ImageView
                     android:id="@+id/imageArrow"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_arrow_left" />
+                    android:src="@mipmap/ic_arrow_left"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true" />
 
                 <TextView
                     style="@style/StandardTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/imageArrow"
-                    android:text="بعدی" />
+                    android:layout_height="wrap_content"
+                    android:text="بعدی"
+                    android:id="@+id/textView2"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@+id/imageArrow"
+                    android:layout_alignParentBottom="true" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -829,7 +834,6 @@
                     android:textAlignment="center"
                     android:textColor="@color/white_"
                     android:background="@drawable/button_corner_blue"
-                    android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
                     android:padding="@dimen/padding_short"/>
             </RelativeLayout>

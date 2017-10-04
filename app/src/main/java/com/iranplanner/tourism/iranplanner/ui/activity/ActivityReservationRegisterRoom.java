@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +71,8 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
     EditText edtLastNameReservation;
     @InjectView(R.id.textPhoneAddress)
     EditText textPhoneAddress;
+    @InjectView(R.id.imageLoading)
+    ProgressBar imageLoading;
     ResultLodging resultLodgingHotelDetail;
     String bundleId;
     private ProgressDialog progressDialog;
@@ -91,6 +94,9 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
 
         edtNameReservation.setText(Util.getUserNameFromShareprefrence(getApplicationContext()));
         edtEmailReservation.setText(Util.getEmailFromShareprefrence(getApplicationContext()));
+
+        Util.setImageView(resultLodgingHotelDetail.getLodgingImgUrl(), getApplicationContext(), imgHotel,imageLoading);
+
 
 //        edtLastNameReservation.setText(Util.ge(getApplicationContext()));
 
@@ -182,18 +188,24 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
         ResultRooms = (List<ResultRoom>) bundle.getSerializable("ResultRooms");
         selectedRooms = (Map<Integer, Integer>) bundle.getSerializable("selectedRooms");
         resultLodgingHotelDetail = (ResultLodging) bundle.getSerializable("resultLodgingHotelDetail");
+
     }
 
     private void setHotelDescription() {
         txtHotelName.setText(resultLodgingHotelDetail.getLodgingName());
-        txtRoomSelected.setText(selectedRooms.size() + "");
+        txtRoomSelected.setText(Util.persianNumbers(selectedRooms.size() + ""));
 //        txtCheckInDateReserve.setText("");
 //        txtDateCheckOutReserveValue.setText("");
-        txtTimeCheckoutValue.setText(resultLodgingHotelDetail.getLodgingCheckout());
-        txtTimeCheckinValue.setText(resultLodgingHotelDetail.getLodgingCheckin());
-        txtHotelAddressValue.setText(resultLodgingHotelDetail.getLodgingAddress());
-        txtCheckInDateReserveValue.setText(Utils.getSimpleDate(startOfTravel));
-//        txtDurationTravel.setText(durationTravel);
+//        txtTimeCheckoutValue.setText(Util.persianNumbers(resultLodgingHotelDetail.getLodgingCheckout()));
+
+        txtTimeCheckoutValue.setText(resultLodgingHotelDetail.getLodgingCheckout() != null ? Util.persianNumbers(resultLodgingHotelDetail.getLodgingCheckout()) : "0");
+        txtTimeCheckinValue.setText(resultLodgingHotelDetail.getLodgingCheckout() != null ? Util.persianNumbers(resultLodgingHotelDetail.getLodgingCheckout()) : "0");
+
+
+//        txtTimeCheckinValue.setText(Util.persianNumbers(resultLodgingHotelDetail.getLodgingCheckin()));
+        txtHotelAddressValue.setText(Util.persianNumbers(resultLodgingHotelDetail.getLodgingAddress()));
+        txtCheckInDateReserveValue.setText(Util.persianNumbers(Utils.getSimpleDate(startOfTravel)));
+        txtDurationTravel.setText(Util.persianNumbers(durationTravel+""));
     }
 
 //    private void setupTablayout() {

@@ -113,7 +113,7 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
                 .build().injectConfirmHotel(this);
         ReqLodgingReservationList = new ArrayList<ReqLodgingReservation>();
 
-        confirmReservationViewPagerAdapter = new ConfirmReservationViewPagerAdapter(getApplicationContext(), this, ResultRooms, durationTravel, startOfTravel);
+        confirmReservationViewPagerAdapter = new ConfirmReservationViewPagerAdapter(getApplicationContext(), this, ResultRooms, durationTravel, startOfTravel, bundleId);
         pager.setAdapter(confirmReservationViewPagerAdapter);
         pager.setCurrentItem(ResultRooms.size() - 1);
         confirmReservationViewPagerAdapter.setOnItemClickListener(new ConfirmReservationViewPagerAdapter.OnItemClickViewPagerListener() {
@@ -302,6 +302,7 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
     public void showHotelReservationResult(RequestLodgingReservationMain loginResult) {
         pager.setCurrentItem(pager.getCurrentItem(), true);
         ((TextView) viewAdapter.findViewById(R.id.txtOkRoom)).setText("ویرایش");
+        ((TextView) viewAdapter.findViewById(R.id.txtOkRoom)).setBackgroundResource(R.drawable.button_corner_grey_stroke);
         if (0 == pager.getCurrentItem()) {
             viewEnds.setVisibility(View.VISIBLE);
         }
@@ -321,6 +322,7 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
         if (reservationRequestDeleteRoom.getStatus().getStatus() == 200) {
             ResultRooms.remove(0);
             confirmReservationViewPagerAdapter.notifyDataSetChanged();
+            Toast.makeText(getApplicationContext(), "اتاق مورد نظر یافت نشد", Toast.LENGTH_LONG).show();
             Log.e("delete", "room");
         }
     }
