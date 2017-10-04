@@ -1,7 +1,15 @@
 package com.iranplanner.tourism.iranplanner.di.model;
 
+import android.Manifest;
 import android.app.Application;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 
@@ -34,12 +42,14 @@ public class App extends Application {
     private NetComponent googleNetComponent;
     public FirebaseAnalytics mFirebaseAnalytics;
 
-
     public FirebaseAnalytics getmFirebaseAnalytics() {
         return mFirebaseAnalytics;
     }
 
     private static final String TAG = App.class.getSimpleName();
+
+    private LocationManager locationManager;
+    private Location location;
 
     @Override
     public void onCreate() {
@@ -79,6 +89,10 @@ public class App extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        enableLocationCheck();
     }
 
     public NetComponent getNetComponent() {
@@ -88,4 +102,36 @@ public class App extends Application {
     public NetComponent getGoogleNetComponent() {
         return googleNetComponent;
     }
+
+    public void enableLocationCheck() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            return;
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+    }
+
+    public Location getLastLocation() {
+        return location;
+    }
+
+    private void storeLocation(Location location) {
+        this.location = location;
+    }
+
+    private LocationListener locationListener = new LocationListener() {
+
+        public void onLocationChanged(Location location) {
+            // Called when a new location is found by the network location provider.
+            storeLocation(location);
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onProviderDisabled(String provider) {
+        }
+    };
 }

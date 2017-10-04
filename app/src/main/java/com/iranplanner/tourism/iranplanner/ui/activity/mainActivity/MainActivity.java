@@ -1,89 +1,123 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.mainActivity;
 
 
+import android.Manifest;
+import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-
-//import com.digits.sdk.android.AuthCallback;
-//import com.digits.sdk.android.Digits;
-//import com.digits.sdk.android.DigitsException;
-//import com.digits.sdk.android.DigitsSession;
-//import com.alirezaafkar.toolbar.RtlActionBarDrawerToggle;
-//import com.alirezaafkar.toolbar.RtlToolbar;
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.di.model.ForceUpdateChecker;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
-import com.iranplanner.tourism.iranplanner.standard.StandardFragment;
-import com.iranplanner.tourism.iranplanner.ui.downloader.FileDownloadHelper;
-import com.iranplanner.tourism.iranplanner.ui.fragment.FirstItem;
-import com.iranplanner.tourism.iranplanner.ui.fragment.home.HomeFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchFragment;
-import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingFragment;
-import com.iranplanner.tourism.iranplanner.ui.tutorial.TutorialActivity;
-//import com.twitter.sdk.android.core.TwitterAuthConfig;
-//import com.twitter.sdk.android.core.TwitterCore;
-//import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import entity.GetHomeResult;
 import tools.Util;
 
 public class MainActivity extends StandardActivity implements ForceUpdateChecker.OnUpdateNeededListener {
-    private StandardFragment currentTab;
     GetHomeResult homeResult;
-//
-//    private RtlToolbar mToolbar;
-//    private DrawerLayout mDrawerLayout;
-
-
-    protected String[] mNavigationDrawerItemTitles;
-    protected DrawerLayout mDrawerLayout;
-    protected ListView mDrawerList;
-    protected Toolbar toolbar;
-    protected CharSequence mDrawerTitle;
-    protected CharSequence mTitle;
-    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
-
-    protected ImageView toolbarToggle;
-    protected ImageView toolbarToggleLeft;
-
-    protected static int buildVersion;
-
-    protected TextView toolbarTitle;
-
-    protected static Typeface YEKAN;
 
     boolean doubleBackToExitPressedOnce = false;
     private ViewPager viewPager;
     private TabPagerAdapter pagerAdapter;
     TabLayout mainTabLayout;
 
+    //runtime permission field vars
+    private static final int ACCESS_FINE_LOCATION_PERMISSION_CONSTANT = 100;
+    private static final int REQUEST_PERMISSION_SETTING = 101;
+    private boolean sentToSettings = false;
+    private SharedPreferences permissionStatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        init();
+        checkPermission();
+        ((App) getApplication()).getLastLocation();
+
+    }
+
+    private void checkPermission() {
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                //Show Information about why you need the permission
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Need Storage Permission");
+                builder.setMessage("This app needs storage permission.");
+                builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION_PERMISSION_CONSTANT);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            } else if (permissionStatus.getBoolean(Manifest.permission.ACCESS_FINE_LOCATION, false)) {
+                //Previously Permission Request was cancelled with 'Dont Ask Again',
+                // Redirect to Settings after showing Information about why you need the permission
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("Need Storage Permission");
+                builder.setMessage("This app needs storage permission.");
+                builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        sentToSettings = true;
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+                        intent.setData(uri);
+                        startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
+                        Toast.makeText(getBaseContext(), "Go to Permissions to Grant Storage", Toast.LENGTH_LONG).show();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            } else {
+                //just request the permission
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION_PERMISSION_CONSTANT);
+            }
+
+            SharedPreferences.Editor editor = permissionStatus.edit();
+            editor.putBoolean(Manifest.permission.ACCESS_FINE_LOCATION, true);
+            editor.commit();
+
+        } else {
+            //You already have the permission, just go ahead.
+            proceedAfterPermission();
+        }
+    }
+
+    private void init() {
+
         Bundle extras = getIntent().getExtras();
         homeResult = (GetHomeResult) extras.getSerializable("HomeResult");
         viewPager = (ViewPager) findViewById(R.id.main_view_pager);
@@ -103,38 +137,25 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
 
         }
 
-//        startActivity(new Intent(this, TutorialActivity.class));
-
         int position = 2;
-//        if (extras != null) {
-//            position = extras.getInt("viewpager_position");
-//        }
         mainTabLayout.getTabAt(position).getCustomView().setSelected(true);
-        currentTab = (StandardFragment) pagerAdapter.getItem(position);
         viewPager.setCurrentItem(position);
 
         Util.displayFirebaseRegId(this);
 
         ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
-//        ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setOffscreenPageLimit(3);
+
+        permissionStatus = getSharedPreferences("permissionStatus", MODE_PRIVATE);
     }
 
-//    private void initDrawer() {
-//        RtlActionBarDrawerToggle drawerToggle = new RtlActionBarDrawerToggle(this, mDrawerLayout,
-//                mToolbar, R.string.navigation_drawer_open,
-//                R.string.navigation_drawer_close);
-//        mDrawerLayout.addDrawerListener(drawerToggle);
-//        drawerToggle.syncState();
-//    }
-//    }
-
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
+    private void redirectStore(String updateUrl) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
+    //Wrote this legend to Handle all those weird back presses
     @Override
     public void onBackPressed() {
         ItineraryListFragment fragment = (ItineraryListFragment) getSupportFragmentManager().findFragmentByTag(MainSearchFragment.TAG_ITINERARY);
@@ -186,71 +207,71 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         dialog.show();
     }
 
-    private void redirectStore(String updateUrl) {
-        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
     }
 
 
-    //-------------
-
-    public static MainActivity instance;
-    private MainSearchFragment mainSearchFragment;
-    private SettingFragment settingFragment;
-    private HomeFragment homeFragment;
-    private TabLayout allTabs;
-
-    public static MainActivity getInstance() {
-        return instance;
+    private void proceedAfterPermission() {
+        //We've got the permission, now we can proceed further
+        ((App) getApplication()).enableLocationCheck();
     }
 
-    private void getAllWidgets() {
-        allTabs = (TabLayout) findViewById(R.id.tab_layout);
-    }
-
-    private void setupTabLayout() {
-        mainSearchFragment = MainSearchFragment.newInstance();
-        settingFragment = SettingFragment.newInstance();
-        allTabs.addTab(allTabs.newTab().setText("حستجو"), true);
-        allTabs.addTab(allTabs.newTab().setText("حساب من"));
-    }
-
-    private void bindWidgetsWithAnEvent() {
-        allTabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                setCurrentTabFragment(tab.getPosition());
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == ACCESS_FINE_LOCATION_PERMISSION_CONSTANT) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //The External Storage Write Permission is granted to you... Continue your left job...
+                proceedAfterPermission();
+            } else {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    //Show Information about why you need the permission
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("Need Storage Permission");
+                    builder.setMessage("This app needs storage permission");
+                    builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, ACCESS_FINE_LOCATION_PERMISSION_CONSTANT);
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Unable to get Permission", Toast.LENGTH_LONG).show();
+                }
             }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-    }
-
-    private void setCurrentTabFragment(int tabPosition) {
-        switch (tabPosition) {
-            case 0:
-                replaceFragment(mainSearchFragment);
-                break;
-            case 1:
-                replaceFragment(settingFragment);
-                break;
-            case 3:
-                replaceFragment(homeFragment);
         }
     }
 
-    public void replaceFragment(StandardFragment fragment) {
-//        FragmentManager fm = getSupportFragmentManager();
-//        FragmentTransaction ft = fm.beginTransaction();
-//        ft.replace(R.id.frame_container, fragment);
-//        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//        ft.commit();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_PERMISSION_SETTING) {
+            if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                //Got Permission
+                proceedAfterPermission();
+            }
+        }
     }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        if (sentToSettings) {
+            if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                //Got Permission
+                proceedAfterPermission();
+            }
+        }
+    }
+
 }
