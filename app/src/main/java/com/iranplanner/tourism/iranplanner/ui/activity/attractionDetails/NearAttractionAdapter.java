@@ -40,8 +40,12 @@ public class NearAttractionAdapter extends RecyclerView.Adapter<NearAttractionAd
     @Override
     public void onBindViewHolder(final Holder holder, final int listPosition) {
         TextView textViewName = holder.textViewName;
+        TextView txtDistance = holder.txtDistance;
         ImageView imageView = holder.imageViewIcon;
+        txtDistance.setVisibility(View.VISIBLE);
         textViewName.setText(resultAttractionList.get(listPosition).getResulAttraction().getAttractionTitle());
+        txtDistance.setText(Util.persianNumbers(distanceConvert(resultAttractionList.get(listPosition).getResulAttraction().getAttractionDistance())));
+
         if (resultAttractionList.get(listPosition).getResulAttraction().getAttractionImgUrl() != null)
             Util.setImageView(String.valueOf(resultAttractionList.get(listPosition).getResulAttraction().getAttractionImgUrl()), context, imageView, null);
     }
@@ -54,13 +58,26 @@ public class NearAttractionAdapter extends RecyclerView.Adapter<NearAttractionAd
     public static class Holder extends RecyclerView.ViewHolder {
 
         TextView textViewName;
+        TextView txtDistance;
         ImageView imageViewIcon;
 
         public Holder(View itemView) {
             super(itemView);
             this.textViewName = (TextView) itemView.findViewById(R.id.txtView);
+            this.txtDistance = (TextView) itemView.findViewById(R.id.txtDistance);
             this.imageViewIcon = (ImageView) itemView.findViewById(R.id.image);
         }
+    }
+
+    private String distanceConvert(String distance) {
+        String dis;
+        if (Float.valueOf(distance) < 1) {
+            dis = (int) Math.round(Float.valueOf(distance) * 1000) + "متر";
+        } else {
+            dis = distance + "کیلومتر";
+        }
+        return dis;
+
     }
 }
 
