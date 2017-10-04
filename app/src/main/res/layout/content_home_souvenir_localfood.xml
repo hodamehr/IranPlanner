@@ -20,9 +20,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/background" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -37,7 +34,17 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="@dimen/margin_xshort"
-                android:hint="هتل" />
+                android:ellipsize="end"
+                android:lines="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtView"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/margin_xshort"
+                android:id="@+id/txtDistance"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:id="@+id/starHolder"
