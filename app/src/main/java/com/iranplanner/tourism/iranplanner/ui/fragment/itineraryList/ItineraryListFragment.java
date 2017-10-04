@@ -112,6 +112,9 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Log.e("DEBUG:::", "ItineraryListFragment");
+
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         View view = inflater.inflate(R.layout.fragment_itinerary_list, container, false);

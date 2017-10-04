@@ -99,7 +99,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         View.OnClickListener,
         ItineraryContract.View {
 
-
     @Inject
     ItineraryPresenter itineraryPresenter;
 
@@ -157,8 +156,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     int WishValue;
     //    DaggerItineraryComponent.Builder builder;
     DaggerItineraryComponent.Builder builder;
-
-
 
     private void findView() {
 //        setContentView(R.layout.fragment_itinerary_item_more);
@@ -228,7 +225,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             okImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
             rateImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_ok_on));
 
-
         }
         if (resultWidget.get(0).getWidgetLikeValue() != null && resultWidget.get(0).getWidgetLikeValue() == 3) {
             dislikeImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_dislike_on));
@@ -242,13 +238,14 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             beftorVisitedImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_go_on));
             doneImg.setImageDrawable(getApplicationContext().getResources().getDrawable(R.mipmap.ic_before_go_on));
         }
-
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.e(TAG, "MoreItemItineraryActivity");
+
         findView();
         BookmarkValue = 0;
         LikeValue = 0;
@@ -284,7 +281,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             fromCityName.setText(itineraryData.getItineraryFromCityName());
             toCityName.setText(itineraryData.getItineraryToCityName());
         }
-
 
         //listener bara inke vaghti maghadir width , height set shod
         supplierLayoutMore.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -351,7 +347,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 //                    startActivity(intent);
 //                }
                 Log.e("position", position + "");
-
             }
 
             @Override
@@ -365,7 +360,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .itineraryModule(new ItineraryModule(this));
         builder.build().inject(this);
-        itineraryPresenter.getWidgetResult("nodeuser", itineraryData.getItineraryId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "itinerary",Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+        itineraryPresenter.getWidgetResult("nodeuser", itineraryData.getItineraryId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "itinerary", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
     }
 
     @Override
@@ -402,7 +397,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             case R.id.commentHolder:
                 showProgressDialog();
                 builder.build().inject(this);
-                itineraryPresenter.getItineraryCommentList("pagecomments", itineraryId, "itinerary", "0",Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                itineraryPresenter.getItineraryCommentList("pagecomments", itineraryId, "itinerary", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
                 break;
 
             case R.id.showReservation:
@@ -523,7 +518,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 showProgressDialog();
                 builder.build().inject(this);
 //                itineraryPresenter.getItineraryAttractionList("attraction", "fa", itineraryId,Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
-                itineraryPresenter.getItineraryAttractionListDay("attractionday", "fa", itineraryId,Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                itineraryPresenter.getItineraryAttractionListDay("attractionday", "fa", itineraryId, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
 
                 break;
         }
@@ -532,7 +527,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     private void OnClickedIntrestedWidget(String gType, String gValue, ImageView imageView) {
         if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
             itineraryPresenter.doWaitingAnimation(imageView);
-            itineraryPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "itinerary", itineraryId, gType, gValue,Util.getUseRIdFromShareprefrence(getApplicationContext()));
+            itineraryPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "itinerary", itineraryId, gType, gValue, Util.getUseRIdFromShareprefrence(getApplicationContext()));
         } else {
             Log.e("user is not login", "error");
             Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
@@ -712,13 +707,13 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        try{
+        try {
             if (hasFocus == true) {
                 RelativeLayout myLinearLayout = (RelativeLayout) findViewById(R.id.mapHolder);
                 int width = myLinearLayout.getWidth();
                 int height = myLinearLayout.getHeight();
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                if(markers!=null){
+                if (markers != null) {
                     for (Marker marker : markers) {
                         builder.include(marker.getPosition());
                     }
@@ -730,9 +725,9 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 int padding = (int) (width * 0.12); // offset from edges of the map 12% of screen
                 CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
                 mMap.animateCamera(cu);
-        }
+            }
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }

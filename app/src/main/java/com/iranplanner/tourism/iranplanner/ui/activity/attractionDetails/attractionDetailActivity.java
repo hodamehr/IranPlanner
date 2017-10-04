@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,7 +41,6 @@ import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.activity.MapFullActivity;
-import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMoreContract;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMorePresenter;
 import com.iranplanner.tourism.iranplanner.ui.activity.comment.CommentListActivity;
@@ -163,11 +161,6 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
     DaggerAtractionDetailComponent.Builder builder;
     private List<ResultAttractionList> resultAttractionList;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
     private void findView() {
 //        setContentView(R.layout.activity_attraction_detail);
         setContentView(R.layout.fragment_attraction_detail);
@@ -235,7 +228,6 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
         contentFullDescription.setLongClickable(false);
         contentFullDescription.setHapticFeedbackEnabled(false);
 
-
         String pish = "<html><head><style type=\"text/css\">@font-face {color:#737373;font-family: MyFont;src: url(\"file:///android_asset/fonts/IRANSansMobile.ttf\")}body {font-family: MyFont;font-size: small;text-align: justify;direction:rtl}</style></head><body>";
         String pas = "</body></html>";
         String myHtmlString = pish + myData + pas;
@@ -264,7 +256,7 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
     }
 
     private void setNearAttraction(List<ResultAttractionList> resultAttractions) {
-        nearAttractionAdapter attractionHomeAdapter = new nearAttractionAdapter(resultAttractions, getApplicationContext());
+        NearAttractionAdapter attractionHomeAdapter = new NearAttractionAdapter(resultAttractions, getApplicationContext());
         LinearLayoutManager horizontalLayoutManagaer
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerBestAttraction.setLayoutManager(horizontalLayoutManagaer);
@@ -826,4 +818,8 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
         }
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 }

@@ -1,6 +1,7 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.coinpany.core.android.widget.Utils;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.di.model.App;
@@ -32,6 +34,7 @@ import entity.ResultItinerary;
 import entity.ResultLodging;
 import entity.ResultLodgingList;
 import tools.Util;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by h.vahidimehr on 21/02/2017.
@@ -39,43 +42,48 @@ import tools.Util;
 
 public class ReservationListActivity extends StandardActivity implements DataTransferInterface, ReservationContract.View {
     private ReseveDateListAdapter adapter;
-    LinearLayoutManager mLayoutManager;
-    Date startOfTravel;
-    ResultItinerary itineraryData;
-    int durationTravel = 1;
-    ProgressDialog progressDialog;
+    private LinearLayoutManager mLayoutManager;
+    private Date startOfTravel;
+    private ResultItinerary itineraryData;
+    private int durationTravel = 1;
+    private ProgressDialog progressDialog;
     DaggerReservationComponent.Builder builder;
     @Inject
     ReservationPresenter reservationPresenter;
     protected Toolbar toolbar;
-    ImageView toolbarBack, toolbarToggle;
+
+    private View selectHolderTop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_list);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reservationListRecyclerView);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        Bundle extras = getIntent().getExtras();
-        itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
-        startOfTravel = (Date) extras.getSerializable("startOfTravel");
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        toolbarBack = (ImageView) findViewById(R.id.toolbarBack);
-//        toolbarToggle = (ImageView) findViewById(R.id.toolbarToggle);
+        Log.e(TAG, "ReservationListActivity");
 
-        setupToolbar();
-        adapter = new ReseveDateListAdapter(ReservationListActivity.this, this, itineraryData, getApplicationContext(), R.layout.fragment_itinerary_item, startOfTravel);
-        recyclerView.setAdapter(adapter);
-        mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-//--------
         builder = DaggerReservationComponent.builder()
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .reservationModule(new ReservationModule(this));
         builder.build().inject(this);
+
+        Bundle extras = getIntent().getExtras();
+        itineraryData = (ResultItinerary) extras.getSerializable("itineraryData");
+        startOfTravel = (Date) extras.getSerializable("startOfTravel");
+
+        setupToolbar();
+        init();
+    }
+
+    private void init() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reservationListRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new ReseveDateListAdapter(ReservationListActivity.this, this, itineraryData, getApplicationContext(), R.layout.fragment_itinerary_item, startOfTravel);
+        recyclerView.setAdapter(adapter);
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
 
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
@@ -90,23 +98,25 @@ public class ReservationListActivity extends StandardActivity implements DataTra
                         reservationPresenter.getLodgingList("list", itineraryData.getItineraryLodgingCity().get(position + 1).getCityId(), Util.getTokenFromSharedPreferences(getApplicationContext()), "20", "0", Util.getAndroidIdFromSharedPreferences(getApplicationContext()), "");
                     }
                 });
-
             }
         }));
-//        toolbarBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.e("ddd", "dddddddddddddddddddddddddd");
-//            }
-//        });
+
+        selectHolderTop = findViewById(R.id.selectHoldetTop);
+        selectHolderTop.setVisibility(View.GONE);
 
     }
 
-    void setupToolbar() {
-        ((StandardActivity) this).setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.transparent));
-        ((StandardActivity) this).getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        toolbarToggle.setVisibility(View.GONE);
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("اقامت های پیشنهادی");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
@@ -132,17 +142,12 @@ public class ReservationListActivity extends StandardActivity implements DataTra
 
     @Override
     public void showError(String message) {
-
-        if (progressDialog != null) {
+        if (progressDialog != null)
             progressDialog.dismiss();
-        }
-
-        if (message.contains("Unable to resolve host ") || message.contains("Software caused connection abort")) {
+        if (message.contains("Unable to resolve host ") || message.contains("Software caused connection abort"))
             Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
-        }
-        if (message.contains("HTTP 400 BAD REQUEST")) {
+        if (message.contains("HTTP 400 BAD REQUEST"))
             Toast.makeText(getApplicationContext(), "مرکز اقامتی وجود ندارد", Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override
@@ -164,4 +169,5 @@ public class ReservationListActivity extends StandardActivity implements DataTra
     public void dismissProgress() {
         progressDialog.dismiss();
     }
+
 }

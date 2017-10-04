@@ -11,6 +11,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.di.data.component.DaggerNetComponent;
 import com.iranplanner.tourism.iranplanner.di.data.component.NetComponent;
 import com.iranplanner.tourism.iranplanner.di.data.module.AppModule;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import server.Config;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 import static android.content.ContentValues.TAG;
 
@@ -71,6 +73,12 @@ public class App extends Application {
                         }
                     }
                 });
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/IRANSansMobile.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
 
     public NetComponent getNetComponent() {
