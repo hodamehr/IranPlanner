@@ -1,8 +1,10 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -111,6 +113,27 @@ public class ReservationListActivity extends StandardActivity implements DataTra
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("اقامت های پیشنهادی");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("KILL");
+        registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.iranplanner.tourism.iranplanner.ui.activity;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
@@ -128,6 +131,27 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
         });
     }
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("KILL");
+        registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
     public boolean validate() {
         boolean valid = true;
         String email = edtEmailReservation.getText().toString();
@@ -221,6 +245,4 @@ public class ActivityReservationRegisterRoom extends StandardActivity {
     protected int getLayoutId() {
         return R.layout.activity_reservation_input;
     }
-
-
 }

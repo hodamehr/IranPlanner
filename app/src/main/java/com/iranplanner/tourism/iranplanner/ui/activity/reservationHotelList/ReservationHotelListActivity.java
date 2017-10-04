@@ -1,7 +1,10 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
@@ -113,6 +116,27 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
         filterManager.enablePlaceRate();
     }
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("KILL");
+        registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
     private void init() {
 
         mapToggle = findViewById(R.id.reservationMapToggleView);
@@ -175,7 +199,6 @@ public class ReservationHotelListActivity extends StandardActivity implements Da
             }
         }, 300);
     }
-
 
     private void getExtras() {
         Bundle extras = getIntent().getExtras();

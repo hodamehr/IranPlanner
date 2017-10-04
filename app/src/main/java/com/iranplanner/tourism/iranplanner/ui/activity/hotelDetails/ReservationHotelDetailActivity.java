@@ -1,8 +1,10 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.hotelDetails;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -113,15 +115,6 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
-//    private void setupTablayout() {
-//
-//        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-//        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-//
-//    }
 
     private void findView() {
 //        setContentView(R.layout.activity_reservation_hotel_detail);
@@ -247,6 +240,27 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
             position = myData.indexOf(" ", position + 1);
         }
         return myData.substring(0, position) + "...";
+    }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("KILL");
+        registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     @Override

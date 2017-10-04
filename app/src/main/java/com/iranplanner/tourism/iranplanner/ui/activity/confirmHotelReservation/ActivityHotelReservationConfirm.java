@@ -1,7 +1,10 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.confirmHotelReservation;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -138,46 +141,27 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
                 }
             }
         });
+    }
 
-//        recyclerView.setHasFixedSize(true);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-//        recyclerView.setLayoutManager(layoutManager);
-//
-//        hotelReservationOkHolder.setOnClickListener(this);
-//        adapter = new HotelReservationConfirmListAdapter(durationTravel, startOfTravel, ActivityHotelReservationConfirm.this, this, getApplicationContext(), R.layout.activity_reservation_room_detail, selectedRooms, ResultRooms, this);
-//        recyclerView.setAdapter(adapter);
-//        mLayoutManager = new LinearLayoutManager(getApplicationContext());
-//        recyclerView.setLayoutManager(mLayoutManager);
-//        recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, final int position) {
-//                TextView txtOkRoom = (TextView) view.findViewById(R.id.txtOkRoom);
-//
-//                txtOkRoom.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Log.e("oktext clicked", "yes");
-//
-//                        if (!ResultRooms.get(position).getOkConfirmChange()) {
-//                            getRequestMain(position);
-//                            requestConfirmHotel(resultLodgingReservation);
-//                        } else {
-//                            Toast.makeText(getApplicationContext(), "سرپرست اتاق ها وارد نشده است", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                });
-//                txtNumberRoom = (TextView) view.findViewById(R.id.txtNumberRoom);
-//                chooseHolder.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        showDialogNumber(position, txtNumberRoom);
-//                    }
-//                });
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
 
-//            }
-//        }));
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("KILL");
+        registerReceiver(receiver, filter);
+    }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     private void requestConfirmHotel(ResultLodgingReservation resultLodgingReservation) {
@@ -374,6 +358,5 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
         } else if (bundleFrom.equals("HotelReservationStatusActivity")) {
             super.onBackPressed();
         }
-
     }
 }

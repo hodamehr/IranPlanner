@@ -1,7 +1,10 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -61,6 +64,11 @@ public class HotelReservationStatusActivity extends StandardActivity
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .hotelReservationStatusListModule(new HotelReservationStatusListModule(this))
                 .build().injectHotelReservationStatusActivity(this);
+
+        Log.e(TAG, "broadcast send ");
+        Intent intent = new Intent();
+        intent.setAction("KILL");
+        sendBroadcast(intent);
     }
 
     private void initToolbar() {
