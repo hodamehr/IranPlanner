@@ -60,6 +60,7 @@ public class MainSearchPresenter extends MainSearchContract {
     @Override
     public void loadItineraryFromProvince(String action, String province, String offset, String cid,
                                           String andID) {
+        mView.showProgress();
         retrofit.create(ItineraryService.class)
                 .getItinerariesFromProvince(action, province, offset, cid, andID).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -88,6 +89,7 @@ public class MainSearchPresenter extends MainSearchContract {
     @Override
     public void loadItineraryFromAttraction(String action, String lang, String from, String limit, String offset, String attraction, String cid,
                                             String andID) {
+        mView.showProgress();
         retrofit.create(ItineraryService.class).getItinerariesAttraction(action, lang, from, limit, offset, attraction, cid, andID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

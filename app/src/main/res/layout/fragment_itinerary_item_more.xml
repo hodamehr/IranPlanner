@@ -36,7 +36,7 @@
                         <ImageView
                             android:id="@+id/imgItineraryListMore"
                             android:layout_width="match_parent"
-                            android:layout_height="250dp"
+                            android:layout_height="@dimen/home_photo_height"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
@@ -55,10 +55,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:text="text"
+                                android:textAlignment="center"
                                 android:textColor="@color/white_"
                                 android:translationZ="1dp" />
 
-                            <ImageView
+                            <!--<ImageView
                                 android:id="@+id/itineraryMoreLike"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
@@ -67,7 +68,7 @@
                                 android:layout_toRightOf="@+id/itineraryDuration"
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/ic_calenderwhite"
-                                android:translationZ="1dp" />
+                                android:translationZ="1dp" />-->
                         </RelativeLayout>
 
                         <ImageView
@@ -87,11 +88,11 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/imageTypeAttraction"
-                            android:paddingLeft="@dimen/padding_short"
+                            android:layout_toEndOf="@+id/imageTypeAttraction"
+                            android:paddingEnd="@dimen/padding_short"
                             android:text="from"
                             android:textColor="@color/white_"
-                            android:translationZ="1dp" />
+                            android:translationZ="2dp" />
 
                         <TextView
                             android:id="@+id/toCityName"
@@ -100,907 +101,358 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:layout_toLeftOf="@+id/imageTypeAttraction"
-                            android:paddingRight="@dimen/padding_short"
+                            android:layout_toStartOf="@+id/imageTypeAttraction"
+                            android:paddingStart="@dimen/padding_short"
                             android:text="destintion"
                             android:textColor="@color/white_"
-                            android:translationZ="1dp" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="250dp"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:background="@drawable/dark_shadow"></RelativeLayout>
-                    </RelativeLayout>
-                    <!--rating Holder-->
-                    <RelativeLayout
-                        android:id="@+id/ratingHolder"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/supplierLayoutMore"
-                        android:background="@color/greyLight">
-
-                        <RelativeLayout
-                            android:id="@+id/VisitedLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:weightSum="2">
-
-                                <LinearLayout
-                                    android:id="@+id/beftorVisitedHolder"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:paddingTop="@dimen/padding_short">
-
-                                    <ImageView
-                                        android:id="@+id/beftorVisitedImg"
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_before_go_off" />
-
-                                    <TextView
-                                        android:id="@+id/beftorVisitedTxt"
-                                        style="@style/SmallText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginLeft="5dp"
-                                        android:layout_marginRight="5dp"
-                                        android:maxLines="1"
-                                        android:text="قبلا به این سفر رفتم" />
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/nowVisitedHolder"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:paddingTop="@dimen/padding_short">
-
-                                    <ImageView
-                                        android:id="@+id/nowVisitedImg"
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_now_go_off" />
-
-                                    <TextView
-                                        android:id="@+id/nowVisitedTxt"
-                                        style="@style/SmallText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="5dp"
-                                        android:layout_marginLeft="5dp"
-                                        android:layout_marginRight="5dp"
-                                        android:maxLines="1"
-                                        android:text="الان در حال اجرای سفر هستم" />
-
-                                </LinearLayout>
-                            </LinearLayout>
-
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/LikeLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:weightSum="3">
-
-                                <LinearLayout
-                                    android:id="@+id/dislikeHolder"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:paddingTop="@dimen/padding_short">
-
-                                    <ImageView
-                                        android:id="@+id/dislikeImg"
-                                        android:layout_width="30dp"
-                                        android:layout_height="30dp"
-                                        android:padding="@dimen/margin_xxshort"
-                                        android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_dislike_off" />
-
-                                    <TextView
-                                        android:id="@+id/dislikeTxt"
-                                        style="@style/SmallText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="@dimen/margin_xshort"
-                                        android:layout_marginLeft="5dp"
-                                        android:layout_marginRight="5dp"
-                                        android:maxLines="1"
-                                        android:text="دوست ندارم" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/okHolder"
-                                    android:layout_width="wrap_content"
-
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:paddingTop="@dimen/padding_short">
-
-                                    <ImageView
-                                        android:id="@+id/okImg"
-                                        android:layout_width="30dp"
-                                        android:layout_height="30dp"
-                                        android:padding="@dimen/margin_xxshort"
-                                        android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_ok_off" />
-
-                                    <TextView
-                                        android:id="@+id/okTxt"
-                                        style="@style/SmallText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="@dimen/margin_xshort"
-                                        android:layout_marginLeft="5dp"
-                                        android:layout_marginRight="5dp"
-                                        android:maxLines="1"
-                                        android:text="بد نیست" />
-
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/likeHolder"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical"
-                                    android:paddingTop="@dimen/padding_short">
-
-                                    <ImageView
-                                        android:id="@+id/likeImg"
-                                        android:layout_width="30dp"
-                                        android:layout_height="30dp"
-                                        android:padding="@dimen/margin_xxshort"
-                                        android:scaleType="centerCrop"
-                                        android:src="@mipmap/ic_like_off" />
-
-                                    <TextView
-                                        android:id="@+id/likeTxt"
-                                        style="@style/SmallText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginBottom="@dimen/margin_xshort"
-                                        android:layout_marginLeft="5dp"
-                                        android:layout_marginRight="5dp"
-                                        android:maxLines="1"
-                                        android:text="دوست دارم" />
-
-
-                                </LinearLayout>
-                            </LinearLayout>
-                        </RelativeLayout>
-
-                    </RelativeLayout>
-                    <!--<CommentHolder-->
-                    <RelativeLayout
-                        android:id="@+id/supplierLayoutMore"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/imageHolder"
-                        android:background="@color/white_">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:weightSum="4">
-
-                            <LinearLayout
-                                android:id="@+id/commentHolder"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:paddingTop="@dimen/padding_short">
-
-                                <ImageView
-                                    android:id="@+id/commentImg"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:padding="@dimen/margin_xxshort"
-                                    android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_reviewgreen" />
-
-                                <TextView
-                                    android:id="@+id/commentTxt"
-                                    style="@style/SmallText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="@dimen/margin_xshort"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:maxLines="1"
-                                    android:text="ثبت نظر" />
-
-
-                            </LinearLayout>
-
-
-                            <LinearLayout
-                                android:id="@+id/doneHolder"
-                                android:layout_width="wrap_content"
-
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:paddingTop="@dimen/padding_short">
-
-                                <ImageView
-                                    android:id="@+id/doneImg"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:padding="@dimen/margin_xxshort"
-                                    android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_go" />
-
-                                <TextView
-                                    android:id="@+id/doneTxt"
-                                    style="@style/SmallText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="@dimen/margin_xshort"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:maxLines="1"
-                                    android:text="اجرای سفر" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/rateHolder"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:paddingTop="@dimen/padding_short">
-
-                                <ImageView
-                                    android:id="@+id/rateImg"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:padding="@dimen/margin_xxshort"
-                                    android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_rate_grey" />
-
-                                <TextView
-                                    android:id="@+id/txtInterest"
-                                    style="@style/SmallText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="@dimen/margin_xshort"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:maxLines="1"
-                                    android:text="علاقه‌‌‌‌مندی" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/bookmarkHolder"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:paddingTop="@dimen/padding_short">
-
-                                <ImageView
-                                    android:id="@+id/bookmarkImg"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:padding="@dimen/margin_xxshort"
-                                    android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_bookmark_grey" />
-
-                                <TextView
-                                    android:id="@+id/saveTxt"
-                                    style="@style/SmallText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="@dimen/margin_xxshort"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:maxLines="1"
-                                    android:text="ذخیره" />
-
-
-                            </LinearLayout>
-                        </LinearLayout>
-                    </RelativeLayout>
-
-                    <!--GroupHolder-->
-                    <RelativeLayout
-                        android:id="@+id/GroupHolder"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/ratingHolder"
-                        android:layout_marginBottom="50dp">
-                        <!--travel type-->
-                        <RelativeLayout
-                            android:id="@+id/supplierLayoutTravelType"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/ShowMoreInfoHolder"
-                            android:paddingLeft="@dimen/padding_standard"
-                            android:paddingRight="@dimen/padding_standard">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentTop="true"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:paddingTop="@dimen/padding_short">
-
-                                <ImageView
-                                    android:id="@+id/itinerary_attraction_Difficulty"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_level_grey" />
-
-                                <TextView
-                                    android:id="@+id/txtItinerary_attraction_Difficulty"
-                                    style="@style/SmallText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:maxLines="1"
-                                    android:text="درجه سختی" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:layout_centerInParent="true"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:paddingTop="@dimen/padding_short">
-
-                                <ImageView
-                                    android:id="@+id/itinerary_attraction_type_more"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_road_grey" />
-
-                                <TextView
-                                    android:id="@+id/txtItinerary_attraction_type"
-                                    style="@style/SmallText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:maxLines="1"
-                                    android:text="جاده ای" />
-
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentTop="true"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:paddingTop="@dimen/padding_short">
-
-                                <ImageView
-                                    android:id="@+id/itinerary_count_attraction"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_eye_grey" />
-
-                                <TextView
-                                    android:id="@+id/txtItinerary_count_attraction"
-                                    style="@style/SmallText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginRight="5dp"
-                                    android:maxLines="1"
-                                    android:text="تعداد جاذبه" />
-
-
-                            </LinearLayout>
-
-
-                        </RelativeLayout>
-                        <!--mapHolder-->
-                        <RelativeLayout
-                            android:id="@+id/mapHolder"
-                            android:layout_width="match_parent"
-                            android:layout_height="250dp"
-                            android:layout_below="@+id/supplierLayoutTravelType"
-                            android:background="@color/greyLight"
-                            android:focusableInTouchMode="true">
-
-                            <fragment
-                                android:id="@+id/map"
-                                android:name="com.google.android.gms.maps.SupportMapFragment"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:focusableInTouchMode="true"
-                                tools:context="com.iranplanner.tourism.iranplanner.ui.activity.moreItemItinerary.MoreItemItineraryActivity" />
-                        </RelativeLayout>
-                        <!--dateHolder-->
-                        <RelativeLayout
-                            android:id="@+id/dateHolder"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-
-                            android:paddingLeft="@dimen/padding_big"
-                            android:paddingRight="@dimen/padding_big">
-
-                            <ImageView
-                                android:id="@+id/triangle"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_alignParentTop="true"
-                                android:layout_centerHorizontal="true"
-                                android:rotation="180"
-                                android:src="@drawable/shape_triangle" />
-
-
-                            <RelativeLayout
-                                android:id="@+id/dateRe"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/triangle"
-                                android:layout_marginBottom="@dimen/margin_standard"
-                               >
-
-
-                                <RelativeLayout
-                                    android:id="@+id/changeDateHolder"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                            android:translationZ="2dp" />
+
+                        <!--        <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="250dp"
                                     android:layout_alignParentLeft="true"
-                                    android:layout_centerVertical="true"
-                                    android:background="@drawable/rectangle"
-                                    android:padding="@dimen/margin_xshort">
-
-                                    <TextView
-                                        android:id="@+id/txtOk"
-                                        style="@style/StandardTextGrey"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginRight="@dimen/margin_short"
-                                        android:text="تاریخ شروع"
-                                        android:textColor="@color/grey" />
-
-                                    <ImageView
-                                        android:id="@+id/calendarIcon"
-                                        android:layout_width="25dp"
-                                        android:layout_height="25dp"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginRight="@dimen/padding_short"
-                                        android:layout_toLeftOf="@+id/txtOk"
-                                        android:background="@mipmap/ic_calendar_grey" />
-
-                                    <TextView
-                                        android:id="@+id/txtDate"
-                                        style="@style/StandardTextGrey"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginRight="@dimen/margin_short"
-                                        android:layout_toLeftOf="@+id/calendarIcon"
-                                        android:text="شنبه اول بهمن 1395"
-                                        android:maxLines="1"
-
-                                        />
-                                </RelativeLayout>
-
-                            </RelativeLayout>
-
-                            <Button
-                                android:id="@+id/showReservations"
-                                style="@style/StandardTitle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:background="@drawable/button_corner_green"
-                                android:text="رزرو مراکز اقامتی"
-                                android:textColor="@color/white_"
-                                android:visibility="gone" />
-
-                            <Button
-                                android:id="@+id/showItinerys1"
-                                style="@style/StandardTitle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_below="@+id/dateRe"
-                                android:layout_marginBottom="@dimen/margin_standard"
-                                android:background="@drawable/button_corner"
-                                android:text="نمایش برنامه سفر"
-                                android:textColor="@color/white_"
-                                android:visibility="gone" />
-
-                        </RelativeLayout>
-
-                        <!--showAttractionHolder- safar dar yek negah-->
-                        <RelativeLayout
-                            android:id="@+id/ShowAttractionHolder"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_below="@id/dateHolder">
-
-                            <ImageView
-                                android:id="@+id/triangleShowAttraction"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_centerHorizontal="true"
-                                android:rotation="180"
-                                android:src="@drawable/shape_triangle"
-                                android:visibility="gone" />
-
-                            <LinearLayout
-                                android:id="@+id/typeOfItineraryDetail"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/typeOfItinerary"
-                                android:layout_marginBottom="@dimen/margin_standard"
-                                android:layout_marginLeft="@dimen/margin_standard"
-                                android:layout_marginRight="@dimen/margin_standard"
-                                android:weightSum="3">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <RelativeLayout
-                                        android:id="@+id/progressHolder3"
-                                        android:layout_width="wrap_content"
-
-                                        android:layout_height="wrap_content"
-                                        android:layout_centerHorizontal="true"
-                                        android:layout_marginTop="@dimen/margin_short"
-                                        android:orientation="vertical">
-
-                                        <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                                            android:id="@+id/progress3"
-                                            android:layout_width="55dp"
-                                            android:layout_height="55dp"
-                                            android:layout_centerHorizontal="true"
-                                            app:cpb_background_progressbar_color="@color/greyLight"
-                                            app:cpb_background_progressbar_width="5dp"
-                                            app:cpb_progressbar_color="@color/pink"
-                                            app:cpb_progressbar_width="5dp" />
-                                        <!--android:theme="@style/CircularProgress"-->
-                                        <TextView
-                                            android:id="@+id/textPercentage3"
-                                            style="@style/SmallText"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_centerInParent="true"
-                                            android:maxLines="1"
-                                            android:text="80%"
-                                            android:textColor="@color/pink" />
-
-                                    </RelativeLayout>
-                                    <!--<com.mikhaellopez.circularprogressbar.CircularProgressBar-->
-                                    <!--android:id="@+id/progress1"-->
-                                    <!--android:layout_width="55dp"-->
-                                    <!--android:layout_height="55dp"-->
-                                    <!--app:cpb_background_progressbar_color="@color/greyLight"-->
-                                    <!--app:cpb_background_progressbar_width="5dp"-->
-                                    <!--app:cpb_progressbar_color="@color/pink"-->
-                                    <!--app:cpb_progressbar_width="5dp" />-->
-
-                                    <TextView
-                                        android:id="@+id/textTpeTravel3"
-                                        style="@style/StandardText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="@dimen/margin_xshort"
-                                        android:maxLines="1"
-                                        android:text="هنری"
-                                        android:textColor="@color/pink" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <RelativeLayout
-                                        android:id="@+id/progressHolder2"
-                                        android:layout_width="wrap_content"
-
-                                        android:layout_height="wrap_content"
-                                        android:layout_centerHorizontal="true"
-                                        android:layout_marginTop="@dimen/margin_short"
-                                        android:orientation="vertical">
-
-                                        <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                                            android:id="@+id/progress2"
-                                            android:layout_width="55dp"
-                                            android:layout_height="55dp"
-                                            android:layout_centerHorizontal="true"
-                                            app:cpb_background_progressbar_color="@color/greyLight"
-                                            app:cpb_background_progressbar_width="5dp"
-                                            app:cpb_progressbar_color="@color/pink"
-                                            app:cpb_progressbar_width="5dp" />
-                                        <!--android:theme="@style/CircularProgress"-->
-                                        <TextView
-                                            android:id="@+id/textPercentage2"
-                                            style="@style/SmallText"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_centerInParent="true"
-                                            android:maxLines="1"
-                                            android:text="80%"
-                                            android:textColor="@color/pink" />
-
-                                    </RelativeLayout>
-                                    <!--<com.mikhaellopez.circularprogressbar.CircularProgressBar-->
-                                    <!--android:id="@+id/progress2"-->
-                                    <!--android:layout_width="55dp"-->
-                                    <!--android:layout_height="55dp"-->
-                                    <!--app:cpb_background_progressbar_color="@color/greyLight"-->
-                                    <!--app:cpb_background_progressbar_width="5dp"-->
-                                    <!--app:cpb_progressbar_color="@color/pink"-->
-                                    <!--app:cpb_progressbar_width="5dp" />-->
-
-                                    <TextView
-                                        android:id="@+id/textTpeTravel2"
-                                        style="@style/StandardText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="@dimen/margin_xshort"
-                                        android:maxLines="1"
-                                        android:text="فرهنگی هنری"
-                                        android:textColor="@color/pink" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-
-                                    android:gravity="center"
-                                    android:orientation="vertical">
-
-                                    <RelativeLayout
-                                        android:id="@+id/progressHolder1"
-                                        android:layout_width="wrap_content"
-
-                                        android:layout_height="wrap_content"
-                                        android:layout_centerHorizontal="true"
-                                        android:layout_marginTop="@dimen/margin_short"
-                                        android:orientation="vertical">
-
-                                        <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                                            android:id="@+id/progress1"
-                                            android:layout_width="55dp"
-                                            android:layout_height="55dp"
-                                            android:layout_centerHorizontal="true"
-                                            app:cpb_background_progressbar_color="@color/greyLight"
-                                            app:cpb_background_progressbar_width="5dp"
-                                            app:cpb_progressbar_color="@color/pink"
-                                            app:cpb_progressbar_width="5dp" />
-                                        <!--android:theme="@style/CircularProgress"-->
-                                        <TextView
-                                            android:id="@+id/textPercentage1"
-                                            style="@style/SmallText"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_centerInParent="true"
-                                            android:maxLines="1"
-                                            android:text="80%"
-                                            android:textColor="@color/pink" />
-
-                                    </RelativeLayout>
-                                    <!--<com.mikhaellopez.circularprogressbar.CircularProgressBar-->
-                                    <!--android:id="@+id/progress3"-->
-                                    <!--android:layout_width="55dp"-->
-                                    <!--android:layout_height="55dp"-->
-                                    <!--app:cpb_background_progressbar_color="@color/greyLight"-->
-                                    <!--app:cpb_background_progressbar_width="5dp"-->
-                                    <!--app:cpb_progressbar_color="@color/pink"-->
-                                    <!--app:cpb_progressbar_width="5dp" />-->
-
-                                    <TextView
-                                        android:id="@+id/textTpeTravel1"
-                                        style="@style/StandardText"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_margin="@dimen/margin_xshort"
-                                        android:maxLines="1"
-                                        android:text="فرهنگی هنری"
-                                        android:textColor="@color/pink" />
-
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            <Button
-                                android:id="@+id/ReservationBtn"
-                                style="@style/StandardTitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_below="@id/typeOfItineraryDetail"
-                                android:layout_margin="@dimen/padding_larg"
-                                android:background="@drawable/button_corner"
-                                android:text="رزرو مراکز اقامتی"
-                                android:textColor="@color/white_"
-                                android:visibility="gone" />
-
-                            <TextView
-                                android:id="@+id/typeOfItinerary"
-                                style="@style/StandardTitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:layout_centerHorizontal="true"
-                                android:paddingBottom="@dimen/padding_short"
-                                android:paddingLeft="@dimen/padding_standard"
-                                android:paddingRight="@dimen/padding_standard"
-                                android:text="سفر در یک نگاه"
-                                android:textColor="@color/grey" />
-
-
-                        </RelativeLayout>
-                        <!--showMore   bishtar bekhanid  -->
-                        <RelativeLayout
-                            android:id="@+id/deviderShowMoreInfoHolder"
-                            android:layout_width="match_parent"
-                            android:layout_height="5dp"
-                            android:background="@color/greyLight"
-                            android:layout_below="@+id/ShowAttractionHolder"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"></RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/ShowMoreInfoHolder"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_below="@id/deviderShowMoreInfoHolder"
-                            android:layout_centerVertical="true"
-                            android:background="@color/white_"
-                            android:padding="@dimen/padding_short">
-
-                            <TextView
-                                android:id="@+id/titleBody"
-                                style="@style/StandardTitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginRight="@dimen/padding_short"
-                                android:gravity="right"
-                                android:paddingBottom="@dimen/padding_short"
-                                android:text="درباره این سفر"
-
-                                />
-
-                            <RelativeLayout
-                                android:id="@+id/webBody"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/titleBody"
-                                android:gravity="right">
-
-                                <com.coinpany.core.android.widget.CTouchyWebView
-                                    android:id="@+id/contentFullDescription"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textAppearance="@style/StandardTextGrey"
-
-                                    />
-                            </RelativeLayout>
-
-                            <TextView
-                                android:id="@+id/MoreInoText"
-                                style="@style/StandardText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/webBody"
-                                android:layout_marginLeft="@dimen/margin_standard"
-                                android:gravity="left"
-                                android:text="بیشتر بخوانید"
-                                android:textColor="@color/blue" />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/borderLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:layout_below="@+id/ShowMoreInfoHolder"
-                            android:background="@color/greyLight"
-                            android:visibility="gone"></RelativeLayout>
-                        <!--pageMore-->
-                        <RelativeLayout
-                            android:id="@+id/viewPagerMore"
-                            android:layout_width="match_parent"
-                            android:layout_height="240dp"
-                            android:layout_below="@+id/mapHolder"
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/margin_short"
-                            android:visibility="gone"
-                            >
-
-
-                            <android.support.v4.view.ViewPager
-                                android:id="@+id/toolsPager"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:paddingLeft="@dimen/margin_standard"
-                                android:paddingRight="@dimen/margin_short"
-                                android:paddingTop="@dimen/padding_standard"
-                            >
-
-                            </android.support.v4.view.ViewPager>
-
-
-                        </RelativeLayout>
-
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:background="@drawable/dark_shadow"></RelativeLayout>-->
                     </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/imageHolder">
+
+                        <include layout="@layout/content_itinerary_more" />
+                    </RelativeLayout>
+                    <!--&lt;!&ndash;rating Holder&ndash;&gt;-->
+                    <!--<RelativeLayout-->
+                    <!--android:id="@+id/ratingHolder"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignTop="@+id/supplierLayoutMore"-->
+                    <!--android:background="@color/greyLight">-->
+
+                    <!--<RelativeLayout-->
+                    <!--android:id="@+id/VisitedLayout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="10dp">-->
+
+                    <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:weightSum="2">-->
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/beftorVisitedHolder"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingTop="@dimen/padding_short">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/beftorVisitedImg"-->
+                    <!--android:layout_width="25dp"-->
+                    <!--android:layout_height="25dp"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@mipmap/ic_before_go_off" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/beftorVisitedTxt"-->
+                    <!--style="@style/SmallText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="قبلا به این سفر رفتم" />-->
+
+
+                    <!--</LinearLayout>-->
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/nowVisitedHolder"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingTop="@dimen/padding_short">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/nowVisitedImg"-->
+                    <!--android:layout_width="25dp"-->
+                    <!--android:layout_height="25dp"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@mipmap/ic_now_go_off" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/nowVisitedTxt"-->
+                    <!--style="@style/SmallText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="الان در حال اجرای سفر هستم" />-->
+
+                    <!--</LinearLayout>-->
+                    <!--</LinearLayout>-->
+
+
+                    <!--</RelativeLayout>-->
+
+                    <!--<RelativeLayout-->
+                    <!--android:id="@+id/LikeLayout"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
+
+                    <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:weightSum="3">-->
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/dislikeHolder"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingTop="@dimen/padding_short">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/dislikeImg"-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:padding="@dimen/margin_xxshort"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@mipmap/ic_dislike_off" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/dislikeTxt"-->
+                    <!--style="@style/SmallText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/margin_xshort"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="دوست ندارم" />-->
+
+                    <!--</LinearLayout>-->
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/okHolder"-->
+                    <!--android:layout_width="wrap_content"-->
+
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingTop="@dimen/padding_short">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/okImg"-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:padding="@dimen/margin_xxshort"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@mipmap/ic_ok_off" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/okTxt"-->
+                    <!--style="@style/SmallText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/margin_xshort"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="بد نیست" />-->
+
+
+                    <!--</LinearLayout>-->
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/likeHolder"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingTop="@dimen/padding_short">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/likeImg"-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:padding="@dimen/margin_xxshort"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@mipmap/ic_like_off" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/likeTxt"-->
+                    <!--style="@style/SmallText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/margin_xshort"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="دوست دارم" />-->
+
+
+                    <!--</LinearLayout>-->
+                    <!--</LinearLayout>-->
+                    <!--</RelativeLayout>-->
+
+                    <!--</RelativeLayout>-->
+                    <!--&lt;!&ndash;<CommentHolder&ndash;&gt;-->
+                    <!--<RelativeLayout-->
+                    <!--android:id="@+id/supplierLayoutMore"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignBottom="@+id/imageHolder"-->
+                    <!--android:background="@color/white_">-->
+
+                    <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:weightSum="4">-->
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/commentHolder"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingTop="@dimen/padding_short">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/commentImg"-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:padding="@dimen/margin_xxshort"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@mipmap/ic_reviewgreen" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/commentTxt"-->
+                    <!--style="@style/SmallText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/margin_xshort"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="ثبت نظر" />-->
+
+
+                    <!--</LinearLayout>-->
+
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/doneHolder"-->
+                    <!--android:layout_width="wrap_content"-->
+
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingTop="@dimen/padding_short">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/doneImg"-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:padding="@dimen/margin_xxshort"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@mipmap/ic_go" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/doneTxt"-->
+                    <!--style="@style/SmallText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/margin_xshort"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="اجرای سفر" />-->
+
+
+                    <!--</LinearLayout>-->
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/rateHolder"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingTop="@dimen/padding_short">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/rateImg"-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:padding="@dimen/margin_xxshort"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@mipmap/ic_rate_grey" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/txtInterest"-->
+                    <!--style="@style/SmallText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/margin_xshort"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="علاقه‌‌‌‌مندی" />-->
+
+
+                    <!--</LinearLayout>-->
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/bookmarkHolder"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingTop="@dimen/padding_short">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/bookmarkImg"-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:padding="@dimen/margin_xxshort"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:src="@mipmap/ic_bookmark_grey" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/saveTxt"-->
+                    <!--style="@style/SmallText"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/margin_xxshort"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginRight="5dp"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="ذخیره" />-->
+
+
+                    <!--</LinearLayout>-->
+                    <!--</LinearLayout>-->
+                    <!--</RelativeLayout>-->
+
+
                 </RelativeLayout>
 
 
@@ -1011,38 +463,37 @@
     </ScrollView>
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_short"
+        android:layout_marginLeft="@dimen/margin_short"
+        android:layout_marginRight="@dimen/margin_short"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/showReservation"
+            style="@style/StandardTitle"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/margin_short"
-            android:layout_marginLeft="@dimen/margin_short"
-            android:layout_marginRight="@dimen/margin_short"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_marginRight="@dimen/margin_xxxshort"
+            android:layout_weight="1"
+            android:background="@drawable/button_corner_green"
+            android:text="رزرو مراکز اقامتی"
+            android:textColor="@color/white_" />
 
-            <Button
-                android:id="@+id/showReservation"
-                style="@style/StandardTitle"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginRight="@dimen/margin_xxxshort"
-                android:layout_weight="1"
-                android:background="@drawable/button_corner_green"
-                android:text="رزرو مراکز اقامتی"
-                android:textColor="@color/white_" />
-
-            <Button
-                android:id="@+id/showItinerary1"
-                style="@style/StandardTitle"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_corner_pink"
-                android:text="نمایش برنامه سفر"
-                android:textColor="@color/white_" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/showItinerary1"
+            style="@style/StandardTitle"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_corner_pink"
+            android:text="نمایش برنامه سفر"
+            android:textColor="@color/white_" />
+    </LinearLayout>
 
     <!--<LinearLayout-->
     <!--android:layout_width="match_parent"-->
