@@ -12,7 +12,11 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -103,52 +107,49 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     ItineraryPresenter itineraryPresenter;
 
     private GoogleMap mMap;
-    ArrayList<LatLng> MarkerPoints;
-    GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
-    Marker mCurrLocationMarker;
-    LocationRequest mLocationRequest;
-    ResultItinerary itineraryData;
+    private ArrayList<LatLng> MarkerPoints;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+    private Marker mCurrLocationMarker;
+    private LocationRequest mLocationRequest;
+    private ResultItinerary itineraryData;
     private String itineraryId;
-    List<ResultItineraryAttraction> itineraryActionList;
-    List<ResultItineraryAttractionDay> resultItineraryAttractionDays;
-    CircularProgressBar progress1;
-    CircularProgressBar progress2;
-    CircularProgressBar progress3;
-    TextView textTpeTravel1;
-    TextView textTpeTravel2;
-    TextView textTpeTravel3;
-    List<Marker> markers;
-    TextView textPercentage1;
-    TextView textPercentage2;
-    TextView textPercentage3;
-    TextView txtItinerary_attraction_type, txtDate;
-    ProgressDialog progressDialog;
-    ImageView itinerary_attraction_type_more;
+    private List<ResultItineraryAttraction> itineraryActionList;
+    private List<ResultItineraryAttractionDay> resultItineraryAttractionDays;
+    private CircularProgressBar progress1;
+    private CircularProgressBar progress2;
+    private CircularProgressBar progress3;
+    private TextView textTpeTravel1, textTpeTravel2, textTpeTravel3;
+    private List<Marker> markers;
+    private TextView textPercentage1, textPercentage2, textPercentage3;
+    private TextView txtItinerary_attraction_type, txtDate;
+    private ProgressDialog progressDialog;
+    private ImageView itinerary_attraction_type_more;
     protected CTouchyWebView contentFullDescription;
-    TextView txtItinerary_attraction_Difficulty;
-    TextView txtItinerary_count_attraction;
-    ImageView imgItineraryListMore;
-    TextView itineraryDuration;
-    TextView fromCityName, toCityName;
-    TextView showItinerys;
-    TextView txtOk, MoreInoText;
-//    LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder, commentHolder;
-    RelativeLayout ratingHolder, GroupHolder, supplierLayoutMore, VisitedLayout, LikeLayout, changeDateHolder;
-    PersianCalendar persianCurrentDate;
-//    ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, triangleShowAttraction;
-    RotateAnimation rotate;
-    String rotateImage;
-    Animation translateAnimation;
+    private TextView txtItinerary_attraction_Difficulty;
+    private TextView txtItinerary_count_attraction;
+    private ImageView imgItineraryListMore;
+    private TextView itineraryDuration;
+    private TextView fromCityName, toCityName;
+    private TextView showItinerys;
+    private TextView txtOk, MoreInoText;
+    //    LinearLayout rateHolder, bookmarkHolder, doneHolder, nowVisitedHolder, beftorVisitedHolder, likeHolder, okHolder, dislikeHolder, commentHolder;
+    private RelativeLayout ratingHolder, GroupHolder, supplierLayoutMore, VisitedLayout, LikeLayout;
+    private LinearLayout changeDateHolder;
+    private PersianCalendar persianCurrentDate;
+    //    ImageView bookmarkImg, doneImg, dislikeImg, okImg, likeImg, rateImg, beftorVisitedImg, nowVisitedImg, triangleShowAttraction;
+    private RotateAnimation rotate;
+    private String rotateImage;
+    private Animation translateAnimation;
     boolean ratingHolderFlag = false;
-    String myData;
-    Boolean showMore = true;
-    ViewPager toolsPager;
-    List<ItineraryLodgingCity> lodgingReservation;
-    Date startOfTravel;
-    List<Date> stayNights;
-    Map<String, Integer> dateCity;
-    Button showReservation, showItinerary;
+    private String myData;
+    private Boolean showMore = true;
+    private ViewPager toolsPager;
+    private List<ItineraryLodgingCity> lodgingReservation;
+    private Date startOfTravel;
+    private List<Date> stayNights;
+    private Map<String, Integer> dateCity;
+    private Button showReservation, showItinerary;
     //    List<Map<String,Integer>> ss;
     int BookmarkValue;
     int LikeValue;
@@ -193,7 +194,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         GroupHolder = (RelativeLayout) findViewById(R.id.GroupHolder);
         VisitedLayout = (RelativeLayout) findViewById(R.id.VisitedLayout);
 //        LikeLayout = (RelativeLayout) findViewById(R.id.LikeLayout);
-        changeDateHolder = (RelativeLayout) findViewById(R.id.changeDateHolder);
+        changeDateHolder = (LinearLayout) findViewById(R.id.changeDateHolder);
         supplierLayoutMore = (RelativeLayout) findViewById(R.id.supplierLayoutMore);
         imgItineraryListMore = (ImageView) findViewById(R.id.imgItineraryListMore);
         contentFullDescription = (CTouchyWebView) findViewById(R.id.contentFullDescription);
@@ -244,7 +245,9 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.e(TAG, "MoreItemItineraryActivity");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         findView();
         BookmarkValue = 0;
@@ -258,9 +261,10 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         itineraryData = (ResultItinerary) bundle.getSerializable("itineraryData");
         String duration = bundle.getString("duration");
         List<ResultWidget> resultWidget = (List<ResultWidget>) bundle.getSerializable("resultWidget");
-//        if (resultWidget != null) {
-//            setInterestResponce(resultWidget);
-//        }
+
+        String title = "برنامه سفر " + itineraryData.getItineraryFromCityName() + " به " + itineraryData.getItineraryToCityName();
+        getSupportActionBar().setTitle(title);
+
         setTypeOfTravel();
         myData = itineraryData.getItineraryBody();
         setWebViewContent(getShowMoreString(myData));
@@ -366,7 +370,35 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_itinerary_item_more;
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_itinerary_more, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuItineraryComment:
+                //here comes the comment code section
+                break;
+            case R.id.menuItineraryFav:
+                if (toggleFav())
+                    item.setIcon(R.mipmap.ic_like_on);
+                else item.setIcon(R.mipmap.ic_like_off);
+                break;
+        }
+        return true;
+    }
+
+    private boolean isFav = false;
+
+    private boolean toggleFav() {
+        //here comes the api code
+        return isFav = !isFav;
     }
 
     private void showToolViewPager() {
@@ -902,6 +934,12 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
     public void setIntrestedWidget(InterestResult InterestResult) {
 
         ResultData resultData = InterestResult.getResultData();
@@ -1076,7 +1114,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         });
 
     }
-
 
     //onconnectioncallback
     @Override
