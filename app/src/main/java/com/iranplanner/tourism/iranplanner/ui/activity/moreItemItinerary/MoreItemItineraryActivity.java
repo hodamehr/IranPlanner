@@ -370,7 +370,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .itineraryModule(new ItineraryModule(this));
         builder.build().inject(this);
-//        itineraryPresenter.getWidgetResult("nodeuser", itineraryData.getItineraryId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "itinerary", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+        itineraryPresenter.getWidgetResult("nodeuser", itineraryData.getItineraryId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "itinerary", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
     }
 
     @Override
@@ -378,13 +378,23 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         return R.layout.fragment_itinerary_item_more;
     }
 
+//    Menu menu;
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_itinerary_more, menu);
+//        this.menu=menu;
+//        return true;
+//    }
+
+    private Menu menu=null;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_itinerary_more, menu);
+        getMenuInflater().inflate(R.menu.menu_itinerary_more, menu);
+        this.menu=menu;
+        menu.findItem(R.id.menuItineraryFav).setVisible(true);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -392,9 +402,21 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 //here comes the comment code section
                 break;
             case R.id.menuItineraryFav:
-                if (toggleFav())
-                    item.setIcon(R.mipmap.ic_like_on);
-                else item.setIcon(R.mipmap.ic_like_off);
+                if (toggleFav()) {
+                    builder = DaggerItineraryComponent.builder()
+                            .netComponent(((App) getApplicationContext()).getNetComponent())
+                            .itineraryModule(new ItineraryModule(this));
+                    builder.build().inject(this);
+//                    itineraryPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "attraction", itineraryId, "like", Constants.likeImg, Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+//                    itineraryPresenter.getInterest("widget", user, "1", "itinerary", itineraryId, gType, gValue,ss);
+
+                    OnClickedIntrestedWidget("like", Constants.likeImg, null);
+
+//                    item.setIcon(R.mipmap.ic_like_on);
+                } else {
+//                    item.setIcon(R.mipmap.ic_like_off);
+                    OnClickedIntrestedWidget("like", Constants.dislikeImg, null);
+                }
                 break;
         }
         return true;
@@ -564,8 +586,10 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     private void OnClickedIntrestedWidget(String gType, String gValue, ImageView imageView) {
         if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
-            itineraryPresenter.doWaitingAnimation(imageView);
-            itineraryPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "itinerary", itineraryId, gType, gValue, Util.getUseRIdFromShareprefrence(getApplicationContext()));
+//            itineraryPresenter.doWaitingAnimation(imageView);
+            String user=Util.getUseRIdFromShareprefrence(getApplicationContext());
+            String ss= Util.getAndroidIdFromSharedPreferences(getApplicationContext());
+            itineraryPresenter.getInterest("widget", user, "1", "itinerary", itineraryId, gType, gValue,ss);
         } else {
             Log.e("user is not login", "error");
             Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
@@ -855,6 +879,8 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     @Override
     public void showError(String message) {
+        menu.findItem(R.id.menuItineraryFav).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
+
         Log.e("error", " in get attraction list" + message);
         if (progressDialog != null) {
             progressDialog.dismiss();
@@ -945,6 +971,14 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     @Override
     public void setIntrestedWidget(InterestResult InterestResult) {
+        if (toggleFav()) {
+
+            menu.findItem(R.id.menuItineraryFav).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
+        }
+        else {
+            menu.findItem(R.id.menuItineraryFav).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+
+        }
 
         ResultData resultData = InterestResult.getResultData();
         //// TODO: 14/02/2017

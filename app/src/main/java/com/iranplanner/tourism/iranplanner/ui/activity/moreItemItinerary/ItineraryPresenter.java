@@ -178,19 +178,19 @@ public class ItineraryPresenter extends ItineraryContract {
 
                     @Override
                     public void onCompleted() {
-                        rotate.setRepeatCount(0);
+//                        rotate.setRepeatCount(0);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mView.showError(e.getMessage());
-                        rotate.setRepeatCount(0);
+//                        rotate.setRepeatCount(0);
                     }
 
                     @Override
                     public void onNext(InterestResult interestResult) {
                         mView.setIntrestedWidget(interestResult);
-                        rotate.setRepeatCount(0);
+//                        rotate.setRepeatCount(0);
 
                     }
                 });

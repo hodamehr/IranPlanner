@@ -285,6 +285,7 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(resulAttraction.getAttractionTitle());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.abs_layout);
 
         attractionPlace.setText(resulAttraction.getProvinceTitle() + " - " + resulAttraction.getCityTitle());
         if (resulAttraction.getAttractionEstimatedTime() != null) {
@@ -299,9 +300,9 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
         }
 
         if (resulAttraction.getAttractionPrice() == null) {
-            textEntranceFee.setText("رایگان");
+            textEntranceFee.setText("هزینه ورودی : رایگان");
         } else {
-            textEntranceFee.setText(Util.persianNumbers(resulAttraction.getAttractionPrice().toString()) + "تومان");
+            textEntranceFee.setText("هزینه ورودی : " + Util.persianNumbers(resulAttraction.getAttractionPrice().toString()) + "تومان");
         }
         attractionType.setText(resulAttraction.getAttractionItineraryTypeTitle());
         setAttractionTypeImage();
@@ -343,18 +344,23 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
         onBackPressed();
         return true;
     }
-
+    private Menu menu=null;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_attraction_detail,menu);
+        getMenuInflater().inflate(R.menu.menu_attraction_detail, menu);
+        this.menu=menu;
+        menu.findItem(R.id.menuAttractionLike).setVisible(true);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menuAttractionLike:
                 Toast.makeText(this, "Liked!", Toast.LENGTH_SHORT).show();
+                OnClickedIntrestedWidget("like", Constants.intrestDefault, null);
+//                menu.findItem(R.id.menuAttractionLike).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+                item.setIcon(R.mipmap.ic_like_off);
                 return true;
             case R.id.menuAttractionShare:
                 Toast.makeText(this, "Shared!", Toast.LENGTH_SHORT).show();
@@ -445,6 +451,7 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -557,12 +564,12 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
                 break;
 
 
-
         }
     }
+
     private void OnClickedIntrestedWidget(String gType, String gValue, ImageView imageView) {
         if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
-            attractionDetailPresenter.doWaitingAnimation(imageView);
+//            attractionDetailPresenter.doWaitingAnimation(imageView);
             attractionDetailPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "attraction", resulAttraction.getAttractionId(), gType, gValue, Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
 
         } else {
@@ -594,6 +601,7 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
         mAnimatorSet.start();
         ratingHolderFlag = false;
     }
+
     private void animWaiting(ImageView image) {
         rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setRepeatCount(5);
@@ -736,10 +744,12 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
 
     @Override
     public void setIntrestedWidget(InterestResult InterestResult) {
-        ResultData resultData = InterestResult.getResultData();
-        //// TODO: 14/02/2017
-//        rotate.setRepeatCount(0);
-        checkWhichImageIntrested(rotateImage);
+//        ResultData resultData = InterestResult.getResultData();
+//        //// TODO: 14/02/2017
+////        rotate.setRepeatCount(0);
+//        checkWhichImageIntrested(rotateImage);
+        menu.findItem(R.id.menuAttractionLike).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+
     }
 
     @Override
@@ -758,6 +768,7 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
         mMap.addPolyline(rectLine);
 
     }
+
     private void setWidgetValue(List<ResultWidget> resultWidget) {
 
         if (resultWidget.get(0).getWidgetBookmarkValue() != null) {
