@@ -196,7 +196,7 @@
                         android:layout_centerInParent="true"
                         app:cpb_background_progressbar_color="@color/greyLight"
                         app:cpb_background_progressbar_width="5dp"
-                        app:cpb_progressbar_color="@color/pink"
+                        app:cpb_progressbar_color="@color/dark_blue"
                         app:cpb_progressbar_width="5dp" />
 
                     <TextView
@@ -206,8 +206,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:maxLines="1"
-                        android:text="85%"
-                        android:textColor="@color/pink" />
+                        android:text="45%"
+                        android:textColor="@color/dark_blue" />
                 </RelativeLayout>
 
                 <TextView
@@ -216,8 +216,8 @@
                     android:layout_width="100dp"
                     android:layout_height="20dp"
                     android:gravity="center"
-                    android:text="amin is awesome"
-                    android:textColor="@color/pink" />
+                    android:textColor="@color/dark_blue"
+                    android:text="city"/>
 
             </LinearLayout>
 

@@ -4,8 +4,9 @@
     <item
         android:id="@+id/menuAttractionLike"
         app:showAsAction="always"
-        android:icon="@mipmap/ic_like_on"
+        android:icon="@mipmap/ic_dislike_grey_"
         android:title="like" />
+
     <item
         app:showAsAction="always"
         android:id="@+id/menuAttractionShare"
