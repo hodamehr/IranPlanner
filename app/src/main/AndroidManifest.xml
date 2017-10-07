@@ -57,7 +57,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.mainActivity.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.reqestHotelStatus.HotelReservationStatusActivity"
             android:screenOrientation="portrait" />
@@ -154,7 +154,7 @@
         <activity android:name=".ui.activity.event.EventActivity" />
         <activity android:name=".ui.tutorial.TutorialActivity" />
         <activity android:name=".ui.navigationDrawer.ContactUsActivity" />
-        <activity android:name=".ui.navigationDrawer.AboutUsActivity"></activity>
+        <activity android:name=".ui.navigationDrawer.AboutUsActivity"/>
     </application>
 
 </manifest>

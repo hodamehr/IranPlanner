@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -245,10 +246,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         findView();
         BookmarkValue = 0;
         LikeValue = 0;
@@ -262,8 +259,17 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         String duration = bundle.getString("duration");
         List<ResultWidget> resultWidget = (List<ResultWidget>) bundle.getSerializable("resultWidget");
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(android.graphics.Color.WHITE);
         String title = "برنامه سفر " + itineraryData.getItineraryFromCityName() + " به " + itineraryData.getItineraryToCityName();
-        getSupportActionBar().setTitle(title);
+//        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
+        collapsingToolbarLayout.setTitle(title);
+        collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this, R.color.white_));
+        collapsingToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(this, R.color.white_));
 
         setTypeOfTravel();
         myData = itineraryData.getItineraryBody();
@@ -683,12 +689,10 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                             return false;
                         }
                     })
-                    .into(imgItineraryListMore)
-            ;
+                    .into(imgItineraryListMore);
         } else {
             Glide.clear(imgItineraryListMore);
             imgItineraryListMore.setImageDrawable(null);
-
         }
     }
 
@@ -760,7 +764,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
             }
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -1033,18 +1037,14 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
                 case R.id.txtOk:
                     persianDatePickr.getDisplayDate();
                     dismiss();
-//                break;
                     break;
                 case R.id.txtNo:
                     dismiss();
-                    break;
-                default:
                     break;
             }
             dismiss();
         }
     }
-
 
     //-------------------------------
     @Override
@@ -1115,7 +1115,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     }
 
-    //onconnectioncallback
     @Override
     public void onConnected(Bundle bundle) {
 
@@ -1140,7 +1139,6 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     }
 
-    //
     @Override
     public void onLocationChanged(Location location) {
 
@@ -1165,8 +1163,5 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 //        if (mGoogleApiClient != null) {
 //            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
 //        }
-
     }
-
-
 }
