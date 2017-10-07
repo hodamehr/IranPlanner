@@ -181,15 +181,15 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
 
         });
 
-        tvSearch = (TextView) view.findViewById(R.id.txtSearch);
+//        tvSearch = (TextView) view.findViewById(R.id.txtSearch);
 
-        tvSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-                Log.e("heytag", "clicked");
-            }
-        });
+//        tvSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onBackPressed();
+//                Log.e("heytag", "clicked");
+//            }
+//        });
 
         return view;
     }

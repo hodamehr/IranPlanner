@@ -102,6 +102,8 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
     TextView textEntranceFee;
     @InjectView(R.id.attractionType)
     TextView attractionType;
+    @InjectView(R.id.txtAddress)
+    TextView txtAddress;
     @InjectView(R.id.imageTypeAttraction)
     ImageView imageTypeAttraction;
     @InjectView(R.id.imageAttraction)
@@ -303,7 +305,7 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
         }
         attractionType.setText(resulAttraction.getAttractionItineraryTypeTitle());
         setAttractionTypeImage();
-
+        txtAddress.setText(resulAttraction.getAttractionAddress());
         interestingLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {

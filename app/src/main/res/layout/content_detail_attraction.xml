@@ -495,7 +495,7 @@
             android:id="@+id/mapHolder"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_below="@+id/ShowMoreInfoHolder"
+            android:layout_below="@+id/supplierAddress"
             android:background="@color/greyLight"
             android:focusableInTouchMode="true">
 
@@ -563,7 +563,32 @@
                 android:text="بیشتر بخوانید"
                 android:textColor="@color/blue" />
         </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/supplierAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ShowMoreInfoHolder"
+            android:padding="@dimen/padding_short"
+            android:paddingBottom="@dimen/margin_short">
 
+            <TextView
+                android:id="@+id/txtAddressTitle"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="آدرس" />
+
+            <TextView
+                android:id="@+id/txtAddress"
+                style="@style/SmallText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/txtAddressTitle"
+                android:paddingTop="@dimen/padding_short"
+                android:text="ادرس " />
+        </RelativeLayout>
         <RelativeLayout
             android:id="@+id/borderLayout"
             android:layout_width="match_parent"
