@@ -227,6 +227,7 @@ public class SplashActivity extends StandardActivity implements MainSearchPresen
     @Override
     public void showError(String message) {
         FirebaseCrash.report(new Exception("App Name :  non-fatal error"));
+        Log.e(TAG, String.valueOf(message));
 //        SplashActivity.this.finish();
     }
 

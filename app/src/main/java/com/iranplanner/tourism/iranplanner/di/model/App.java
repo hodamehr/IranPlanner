@@ -49,18 +49,18 @@ public class App extends Application {
     private static final String TAG = App.class.getSimpleName();
 
     private LocationManager locationManager;
-    private Location location;
+    private Location location = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mNetComponent = DaggerNetComponent.builder()
                 .appModule(new AppModule(this))
-                .netModule(new NetModule(Config.BASEURL, this))
+                .netModule(new NetModule(Config.BASEURL))
                 .build();
         googleNetComponent = DaggerNetComponent.builder()
                 .appModule(new AppModule(this))
-                .netModule(new NetModule("http://maps.googleapis.com/", this))
+                .netModule(new NetModule("http://maps.googleapis.com/"))
                 .build();
         //
 
@@ -90,7 +90,8 @@ public class App extends Application {
                 .build()
         );
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            return;
 
         enableLocationCheck();
     }
@@ -107,7 +108,14 @@ public class App extends Application {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             return;
-//        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
+        if (locationManager == null)
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        else if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER))
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
     }
 
     public Location getLastLocation() {

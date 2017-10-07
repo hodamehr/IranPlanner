@@ -33,11 +33,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetModule {
     private String mBaseUrl;
-    private App app;
+    private App application = null;
 
-    public NetModule(String mBaseUrl, App app) {
+    public NetModule(String mBaseUrl) {
         this.mBaseUrl = mBaseUrl;
-        this.app = app;
     }
 
     @Provides
@@ -49,6 +48,7 @@ public class NetModule {
     @Provides
     @Singleton
     Cache provideHttpCache(Application application) {
+        this.application = (App) application;
         int cacheSize = 10 * 1024 * 1024;
         Cache cache = new Cache(application.getCacheDir(), cacheSize);
         return cache;
@@ -73,10 +73,18 @@ public class NetModule {
                 Request original = chain.request();
                 HttpUrl originalHttpUrl = original.url();
 
-                HttpUrl url = originalHttpUrl.newBuilder()
-//                        .addQueryParameter("lat", String.valueOf(app.getLastLocation().getLatitude()))
-//                        .addQueryParameter("lng", String.valueOf(app.getLastLocation().getLongitude()))
-                        .build();
+                HttpUrl url;
+
+                if (application != null && application.getLastLocation() != null) {
+                    url = originalHttpUrl.newBuilder()
+                            .addQueryParameter("lat", String.valueOf(application.getLastLocation().getLatitude()))
+                            .addQueryParameter("lng", String.valueOf(application.getLastLocation().getLongitude()))
+                            .build();
+                } else
+                    url = originalHttpUrl.newBuilder()
+                            .addQueryParameter("lat", "Location unknown or permission denied")
+                            .addQueryParameter("lng", "Location unknown or permission denied")
+                            .build();
 
                 // Request customization: add request headers
                 Request.Builder requestBuilder = original.newBuilder()
