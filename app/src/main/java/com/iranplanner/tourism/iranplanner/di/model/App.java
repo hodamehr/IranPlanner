@@ -56,11 +56,11 @@ public class App extends Application {
         super.onCreate();
         mNetComponent = DaggerNetComponent.builder()
                 .appModule(new AppModule(this))
-                .netModule(new NetModule(Config.BASEURL))
+                .netModule(new NetModule(Config.BASEURL, this))
                 .build();
         googleNetComponent = DaggerNetComponent.builder()
                 .appModule(new AppModule(this))
-                .netModule(new NetModule("http://maps.googleapis.com/"))
+                .netModule(new NetModule("http://maps.googleapis.com/", this))
                 .build();
         //
 
@@ -113,6 +113,10 @@ public class App extends Application {
     public Location getLastLocation() {
         return location;
     }
+
+//    public String getLastLocation() {
+//        return "amin is awesome";
+//    }
 
     private void storeLocation(Location location) {
         this.location = location;
