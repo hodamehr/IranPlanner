@@ -8,9 +8,13 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.coinpany.core.android.widget.Utils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,7 +28,10 @@ import com.iranplanner.tourism.iranplanner.ui.activity.MapFullActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
 import java.io.Serializable;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import entity.ItineraryLodgingCity;
@@ -36,9 +43,11 @@ public class EventActivity extends StandardActivity {
     private SupportMapFragment mapFragment;
     private GoogleMap mMap;
     private Marker marker;
-    List<ResultEvent> resultEvent;
+    private ResultEvent resultEvent;
 
-    private TextView tvEventStatus, tvEventName, tvEventCity, tvEventSubTitle, tvEventHoldingDate, tvEventVisitationHour, tvEventAddress;
+    private TextView
+            tvEventStatus, tvEventName, tvEventCity, tvEventSubTitle, tvEventHoldingDate, tvEventVisitationHour, tvEventAddress, tvEventAbout;
+    private ImageView banner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +61,7 @@ public class EventActivity extends StandardActivity {
     private void getExtra() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        resultEvent = (List<ResultEvent>) bundle.getSerializable("ResultEvent");
+        resultEvent = (ResultEvent) bundle.getSerializable("ResultEvent");
     }
 
     private void initToolbar() {
@@ -82,14 +91,25 @@ public class EventActivity extends StandardActivity {
         tvEventHoldingDate = (TextView) findViewById(R.id.eventHoldingDateTv);
         tvEventVisitationHour = (TextView) findViewById(R.id.eventVisitationHourTv);
         tvEventAddress = (TextView) findViewById(R.id.eventAddressTv);
+        tvEventAbout = (TextView) findViewById(R.id.eventAboutTv);
 
-//        tvEventStatus.setText(resultEvent.get(0).getEventInfo().get);
-        tvEventName.setText(resultEvent.get(0).getEventInfo().getEventTitle());
-        tvEventCity.setText(resultEvent.get(0).getEventInfo().getEventCityTitle());
-        tvEventSubTitle.setText(resultEvent.get(0).getEventInfo().getEventBody());
-        tvEventHoldingDate.setText(resultEvent.get(0).getEventInfo().getEventDateStart());
-        tvEventVisitationHour.setText(resultEvent.get(0).getEventInfo().getEventDateDuration());
-        tvEventAddress.setText(resultEvent.get(0).getEventInfo().getEventAddress());
+        banner = (ImageView) findViewById(R.id.expandedImage);
+        Glide.with(this).load(resultEvent.getEventInfo().getImgUrl()).into(banner);
+
+        String address = "آدرس : " + resultEvent.getEventInfo().getEventAddress();
+
+        tvEventName.setText(resultEvent.getEventInfo().getEventProvinceTitle());
+        tvEventCity.setText(resultEvent.getEventInfo().getEventCityTitle());
+        tvEventSubTitle.setText(resultEvent.getEventInfo().getEventTitle());
+
+        long holdingDateTimestamp = Long.parseLong(resultEvent.getEventInfo().getEventDateStart());
+        String holdingDate = "تاریخ برگزاری : " + Utils.getSimpleDate(convertTime(holdingDateTimestamp));
+
+        tvEventHoldingDate.setText(holdingDate);
+        tvEventVisitationHour.setText(resultEvent.getEventInfo().getEventDateDuration());
+
+        tvEventAddress.setText(address);
+        tvEventAbout.setText(Html.fromHtml(resultEvent.getEventInfo().getEventBody()));
     }
 
 //    @Override
@@ -109,6 +129,12 @@ public class EventActivity extends StandardActivity {
 //        );
 //        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lan, lon), 15.0f));
 //    }
+
+    private Date convertTime(long time) {
+        Date date = new Date(time);
+        Format format = new SimpleDateFormat("yyyy MM dd HH:mm:ss");
+        return date;
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

@@ -64,9 +64,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Hold
 
         public void setData(ResultEvent current) {
             try {
-                tvTitle.setText(current.getEventInfo().getEventTitle());
-                tvDate.setText(current.getEventInfo().getEventDurationTitle().toString());
-                tvCity.setText(current.getEventInfo().getEventCityTitle().toString());
+//                tvTitle.setText(current.getEventInfo().getEventTitle());
+//                tvDate.setText(current.getEventInfo().getEventDurationTitle());
+//                tvCity.setText(current.getEventInfo().getEventCityTitle());
 
             } catch (Exception e) {
                 e.printStackTrace();

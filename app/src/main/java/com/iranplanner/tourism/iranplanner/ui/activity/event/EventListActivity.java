@@ -21,6 +21,7 @@ import entity.ResultEvent;
 
 public class EventListActivity extends StandardActivity implements RecyclerItemOnClickListener.OnItemClickListener {
     List<ResultEvent> ResultEvent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,7 @@ public class EventListActivity extends StandardActivity implements RecyclerItemO
         initToolbar();
         init();
     }
+
     private void getExtra() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -53,7 +55,7 @@ public class EventListActivity extends StandardActivity implements RecyclerItemO
     @Override
     public void onItemClick(View view, int position) {
         Intent intent = new Intent(EventListActivity.this, EventActivity.class);
-        intent.putExtra("ResultEvent", (Serializable) ResultEvent);
+        intent.putExtra("ResultEvent", (Serializable) ResultEvent.get(position));
         startActivity(intent);
     }
 
