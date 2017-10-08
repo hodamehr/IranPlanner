@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/accountHolder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,8 +8,8 @@
     <ImageView
         android:id="@+id/registerBgIv"
         android:layout_width="match_parent"
-        android:scaleType="centerCrop"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,11 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/padding_larg"
-            android:paddingLeft="@dimen/padding_larg"
-            android:paddingRight="@dimen/padding_larg"
+            android:paddingBottom="@dimen/padding_large"
+            android:paddingLeft="@dimen/padding_large"
+            android:paddingRight="@dimen/padding_large"
             android:paddingTop="@dimen/padding_big">
-
 
             <!-- Email Label -->
             <LinearLayout
@@ -36,8 +33,8 @@
                 android:background="@drawable/corner_layout"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/margin_standard"
-                android:paddingLeft="@dimen/padding_larg"
-                android:paddingRight="@dimen/padding_larg"
+                android:paddingLeft="@dimen/padding_large"
+                android:paddingRight="@dimen/padding_large"
                 android:paddingTop="@dimen/margin_standard">
 
                 <ImageView
@@ -46,6 +43,13 @@
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/ic_iranplanner_logo" />
 
+                <TextView
+                    android:id="@+id/loginCommand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@android:color/holo_red_dark" />
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -53,15 +57,15 @@
                     android:layout_marginTop="8dp"
                     android:gravity="right">
 
-                    <EditText
+                    <android.support.design.widget.TextInputEditText
                         android:id="@+id/input_tel"
                         style="@style/StandardText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:hint="تلفن همراه"
-                        android:inputType="phone"
                         android:imeOptions="actionNext"
+                        android:inputType="phone"
                         android:selectAllOnFocus="false" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -69,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <EditText
+                    <android.support.design.widget.TextInputEditText
                         android:id="@+id/input_email"
                         style="@style/SmallText"
                         android:layout_width="match_parent"
@@ -83,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <EditText
+                    <android.support.design.widget.TextInputEditText
                         android:id="@+id/input_password"
                         style="@style/SmallText"
                         android:layout_width="match_parent"
@@ -91,18 +95,19 @@
                         android:hint="کلمه عبور"
                         android:inputType="textPassword" />
                 </android.support.design.widget.TextInputLayout>
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <EditText
+                    <android.support.design.widget.TextInputEditText
                         android:id="@+id/input_password_repeat"
                         style="@style/SmallText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="تکرار کلمه عبور"
-                        android:inputType="textPassword"
-                        android:imeOptions="actionDone"/>
+                        android:imeOptions="actionDone"
+                        android:inputType="textPassword" />
                 </android.support.design.widget.TextInputLayout>
 
                 <TextView
@@ -114,7 +119,7 @@
                     android:background="@drawable/button_corner_blue_stroke"
                     android:gravity="center"
                     android:padding="@dimen/padding_short"
-                    android:text="عضویت"
+                    android:text="ثبت نام"
                     android:textColor="@color/main_blue" />
 
                 <TextView
@@ -137,47 +142,23 @@
                 android:layout_marginTop="@dimen/margin_standard"
                 android:background="@drawable/corner_layout"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/padding_larg"
-                android:paddingRight="@dimen/padding_larg"
+                android:paddingLeft="@dimen/padding_large"
+                android:paddingRight="@dimen/padding_large"
                 android:paddingTop="@dimen/margin_standard"
-                android:visibility="invisible"
-             >
+                android:visibility="invisible">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/padding_standard"
                     android:background="@drawable/corner_layout">
+
                     <com.google.android.gms.common.SignInButton
                         android:id="@+id/btnSignInGoogle"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"></com.google.android.gms.common.SignInButton>
-                    <!--<TextView-->
-                        <!--android:id="@+id/google"-->
-                        <!--style="@style/SmallText"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_centerInParent="true"-->
-                        <!--android:gravity="center"-->
-                        <!--android:text="ورود باحساب گوگل"-->
-                        <!--android:textColor="@color/grey"-->
-
-                        <!--/>-->
-
-                    <!--<ImageView-->
-                        <!--android:id="@+id/googleImg"-->
-                        <!--android:layout_width="25dp"-->
-                        <!--android:layout_height="25dp"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:layout_marginLeft="@dimen/padding_short"-->
-                        <!--android:layout_marginRight="@dimen/padding_short"-->
-                        <!--android:layout_toRightOf="@+id/google"-->
-                        <!--android:src="@drawable/ic_google" />-->
+                        android:layout_height="match_parent"/>
                 </RelativeLayout>
-
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
-
 </RelativeLayout>

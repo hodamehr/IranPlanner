@@ -135,7 +135,7 @@
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/padding_24"
                     android:paddingRight="@dimen/padding_24"
-                    android:paddingTop="@dimen/padding_larg">
+                    android:paddingTop="@dimen/padding_large">
 
                     <ImageView
                         android:layout_width="100dp"

@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_below="@+id/btnShowProvince"
-                        android:paddingRight="@dimen/padding_larg"
+                        android:paddingRight="@dimen/padding_large"
                         android:text="شماره درخواست: 66666"
                         android:paddingTop="@dimen/padding_standard"/>
 
@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_below="@+id/txtRequestNumber"
-                        android:paddingRight="@dimen/padding_larg"
+                        android:paddingRight="@dimen/padding_large"
                         android:text="شماره درخواست: 66666" />
                 </RelativeLayout>
             </android.support.v7.widget.CardView>

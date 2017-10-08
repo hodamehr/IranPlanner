@@ -282,7 +282,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/typeOfItineraryDetail"
-                android:layout_margin="@dimen/padding_larg"
+                android:layout_margin="@dimen/padding_large"
                 android:background="@drawable/button_corner"
                 android:text="رزرو مراکز اقامتی"
                 android:textColor="@color/white_"

@@ -1,9 +1,7 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.login;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -15,9 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.Auth;
@@ -42,50 +38,34 @@ import entity.GoogleLoginReqSend;
 import entity.LoginReqSend;
 import entity.LoginResult;
 import entity.ResultUserLogin;
-import server.Config;
 import tools.Util;
 
 /**
  * Created by h.vahidimehr on 04/02/2017.
  */
 
-public class LoginActivity extends StandardActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoginContract.View {
+public class LoginActivity extends StandardActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoginContract.View, View.OnClickListener {
 
-    EditText _emailText;
-    EditText _passwordText;
-    TextView _loginButton;
-    TextView _signupLink, loginCommand, logout;
-    ProgressDialog progressDialog;
-    LinearLayout accountInputHolder, signupInputHolder;
-    int counter = 0;
-    boolean block = false;
-    GetHomeResult HomeResult;
+    private EditText etMail, etPassword;
+    private TextView tvLogin, tvSignUp, tvLoginCommand;
+    private ProgressDialog progressDialog;
+    private int counter = 0;
+    private boolean block = false;
+    private GetHomeResult HomeResult;
 
-    //==========google signin
+    //Google SignIn Constants
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
 
-    // [START declare_auth]
     private FirebaseAuth mAuth;
-    // [END declare_auth]
-
     private GoogleApiClient mGoogleApiClient;
-
-    //  =============
-    public static LoginActivity newInstance() {
-        LoginActivity fragment = new LoginActivity();
-        return fragment;
-    }
 
     @Inject
     LoginPresenter loginPresenter;
 
     @Override
-
-
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getApplicationContext().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         Bundle extras = getIntent().getExtras();
@@ -94,14 +74,13 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
         ButterKnife.inject(this);
         if (Util.getUseRIdFromShareprefrence(getApplicationContext()) == null || Util.getUseRIdFromShareprefrence(getApplicationContext()) == "") {
             setContentView(R.layout.login);
-            _emailText = (EditText) findViewById(R.id.input_email);
-            _passwordText = (EditText) findViewById(R.id.input_password);
-            _loginButton = (TextView) findViewById(R.id.btn_login);
-            _signupLink = (TextView) findViewById(R.id.link_signup);
-            loginCommand = (TextView) findViewById(R.id.loginCommand);
-            accountInputHolder = (LinearLayout) findViewById(R.id.accountInputHolder);
-            loginCommand.setText("");
-            signupInputHolder = (LinearLayout) findViewById(R.id.signupInputHolder);
+            etMail = (EditText) findViewById(R.id.input_email);
+            etPassword = (EditText) findViewById(R.id.input_password);
+            tvLogin = (TextView) findViewById(R.id.btn_login);
+            tvSignUp = (TextView) findViewById(R.id.link_signup);
+
+            tvLoginCommand = (TextView) findViewById(R.id.loginCommand);
+            tvLoginCommand.setText("");
 
             //Load Background Image
             Glide.with(this).load(R.drawable.splash_bg_blur).centerCrop().override(600, 400).into((ImageView) findViewById(R.id.loginBgIv));
@@ -110,27 +89,17 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
                     .requestIdToken(getString(R.string.default_web_client_id))
                     .requestEmail()
                     .build();
-            // [END config_signin]
 
             mGoogleApiClient = new GoogleApiClient.Builder(getApplicationContext())
                     .enableAutoManage(this, this)
                     .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                     .build();
 
-            // [START initialize_auth]
             mAuth = FirebaseAuth.getInstance();
-            // [END initialize_auth]
 
-            findViewById(R.id.btnSignInGoogle).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    signIn();
-                }
-            });
-            // login?
-//            setLoginName();
+            findViewById(R.id.btnSignInGoogle).setOnClickListener(this);
 
-            _emailText.addTextChangedListener(new TextWatcher() {
+            etMail.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -143,16 +112,11 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (!block) {
-                        set_loginButton(true, null);
-
-                    }
-
-//                    _loginButton.setEnabled(true);
-//                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+                    if (!block)
+                        setLoginButton(true);
                 }
             });
-            _passwordText.addTextChangedListener(new TextWatcher() {
+            etPassword.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -165,55 +129,36 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (!block) {
-                        set_loginButton(true, null);
-
-                    }
-//                    _loginButton.setEnabled(true);
-//                    _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+                    if (!block)
+                        setLoginButton(true);
                 }
             });
 
-            _loginButton.setOnClickListener(new View.OnClickListener() {
+            tvLogin.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(final View v) {
                     if (counter >= 3) {
                         counter = 0;
                         block = true;
-//                        loginCommand.setText("");
-//                        v.setClickable(false);
-//                        v.setBackgroundColor(getResources().getColor(R.color.greyLight));
-//                        Toast.makeText(getApplicationContext(), "چند دقیقه بعد مجددا تلاش کنید", Toast.LENGTH_LONG).show();
-//                        _loginButton.setEnabled(false);
-//                        _emailText.setText("");
-//                        _passwordText.setText("");
-//                        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
-                        loginCommand.setText("تلاش ناموفق برای سه بار! چند دقیقه دیگر امتحان کنید");
+                        tvLoginCommand.setText("تلاش ناموفق برای سه بار! چند دقیقه دیگر امتحان کنید");
 
-                        set_loginButton(false, v);
+                        setLoginButton(false);
                         new Handler().postDelayed(new Runnable() {
                             public void run() {
-//                                v.setEnabled(true);
-//                                v.setClickable(true);
-//                                v.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
                                 cleaner();
-                                set_loginButton(true, v);
+                                setLoginButton(true);
                             }
                         }, 150000);
-                    } else {
+                    } else
                         login();
-                    }
 
                 }
             });
 
-            _signupLink.setOnClickListener(new View.OnClickListener() {
-
+            tvSignUp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                Intent intent = new Intent(getContext(), SignupActivity.class);
-//                startActivity(intent);
                     Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                     intent.putExtra("HomeResult", HomeResult);
                     startActivity(intent);
@@ -225,6 +170,8 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
             finish();
             startActivity(intent);
         }
+
+        etMail.requestFocus();
     }
 
     @Override
@@ -233,40 +180,35 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
     }
 
     private void cleaner() {
-        loginCommand.setText("");
-        _emailText.setText("");
-        _passwordText.setText("");
+        tvLoginCommand.setText("");
+        etMail.setText("");
+        etPassword.setText("");
     }
 
-    private void set_loginButton(boolean setEnable, View v) {
+    private void setLoginButton(boolean setEnable) {
         if (setEnable) {
             block = false;
-            _loginButton.setEnabled(true);
-            _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
-            _loginButton.setClickable(true);
+            tvLogin.setEnabled(true);
+            tvLogin.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
+            tvLogin.setClickable(true);
 
         } else {
-            _loginButton.setEnabled(false);
-            _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
-            _loginButton.setClickable(false);
+            tvLogin.setEnabled(false);
+            tvLogin.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
+            tvLogin.setClickable(false);
         }
-
     }
 
     public void login() {
 
         if (!validate()) {
-            Toast.makeText(getApplicationContext(), "اشکال در مقادیر ورودی", Toast.LENGTH_SHORT).show();
-            set_loginButton(false, null);
-//            _loginButton.setEnabled(false);
-//            _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_grey_stroke));
+            etPassword.setError("اشکال در مقادیر ورودی");
+            etMail.setError("اشکال در مقادیر ورودی");
+            setLoginButton(false);
             return;
         }
-//        _loginButton.setEnabled(true);
-//        _loginButton.setBackground(getResources().getDrawable(R.drawable.button_corner_blue_stroke));
-//        accountInputHolder.setVisibility(View.INVISIBLE);
-        set_loginButton(true, null);
-        requestLogin(_emailText.getText().toString(), Util.md5(_passwordText.getText().toString()));
+        setLoginButton(true);
+        requestLogin(etMail.getText().toString(), Util.md5(etPassword.getText().toString()));
     }
 
     private void requestLogin(String email, String password) {
@@ -276,7 +218,6 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
         String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
         String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
         loginPresenter.getLoginPostResul(new LoginReqSend("login", email, password, cid, andId), cid, andId);
-
     }
 
     private void requestGoogleLogin(GoogleLoginReqSend googleLoginReqSend) {
@@ -289,16 +230,12 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
     @Override
     public void showLoginResult(LoginResult loginResult) {
         ResultUserLogin resultUserLogin = loginResult.getResultUserLogin();
-        setSaveDataInShareprefrence(resultUserLogin.getUserEmail(), resultUserLogin.getUserFname(), resultUserLogin.getUserLname(), resultUserLogin.getUserUid().toString());
+        setSaveDataInSharedPreference(resultUserLogin.getUserEmail(), resultUserLogin.getUserFname(), resultUserLogin.getUserLname(), resultUserLogin.getUserUid().toString());
     }
 
-    private void setSaveDataInShareprefrence(String email, String name, String lName, String userId) {
+    private void setSaveDataInSharedPreference(String email, String name, String lName, String userId) {
         Util.saveDataINShareprefrence(getApplicationContext(), email, name, lName, userId);
-//        _loginButton.setEnabled(true);
-//        signupInputHolder.setVisibility(View.INVISIBLE);
-//        accountInputHolder.setVisibility(View.VISIBLE);
-//        setLoginName();
-        loginCommand.setVisibility(View.GONE);
+        tvLoginCommand.setVisibility(View.GONE);
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("HomeResult", HomeResult);
         startActivity(intent);
@@ -308,20 +245,11 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
     @Override
     public void showError(String message) {
         counter++;
-        if (message.equals("HTTP 400 BAD REQUEST")) {
-            loginCommand.setVisibility(View.VISIBLE);
-            loginCommand.setText("نام کاربری یا کلمه عبور اشتباه است.");
-//            accountInputHolder.setVisibility(View.VISIBLE);
-//            _loginButton.setEnabled(true);
-
-        } else {
-//            Toast.makeText(getApplicationContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
-//            progressDialog.dismiss();
-            loginCommand.setVisibility(View.VISIBLE);
-            loginCommand.setText("نام کاربری یا کلمه عبور اشتباه است.");
-//            accountInputHolder.setVisibility(View.VISIBLE);
-//            _loginButton.setEnabled(true);
-        }
+        //if (message.equals("HTTP 400 BAD REQUEST")) {
+        tvLoginCommand.setVisibility(View.VISIBLE);
+        tvLoginCommand.setText("نام کاربری یا کلمه عبور اشتباه است.");
+        //} else {
+        //}
     }
 
     @Override
@@ -338,45 +266,22 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
 
     @Override
     public void dismissProgress() {
-        if (progressDialog.isShowing() == true || progressDialog != null) {
+        if (progressDialog.isShowing() || progressDialog != null)
             progressDialog.dismiss();
-        }
     }
 
     public boolean validate() {
         boolean valid = true;
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        String email = etMail.getText().toString();
+        String password = etPassword.getText().toString();
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("فرمت ایمیل اشتباه است");
+            etMail.setError("فرمت ایمیل اشتباه است");
             valid = false;
         } else {
-            _emailText.setError(null);
+            etMail.setError(null);
         }
         return valid;
     }
-
-    private void saveDataINShareprefrence(String email, String lastName, String gender, String userId) {
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF_USER, 0);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("email", email);
-        editor.putString("fname", lastName);
-        editor.putString("gender", gender);
-        editor.putString("gender", gender);
-        editor.putString("userId", userId);
-        editor.commit();
-    }
-
-    private void clearSharedprefrence() {
-//        SharedPreferences preferences = getSharedPreferences("Mypref", 0);
-//        preferences.edit().remove("shared_pref_key").commit();
-        SharedPreferences settings = getApplicationContext().getSharedPreferences(Config.SHARED_PREF_USER, Context.MODE_PRIVATE);
-        settings.edit().clear().commit();
-//        SharedPreferences settings = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-//        settings.edit().clear().commit();
-    }
-
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -416,10 +321,7 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
 //            updateUI(false);
         }
     }
-    // [END handleSignInResult]
 
-
-    // [START signin]
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -431,5 +333,10 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        signIn();
     }
 }

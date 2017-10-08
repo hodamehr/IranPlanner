@@ -38,15 +38,17 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
     ProgressDialog progressDialog;
 
     @InjectView(R.id.input_tel)
-    EditText input_tel;
+    EditText etPhone;
     @InjectView(R.id.input_email)
-    EditText editText;
+    EditText etMail;
     @InjectView(R.id.input_password)
-    EditText passwordText;
+    EditText etPassword;
     @InjectView(R.id.input_password_repeat)
-    EditText input_password_repeat;
+    EditText etPasswordRepeat;
     @InjectView(R.id.btn_signup)
-    TextView _signupButton;
+    TextView btnSignUp;
+    @InjectView(R.id.loginCommand)
+    TextView tvLoginCommand;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
 
@@ -54,25 +56,25 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
     @Inject
     RegisterPresenter registerPresenter;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
         Bundle extras = getIntent().getExtras();
         HomeResult = (GetHomeResult) extras.getSerializable("HomeResult");
+
         //Load Background Image
         Glide.with(this).load(R.drawable.splash_bg_blur).centerCrop().override(600, 400).into((ImageView) findViewById(R.id.registerBgIv));
 
         ButterKnife.inject(this);
-        input_tel.setFocusable(true);
-        _signupButton.setOnClickListener(new View.OnClickListener() {
+        etPhone.requestFocus();
+        etPhone.setFocusable(true);
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signup();
+                signUp();
             }
         });
-
 
     }
 
@@ -85,9 +87,9 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
     public void showRegisterMessage(ResultRegister resultRegister) {
 
         ResultUserRegister result = resultRegister.getResultUserRegister();
-        if (result.getStatus().equals("Succesfull")) {
+        if (result.getStatus().equals("Successful")) {
             Toast.makeText(getApplicationContext(), "حساب کاربری با موفقیت انجام شد", Toast.LENGTH_LONG).show();
-            Util.saveDataINShareprefrence(getApplicationContext(), editText.getText().toString(), "کاربر", "", result.getUserUid().toString());
+            Util.saveDataINShareprefrence(getApplicationContext(), etMail.getText().toString(), "کاربر", "", result.getUserUid().toString());
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.putExtra("HomeResult", HomeResult);
@@ -95,19 +97,16 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
             startActivity(intent);
             finish();
 
-        } else if (result.getStatus().equals("Duplicate Phone")) {
-            Toast.makeText(getApplicationContext(), "حساب کاربری با این شماره قبلاایجاد شده است ", Toast.LENGTH_LONG).show();
+        } else if (result.getStatus().equals("Duplicate Phone"))
+            tvLoginCommand.setText("حساب کاربری با این شماره قبلاایجاد شده است ");
+        else if (result.getStatus().equals("Duplicate email"))
+            tvLoginCommand.setText("حساب کاربری با این ایمیل قبلاایجاد شده است ");
+        else if (result.getStatus().equals("Invalid info"))
+            tvLoginCommand.setText("اشکال در مقادیر ورودی");
 
-        } else if (result.getStatus().equals("Duplicate email")) {
-            Toast.makeText(getApplicationContext(), "حساب کاربری با این ایمیل قبلاایجاد شده است ", Toast.LENGTH_LONG).show();
-
-        } else if (result.getStatus().equals("Invalid info")) {
-            Toast.makeText(getApplicationContext(), "اشکال در مقادیر ورودی", Toast.LENGTH_LONG).show();
-
-        }
         progressDialog.dismiss();
 
-        _signupButton.setEnabled(true);
+        btnSignUp.setEnabled(true);
         setResult(RESULT_OK, null);
 
     }
@@ -135,20 +134,18 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
         progressDialog.dismiss();
     }
 
-    public void signup() {
-        Log.d(TAG, "Signup");
+    public void signUp() {
         if (!validate()) {
-            Toast.makeText(getApplicationContext(), "اشکال در مقادیر ورودی", Toast.LENGTH_SHORT).show();
-            _signupButton.setEnabled(true);
+            tvLoginCommand.setText("اشکال در مقادیر ورودی");
+            btnSignUp.setEnabled(true);
             return;
         }
-//        _signupButton.setEnabled(false);
 
         String name = "";
         String lastName = "";
-        String email = editText.getText().toString();
-        String phoneNumber = input_tel.getText().toString();
-        String password = Util.md5(passwordText.getText().toString());
+        String email = etMail.getText().toString();
+        String phoneNumber = etPhone.getText().toString();
+        String password = Util.md5(etPassword.getText().toString());
         String gender = "0";
 
         DaggerRegisterComponent.builder()
@@ -162,24 +159,20 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
     public boolean validate() {
         boolean valid = true;
 
-
-        String email = editText.getText().toString();
-        String password = passwordText.getText().toString();
-        String passwordRepeat = input_password_repeat.getText().toString();
-        String phoneNumber = input_tel.getText().toString();
-
+        String email = etMail.getText().toString();
+        String password = etPassword.getText().toString();
+        String passwordRepeat = etPasswordRepeat.getText().toString();
+        String phoneNumber = etPhone.getText().toString();
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editText.setError("فرمت ایمیل اشتباه است");
+            etMail.setError("فرمت ایمیل اشتباه است");
             valid = false;
-        } else {
-            editText.setError(null);
-        }
+        } else
+            etMail.setError(null);
+
 
         if (password.isEmpty() || password.length() < 8) {
-            passwordText.setError("کلمه عبور باید بیشتر از 8 حرف و ترکیبی از حرف و عدد باشد");
-
-
+            etPassword.setError("کلمه عبور باید بیشتر از 8 حرف و ترکیبی از حرف و عدد باشد");
             valid = false;
         } else if (password.isEmpty() || password.length() >= 8) {
             int digitSize = 0;
@@ -189,24 +182,22 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
                 }
             }
             if (digitSize == password.length() || digitSize == 0) {
-                passwordText.setError("کلمه عبور باید شامل حرف و عدد باشد");
+                etPassword.setError("کلمه عبور باید شامل حرف و عدد باشد");
                 valid = false;
             }
-        } else {
-
-            passwordText.setError(null);
-        }
+        } else
+            etPasswordRepeat.setError(null);
         if (password.isEmpty() || password.length() < 8) {
-            input_password_repeat.setError("کلمه عبور می بایست بیشتر از 8 حرف باشد");
+            etPasswordRepeat.setError("کلمه عبور می بایست بیشتر از 8 حرف باشد");
             valid = false;
         } else {
-            input_password_repeat.setError(null);
+            etPasswordRepeat.setError(null);
         }
         if (!passwordRepeat.equals(password)) {
-            passwordText.setError("کلمه عبور و تکرار آن یکسان نیستند");
+            etPassword.setError("کلمه عبور و تکرار آن یکسان نیستند");
             valid = false;
         } else {
-            input_password_repeat.setError(null);
+            etPasswordRepeat.setError(null);
         }
         if (!TextUtils.isEmpty(phoneNumber)) {
 
@@ -215,12 +206,12 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
                     || (phoneNumber.trim().length() == 11 && !phoneNumber.trim().startsWith("09"))
                     || (phoneNumber.trim().length() == 10 && !phoneNumber.trim().startsWith("9"))) {
                 String message = "شماره تلفن همراه وارد شده صحیح نیست.";
-                input_tel.setError(message);
+                etPhone.setError(message);
                 valid = false;
             }
         } else if (TextUtils.isEmpty(phoneNumber)) {
             String message = "ثبت شماره تلفن اجباری است";
-            input_tel.setError(message);
+            etPhone.setError(message);
             valid = false;
         }
         return valid;
