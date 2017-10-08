@@ -66,6 +66,8 @@ dependencies {
         useLibrary 'org.apache.http.legacy'
     }
     compile 'com.android.support:appcompat-v7:25.0.1'
+    //    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.mikhaellopez:circularprogressbar:1.1.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
@@ -98,12 +100,11 @@ dependencies {
     compile 'javax.inject:javax.inject:1'
     compile 'org.wlf:FileDownloader:0.3.2'
     compile 'me.relex:circleindicator:1.2.2@aar'
-//    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
-    provided 'javax.annotation:jsr250-api:1.0'
-
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'com.daimajia.androidanimations:library:2.3@aar'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
+    provided 'javax.annotation:jsr250-api:1.0'
 }
 
 

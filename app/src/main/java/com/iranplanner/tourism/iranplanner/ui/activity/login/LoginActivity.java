@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.forgetPassword.ForgetPasswordActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.register.RegisterActivity;
 
@@ -98,6 +99,7 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
             mAuth = FirebaseAuth.getInstance();
 
             findViewById(R.id.btnSignInGoogle).setOnClickListener(this);
+            findViewById(R.id.txtForgetPassword).setOnClickListener(this);
 
             etMail.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -337,6 +339,15 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
 
     @Override
     public void onClick(View view) {
-        signIn();
+        switch (view.getId()) {
+            case R.id.txtForgetPassword:
+                Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+                intent.putExtra("email", etMail.getText().toString());
+                startActivity(intent);
+                break;
+            case R.id.btnSignInGoogle:
+                signIn();
+                break;
+        }
     }
 }

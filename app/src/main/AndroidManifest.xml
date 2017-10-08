@@ -47,9 +47,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="www.iranplanner.com"
-                    android:path="/android-app" />
+                    android:path="/android-app"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -57,7 +57,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.mainActivity.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.reqestHotelStatus.HotelReservationStatusActivity"
             android:screenOrientation="portrait" />
@@ -154,7 +154,8 @@
         <activity android:name=".ui.activity.event.EventActivity" />
         <activity android:name=".ui.tutorial.TutorialActivity" />
         <activity android:name=".ui.navigationDrawer.ContactUsActivity" />
-        <activity android:name=".ui.navigationDrawer.AboutUsActivity"/>
+        <activity android:name=".ui.navigationDrawer.AboutUsActivity" />
+        <activity android:name=".ui.activity.forgetPassword.ForgetPasswordActivity"></activity>
     </application>
 
 </manifest>
