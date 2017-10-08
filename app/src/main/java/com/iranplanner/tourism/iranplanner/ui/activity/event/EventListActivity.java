@@ -12,19 +12,27 @@ import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import entity.HomeEvent;
+import entity.ResultEvent;
 
 public class EventListActivity extends StandardActivity implements RecyclerItemOnClickListener.OnItemClickListener {
-
+    List<ResultEvent> ResultEvent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
-
+        getExtra();
         initToolbar();
         init();
+    }
+    private void getExtra() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        ResultEvent = (List<ResultEvent>) bundle.getSerializable("ResultEvent");
     }
 
     private void initToolbar() {
@@ -37,14 +45,16 @@ public class EventListActivity extends StandardActivity implements RecyclerItemO
 
     private void init() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        recyclerView.setAdapter(new EventListAdapter(getEvents(), this));
+        recyclerView.setAdapter(new EventListAdapter(ResultEvent, this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(this, this));
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        startActivity(new Intent(EventListActivity.this, EventActivity.class));
+        Intent intent = new Intent(EventListActivity.this, EventActivity.class);
+        intent.putExtra("ResultEvent", (Serializable) ResultEvent);
+        startActivity(intent);
     }
 
     private ArrayList<HomeEvent> getEvents() {

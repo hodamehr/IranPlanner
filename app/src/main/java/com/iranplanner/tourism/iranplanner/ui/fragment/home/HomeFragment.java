@@ -90,6 +90,8 @@ import entity.HomeSouvenir;
 import entity.ResulAttraction;
 import entity.ResultAttractionList;
 import entity.ResultCommentList;
+import entity.ResultEvent;
+import entity.ResultEvents;
 import entity.ResultHome;
 import entity.ResultItinerary;
 import entity.ResultItineraryList;
@@ -389,7 +391,9 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     private void getAttractionMore(String type) {
         homePresenter.getAttractionMore("search", "fa", selectId, "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), type);
     }
+
     String offset = "0";
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -476,7 +480,10 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 }
                 break;
             case R.id.tvEventShowAll:
-                startActivity(new Intent(getActivity(), EventListActivity.class));
+                //        https://api.parsdid.com/iranplanner/app/api-event.php?action=list&lang=fa&id=342&type=city
+
+                homePresenter.getEventMore("list", "fa", "342", "city", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+
                 break;
 
         }
@@ -730,6 +737,15 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         intentA.putExtra("attractionsList", (Serializable) resultLodgings);
         intentA.putExtra("nextOffset", getAttractionList.getStatistics().getOffsetNext());
         startActivity(intentA);
+    }
+
+    @Override
+    public void ShowEventLists(ResultEvents resultEvents) {
+        List<ResultEvent> resultEvnt = resultEvents.getResultEvent();
+        Intent intent = new Intent(getActivity(), EventListActivity.class);
+        intent.putExtra("ResultEvent", (Serializable) resultEvnt);
+        startActivity(intent);
+
     }
 
     private void setViewPagerEvent(List<HomeEvent> homeEvents) {

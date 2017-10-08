@@ -31,24 +31,27 @@
 
             <TextView
                 android:id="@+id/rowEventTitleTv"
-                style="@style/StandardTitle"
+                style="@style/StandardTextGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="درود بر امین" />
+                android:lines="1"
+                android:ellipsize="start"
+                android:text="عنوان"
+                 />
 
             <TextView
-                style="@style/StandardText"
+                style="@style/StandardTextGrey"
                 android:id="@+id/rowEventCityTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="شهرامیت" />
+                android:text="شهرامیت"                />
 
             <TextView
-                style="@style/StandardText"
+                style="@style/StandardTextGrey"
                 android:id="@+id/rowEventDateTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="تاریخ برگذاری" />
+                android:text="تاریخ برگزاری" />
 
         </LinearLayout>
 

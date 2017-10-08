@@ -83,6 +83,8 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
             tvLoginCommand = (TextView) findViewById(R.id.loginCommand);
             tvLoginCommand.setText("");
 
+            etMail.requestFocus();
+
             //Load Background Image
             Glide.with(this).load(R.drawable.splash_bg_blur).centerCrop().override(600, 400).into((ImageView) findViewById(R.id.loginBgIv));
 
@@ -173,7 +175,6 @@ public class LoginActivity extends StandardActivity implements GoogleApiClient.C
             startActivity(intent);
         }
 
-        etMail.requestFocus();
     }
 
     @Override

@@ -4,6 +4,7 @@ package com.iranplanner.tourism.iranplanner.ui.fragment.home;
 import javax.inject.Inject;
 
 import entity.GetHomeResult;
+import entity.ResultEvents;
 import entity.ShowAttractionListMore;
 import entity.ShowAttractionMoreList;
 import retrofit2.Retrofit;
@@ -107,6 +108,34 @@ public class HomePresenter extends HomeContract {
                 });
     }
 
+    @Override
+    public void getEventMore(String action, String lang, String id, String type, String cid, String androidId) {
+        mView.showProgress();
+        retrofit.create(HomeService.class)
+                .getEventMore( action,  lang,  id,  type,  cid,  androidId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultEvents>() {
+
+                    @Override
+                    public void onCompleted() {
+                        mView.showComplete();
+                        mView.dismissProgress();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(e.getMessage());
+                        mView.dismissProgress();
+                    }
+
+                    @Override
+                    public void onNext(ResultEvents ResultEvents) {
+                        mView.ShowEventLists(ResultEvents);
+                    }
+                });
+    }
+
 
     //    action=home&type=city&value=309
     public interface HomeService {
@@ -129,5 +158,16 @@ public class HomePresenter extends HomeContract {
                 @Query("andId") String androidId,
                 @Query("type") String attractionType
                 );
+//        https://api.parsdid.com/iranplanner/app/api-event.php?action=list&lang=fa&id=342&type=city
+        @GET("api-event.php")
+        Observable<ResultEvents> getEventMore(
+                @Query("action") String action,
+                @Query("lang") String lang,
+                @Query("id") String id,
+                @Query("type") String type,
+                @Query("cid") String cid,
+                @Query("andId") String androidId        );
+
+
     }
 }

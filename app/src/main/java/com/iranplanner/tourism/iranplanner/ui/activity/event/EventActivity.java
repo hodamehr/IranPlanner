@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.ItineraryLodgingCity;
+import entity.ResultEvent;
 import entity.ResultLodging;
 
 public class EventActivity extends StandardActivity {
@@ -35,6 +36,7 @@ public class EventActivity extends StandardActivity {
     private SupportMapFragment mapFragment;
     private GoogleMap mMap;
     private Marker marker;
+    List<ResultEvent> resultEvent;
 
     private TextView tvEventStatus, tvEventName, tvEventCity, tvEventSubTitle, tvEventHoldingDate, tvEventVisitationHour, tvEventAddress;
 
@@ -42,9 +44,15 @@ public class EventActivity extends StandardActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
-
+        getExtra();
         initToolbar();
         init();
+    }
+
+    private void getExtra() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        resultEvent = (List<ResultEvent>) bundle.getSerializable("ResultEvent");
     }
 
     private void initToolbar() {
@@ -71,11 +79,17 @@ public class EventActivity extends StandardActivity {
         tvEventName = (TextView) findViewById(R.id.eventTitleTv);
         tvEventCity = (TextView) findViewById(R.id.eventCityTv);
         tvEventSubTitle = (TextView) findViewById(R.id.eventSubTitleTv);
-        tvEventName = (TextView) findViewById(R.id.eventTitleTv);
         tvEventHoldingDate = (TextView) findViewById(R.id.eventHoldingDateTv);
         tvEventVisitationHour = (TextView) findViewById(R.id.eventVisitationHourTv);
         tvEventAddress = (TextView) findViewById(R.id.eventAddressTv);
 
+//        tvEventStatus.setText(resultEvent.get(0).getEventInfo().get);
+        tvEventName.setText(resultEvent.get(0).getEventInfo().getEventTitle());
+        tvEventCity.setText(resultEvent.get(0).getEventInfo().getEventCityTitle());
+        tvEventSubTitle.setText(resultEvent.get(0).getEventInfo().getEventBody());
+        tvEventHoldingDate.setText(resultEvent.get(0).getEventInfo().getEventDateStart());
+        tvEventVisitationHour.setText(resultEvent.get(0).getEventInfo().getEventDateDuration());
+        tvEventAddress.setText(resultEvent.get(0).getEventInfo().getEventAddress());
     }
 
 //    @Override

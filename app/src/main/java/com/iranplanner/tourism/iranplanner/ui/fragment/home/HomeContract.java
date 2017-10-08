@@ -3,6 +3,7 @@ package com.iranplanner.tourism.iranplanner.ui.fragment.home;
 import com.iranplanner.tourism.iranplanner.ui.presenter.Presenter;
 
 import entity.GetHomeResult;
+import entity.ResultEvents;
 import entity.ShowAttractionListMore;
 import entity.ShowAttractionMoreList;
 
@@ -18,7 +19,9 @@ public abstract class HomeContract extends Presenter<HomeContract.View> {
         void showComplete();
 
         void ShowHomeResult(GetHomeResult GetHomeResult);
+
         void ShowAttractionLists(ShowAttractionListMore getAttractionList);
+        void ShowEventLists(ResultEvents resultEvents);
 
         void showProgress();
 
@@ -34,10 +37,18 @@ public abstract class HomeContract extends Presenter<HomeContract.View> {
                                  String androidId);
 
     public abstract void getAttractionMore(String action
-                                           ,String lang
-                                           ,String city
-                                           ,String offset
-                                           ,String cid
-                                           ,String andId,
-                                           String type);
+            , String lang
+            , String city
+            , String offset
+            , String cid
+            , String andId
+            , String type);
+
+    public abstract void getEventMore(
+            String action,
+            String lang,
+            String id,
+            String type,
+            String cid,
+            String androidId);
 }

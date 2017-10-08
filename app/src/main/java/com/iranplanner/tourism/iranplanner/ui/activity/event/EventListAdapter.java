@@ -11,8 +11,10 @@ import android.widget.TextView;
 import com.iranplanner.tourism.iranplanner.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import entity.HomeEvent;
+import entity.ResultEvent;
 
 /**
  * Created by h.vahidimehr on 10/09/2017.
@@ -20,11 +22,11 @@ import entity.HomeEvent;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Holder> {
 
-    private ArrayList<HomeEvent> events;
+    private List<ResultEvent> events;
     private Context context;
     private LayoutInflater inflater;
 
-    public EventListAdapter(ArrayList<HomeEvent> events, Context context) {
+    public EventListAdapter(List<ResultEvent> events, Context context) {
         this.events = events;
         this.context = context;
         inflater = LayoutInflater.from(context);
@@ -38,7 +40,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Hold
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        HomeEvent current = events.get(position);
+        ResultEvent current = events.get(position);
         holder.setData(current);
     }
 
@@ -60,10 +62,12 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Hold
             imageView = (ImageView) itemView.findViewById(R.id.rowEventIv);
         }
 
-        public void setData(HomeEvent current) {
+        public void setData(ResultEvent current) {
             try {
-                tvTitle.setText(current.getEventTitle());
-                tvDate.setText(current.getEventDuration().toString());
+                tvTitle.setText(current.getEventInfo().getEventTitle());
+                tvDate.setText(current.getEventInfo().getEventDurationTitle().toString());
+                tvCity.setText(current.getEventInfo().getEventCityTitle().toString());
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
