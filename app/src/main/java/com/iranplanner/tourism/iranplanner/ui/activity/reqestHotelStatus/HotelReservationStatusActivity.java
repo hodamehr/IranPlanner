@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
@@ -94,14 +96,27 @@ public class HotelReservationStatusActivity extends StandardActivity
         RecyclerView settingRequestBundle = (RecyclerView) findViewById(R.id.settingRequestBundle);
         settingRequestBundle.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         settingRequestBundle.setAdapter(new RequestBundleAdapter(getApplicationContext(), resultReqBundleList));
+
         settingRequestBundle.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
                 String offset = "0";
-                if (resultReqCountList.get(position).getReservationReqStatus().getStatusCount() != "0") {
-                    //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_bundle_full&uid=792147600796866&lang=fa&id=12150158259660
-                    hotelReservationStatusListPresenter.getHotelReservationBundleFull("req_user_bundle_full", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), resultReqBundleList.get(position).getBundleRequest().getBundleId(), Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
-                }
+                ((Button)view.findViewById(R.id.btnComplete)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (resultReqCountList.get(position).getReservationReqStatus().getStatusCount() != "0") {
+                            //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_bundle_full&uid=792147600796866&lang=fa&id=12150158259660
+                            hotelReservationStatusListPresenter.getHotelReservationBundleFull("req_user_bundle_full", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), resultReqBundleList.get(position).getBundleRequest().getBundleId(), Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                        }
+                    }
+                });
+                ((Button)view.findViewById(R.id.requestStatusRowRemoveBtn)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+//                      remove
+                    }
+                });
+
 
             }
         }));
@@ -112,17 +127,37 @@ public class HotelReservationStatusActivity extends StandardActivity
         recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-                String offset = "0";
-                if (resultReqCountList.get(position).getReservationReqStatus().getStatusCount() != "0") {
-                    //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_list&lang=fa&uid=792147600796866&type=1
 
-                    hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), String.valueOf(position), "20", offset, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
-                }
+//                ((Button) view.findViewById(R.id.requestStatusRowShowBtn)).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+                        String offset = "0";
+                        if (resultReqCountList.get(position).getReservationReqStatus().getStatusCount() != "0") {
+                            //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_list&lang=fa&uid=792147600796866&type=1
+                            hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), String.valueOf(position+1), "20", offset, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                        }
+//                    }
+//                });
+//                ((Button) view.findViewById(R.id.requestStatusRowPaymentBtn)).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        //open view page
+////                        sendToBrowser();
+//                    }
+//                });
+
 
             }
+
         }));
     }
 
+    private void sendToBrowser(){
+        String url = "http://www.example.com";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
     @Override
     public void showHotelReservationStatusList(ReservationRequestList reservationRequestList) {
 

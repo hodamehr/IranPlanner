@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.ResultReqCount;
+import tools.Util;
 
 /**
  * Created by h.vahidimehr on 29/08/2017.
@@ -56,7 +57,7 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
     }
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private Button btnPayment, btnView;
+        private Button btnPayment, btnView,requestStatusRowShowBtn;
         private TextView tvTitle, tvCount;
         private View itemView ;
 
@@ -64,6 +65,7 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
             super(itemView);
             this.itemView = itemView;
             btnPayment = (Button) itemView.findViewById(R.id.requestStatusRowPaymentBtn);
+            requestStatusRowShowBtn = (Button) itemView.findViewById(R.id.requestStatusRowShowBtn);
             tvTitle = (TextView) itemView.findViewById(R.id.requestStatusRowTitleTv);
             tvCount = (TextView) itemView.findViewById(R.id.requestStatusRowCountTv);
             btnPayment.setVisibility(View.GONE);
@@ -72,11 +74,18 @@ public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdap
         }
 
         public void setData(String current, int position, String count) {
-            if (position == 2)
+            if (position == 1){
                 btnPayment.setVisibility(View.VISIBLE);
-            else btnPayment.setVisibility(View.GONE);
+                requestStatusRowShowBtn.setVisibility(View.GONE);
+            }
+
+            else if (position==0|| position==2||position==3){
+                requestStatusRowShowBtn.setVisibility(View.VISIBLE);
+                btnPayment.setVisibility(View.GONE);
+            }
+
             tvTitle.setText(current);
-            tvCount.setText(count);
+            tvCount.setText(Util.persianNumbers(count));
         }
 
         @Override

@@ -25,6 +25,7 @@ import java.util.List;
 
 import entity.ReservationRequestList;
 import entity.ResultReservationReqFull;
+import tools.Constants;
 import tools.Util;
 
 public class ReservationRequestDetailActivity extends StandardActivity {
@@ -33,6 +34,7 @@ public class ReservationRequestDetailActivity extends StandardActivity {
     private TextView tvHotelName, tvRoomTypeTv, tvReqCode, tvStartDueDate, tvReqStatus, tvReqDate, tvSupervisorName, tvStartPrice, tvOff, tvFinalPrice;
     private Button hotelPurchaseBtn;
     String reqId;
+    List<ResultReservationReqFull> reservationReqFulls;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +43,12 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         getExtras();
         init();
         initToolbar();
-        sendToBrowser();
+
 
         hotelPurchaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("bundle", "webview");
-                String postData ="{"+" \"request_id\" "+": \""+reqId+"\" ,"+"\"uid\""+":\""+ Util.getUseRIdFromShareprefrence(getApplicationContext())+"\"}";
-                String url = "https://iranplanner.com/reflection";
-//                webView.postUrl(url, EncodingUtils.getBytes(postData, "BASE64"));
+                sendToBrowser(reservationReqFulls.get(0).getRequest().getReqKey());
             }
         });
     }
@@ -79,7 +78,7 @@ public class ReservationRequestDetailActivity extends StandardActivity {
 
     private void getExtras() {
         Intent intent = getIntent();
-        List<ResultReservationReqFull> reservationReqFulls
+        reservationReqFulls
                 = (List<ResultReservationReqFull>) intent.getSerializableExtra(ReservationRequestList.INTENT_KEY_RESULT_RESERVATION);
 
         hotelName = reservationReqFulls.get(0).getRequest().getReqLodgingTitle();
@@ -120,10 +119,13 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         getSupportActionBar().setTitle(hotelName);
     }
 
-    private void sendToBrowser(){
-        String url = "http://www.example.com";
+    private void sendToBrowser(String reqKey) {
+        String url = Constants.urlPayment;
         Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
+        Uri uri = Uri.parse(url).buildUpon()
+                .appendQueryParameter("req", reqKey)
+                .build();
+        i.setData(uri);
         startActivity(i);
     }
 

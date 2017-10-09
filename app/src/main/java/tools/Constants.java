@@ -25,4 +25,5 @@ public final class Constants {
     public static final String attractionHistoricalCode = "2932";
     public static final String attractionSortCode = "2934";
     public static final int durationTravel = 3;
+    public static String urlPayment="http://iranplanner.com/mobilepayment";
 }

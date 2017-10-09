@@ -81,6 +81,18 @@ public class Request implements Serializable{
     @Expose
     private RequestPrice requestPrice;
 
+    @SerializedName("req_key")
+    @Expose
+    private String reqKey;
+
+    public String getReqKey() {
+        return reqKey;
+    }
+
+    public void setReqKey(String reqKey) {
+        this.reqKey = reqKey;
+    }
+
     public String getReqBundleOrder() {
         return reqBundleOrder;
     }

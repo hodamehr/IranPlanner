@@ -44,6 +44,12 @@
             android:layout_height="40dp"
             android:gravity="center"
             android:singleLine="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/padding_standard"
+            android:paddingRight="@dimen/padding_standard">
 
         <Button
             android:id="@+id/requestStatusRowPaymentBtn"
@@ -54,7 +60,22 @@
             android:layout_marginStart="2dp"
             android:background="@drawable/request_status_green_btn_selector"
             android:text="پرداخت"
-            android:textColor="@color/textColorWhite" />
+            android:textColor="@color/textColorWhite"
+            android:layout_weight="1"
+            style="@style/StandardTitle"/>
+        <Button
+            android:id="@+id/requestStatusRowShowBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"
+            android:background="@drawable/button_corner_grey_dark_stroke"
+            android:text="مشاهده"
+            android:textColor="@color/grey"
+            android:layout_weight="1"
+            style="@style/StandardTitle"/>
+        </LinearLayout>
 
     </LinearLayout>
 
