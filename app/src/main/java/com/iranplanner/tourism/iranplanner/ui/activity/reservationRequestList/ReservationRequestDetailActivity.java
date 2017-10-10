@@ -44,7 +44,6 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         init();
         initToolbar();
 
-
         hotelPurchaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

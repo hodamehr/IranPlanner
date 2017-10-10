@@ -96,6 +96,19 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/tutDescTwoTv"
+        style="@style/StandardTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/okBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/margin_standard"
+        android:background="@drawable/corner_layout"
+        android:gravity="center"
+        android:padding="@dimen/padding_short"
+        android:text="@string/tutorial_two" />
+
     <Button
         android:id="@+id/okBtn"
         android:layout_width="wrap_content"

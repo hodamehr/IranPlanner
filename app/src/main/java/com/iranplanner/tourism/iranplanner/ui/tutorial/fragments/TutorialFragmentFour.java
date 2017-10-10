@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -25,6 +26,7 @@ public class TutorialFragmentFour extends Fragment {
 
     private Car car;
     private ImageView booth, curtain, giftTop, giftBelow, giftFeshfeshe;
+    private TextView tvDesc ;
     private Button btnOk;
 
     private View boothContainer, giftContainer;
@@ -44,6 +46,7 @@ public class TutorialFragmentFour extends Fragment {
     private void initView(View view) {
 
         car = new Car(view.findViewById(R.id.tutWholeVanRl), getActivity());
+        tvDesc = (TextView) view.findViewById(R.id.tutDescFourTv);
 
         btnOk = (Button) view.findViewById(R.id.okBtn);
         hideOkBtn();
@@ -56,6 +59,8 @@ public class TutorialFragmentFour extends Fragment {
 
         boothContainer = view.findViewById(R.id.tutBoothRl);
         giftContainer = view.findViewById(R.id.tutGiftRl);
+
+        tvDesc.setAlpha(0f);
 
         booth.bringToFront();
         curtain.bringToFront();
@@ -99,6 +104,8 @@ public class TutorialFragmentFour extends Fragment {
         booth.animate().alpha(1).translationYBy(boothHeight).setDuration(600).setStartDelay(1000);
         curtain.animate().alpha(1).translationYBy(curtainHeight).setDuration(600).setStartDelay(1200);
 
+        tvDesc.animate().alpha(1f).setDuration(500).setStartDelay(2000);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -116,6 +123,7 @@ public class TutorialFragmentFour extends Fragment {
     private void hideOkBtnAnimate() {
         btnOk.setOnClickListener(null);
         btnOk.animate().translationYBy(Util.dpToPx(getContext(), 120)).setStartDelay(500);
+        tvDesc.animate().alpha(0f).setDuration(500).setStartDelay(500);
     }
 
     private void hideOkBtn() {

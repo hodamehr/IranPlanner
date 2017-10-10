@@ -156,4 +156,8 @@
 
     </string-array>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://www.iranplanner.com\",\n  }\n}]</string>
+    <string name="tutorial_one">تجربه ی سفری حرفه ای و خاص همراه با برنامه سفرهای ایران پلنر</string>
+    <string name="tutorial_two">متنوع ترین سامانه رزرو هتل و مراکز اقامتی در سراسر ایران</string>
+    <string name="tutorial_three">اطلاع از تازه ترین و هیجان انگیزترین رویدادهای گردشگری در ایران</string>
+    <string name="tutorial_four">بهترین پیشنهادها برای خرید سوغاتی و غذاهای محلی</string>
 </resources>

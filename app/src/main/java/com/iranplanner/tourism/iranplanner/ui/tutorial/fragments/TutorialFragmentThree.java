@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -25,6 +26,7 @@ import tools.Util;
 public class TutorialFragmentThree extends Fragment implements View.OnClickListener {
 
     private ImageView tent, trumpet;
+    private TextView tvDesc ;
     private Car car;
     private Button btnOk;
 
@@ -46,6 +48,8 @@ public class TutorialFragmentThree extends Fragment implements View.OnClickListe
         tent = (ImageView) view.findViewById(R.id.tutTentIv);
         trumpet = (ImageView) view.findViewById(R.id.tutTrumpetIv);
 
+        tvDesc = (TextView) view.findViewById(R.id.tutDescThreeTv);
+
         container = view.findViewById(R.id.tutMasterContainer);
 
         btnOk = (Button) view.findViewById(R.id.okBtn);
@@ -56,6 +60,8 @@ public class TutorialFragmentThree extends Fragment implements View.OnClickListe
 
         tentHeight = (int) (Util.dpToPx(getContext(), 150) / 2);
         trumpetHeight = (int) (Util.dpToPx(getContext(), 80) / 2);
+
+        tvDesc.setAlpha(0f);
 
         tent.setTranslationY(tentHeight);
         tent.setAlpha(0f);
@@ -86,12 +92,15 @@ public class TutorialFragmentThree extends Fragment implements View.OnClickListe
             }
         }, 1000);
 
+        tvDesc.animate().alpha(1f).setDuration(500).setStartDelay(2000);
+
         showOkBtn();
     }
 
     private void hideOkBtnAnimate() {
         btnOk.setOnClickListener(null);
         btnOk.animate().translationYBy(Util.dpToPx(getContext(), 120)).setStartDelay(500);
+        tvDesc.animate().alpha(0f).setDuration(500).setStartDelay(500);
     }
 
     private void hideOkBtn() {

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -29,6 +30,7 @@ public class TutorialFragmentTwo extends Fragment implements View.OnClickListene
     private Car car;
     private ImageView hotel, hotelText, grass;
     private View container;
+    private TextView tvDesc ;
     private Button btnOk;
 
     @Nullable
@@ -72,11 +74,14 @@ public class TutorialFragmentTwo extends Fragment implements View.OnClickListene
                 .duration(1000)
                 .playOn(hotelText);
 
+        tvDesc.animate().alpha(1f).setDuration(500).setStartDelay(2000);
+
         showOkBtn();
     }
 
     private void initView(View view) {
         car = new Car(view.findViewById(R.id.tutWholeVanRl), getActivity());
+        tvDesc = (TextView) view.findViewById(R.id.tutDescTwoTv);
 
         btnOk = (Button) view.findViewById(R.id.okBtn);
         hideOkBtn();
@@ -96,11 +101,14 @@ public class TutorialFragmentTwo extends Fragment implements View.OnClickListene
 
         grass.setTranslationY(100f);
 
+        tvDesc.setAlpha(0f);
+
     }
 
     private void hideOkBtnAnimate() {
         btnOk.setOnClickListener(null);
         btnOk.animate().translationYBy(Util.dpToPx(getContext(), 120)).setStartDelay(500);
+        tvDesc.animate().alpha(0f).setDuration(500).setStartDelay(500);
     }
 
     private void hideOkBtn() {

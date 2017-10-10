@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -28,6 +29,7 @@ public class TutorialFragmentOne extends Fragment implements View.OnClickListene
     private ImageView dotTopLeft, dotTopRight, dotBottomLeft, dotBottomRight, dotCenter;
     private ImageView pinLeft, pinCenter, pinRight;
     private View wholeVan, container;
+    private TextView tvDesc;
     private Button btnOk;
 
     private Car car;
@@ -54,6 +56,9 @@ public class TutorialFragmentOne extends Fragment implements View.OnClickListene
         pinRight = (ImageView) view.findViewById(R.id.tutPinRight);
 
         container = view.findViewById(R.id.tutMasterContainer);
+
+        tvDesc = (TextView) view.findViewById(R.id.tutDescOneTv);
+        tvDesc.setAlpha(0f);
 
         dotTopRight.setAlpha(0f);
         dotTopLeft.setAlpha(0f);
@@ -117,11 +122,14 @@ public class TutorialFragmentOne extends Fragment implements View.OnClickListene
             }
         }, 2000);
 
+        tvDesc.animate().alpha(1f).setDuration(500).setStartDelay(2000);
+
         car.stopTheWheels();
     }
 
     private void hideDots() {
-        container.animate().alpha(0f).setDuration(1000);
+        container.animate().alpha(0f).setDuration(500).setDuration(1000);
+        tvDesc.animate().alpha(0f).setDuration(500).setStartDelay(500);
         hideOkBtnAnimate();
     }
 
