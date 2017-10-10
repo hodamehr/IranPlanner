@@ -389,6 +389,9 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void getAttractionMore(String type) {
+        DaggerHomeComponent.builder().netComponent(((App) getContext().getApplicationContext()).getNetComponent())
+                .homeModule(new HomeModule(this, this, this, this, this))
+                .build().inject(this);
         homePresenter.getAttractionMore("search", "fa", selectId, "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), type);
     }
 
@@ -787,6 +790,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         recyclerViewProvinceShow.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
+                selectId = homeCountryProvince.get(position).getProvinceId();
+                SelectedType ="province" ;
                 getHomeResult("province", homeCountryProvince.get(position).getProvinceId());
             }
         }));
@@ -965,7 +970,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void getHotelResults(String destination, String selectId, String typeOfHotel) {
-        if (destination.equals("city")) {
+        if (destination != null && destination.equals("city")) {
             reservationPresenter.getLodgingList("list", selectId, Util.getTokenFromSharedPreferences(getContext()), "20", "0", Util.getAndroidIdFromSharedPreferences(getContext()), typeOfHotel);
         } else {
             Toast.makeText(getContext(), "شهر انتخاب شود", Toast.LENGTH_LONG).show();

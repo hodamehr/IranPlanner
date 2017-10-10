@@ -328,7 +328,7 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
         txtAddPeople.setText(Util.persianNumbers(" " + Util.getPriceInToman(roomCapacityExtraPrice * durationTravel * selectAddPeople )+ " تومان "));
         edtHeadNameReservation.setText(resultRooms.get(position).getHeadName());
         edtHeadLastNameReservation.setText(resultRooms.get(position).getHeadLastName());
-        txtDiscount.setText(Util.persianNumbers(" " + Util.getPriceInToman(Integer.valueOf(resultRooms.get(position).getRoomPriceDifference())) + " تومان "));
+        txtDiscount.setText((resultRooms.get(position).getRoomPriceDifference() != null) ? Util.persianNumbers(" " + Util.getPriceInToman(Integer.valueOf(resultRooms.get(position).getRoomPriceDifference())) + " تومان ") : "");
         setVisibleHalfBoard(position);
         endPrice.setText(Util.persianNumbers(Util.getPriceInToman((roomPricefinal * durationTravel) + priceHalfOutPrice + priceHalfInPrice + (roomCapacityExtraPrice * durationTravel * selectAddPeople)) + "تومان"));
         checkHalfOut.setChecked((resultRooms.get(position).getHalfOut() != null) ? resultRooms.get(position).getHalfOut() : false);
