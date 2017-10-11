@@ -1,5 +1,6 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.showRoom;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -75,6 +76,8 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
     TextView txtNumber;
     @Inject
     ShowRoomPresenter showRoomPresenter;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -309,9 +312,8 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
             intentReservationRegisterRoom.putExtra("resultLodgingHotelDetail", (Serializable) resultLodgingHotelDetail);
             intentReservationRegisterRoom.putExtra("bundleId", requestLodgingReservationMain.getResultLodgingReservation().getReqBundleId());
             startActivity(intentReservationRegisterRoom);
-        } else {
+        } else
             Toast.makeText(getApplicationContext(), "قطع ارتباط با سرور", Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override
@@ -342,11 +344,11 @@ public class ShowRoomActivity extends StandardActivity implements ShowRoomContra
 
     @Override
     public void showProgress() {
-
+        progressDialog = Util.showProgressDialog(getApplicationContext(), "منتظر باشید", ShowRoomActivity.this);
     }
 
     @Override
     public void dismissProgress() {
-
+        Util.dismissProgress(progressDialog);
     }
 }

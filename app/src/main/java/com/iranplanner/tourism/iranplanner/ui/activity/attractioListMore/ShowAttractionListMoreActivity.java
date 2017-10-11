@@ -1,6 +1,7 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -54,6 +55,7 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
     //Added by Amin
     private View filterToggle, mapToggle, filterView, filterShade, bottomPanelView;
     private boolean isViewOpen = false;
+    private ProgressDialog progressDialog;
 
     private void getExtra() {
         Intent intent = getIntent();
@@ -98,8 +100,6 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
         attractionRecyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Log.e("open", "showattraction");
-
                 attractionListMorePresenter.getAttractionDetailNear("full", attractionsList.get(position).getResulAttraction().getAttractionId(), "fa", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
             }
         }));
@@ -297,12 +297,12 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
 
     @Override
     public void showProgress() {
-
+        progressDialog = Util.showProgressDialog(getApplicationContext(), "منتظر بمانید", ShowAttractionListMoreActivity.this);
     }
 
     @Override
     public void dismissProgress() {
-
+        Util.dismissProgress(progressDialog);
     }
 
     @Override

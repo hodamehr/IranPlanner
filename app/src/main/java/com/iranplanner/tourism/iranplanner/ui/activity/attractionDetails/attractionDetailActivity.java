@@ -162,6 +162,7 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
     RecyclerView recyclerBestAttraction;
     DaggerAtractionDetailComponent.Builder builder;
     private List<ResultAttractionList> resultAttractionList;
+    private ProgressDialog progressBar;
 
     private void findView() {
 //        setContentView(R.layout.activity_attraction_detail);
@@ -266,7 +267,7 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
         recyclerBestAttraction.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                attractionListMorePresenter.getAttractionDetailNear("full", resulAttraction.getAttractionId(), "fa", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                attractionListMorePresenter.getAttractionDetailNear("full", resultAttractionList.get(position).getResulAttraction().getAttractionId(), "fa", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
 
             }
         }));
@@ -337,6 +338,7 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
                 .attractionDetailModule(new AttractionDetailModule(this, this));
         builder.build().inject(this);
         attractionDetailPresenter.getWidgetResult("nodeuser", resulAttraction.getAttractionId(), Util.getUseRIdFromShareprefrence(getApplicationContext()), "attraction", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+
     }
 
     @Override
@@ -344,11 +346,13 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
         onBackPressed();
         return true;
     }
-    private Menu menu=null;
+
+    private Menu menu = null;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_attraction_detail, menu);
-        this.menu=menu;
+        this.menu = menu;
         menu.findItem(R.id.menuAttractionLike).setVisible(true);
         return true;
     }
@@ -700,12 +704,12 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
 
     @Override
     public void showProgress() {
-
+        progressBar = Util.showProgressDialog(getApplicationContext(), "منتظر بمانید", attractionDetailActivity.this);
     }
 
     @Override
     public void dismissProgress() {
-
+        progressBar.dismiss();
     }
 
     @Override
