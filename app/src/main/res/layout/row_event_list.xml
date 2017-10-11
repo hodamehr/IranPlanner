@@ -34,21 +34,20 @@
                 style="@style/StandardTextGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lines="1"
                 android:ellipsize="start"
-                android:text="عنوان"
-                 />
+                android:lines="1"
+                android:text="عنوان" />
 
             <TextView
-                style="@style/StandardTextGrey"
                 android:id="@+id/rowEventCityTv"
+                style="@style/StandardTextGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="شهرامیت"                />
+                android:text="شهرامیت" />
 
             <TextView
-                style="@style/StandardTextGrey"
                 android:id="@+id/rowEventDateTv"
+                style="@style/StandardTextGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="تاریخ برگزاری" />

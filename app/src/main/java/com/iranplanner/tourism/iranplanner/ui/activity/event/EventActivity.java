@@ -37,6 +37,7 @@ import java.util.List;
 import entity.ItineraryLodgingCity;
 import entity.ResultEvent;
 import entity.ResultLodging;
+import tools.Util;
 
 public class EventActivity extends StandardActivity {
 
@@ -96,14 +97,18 @@ public class EventActivity extends StandardActivity {
         banner = (ImageView) findViewById(R.id.expandedImage);
         Glide.with(this).load(resultEvent.getEventInfo().getImgUrl()).into(banner);
 
-        String address = "آدرس : " + resultEvent.getEventInfo().getEventAddress();
+        String address;
+        if (resultEvent.getEventInfo().getEventAddress() == null)
+            address = "آدرس : ";
+        else
+            address = "آدرس : " + resultEvent.getEventInfo().getEventAddress();
 
         tvEventName.setText(resultEvent.getEventInfo().getEventProvinceTitle());
         tvEventCity.setText(resultEvent.getEventInfo().getEventCityTitle());
         tvEventSubTitle.setText(resultEvent.getEventInfo().getEventTitle());
 
         long holdingDateTimestamp = Long.parseLong(resultEvent.getEventInfo().getEventDateStart());
-        String holdingDate = "تاریخ برگزاری : " + Utils.getSimpleDate(convertTime(holdingDateTimestamp));
+        String holdingDate = Util.persianNumbers("تاریخ برگزاری : " + Utils.getSimpleDate(convertTime(holdingDateTimestamp)));
 
         tvEventHoldingDate.setText(holdingDate);
         tvEventVisitationHour.setText(resultEvent.getEventInfo().getEventDateDuration());

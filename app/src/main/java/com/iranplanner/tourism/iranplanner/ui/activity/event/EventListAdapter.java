@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.iranplanner.tourism.iranplanner.R;
 
 import java.util.ArrayList;
@@ -64,9 +65,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Hold
 
         public void setData(ResultEvent current) {
             try {
+                Glide.with(context).load(current.getEventInfo().getImgUrl()).into(imageView);
 //                tvTitle.setText(current.getEventInfo().getEventTitle());
-//                tvDate.setText(current.getEventInfo().getEventDurationTitle());
-//                tvCity.setText(current.getEventInfo().getEventCityTitle());
+                tvDate.setText(current.getEventInfo().getEventDurationTitle());
+                tvCity.setText(current.getEventInfo().getEventCityTitle());
 
             } catch (Exception e) {
                 e.printStackTrace();
