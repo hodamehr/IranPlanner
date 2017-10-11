@@ -2,21 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
-        android:title="dfdfdfd"
-        android:icon="@mipmap/ic_attraction"
-        app:showAsAction="ifRoom"/>
-
-    <item
-        android:id="@+id/action_email"
+        android:id="@+id/action_share"
         android:icon="@mipmap/ic_share"
         android:title="tring/action_email"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item
-        android:id="@+id/action_email1"
+        android:id="@+id/action_like"
         android:icon="@mipmap/ic_like_grey"
         android:title="tring/action_email"
-        app:showAsAction="never"
-       />
+        app:showAsAction="always" />
 </menu>

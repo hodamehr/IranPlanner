@@ -29,10 +29,8 @@ public class MyFirebaseInstanceIDService  extends FirebaseInstanceIdService {
         // Saving reg id to shared preferences
         String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        storeRegIdInPref(refreshedToken, android_id);
 
-        // sending reg id to your server
-        sendRegistrationToServer(refreshedToken);
+        storeRegIdInPref(refreshedToken, android_id);
 
         // Notify UI that registration has completed, so the progress indicator can be hidden.
         Intent registrationComplete = new Intent(Config.REGISTRATION_COMPLETE);
@@ -40,23 +38,11 @@ public class MyFirebaseInstanceIDService  extends FirebaseInstanceIdService {
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
     }
 
-    private void sendRegistrationToServer(final String token) {
-         String android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-//        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
-//
-//            TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-//            telephonyManager.getDeviceId();
-//            Log.e(TAG, "sendRegistrationToServer: " + token +"DeviceId"+telephonyManager.getDeviceId());
-        // sending gcm token to server
-
-    }
-
     private void storeRegIdInPref(String token,String androidId) {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString("regId", token);
         editor.putString("andId",androidId);
-        editor.commit();
+        editor.apply();
     }
 }

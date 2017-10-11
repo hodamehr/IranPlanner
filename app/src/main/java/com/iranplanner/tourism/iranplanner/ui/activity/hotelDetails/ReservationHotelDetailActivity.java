@@ -8,9 +8,11 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -79,7 +81,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by h.vahidimehr on 28/02/2017.
  */
 
-public class ReservationHotelDetailActivity extends ActionBarActivity implements OnMapReadyCallback, View.OnClickListener, AttractionListMorePresenter.View {
+public class ReservationHotelDetailActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, AttractionListMorePresenter.View {
 
     private GoogleMap mMap;
     //    ResultItineraryAttraction attraction;
@@ -102,11 +104,8 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
     Date startOfTravel;
     int durationTravel;
     Button roomReservationBtn;
-    Toolbar toolbar;
     private String todayDate;
     private ProgressDialog progressDialog;
-    //    List<ResultWidget> resultWidget;
-//    TabLayout tabLayout;
 
     @Inject
     AttractionListMorePresenter attractionListMorePresenter;
@@ -117,6 +116,9 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
     }
 
     private void findView() {
+
+        Log.e("this tag", ReservationHotelDetailActivity.class.getSimpleName());
+
 //        setContentView(R.layout.activity_reservation_hotel_detail);
         setContentView(R.layout.fragment_reservation);
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -226,7 +228,6 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
         contentFullDescription.setLongClickable(false);
         contentFullDescription.setHapticFeedbackEnabled(false);
 
-
         String pish = "<html><head><style type=\"text/css\">@font-face {color:#737373;font-family: MyFont;src: url(\"file:///android_asset/fonts/IRANSansMobile.ttf\")}body {font-family: MyFont;font-size: small;text-align: justify;direction:rtl}</style></head><body>";
         String pas = "</body></html>";
         String myHtmlString = pish + myData + pas;
@@ -269,6 +270,20 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
         return true;
     }
 
+    //todo hoda anjam bede injaro haji
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_share:
+
+                break;
+            case R.id.action_like:
+
+                break;
+        }
+        return true;
+    }
+
     private void getExtras() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -308,34 +323,23 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
 //        txtDuration.setText(Utils.persianNumbers(String.valueOf(durationTravel)) + " شب");
         roomReservationBtn.setOnClickListener(this);
 
-        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        toolbar.setTitle(resultLodgingHotelDetail.getLodgingName());
-//        getSupportActionBar().setLogo(R.drawable.ic_google);
-//getSupportActionBar().getSubtitle();
-//        Activity content_show_room = (Activity) this;
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().getSubtitle();
-        getSupportActionBar().setCustomView(R.layout.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
-        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.expandedappbar);
+        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.collapsedappbar);
+
+        collapsingToolbarLayout.setTitle(resultLodgingHotelDetail.getLodgingName());
+
         holderDate.setOnClickListener(this);
         TypeDurationHolder.setOnClickListener(this);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // back button pressed
-                Log.e("dddddd", "ddddddddd");
-            }
-        });
-//        if(resultWidget!=null){
-//            setInterestResponce(resultWidget);
-//        }
 
         setImageHolder();
-//        setWebViewContent(getShowMoreString(myData));
-
 
 //        interestingLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 //            @Override
@@ -400,6 +404,13 @@ public class ReservationHotelDetailActivity extends ActionBarActivity implements
 //        }
 //
 //    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        Log.e("taggg", "on support back pressed");
+        return false;
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
