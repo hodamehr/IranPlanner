@@ -50,6 +50,8 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     private boolean sentToSettings = false;
     private SharedPreferences permissionStatus;
 
+    private boolean isFirstTime = false ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

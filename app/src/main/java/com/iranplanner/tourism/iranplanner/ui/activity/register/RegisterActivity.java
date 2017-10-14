@@ -87,7 +87,7 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
     public void showRegisterMessage(ResultRegister resultRegister) {
 
         ResultUserRegister result = resultRegister.getResultUserRegister();
-        if (result.getStatus().equals("Successful")) {
+        if (result.getStatus().equals("Succesful")) {
             Toast.makeText(getApplicationContext(), "حساب کاربری با موفقیت انجام شد", Toast.LENGTH_LONG).show();
             Util.saveDataINShareprefrence(getApplicationContext(), etMail.getText().toString(), "کاربر", "", result.getUserUid().toString());
 
@@ -102,6 +102,8 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
         else if (result.getStatus().equals("Duplicate email"))
             tvLoginCommand.setText("حساب کاربری با این ایمیل قبلاایجاد شده است ");
         else if (result.getStatus().equals("Invalid info"))
+            tvLoginCommand.setText("اشکال در مقادیر ورودی");
+        else
             tvLoginCommand.setText("اشکال در مقادیر ورودی");
 
         progressDialog.dismiss();
@@ -216,5 +218,4 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
         }
         return valid;
     }
-
 }
