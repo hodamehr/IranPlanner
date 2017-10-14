@@ -36,7 +36,8 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="start"
                 android:lines="1"
-                android:text="عنوان" />
+                android:text="عنوان"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/rowEventCityTv"

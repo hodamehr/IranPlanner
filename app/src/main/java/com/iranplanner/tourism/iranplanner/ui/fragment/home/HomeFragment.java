@@ -53,6 +53,7 @@ import com.iranplanner.tourism.iranplanner.ui.activity.hotelDetails.ReservationH
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationContract;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationPresenter;
 import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.moreItemItinerary.MoreItemItineraryActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.reservationHotelList.ReservationHotelListPresenter;
 import com.iranplanner.tourism.iranplanner.ui.fragment.FirstItem;
@@ -104,6 +105,8 @@ import entity.ShowAttractionMoreList;
 import me.relex.circleindicator.CircleIndicator;
 import tools.Constants;
 import tools.Util;
+
+import static android.R.attr.data;
 
 
 /**
@@ -389,10 +392,11 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void getAttractionMore(String type) {
-        DaggerHomeComponent.builder().netComponent(((App) getContext().getApplicationContext()).getNetComponent())
-                .homeModule(new HomeModule(this, this, this, this, this))
-                .build().inject(this);
-        homePresenter.getAttractionMore("search", "fa", selectId, "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), type);
+//        DaggerHomeComponent.builder().netComponent(((App) getContext().getApplicationContext()).getNetComponent())
+//                .homeModule(new HomeModule(this, this, this, this, this))
+//                .build().inject(this);
+//        String action, String lang, String value, String placetype, String offset, String cid, String androidId, String attractionType
+        homePresenter.getAttractionMore("search", "fa", selectId, SelectedType, "0",Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), type);
     }
 
     String offset = "0";
@@ -485,7 +489,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             case R.id.tvEventShowAll:
                 //        https://api.parsdid.com/iranplanner/app/api-event.php?action=list&lang=fa&id=342&type=city
 
-                homePresenter.getEventMore("list", "fa", "342", "city", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+                homePresenter.getEventMore("list", "fa", selectId, SelectedType , Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
 
                 break;
 
@@ -797,7 +801,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         }));
     }
 
-    private void setItinerary(List<HomeItinerary> homeItineraries) {
+    private void setItinerary(final List<HomeItinerary> homeItineraries) {
         HomeItineraryAdapter homeItineraryAdapter = new HomeItineraryAdapter(homeItineraries, getContext());
         LinearLayoutManager horizontalLayoutManagaer
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);

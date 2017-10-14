@@ -92,10 +92,12 @@ public class ShowAttractionListMoreActivity extends StandardActivity implements 
 
         getExtra();
         attractionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        if (attractionsList != null && attractionsList.size() > 0) {
+            adapter = new AttractionsMoreListAdapter(this, this, attractionsList, getApplicationContext(), R.layout.content_attraction_list);
+            attractionRecyclerView.addItemDecoration(new AttractionListMoreItemDecoration(this));
+            attractionRecyclerView.setAdapter(adapter);
 
-        adapter = new AttractionsMoreListAdapter(this, this, attractionsList, getApplicationContext(), R.layout.content_attraction_list);
-        attractionRecyclerView.addItemDecoration(new AttractionListMoreItemDecoration(this));
-        attractionRecyclerView.setAdapter(adapter);
+        }
 
         attractionRecyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override

@@ -67,7 +67,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Hold
             try {
                 Glide.with(context).load(current.getEventInfo().getImgUrl()).into(imageView);
 //                tvTitle.setText(current.getEventInfo().getEventTitle());
-                tvDate.setText(current.getEventInfo().getEventDurationTitle());
+                tvDate.setText(current.getEventInfo().getEventTitle());
                 tvCity.setText(current.getEventInfo().getEventCityTitle());
 
             } catch (Exception e) {

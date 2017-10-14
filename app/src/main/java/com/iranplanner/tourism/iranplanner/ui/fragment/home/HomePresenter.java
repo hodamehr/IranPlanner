@@ -81,10 +81,10 @@ public class HomePresenter extends HomeContract {
     }
 
     @Override
-    public void getAttractionMore(String action, String lang, String city, String offset,String cid, String andId,String type) {
+    public void getAttractionMore(String action, String lang, String value, String placetype, String offset, String cid, String androidId, String attractionType) {
         mView.showProgress();
         retrofit.create(HomeService.class)
-                .getAttractionMore(action, lang, city,offset, cid, andId,type).subscribeOn(Schedulers.io())
+                .getAttractionMore( action,  lang,  value,  placetype,  offset,  cid,  androidId,  attractionType).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Observer<ShowAttractionListMore>() {
@@ -148,11 +148,13 @@ public class HomePresenter extends HomeContract {
                 @Query("andId") String androidId);
 
         //        https://api.parsdid.com//iranplanner/app/api-attraction.php?action=search&lang=fa&city=617
+//        action=placetype&id=
         @GET("api-attraction.php")
         Observable<ShowAttractionListMore> getAttractionMore(
                 @Query("action") String action,
                 @Query("lang") String lang,
-                @Query("city") String value,
+                @Query("id") String value,
+                @Query("placetype") String placetype,
                 @Query("offset") String offset,
                 @Query("cid") String cid,
                 @Query("andId") String androidId,
