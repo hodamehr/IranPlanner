@@ -19,6 +19,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.crash.FirebaseCrash;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.GsonBuilder;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMorePresenter;
@@ -42,6 +45,14 @@ import entity.ResultLodgingList;
 import entity.ShowAtractionDetailMore;
 import entity.ShowAttractionListMore;
 import entity.ShowAttractionMoreList;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+import server.Config;
 import tools.CustomMessage;
 import tools.Util;
 
@@ -224,6 +235,33 @@ public class SplashActivity extends StandardActivity implements MainSearchPresen
     public void showItineraries(ResultItineraryList resultItineraryList, String typeOfSearch) {
 
     }
+
+    private void updateCId(){
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()))
+                .baseUrl(Config.BASEURL)
+                .build();
+
+        // todo get the fucking user id here dude
+
+        String firebaseToken = FirebaseInstanceId.getInstance().getToken();
+//        String userId =
+
+//        ApiInterface apiService = retrofit.create(ApiInterface.class);
+//        apiService.updateCid(firebaseToken ,)
+
+
+    }
+
+    private interface ApiInterface {
+        @POST()
+        Call<ResponseBody> updateCid(@Body String cId, @Body String uId);
+    }
+
 
     @Override
     public void showError(String message) {

@@ -12,6 +12,8 @@ import com.iranplanner.tourism.iranplanner.ui.activity.mainActivity.MainActivity
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 /**
  * Created by Hoda on 14/03/2017.
  */
@@ -35,7 +37,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             handleNotification(remoteMessage.getNotification().getBody());
         }
 
-        // Check if message contains a com.iranplanner.tourism.iranplanner.di.data payload.
+        // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
 
@@ -63,6 +65,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
+    // todo data message need to change according to data type we gonna use
     private void handleDataMessage(JSONObject json) {
         Log.e(TAG, "push json: " + json.toString());
 
@@ -73,7 +76,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String message = data.getString("message");
             boolean isBackground = data.getBoolean("is_background");
             String imageUrl = data.getString("image");
-            String timestamp = data.getString("timestamp");
+            String timestamp = String.valueOf(new Date(System.currentTimeMillis()));
             JSONObject payload = data.getJSONObject("payload");
 
             Log.e(TAG, "title: " + title);
@@ -101,7 +104,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 if (TextUtils.isEmpty(imageUrl)) {
                     showNotificationMessage(getApplicationContext(), title, message, timestamp, resultIntent);
                 } else {
-                // image is present, show notification with image
+                    // image is present, show notification with image
                     showNotificationMessageWithBigImage(getApplicationContext(), title, message, timestamp, resultIntent, imageUrl);
                 }
             }

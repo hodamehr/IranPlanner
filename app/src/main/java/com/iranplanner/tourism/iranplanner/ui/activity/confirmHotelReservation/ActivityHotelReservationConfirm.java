@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -141,6 +143,17 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
                 }
             }
         });
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -287,6 +300,7 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
         pager.setCurrentItem(pager.getCurrentItem(), true);
         ((TextView) viewAdapter.findViewById(R.id.txtOkRoom)).setText("ویرایش");
         ((TextView) viewAdapter.findViewById(R.id.txtOkRoom)).setBackgroundResource(R.drawable.button_corner_grey_stroke);
+        ((TextView) viewAdapter.findViewById(R.id.txtOkRoom)).setTextColor(ContextCompat.getColor(this,R.color.white_));
         if (0 == pager.getCurrentItem()) {
             viewEnds.setVisibility(View.VISIBLE);
         }
@@ -306,7 +320,7 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
         if (reservationRequestDeleteRoom.getStatus().getStatus() == 200) {
             ResultRooms.remove(0);
             confirmReservationViewPagerAdapter.notifyDataSetChanged();
-            Toast.makeText(getApplicationContext(), "اتاق مورد نظر یافت نشد", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "اتاق مورد نظر حذف شد !", Toast.LENGTH_LONG).show();
             Log.e("delete", "room");
         }
     }

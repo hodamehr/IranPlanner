@@ -13,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.iranplanner.tourism.iranplanner.R;
 
 import java.util.Date;
@@ -73,6 +75,8 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
     TextView roomDelete;
     @InjectView(R.id.selectHoldetHalf)
     LinearLayout selectHoldetHalf;
+    @InjectView(R.id.imgHotelList)
+    ImageView imageView;
 
 
     @InjectView(R.id.edtHeadNameReservation)
@@ -145,7 +149,7 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
         NationalHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogString(position, 1, txtNationalityValue, new String[]{"ایرانی", "خارجی"}, " ملیت ");
+                showDialogString(position, 1, txtNationalityValue, new String[]{"خارجی" , "ایرانی"}, " ملیت ");
             }
         });
 
@@ -334,7 +338,10 @@ public class ConfirmReservationViewPagerAdapter extends PagerAdapter {
         checkHalfOut.setChecked((resultRooms.get(position).getHalfOut() != null) ? resultRooms.get(position).getHalfOut() : false);
         checkHalfIn.setChecked((resultRooms.get(position).getHalfIn() != null) ? resultRooms.get(position).getHalfIn() : false);
         txtaddPersonValue.setText((resultRooms.get(position).getSelectedAddNumbers() != null) ? Util.persianNumbers(resultRooms.get(position).getSelectedAddNumbers()) + " نفراضافه " : "نفراضافه");
-        txtNationalityValue.setText((resultRooms.get(position).getSelectedForeign() != null && resultRooms.get(position).getSelectedForeign().equals("0")) ? "ایرانی" : "خارجی");
+        txtNationalityValue.setText((resultRooms.get(position).getSelectedForeign() != null && resultRooms.get(position).getSelectedForeign().equals("0")) ?  "خارجی" : "ایرانی");
+
+        //todo talk to farid about image url
+//        Glide.with(context).load(resultRooms.get(position).get)
     }
 
 

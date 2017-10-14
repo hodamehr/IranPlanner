@@ -19,19 +19,25 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.di.model.ForceUpdateChecker;
+import com.iranplanner.tourism.iranplanner.ui.activity.SplashActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
 import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchFragment;
 
 import entity.GetHomeResult;
+import server.NotificationUtils;
 import tools.Util;
 
 public class MainActivity extends StandardActivity implements ForceUpdateChecker.OnUpdateNeededListener {
     GetHomeResult homeResult;
+
+    private static final String TOPIC_MAIN = "topicMain";
 
     boolean doubleBackToExitPressedOnce = false;
     private ViewPager viewPager;
@@ -53,6 +59,13 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         checkPermission();
         ((App) getApplication()).getLastLocation();
 
+        Log.e("TOKEN", FirebaseInstanceId.getInstance().getToken() + ".");
+
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_MAIN);
+
+        NotificationUtils utils = new NotificationUtils(this);
+        utils.showNotificationMessage("title", "message", String.valueOf(System.currentTimeMillis()), new Intent(this, SplashActivity.class));
+
     }
 
     private void checkPermission() {
@@ -60,8 +73,8 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 //Show Information about why you need the permission
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Need Storage Permission");
-                builder.setMessage("This app needs storage permission.");
+                builder.setTitle("Need Location Permission");
+                builder.setMessage("This app needs Location permission.");
                 builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
