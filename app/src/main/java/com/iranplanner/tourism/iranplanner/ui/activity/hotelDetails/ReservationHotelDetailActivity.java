@@ -274,12 +274,12 @@ public class ReservationHotelDetailActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_share:
-
-                break;
-            case R.id.action_like:
-
-                break;
+//            case R.id.action_share:
+//
+//                break;
+//            case R.id.action_like:
+//
+//                break;
         }
         return true;
     }

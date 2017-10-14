@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_share"
-        android:icon="@mipmap/ic_share"
-        android:title="tring/action_email"
-        app:showAsAction="always"/>
+    <!--<item-->
+        <!--android:id="@+id/action_share"-->
+        <!--android:icon="@mipmap/ic_share"-->
+        <!--android:title="tring/action_email"-->
+        <!--app:showAsAction="always"/>-->
 
-    <item
-        android:id="@+id/action_like"
-        android:icon="@mipmap/ic_like_grey"
-        android:title="tring/action_email"
-        app:showAsAction="always" />
+    <!--<item-->
+        <!--android:id="@+id/action_like"-->
+        <!--android:icon="@mipmap/ic_like_grey"-->
+        <!--android:title="tring/action_email"-->
+        <!--app:showAsAction="always" />-->
 </menu>

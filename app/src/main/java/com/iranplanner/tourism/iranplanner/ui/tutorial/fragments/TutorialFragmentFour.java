@@ -22,7 +22,7 @@ import tools.Util;
  * Created by MrCode on 9/25/17.
  */
 
-public class TutorialFragmentFour extends Fragment {
+public class TutorialFragmentFour extends Fragment implements View.OnClickListener {
 
     private Car car;
     private ImageView booth, curtain, giftTop, giftBelow, giftFeshfeshe;
@@ -49,6 +49,7 @@ public class TutorialFragmentFour extends Fragment {
         tvDesc = (TextView) view.findViewById(R.id.tutDescFourTv);
 
         btnOk = (Button) view.findViewById(R.id.okBtn);
+        btnOk.setOnClickListener(this);
         hideOkBtn();
 
         booth = (ImageView) view.findViewById(R.id.tutBoothIv);
@@ -140,5 +141,10 @@ public class TutorialFragmentFour extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser)
             init();
+    }
+
+    @Override
+    public void onClick(View view) {
+        getActivity().onBackPressed();
     }
 }

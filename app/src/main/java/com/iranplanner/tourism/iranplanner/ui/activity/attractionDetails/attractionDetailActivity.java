@@ -353,22 +353,22 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_attraction_detail, menu);
         this.menu = menu;
-        menu.findItem(R.id.menuAttractionLike).setVisible(true);
+//        menu.findItem(R.id.menuAttractionLike).setVisible(true);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menuAttractionLike:
-                Toast.makeText(this, "Liked!", Toast.LENGTH_SHORT).show();
-                OnClickedIntrestedWidget("like", Constants.intrestDefault, null);
-//                menu.findItem(R.id.menuAttractionLike).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
-                item.setIcon(R.mipmap.ic_like_off);
-                return true;
-            case R.id.menuAttractionShare:
-                Toast.makeText(this, "Shared!", Toast.LENGTH_SHORT).show();
-                return true;
+//            case R.id.menuAttractionLike:
+//                Toast.makeText(this, "Liked!", Toast.LENGTH_SHORT).show();
+//                OnClickedIntrestedWidget("like", Constants.intrestDefault, null);
+////                menu.findItem(R.id.menuAttractionLike).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+//                item.setIcon(R.mipmap.ic_like_off);
+//                return true;
+//            case R.id.menuAttractionShare:
+//                Toast.makeText(this, "Shared!", Toast.LENGTH_SHORT).show();
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -752,7 +752,7 @@ public class attractionDetailActivity extends AppCompatActivity implements OnMap
 //        //// TODO: 14/02/2017
 ////        rotate.setRepeatCount(0);
 //        checkWhichImageIntrested(rotateImage);
-        menu.findItem(R.id.menuAttractionLike).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+//        menu.findItem(R.id.menuAttractionLike).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
 
     }
 

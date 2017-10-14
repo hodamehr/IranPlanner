@@ -29,8 +29,10 @@ import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
 import com.iranplanner.tourism.iranplanner.ui.fragment.itineraryList.ItineraryListFragment;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchFragment;
+import com.iranplanner.tourism.iranplanner.ui.tutorial.TutorialActivity;
 
 import entity.GetHomeResult;
+import server.Config;
 import server.NotificationUtils;
 import tools.Util;
 
@@ -50,8 +52,6 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     private boolean sentToSettings = false;
     private SharedPreferences permissionStatus;
 
-    private boolean isFirstTime = false ;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +65,10 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
 
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_MAIN);
 
-        NotificationUtils utils = new NotificationUtils(this);
-        utils.showNotificationMessage("title", "message", String.valueOf(System.currentTimeMillis()), new Intent(this, SplashActivity.class));
+//        NotificationUtils utils = new NotificationUtils(this);
+//        utils.showNotificationMessage("title", "message", String.valueOf(System.currentTimeMillis()), new Intent(this, SplashActivity.class));
+
+        initTutorial();
 
     }
 
@@ -287,6 +289,22 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
                 proceedAfterPermission();
             }
         }
+    }
+
+    private void initTutorial() {
+
+        String BOOL_FIRST_TIME = "first_time";
+
+        SharedPreferences preferences = getSharedPreferences(Config.SHARED_PREF, 0);
+
+        if (preferences.getBoolean(BOOL_FIRST_TIME, true)) {
+            startActivity(new Intent(this, TutorialActivity.class));
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean(BOOL_FIRST_TIME, false);
+            editor.apply();
+        }
+
+        Log.e(TAG, String.valueOf(preferences.getBoolean(BOOL_FIRST_TIME, true)));
     }
 
 }
