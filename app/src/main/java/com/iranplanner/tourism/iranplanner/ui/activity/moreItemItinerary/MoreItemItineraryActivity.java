@@ -392,7 +392,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_itinerary_more, menu);
         this.menu=menu;
-        menu.findItem(R.id.menuItineraryFav).setVisible(true);
+//        menu.findItem(R.id.menuItineraryFav).setVisible(true);
         return true;
     }
     @Override

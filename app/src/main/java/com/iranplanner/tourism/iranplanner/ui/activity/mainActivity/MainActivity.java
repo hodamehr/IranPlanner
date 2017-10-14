@@ -39,7 +39,7 @@ import tools.Util;
 public class MainActivity extends StandardActivity implements ForceUpdateChecker.OnUpdateNeededListener {
     GetHomeResult homeResult;
 
-    private static final String TOPIC_MAIN = "topicMain";
+    private static final String TOPIC_MAIN = "main";
 
     boolean doubleBackToExitPressedOnce = false;
     private ViewPager viewPager;
@@ -64,9 +64,6 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         Log.e("TOKEN", FirebaseInstanceId.getInstance().getToken() + ".");
 
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_MAIN);
-
-//        NotificationUtils utils = new NotificationUtils(this);
-//        utils.showNotificationMessage("title", "message", String.valueOf(System.currentTimeMillis()), new Intent(this, SplashActivity.class));
 
         initTutorial();
 

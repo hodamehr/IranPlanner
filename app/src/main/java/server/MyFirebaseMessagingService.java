@@ -34,7 +34,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
-            handleNotification(remoteMessage.getNotification().getBody());
+            handleNotification(remoteMessage.getNotification());
         }
 
         // Check if message contains a data payload.
@@ -50,15 +50,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    private void handleNotification(String message) {
+    private void handleNotification(RemoteMessage.Notification message) {
         if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
             // app is in foreground, broadcast the push message
             Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
-            pushNotification.putExtra("message", message);
+            pushNotification.putExtra("message", message.getBody());
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
             // play notification sound
             NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+            notificationUtils.showNotificationMessage(
+                    message.getTitle(),
+                    message.getBody(),
+                    String.valueOf(System.currentTimeMillis()),
+                    pushNotification
+            );
+
             notificationUtils.playNotificationSound();
         }else{
             // If the app is in background, firebase itself handles the notification

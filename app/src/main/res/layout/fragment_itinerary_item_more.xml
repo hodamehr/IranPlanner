@@ -13,6 +13,7 @@
             android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:elevation="8dp"
             android:fitsSystemWindows="true"
             app:collapsedTitleGravity="start"
             app:contentScrim="?attr/colorPrimary"
@@ -96,6 +97,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:elevation="8dp"
                 android:textColorPrimary="@color/white_"
                 app:layout_collapseMode="pin"
                 app:theme="@style/AppToolbar" />
