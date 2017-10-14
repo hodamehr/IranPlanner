@@ -485,7 +485,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             case R.id.tvEventShowAll:
                 //        https://api.parsdid.com/iranplanner/app/api-event.php?action=list&lang=fa&id=342&type=city
 
-                homePresenter.getEventMore("list", "fa", "342", "city", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+                homePresenter.getEventMore("list", "fa", selectId, SelectedType , Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
 
                 break;
 
