@@ -2,28 +2,34 @@ package com.iranplanner.tourism.iranplanner.ui.activity.forgetPassword;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.os.Handler;
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.iranplanner.tourism.iranplanner.R;
+import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 
-public class ForgetPasswordActivity extends StandardActivity implements View.OnClickListener {
+import javax.inject.Inject;
+
+import entity.ResetPassword;
+import entity.SendEmailResetPassword;
+import tools.Util;
+
+public class ForgetPasswordActivity extends StandardActivity implements View.OnClickListener, ForgetPasswordContract.View {
 
     private String email;
     private TextView tvError;
     private TextInputEditText etMail;
     private ProgressDialog dialog;
+    @Inject
+    ForgetPasswordPresenter forgetPasswordPresenter;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +68,15 @@ public class ForgetPasswordActivity extends StandardActivity implements View.OnC
     }
 
     private void forgetPassword() {
-        if (validate())
-            showStatus();
-        else
+        if (validate()) {
+            DaggerForgetComponent.builder().netComponent(((App) getApplicationContext().getApplicationContext()).getNetComponent())
+                    .forgetPasswordModule(new ForgetPasswordModule(this))
+                    .build().inject(this);
+            String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
+            String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
+            forgetPasswordPresenter.getResetPassword(new SendEmailResetPassword(email), cid, andId);
+
+        } else
             tvError.setText("فرمت ایمیل اشتباه است");
     }
 
@@ -91,5 +103,30 @@ public class ForgetPasswordActivity extends StandardActivity implements View.OnC
     public void onClick(View view) {
         tvError.setText("");
         forgetPassword();
+    }
+
+    @Override
+    public void showForgetPassword(ResetPassword resetPassword) {
+        showStatus();
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public void showComplete() {
+
+    }
+
+    @Override
+    public void showProgress() {
+        progressDialog=Util.showProgressDialog(getApplicationContext(),"لطفا منتظر بمانید",this);
+    }
+
+    @Override
+    public void dismissProgress() {
+Util.dismissProgress(progressDialog);
     }
 }
