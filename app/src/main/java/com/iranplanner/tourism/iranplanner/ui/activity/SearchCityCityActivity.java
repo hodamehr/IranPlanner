@@ -1,6 +1,7 @@
 package com.iranplanner.tourism.iranplanner.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -135,11 +136,9 @@ public class SearchCityCityActivity extends StandardActivity implements Callback
             Log.e("get result from server", response.body().toString());
             ResultItineraryList jsonResponse = response.body();
             List<ResultItinerary> data = jsonResponse.getResultItinerary();
-            ItineraryListFragment itineraryListFragment = new ItineraryListFragment();
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("resuliItineraryList", (Serializable) data);
-            itineraryListFragment.setArguments(bundle);
-            loadFragment(this, itineraryListFragment, R.id.containerCityCity, true, 0, 0);
+            Intent intent = new Intent(this,ItineraryListFragment.class);
+            intent.putExtra("resuliItineraryList", (Serializable) data);
+            startActivity(intent);
             checkfragment = true;
         }
     }

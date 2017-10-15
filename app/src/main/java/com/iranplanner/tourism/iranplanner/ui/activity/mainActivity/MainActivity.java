@@ -172,12 +172,6 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
     //Wrote this legend to Handle all those weird back presses
     @Override
     public void onBackPressed() {
-        ItineraryListFragment fragment = (ItineraryListFragment) getSupportFragmentManager().findFragmentByTag(MainSearchFragment.TAG_ITINERARY);
-        if (fragment != null)
-            if (fragment.isVisible()) {
-                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                return;
-            }
 
         if (viewPager.getCurrentItem() == 2) {
 
@@ -205,19 +199,15 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("نسخه جدید برنامه قابل دانلود است")
                 .setMessage("لطفا برنامه را به روز رسانی کنید ")
+                .setCancelable(false)
                 .setPositiveButton("به روز رسانی",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 redirectStore(updateUrl);
                             }
-                        }).setNegativeButton("نه؛متشکرم",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        }).create();
+                        })
+                .create();
         dialog.show();
     }
 

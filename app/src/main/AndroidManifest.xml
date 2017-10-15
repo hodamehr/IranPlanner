@@ -87,6 +87,9 @@
             android:name=".ui.activity.register.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.fragment.itineraryList.ItineraryListFragment"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.activity.moreItemItinerary.MoreItemItineraryActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
