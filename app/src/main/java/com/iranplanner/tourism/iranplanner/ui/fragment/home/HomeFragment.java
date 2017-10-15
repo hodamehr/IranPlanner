@@ -807,6 +807,18 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerItinerary.setLayoutManager(horizontalLayoutManagaer);
         recyclerItinerary.setAdapter(homeItineraryAdapter);
+        recyclerItinerary.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, final int position) {
+//                String cityid = homeItineraries.get(position).getItineraryId();
+//                String name = Util.getUseRIdFromShareprefrence(getContext());
+//                Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
+//                intent.putExtra("itineraryData", (Serializable) homeItineraries.get(position));
+//                intent.putExtra("duration", homeItineraries.get(position).getItineraryDurationTitle());
+//                startActivity(intent);
+//                ("full", String.valueOf(homeLodgings.get(position).getLodgingId()), "20", "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+            }
+        }));
     }
 
     private void setViewPagerLodging(final List<HomeLodging> homeLodgings) {

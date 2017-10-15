@@ -122,7 +122,7 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
 
             SharedPreferences.Editor editor = permissionStatus.edit();
             editor.putBoolean(Manifest.permission.ACCESS_FINE_LOCATION, true);
-            editor.commit();
+            editor.apply();
 
         } else {
             //You already have the permission, just go ahead.

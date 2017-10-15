@@ -398,26 +398,26 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menuItineraryComment:
-                //here comes the comment code section
-                break;
-            case R.id.menuItineraryFav:
-                if (toggleFav()) {
-                    builder = DaggerItineraryComponent.builder()
-                            .netComponent(((App) getApplicationContext()).getNetComponent())
-                            .itineraryModule(new ItineraryModule(this));
-                    builder.build().inject(this);
-//                    itineraryPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "attraction", itineraryId, "like", Constants.likeImg, Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
-//                    itineraryPresenter.getInterest("widget", user, "1", "itinerary", itineraryId, gType, gValue,ss);
-
-                    OnClickedIntrestedWidget("like", Constants.likeImg, null);
-
-//                    item.setIcon(R.mipmap.ic_like_on);
-                } else {
-//                    item.setIcon(R.mipmap.ic_like_off);
-                    OnClickedIntrestedWidget("like", Constants.dislikeImg, null);
-                }
-                break;
+//            case R.id.menuItineraryComment:
+//                //here comes the comment code section
+//                break;
+//            case R.id.menuItineraryFav:
+//                if (toggleFav()) {
+//                    builder = DaggerItineraryComponent.builder()
+//                            .netComponent(((App) getApplicationContext()).getNetComponent())
+//                            .itineraryModule(new ItineraryModule(this));
+//                    builder.build().inject(this);
+////                    itineraryPresenter.getInterest("widget", Util.getUseRIdFromShareprefrence(getApplicationContext()), "1", "attraction", itineraryId, "like", Constants.likeImg, Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+////                    itineraryPresenter.getInterest("widget", user, "1", "itinerary", itineraryId, gType, gValue,ss);
+//
+//                    OnClickedIntrestedWidget("like", Constants.likeImg, null);
+//
+////                    item.setIcon(R.mipmap.ic_like_on);
+//                } else {
+////                    item.setIcon(R.mipmap.ic_like_off);
+//                    OnClickedIntrestedWidget("like", Constants.dislikeImg, null);
+//                }
+//                break;
         }
         return true;
     }
@@ -879,7 +879,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 
     @Override
     public void showError(String message) {
-        menu.findItem(R.id.menuItineraryFav).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
+//        menu.findItem(R.id.menuItineraryFav).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
 
         Log.e("error", " in get attraction list" + message);
         if (progressDialog != null) {
@@ -973,10 +973,10 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     public void setIntrestedWidget(InterestResult InterestResult) {
         if (toggleFav()) {
 
-            menu.findItem(R.id.menuItineraryFav).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
+//            menu.findItem(R.id.menuItineraryFav).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
         }
         else {
-            menu.findItem(R.id.menuItineraryFav).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
+//            menu.findItem(R.id.menuItineraryFav).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
 
         }
 

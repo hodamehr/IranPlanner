@@ -125,13 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/imageHolder">
-
                         <include layout="@layout/content_itinerary_more" />
-                    </RelativeLayout>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>

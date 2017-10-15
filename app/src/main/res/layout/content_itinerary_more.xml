@@ -375,7 +375,6 @@
             android:id="@+id/viewPagerMore"
             android:layout_width="match_parent"
             android:layout_height="240dp"
-            android:layout_below="@+id/mapHolder"
             android:gravity="center"
             android:paddingLeft="@dimen/margin_short"
             android:visibility="gone">
@@ -410,7 +409,6 @@
             android:id="@+id/supplierLayoutTravelType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ShowMoreInfoHolder"
             android:paddingLeft="@dimen/padding_standard"
             android:paddingRight="@dimen/padding_standard">
 
