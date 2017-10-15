@@ -33,7 +33,7 @@ public class ReservationRequestDetailActivity extends StandardActivity {
     private String hotelName, roomType, reqCode, startDueDate, reqStatus, reqDate, supervisorName, startPrice, off, finalPrice;
     private TextView tvHotelName, tvRoomTypeTv, tvReqCode, tvStartDueDate, tvReqStatus, tvReqDate, tvSupervisorName, tvStartPrice, tvOff, tvFinalPrice;
     private Button hotelPurchaseBtn;
-    String reqId;
+    private String reqId;
     List<ResultReservationReqFull> reservationReqFulls;
 
     @Override
@@ -63,11 +63,14 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         tvOff = (TextView) findViewById(R.id.hotelOffTv);
         tvFinalPrice = (TextView) findViewById(R.id.hotelFinalPriceTv);
         hotelPurchaseBtn = (Button) findViewById(R.id.hotelPurchaseBtn);
+
+        hotelPurchaseBtn.setVisibility(View.INVISIBLE);
+
         tvHotelName.setText(hotelName);
         tvRoomTypeTv.setText(roomType);
         tvReqCode.setText(reqCode);
-        tvStartDueDate.setText(startDueDate);
         tvReqStatus.setText(reqStatus);
+        tvStartDueDate.setText(startDueDate);
         tvSupervisorName.setText(supervisorName);
         tvFinalPrice.setText(finalPrice);
         tvOff.setText(off);
@@ -80,14 +83,18 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         reservationReqFulls
                 = (List<ResultReservationReqFull>) intent.getSerializableExtra(ReservationRequestList.INTENT_KEY_RESULT_RESERVATION);
 
+        reqStatus = "وضعیت درخواست : " + intent.getExtras().getString("status");
+
+        if (intent.getExtras().getString("status").equals("پرداخت شده"))
+            hotelPurchaseBtn.setVisibility(View.VISIBLE);
+
         hotelName = reservationReqFulls.get(0).getRequest().getReqLodgingTitle();
         roomType = "نوع اتاق : " + reservationReqFulls.get(0).getRequest().getReqRoomTitle();
-        reqCode = "کد درخواست " + reservationReqFulls.get(0).getRequest().getReqId();
+        reqCode = "کد درخواست " + Util.persianNumbers(reservationReqFulls.get(0).getRequest().getReqId());
         startDueDate = "از " +
-                Utils.getSimpleDateMilli(Long.valueOf(reservationReqFulls.get(0).getRequest().getReqDateFrom()) * 1000) +
+                Util.persianNumbers(Utils.getSimpleDateMilli(Long.valueOf(reservationReqFulls.get(0).getRequest().getReqDateFrom()) * 1000)) +
                 " تا " +
-                Utils.getSimpleDateMilli(Long.valueOf(reservationReqFulls.get(0).getRequest().getReqDateTo()) * 1000);
-        reqStatus = "وضعیت درخواست : " + reservationReqFulls.get(0).getRequest().getReqStatus();
+                Util.persianNumbers(Utils.getSimpleDateMilli(Long.valueOf(reservationReqFulls.get(0).getRequest().getReqDateTo()) * 1000));
         reqId = reservationReqFulls.get(0).getRequest().getReqId();
         tvReqDate = (TextView) findViewById(R.id.hotelReqDateTv);
 
@@ -96,7 +103,7 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         Date date;
         try {
             date = (Date) dateFormat.parse(dateString);
-            reqDate = "تاریخ ثبت درخواست : " + Utils.getSimpleDate(date);
+            reqDate = "تاریخ ثبت درخواست : " + Util.persianNumbers(Utils.getSimpleDate(date));
             tvReqDate.setText(reqDate);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -105,9 +112,9 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         //+ Utils.get(new Date(reservationReqFulls.get(0).getRequest().getStatusTimestamp()));
         supervisorName = "نام سرپرست اتاق : " + reservationReqFulls.get(0).getRequest().getReqRoomNameFirst() + " " +
                 reservationReqFulls.get(0).getRequest().getReqRoomNameLast();
-        startPrice = reservationReqFulls.get(0).getRequest().getReqPriceSum() + " تومان";
-        off = reservationReqFulls.get(0).getRequest().getReqPriceHalfIn() + " تومان";
-        finalPrice = reservationReqFulls.get(0).getRequest().getReqPriceFinal() + " تومان";
+        startPrice = "قیمت اولیه :" + Util.getPriceInToman(Integer.parseInt(reservationReqFulls.get(0).getRequest().getReqPriceSum())) + " تومان";
+        off = "تخفیف شما :" + Util.getPriceInToman(Integer.parseInt(reservationReqFulls.get(0).getRequest().getReqPriceHalfIn())) + " تومان";
+        finalPrice = "قایل پرداخت :" + Util.getPriceInToman(Integer.parseInt(reservationReqFulls.get(0).getRequest().getReqPriceFinal())) + " تومان";
     }
 
     private void initToolbar() {

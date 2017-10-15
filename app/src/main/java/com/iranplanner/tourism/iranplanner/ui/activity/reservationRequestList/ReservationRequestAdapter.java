@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.ResultReservationReqList;
+import tools.Util;
 
 /**
  * Created by h.vahidimehr on 05/09/2017.
@@ -68,7 +69,7 @@ public class ReservationRequestAdapter extends RecyclerView.Adapter<ReservationR
             String roomType = "نوع اتاق : " + current.getRequest().getReqRoomTitle();
             String code = "کد درخواست : " + current.getRequest().getReqId();
 
-            tvCode.setText(code);
+            tvCode.setText(Util.persianNumbers(code));
             tvName.setText(current.getRequest().getReqRoomTitle());
             tvRoomType.setText(roomType);
 

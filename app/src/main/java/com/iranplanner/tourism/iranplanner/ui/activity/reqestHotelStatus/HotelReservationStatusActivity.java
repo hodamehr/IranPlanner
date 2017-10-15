@@ -43,6 +43,7 @@ public class HotelReservationStatusActivity extends StandardActivity
         implements HotelReservationStatusContract.View, View.OnClickListener {
 
     private TextView tvCountPending, tvCountExamine, tvCountPaid, tvCountReject;
+    private int which;
 
     @Inject
     HotelReservationStatusListPresenter hotelReservationStatusListPresenter;
@@ -80,13 +81,13 @@ public class HotelReservationStatusActivity extends StandardActivity
     private void init() {
         tvCountPending = (TextView) findViewById(R.id.requestStatusPendingCountTv);
         tvCountExamine = (TextView) findViewById(R.id.requestStatusExamineCountTv);
-        tvCountPaid= (TextView) findViewById(R.id.requestStatusPaidCountTv);
-        tvCountReject= (TextView) findViewById(R.id.requestStatusRejectCountTv);
+        tvCountPaid = (TextView) findViewById(R.id.requestStatusPaidCountTv);
+        tvCountReject = (TextView) findViewById(R.id.requestStatusRejectCountTv);
 
-        tvCountPending.setText(resultReqCountList.get(1).getReservationReqStatus().getStatusCount());
-        tvCountExamine.setText(resultReqCountList.get(2).getReservationReqStatus().getStatusCount());
-        tvCountPaid.setText(resultReqCountList.get(3).getReservationReqStatus().getStatusCount());
-        tvCountReject.setText(resultReqCountList.get(4).getReservationReqStatus().getStatusCount());
+        tvCountPending.setText(Util.persianNumbers(resultReqCountList.get(1).getReservationReqStatus().getStatusCount()));
+        tvCountExamine.setText(Util.persianNumbers(resultReqCountList.get(2).getReservationReqStatus().getStatusCount()));
+        tvCountPaid.setText(Util.persianNumbers(resultReqCountList.get(3).getReservationReqStatus().getStatusCount()));
+        tvCountReject.setText(Util.persianNumbers(resultReqCountList.get(4).getReservationReqStatus().getStatusCount()));
 
         findViewById(R.id.requestStatusPendingBtn).setOnClickListener(this);
         findViewById(R.id.requestStatusExamineBtn).setOnClickListener(this);
@@ -97,18 +98,22 @@ public class HotelReservationStatusActivity extends StandardActivity
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.requestStatusPendingBtn:
                 hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), String.valueOf(1), "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                which = 1;
                 break;
             case R.id.requestStatusExamineBtn:
                 hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), String.valueOf(2), "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                which = 2;
                 break;
             case R.id.requestStatusPaidBtn:
                 hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), String.valueOf(3), "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                which = 3;
                 break;
             case R.id.requestStatusRejectBtn:
                 hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), String.valueOf(4), "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                which = 4;
                 break;
         }
     }
@@ -173,6 +178,20 @@ public class HotelReservationStatusActivity extends StandardActivity
         Intent intent = new Intent(HotelReservationStatusActivity.this, ReservationRequestActivity.class);
         intent.putExtra
                 (ReservationRequestList.INTENT_KEY_RESULT_RESERVATION, (Serializable) reservationRequestList.getResultReservationReqList());
+        switch (which) {
+            case 1:
+                intent.putExtra("status", "درانتظار پرداخت");
+                break;
+            case 2:
+                intent.putExtra("status", "در حال بررسی");
+                break;
+            case 3:
+                intent.putExtra("status", "پرداخت شده");
+                break;
+            case 4:
+                intent.putExtra("status", "رد شده");
+                break;
+        }
         startActivity(intent);
     }
 

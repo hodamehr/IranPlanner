@@ -245,6 +245,10 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     RelativeLayout overlapImageItineraryHolder;
     @InjectView(R.id.homeNavAttraction)
     ImageView homeNavAttraction;
+    @InjectView(R.id.txtCityrTitle)
+    TextView txtCityrTitle;
+    @InjectView(R.id.provinceHomeHolder)
+    RelativeLayout provinceHomeHolder;
 
     private String cityName = "city name";
 
@@ -383,6 +387,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         super.onCreate(savedInstanceState);
         final Bundle args = getArguments();
         homeResult = (GetHomeResult) args.getSerializable("HomeResult");
+        SelectedType="country";
+        selectId="311";
     }
 
     private void getAttractionResults() {
@@ -390,11 +396,14 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void getAttractionMore(String type) {
-//        DaggerHomeComponent.builder().netComponent(((App) getContext().getApplicationContext()).getNetComponent())
-//                .homeModule(new HomeModule(this, this, this, this, this))
-//                .build().inject(this);
-//        String action, String lang, String value, String placetype, String offset, String cid, String androidId, String attractionType
-        homePresenter.getAttractionMore("search", "fa", selectId, SelectedType, "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), type);
+        if ( SelectedType.equals("country") ) {
+            openCustomSearchDialog(Constants.homeAttraction);
+            frameLayout.setVisibility(View.INVISIBLE);
+
+        } else {
+            homePresenter.getAttractionMore("search", "fa", selectId, SelectedType, "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), type);
+
+        }
     }
 
     String offset = "0";
@@ -429,6 +438,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 getAttractionResults();
                 break;
             case R.id.TypeAttractionHolder:
+
             case R.id.homeNavPinAttraction:
                 getAttractionResults();
                 break;
@@ -656,8 +666,26 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     @Override
+    public void onResume() {
+        Log.e("backpress","true");
+        super.onResume();
+
+    }
+
+    @Override
     public void ShowHomeResult(GetHomeResult getHomeResult) {
+        if(SelectedType.equals("country")){
+            txtCityrTitle.setText("مقاصد محبوب");
+        }else if(SelectedType.equals("province")){
+            txtCityrTitle.setText("شهرهای استان");
+        }else if(SelectedType.equals("city")){
+            txtCityrTitle.setText("شهرهای مجاور");
+        }
         b = true;
+
+        selectId=getHomeResult.getResultHome().get(0).getHomeInfo().getId();
+        SelectedType=getHomeResult.getResultHome().get(0).getHomeInfo().getType();
+
         resultHomes = getHomeResult.getResultHome();
         toolbarTitleSetName(resultHomes.get(0).getHomeInfo().getTitle(), resultHomes.get(0).getHomeInfo().getId());
         setNamePicture(resultHomes.get(0).getHomeInfo(), resultHomes.get(0).getHomeImages());
@@ -681,10 +709,9 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
 
         if (resultHomes.get(0).getHomeCountryProvince().size() != 0) {
-//            provinceListHOlder.setVisibility(View.VISIBLE);
             setListProvince(resultHomes.get(0).getHomeCountryProvince());
         } else {
-//            provinceListHOlder.setVisibility(View.GONE);
+            provinceHomeHolder.setVisibility(View.GONE);
 
         }
         if (resultHomes.get(0).getHomeSouvenirs().size() != 0) {
@@ -790,6 +817,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     }
 
     private void setItinerary(final List<HomeItinerary> homeItineraries) {
+
         HomeItineraryAdapter homeItineraryAdapter = new HomeItineraryAdapter(homeItineraries, getContext());
         LinearLayoutManager horizontalLayoutManagaer
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -947,17 +975,25 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             textProvience.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    selectId = CityProvince.get(position).getId();
-                    SelectedType = CityProvince.get(position).getType();
+
 
 //                    toolbarTitleSetName(CityProvince.get(position).getTitle(),"");
                     if (type == Constants.homeSearch) {
+                        selectId = CityProvince.get(position).getId();
+                        SelectedType = CityProvince.get(position).getType();
                         getHomeResult(SelectedType, CityProvince.get(position).getId());
                         cityName = CityProvince.get(position).getTitle();
                         dismiss();
                     } else if (type == Constants.homeHotel) {
                         cityName = CityProvince.get(position).getTitle();
-                        getHotelResults(SelectedType, CityProvince.get(position).getId(), "");
+                        getHotelResults(CityProvince.get(position).getType(), CityProvince.get(position).getId(), "");
+                        dismiss();
+                    }
+                    else if (type == Constants.homeAttraction) {
+                        cityName = CityProvince.get(position).getTitle();
+                        homePresenter.getAttractionMore("search", "fa", CityProvince.get(position).getId(), CityProvince.get(position).getType(), "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), "");
+//                        homePresenter.getAttractionMore("search", "fa", selectId, SelectedType, "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), type);
+
                         dismiss();
                     }
                 }

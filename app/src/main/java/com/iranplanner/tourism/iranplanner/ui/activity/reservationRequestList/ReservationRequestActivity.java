@@ -29,6 +29,8 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
     @Inject
     ReservationRequestFullPresenter reservationRequestFullPresenter;
 
+    private String title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
 
     private List<ResultReservationReqList> getExtras() {
         Intent intent = getIntent();
+        title = intent.getExtras().getString("status");
         return (List<ResultReservationReqList>) intent.getSerializableExtra(ReservationRequestList.INTENT_KEY_RESULT_RESERVATION);
     }
 
@@ -54,7 +57,7 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("نتیجه");
+        getSupportActionBar().setTitle("درخواست های " + title);
     }
 
     private void init(final List<ResultReservationReqList> resultReservationReqList) {
@@ -85,6 +88,7 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
         Log.e(TAG, "showReservationRequestFull");
         Intent intent = new Intent(ReservationRequestActivity.this, ReservationRequestDetailActivity.class);
         intent.putExtra(ReservationRequestList.INTENT_KEY_RESULT_RESERVATION, (Serializable) reservationRequestFull.getResultReservationReqFull());
+        intent.putExtra("status", title);
         startActivity(intent);
     }
 

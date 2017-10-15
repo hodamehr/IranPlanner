@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true">
@@ -14,34 +15,22 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/main_blue" />
+            android:background="@color/main_blue"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         <LinearLayout
             android:id="@+id/imageTextAttractionHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:id="@+id/imageTextAttractionHolder1"
+            <ImageView
+                android:id="@+id/ImageAttraction"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginStart="@dimen/margin_standard">
-
-                <ProgressBar
-                    android:id="@+id/imageLoading"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerInParent="true"
-                    android:translationZ="1dp" />
-
-                <ImageView
-                    android:id="@+id/ImageAttraction"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="@dimen/margin_short"
-                    android:src="@drawable/emam2" />
-
-            </RelativeLayout>
+                android:layout_marginTop="@dimen/margin_short"
+                android:background="@color/background"
+                android:padding="@dimen/padding_standard"
+                android:src="@drawable/ic_iranplanner_logo" />
 
             <LinearLayout
                 android:id="@+id/relativeLayout4"
@@ -106,15 +95,18 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_margin="5dp"
-                    android:src="@mipmap/ic_calendar_grey" />
+                    android:src="@mipmap/ic_calendar_grey"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/hotelStartDueDate"
                     style="@style/SmallText"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_margin="@dimen/margin_short"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:minHeight="25dp"
                     android:paddingEnd="@dimen/padding_short"
                     android:paddingStart="@dimen/padding_standard"
                     android:text="تاریخ شروع و پایان" />
@@ -130,15 +122,18 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_margin="5dp"
-                    android:src="@mipmap/ic_pinblack" />
+                    android:src="@mipmap/ic_pinblack"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/hotelReqStatusTv"
                     style="@style/SmallText"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_margin="@dimen/margin_short"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:minHeight="25dp"
                     android:paddingEnd="@dimen/padding_short"
                     android:paddingStart="@dimen/padding_standard"
                     android:text="وضعیت درخواست" />
@@ -154,15 +149,18 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_margin="5dp"
-                    android:src="@mipmap/ic_pinblack" />
+                    android:src="@mipmap/ic_pinblack"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/hotelReqDateTv"
                     style="@style/SmallText"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_margin="@dimen/margin_short"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:minHeight="25dp"
                     android:paddingEnd="@dimen/padding_short"
                     android:paddingStart="@dimen/padding_standard"
                     android:text="تاریخ ثبت درخواست" />
@@ -172,21 +170,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_margin="5dp"
-                    android:src="@mipmap/ic_pinblack" />
+                    android:src="@mipmap/ic_pinblack"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/hotelSupervisorTv"
                     style="@style/SmallText"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_short"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:minHeight="25dp"
                     android:paddingEnd="@dimen/padding_short"
                     android:paddingStart="@dimen/padding_standard"
                     android:text="نام سرپرست اتاق" />
@@ -199,12 +201,13 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="@dimen/margin_standard"
-            android:background="@color/blue900" />
+            android:background="@color/greySemilight" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <TextView
                 style="@style/StandardTitle"
@@ -228,6 +231,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_standard"
+            android:gravity="center"
             android:paddingBottom="@dimen/padding_short"
             android:paddingTop="@dimen/padding_short"
             android:text="قیمت اولیه" />
@@ -238,9 +242,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_standard"
+            android:gravity="center"
             android:paddingBottom="@dimen/padding_short"
             android:paddingTop="@dimen/padding_short"
-            android:text="تخفیف شما" />
+            android:text="تخفیف شما"
+            android:textColor="@color/dark_red" />
 
         <TextView
             android:id="@+id/hotelFinalPriceTv"
@@ -248,6 +254,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_standard"
+            android:gravity="center"
             android:paddingBottom="@dimen/padding_short"
             android:paddingTop="@dimen/padding_short"
             android:text="قابل پرداخت"
@@ -256,12 +263,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/padding_standard">
 
             <Button
                 android:id="@+id/hotelPurchaseBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="40dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/selector_btn_green"
@@ -271,14 +279,14 @@
         </LinearLayout>
 
         <!--<WebView-->
-            <!--android:id="@+id/webView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="600dp"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentStart="true" />-->
+        <!--android:id="@+id/webView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="600dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentStart="true" />-->
 
     </LinearLayout>
 </ScrollView>
