@@ -87,7 +87,7 @@ public class RegisterActivity extends StandardActivity implements RegisterContra
     public void showRegisterMessage(ResultRegister resultRegister) {
 
         ResultUserRegister result = resultRegister.getResultUserRegister();
-        if (result.getStatus().equals("Succesful")) {
+        if (result.getStatus().equals("Succesfull")) {
             Toast.makeText(getApplicationContext(), "حساب کاربری با موفقیت انجام شد", Toast.LENGTH_LONG).show();
             Util.saveDataINShareprefrence(getApplicationContext(), etMail.getText().toString(), "کاربر", "", result.getUserUid().toString());
 
