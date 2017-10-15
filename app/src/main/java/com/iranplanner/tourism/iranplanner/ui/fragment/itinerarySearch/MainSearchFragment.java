@@ -582,22 +582,19 @@ public class MainSearchFragment extends StandardFragment implements MainSearchCo
     public void showItineraries(ResultItineraryList resultItineraryList, String typeOfSearch) {
         List<ResultItinerary> data = resultItineraryList.getResultItinerary();
         itineraryListFragment = new ItineraryListFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("resuliItineraryList", (Serializable) data);
-        bundle.putString("fromWhere", typeOfSearch);
-        bundle.putString("nextOffset", resultItineraryList.getStatistics().getOffsetNext().toString());
-        bundle.putString("provinceId", provinceId);
-        bundle.putString("attractionId", attractionEnd);
+        Intent intent = new Intent(getActivity(), ItineraryListFragment.class);
+        intent.putExtra("resuliItineraryList", (Serializable) data);
+        intent.putExtra("fromWhere", typeOfSearch);
+        intent.putExtra("nextOffset", resultItineraryList.getStatistics().getOffsetNext().toString());
+        intent.putExtra("provinceId", provinceId);
+        intent.putExtra("attractionId", attractionEnd);
         if (typeOfSearch.equals("fromCityToCity")) {
-            bundle.putString("endCity", cityEnd);
+            intent.putExtra("endCity", cityEnd);
         } else {
-            bundle.putString("endCity", "");
+            intent.putExtra("endCity", "");
         }
-        itineraryListFragment.setArguments(bundle);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.container, itineraryListFragment,TAG_ITINERARY);
-        ft.addToBackStack(null);
-        ft.commit();
+
+        startActivity(intent);
         cityEnd = "";
         checkfragment = true;
 //        progressDialog.dismiss();

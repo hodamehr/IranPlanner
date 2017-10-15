@@ -396,7 +396,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 //                .homeModule(new HomeModule(this, this, this, this, this))
 //                .build().inject(this);
 //        String action, String lang, String value, String placetype, String offset, String cid, String androidId, String attractionType
-        homePresenter.getAttractionMore("search", "fa", selectId, SelectedType, "0",Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), type);
+        homePresenter.getAttractionMore("search", "fa", selectId, SelectedType, "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()), type);
     }
 
     String offset = "0";
@@ -489,7 +489,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             case R.id.tvEventShowAll:
                 //        https://api.parsdid.com/iranplanner/app/api-event.php?action=list&lang=fa&id=342&type=city
 
-                homePresenter.getEventMore("list", "fa", selectId, SelectedType , Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+                homePresenter.getEventMore("list", "fa", selectId, SelectedType, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
 
                 break;
 
@@ -633,23 +633,20 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     public void showItineraries(ResultItineraryList resultItineraryList, String typeOfSearch) {
 
         List<ResultItinerary> data = resultItineraryList.getResultItinerary();
-        ItineraryListFragment itineraryListFragment = new ItineraryListFragment();
 
-        bundle.putSerializable("resuliItineraryList", (Serializable) data);
-        bundle.putString("fromWhere", typeOfSearch);
-        bundle.putString("nextOffset", resultItineraryList.getStatistics().getOffsetNext().toString());
-        bundle.putString("provinceId", "");
-        bundle.putString("attractionId", "");
+        Intent intent = new Intent(getActivity(), ItineraryListFragment.class);
+        intent.putExtra("resuliItineraryList", (Serializable) data);
+        intent.putExtra("fromWhere", typeOfSearch);
+        intent.putExtra("nextOffset", resultItineraryList.getStatistics().getOffsetNext().toString());
+        intent.putExtra("provinceId", "");
+        intent.putExtra("attractionId", "");
         if (typeOfSearch.equals("fromCityToCity")) {
-            bundle.putString("endCity", "");
+            intent.putExtra("endCity", "");
         } else {
-            bundle.putString("endCity", "");
+            intent.putExtra("endCity", "");
         }
-        itineraryListFragment.setArguments(bundle);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.containerHomeFragment, itineraryListFragment);
-        ft.addToBackStack(null);
-        ft.commit();
+
+        startActivity(intent);
     }
 
     @Override
@@ -795,7 +792,7 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
             @Override
             public void onItemClick(View view, final int position) {
                 selectId = homeCountryProvince.get(position).getProvinceId();
-                SelectedType ="province" ;
+                SelectedType = "province";
                 getHomeResult("province", homeCountryProvince.get(position).getProvinceId());
             }
         }));
@@ -807,6 +804,18 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerItinerary.setLayoutManager(horizontalLayoutManagaer);
         recyclerItinerary.setAdapter(homeItineraryAdapter);
+        recyclerItinerary.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, final int position) {
+//                String cityid = homeItineraries.get(position).getItineraryId();
+//                String name = Util.getUseRIdFromShareprefrence(getContext());
+//                Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
+//                intent.putExtra("itineraryData", (Serializable) homeItineraries.get(position));
+//                intent.putExtra("duration", homeItineraries.get(position).getItineraryDurationTitle());
+//                startActivity(intent);
+//                ("full", String.valueOf(homeLodgings.get(position).getLodgingId()), "20", "0", Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+            }
+        }));
     }
 
     private void setViewPagerLodging(final List<HomeLodging> homeLodgings) {

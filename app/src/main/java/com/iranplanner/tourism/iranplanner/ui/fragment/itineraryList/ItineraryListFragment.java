@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
 
 import com.iranplanner.tourism.iranplanner.di.model.App;
+import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.DaggerMainScreenComponent;
 import com.iranplanner.tourism.iranplanner.ui.fragment.itinerarySearch.MainSearchnModule;
 import com.iranplanner.tourism.iranplanner.ui.activity.moreItemItinerary.MoreItemItineraryActivity;
@@ -46,7 +48,7 @@ import tools.Util;
  * Created by h.vahidimehr on 10/01/2017.
  */
 
-public class ItineraryListFragment extends StandardFragment implements MainSearchContract.View, DataTransferInterface {
+public class ItineraryListFragment extends StandardActivity implements MainSearchContract.View, DataTransferInterface {
 
     @Inject
     MainSearchPresenter mainPresenter;
@@ -76,7 +78,7 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
     private TextView tvSearch;
 
     private void checkFromWhereGetBundle() {
-        Bundle bundle = getArguments();
+        Bundle bundle = getIntent().getExtras();
 
         data = (List<ResultItinerary>) bundle.getSerializable("resuliItineraryList");
         String fromWhere = bundle.getString("fromWhere");
@@ -110,30 +112,38 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
-        Log.e("DEBUG:::", "ItineraryListFragment");
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        setContentView(R.layout.fragment_itinerary_list);
 
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("لیست برنامه سفر");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        View view = inflater.inflate(R.layout.fragment_itinerary_list, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.card_recycler_view);
-        waitingLoading = (ProgressBar) view.findViewById(R.id.waitingLoading);
+        recyclerView = (RecyclerView) findViewById(R.id.card_recycler_view);
+        waitingLoading = (ProgressBar) findViewById(R.id.waitingLoading);
         checkFromWhereGetBundle();
         DaggerMainScreenComponent.builder()
-                .netComponent(((App) getActivity().getApplicationContext()).getNetComponent())
+                .netComponent(((App) getApplicationContext()).getNetComponent())
                 .mainSearchnModule(new MainSearchnModule(this))
                 .build().injectItineraryListFragment(this);
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ItineraryListAdapter(getActivity(), this, data, getContext(), R.layout.fragment_itinerary_item);
+        adapter = new ItineraryListAdapter(ItineraryListFragment.this, this, data, ItineraryListFragment.this, R.layout.fragment_itinerary_item);
         recyclerView.setAdapter(adapter);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new LinearLayoutManager(ItineraryListFragment.this);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(ItineraryListFragment.this, new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
                 ImageView imageView = (ImageView) view.findViewById(R.id.imgItineraryListMore);
@@ -143,7 +153,6 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
                 m.run();
             }
         }));
-
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -156,21 +165,21 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
 
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         if (fromCityToCity && loading) {
-                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity, Util.getTokenFromSharedPreferences(ItineraryListFragment.this), Util.getAndroidIdFromSharedPreferences(ItineraryListFragment.this));
                             waitingLoading.setVisibility(View.VISIBLE);
                             loading = false;
                         } else if (fromProvince) {
-                            mainPresenter.loadItineraryFromProvince("searchprovince", provinceId, nextOffset, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+                            mainPresenter.loadItineraryFromProvince("searchprovince", provinceId, nextOffset, Util.getTokenFromSharedPreferences(ItineraryListFragment.this), Util.getAndroidIdFromSharedPreferences(ItineraryListFragment.this));
                             waitingLoading.setVisibility(View.VISIBLE);
 
                         } else if (fromAttraction) {
 
-                            mainPresenter.loadItineraryFromAttraction("searchattractioncity", "fa", cityFrom, "10", nextOffset, attractionId, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+                            mainPresenter.loadItineraryFromAttraction("searchattractioncity", "fa", cityFrom, "10", nextOffset, attractionId, Util.getTokenFromSharedPreferences(ItineraryListFragment.this), Util.getAndroidIdFromSharedPreferences(ItineraryListFragment.this));
                             waitingLoading.setVisibility(View.VISIBLE);
                         } else if (fromCity) {
 //                            getItineraryCity(cityFrom, nextOffset, cityFrom);
 //                            waitingLoading.setVisibility(View.VISIBLE);
-                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
+                            mainPresenter.loadItineraryFromCity("list", "fa", data.get(0).getItineraryFromCityId().toString(), "20", nextOffset, endCity, Util.getTokenFromSharedPreferences(ItineraryListFragment.this), Util.getAndroidIdFromSharedPreferences(ItineraryListFragment.this));
                             waitingLoading.setVisibility(View.VISIBLE);
                             loading = false;
                         }
@@ -180,20 +189,7 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
             }
 
         });
-
-//        tvSearch = (TextView) view.findViewById(R.id.txtSearch);
-
-//        tvSearch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                onBackPressed();
-//                Log.e("heytag", "clicked");
-//            }
-//        });
-
-        return view;
     }
-
 
     @Override
     public void showItineraries(ResultItineraryList resultItineraryList, String typeOfSearch) {
@@ -213,7 +209,7 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
         loading = false;
 
         if (message.contains("Unable to resolve host ") || message.contains("Software caused connection abort")) {
-            Toast.makeText(getContext(), "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "عدم دسترسی به اینترنت", Toast.LENGTH_LONG).show();
         }
         if (waitingLoading.isEnabled()) {
             waitingLoading.setVisibility(View.INVISIBLE);
@@ -233,18 +229,17 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
 
     @Override
     public void showProgress() {
-        progressDialog = Util.showProgressDialog(getContext(), "لطفا منتظر بمانید", getActivity());
-    }
-
-    @Override
-    public boolean onBackPressed() {
-        onBackPressed();
-        return false;
+        progressDialog = Util.showProgressDialog(this, "لطفا منتظر بمانید", this);
     }
 
     @Override
     public void dismissProgress() {
         Util.dismissProgress(progressDialog);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_itinerary_list;
     }
 
     class MyThread extends Thread {
@@ -262,9 +257,9 @@ public class ItineraryListFragment extends StandardFragment implements MainSearc
         @Override
         public void run() {
             String cityid = data.get(position).getItineraryId();
-            String name = Util.getUseRIdFromShareprefrence(getContext());
+            String name = Util.getUseRIdFromShareprefrence(ItineraryListFragment.this);
 //            getIntrestResponce(img, position, duration, cityid, name);
-            Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
+            Intent intent = new Intent(ItineraryListFragment.this, MoreItemItineraryActivity.class);
             intent.putExtra("itineraryData", (Serializable) data.get(position));
             intent.putExtra("duration", duration);
             startActivity(intent);
