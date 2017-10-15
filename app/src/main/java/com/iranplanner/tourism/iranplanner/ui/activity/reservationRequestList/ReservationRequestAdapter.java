@@ -1,12 +1,15 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.reservationRequestList;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.iranplanner.tourism.iranplanner.R;
 
 import java.util.ArrayList;
@@ -48,25 +51,28 @@ public class ReservationRequestAdapter extends RecyclerView.Adapter<ReservationR
 
     public class Holder extends RecyclerView.ViewHolder {
 
-        private ResultReservationReqList current;
-        private TextView tvRequestCode, tvTimeDuration, tvTypeRoom, tvCityName, tvAttractionName;
+        private TextView tvCode, tvName, tvRoomType;
+        private ImageView imageView;
 
         public Holder(View itemView) {
             super(itemView);
-            tvRequestCode = (TextView) itemView.findViewById(R.id.txtRequestCode);
-            tvTimeDuration = (TextView) itemView.findViewById(R.id.textTimeDuration);
-            tvTypeRoom = (TextView) itemView.findViewById(R.id.txtTypeRoome);
-            tvCityName = (TextView) itemView.findViewById(R.id.txtCityName);
-            tvAttractionName = (TextView) itemView.findViewById(R.id.attraction_name);
+            tvCode = (TextView) itemView.findViewById(R.id.reservationRequestRowCodeTv);
+            tvName = (TextView) itemView.findViewById(R.id.reservationRequestRowNameTv);
+            tvRoomType = (TextView) itemView.findViewById(R.id.reservationRequestRowRoomTypeTv);
+
+            imageView = (ImageView) itemView.findViewById(R.id.requestStatusIv);
         }
 
         public void setData(ResultReservationReqList current) {
-            this.current = current;
-            tvRequestCode.setText(current.getRequest().getReqLodgingId());
-            tvTimeDuration.setText(current.getRequest().getReqDateFrom());
-            tvTypeRoom.setText(current.getRequest().getReqRoomTitle());
-            //where the hell is city name :|
-            tvAttractionName.setText(current.getRequest().getReqLodgingTitle());
+
+            String roomType = "نوع اتاق : " + current.getRequest().getReqRoomTitle();
+            String code = "کد درخواست : " + current.getRequest().getReqId();
+
+            tvCode.setText(code);
+            tvName.setText(current.getRequest().getReqRoomTitle());
+            tvRoomType.setText(roomType);
+
+            // TODO: 10/15/17  Get Image Url From Api and Load it With Glide
         }
     }
 }

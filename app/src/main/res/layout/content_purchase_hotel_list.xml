@@ -1,134 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:layout_marginEnd="@dimen/margin_short"
     android:layout_marginStart="@dimen/margin_short"
     android:layout_marginTop="@dimen/margin_short"
     android:layoutDirection="rtl"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/imageTextAttractionHolder"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <RelativeLayout
-            android:id="@+id/imageTextAttractionHolder1"
+        <ImageView
+            android:id="@+id/requestStatusIv"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_alignParentStart="true">
+            android:background="@color/background"
+            android:padding="@dimen/padding_standard"
+            android:src="@drawable/ic_iranplanner_logo" />
 
-            <ProgressBar
-                android:id="@+id/imageLoading"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                android:translationZ="1dp" />
-
-
-            <ImageView
-                android:id="@+id/ImageAttraction"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/emam2" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/relativeLayout4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/margin_short"
             android:layout_marginTop="@dimen/padding_standard"
-            android:layout_toEndOf="@+id/imageTextAttractionHolder1"
-            android:gravity="start">
+            android:gravity="start"
+            android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/relativeLayoutHolder"
+            <TextView
+                android:id="@+id/reservationRequestRowNameTv"
+                style="@style/StandardTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true">
+                android:text="پارسه" />
 
-                <TextView
-                    android:id="@+id/attraction_name"
-                    style="@style/StandardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginBottom="@dimen/margin_short"
-                    android:layout_marginLeft="@dimen/margin_standard"
-                    android:layout_marginRight="@dimen/margin_standard"
-                    android:text="پارسه" />
+            <TextView
+                android:id="@+id/reservationRequestRowRoomTypeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="centerCrop"
+                android:text="نوع اتاق" />
 
-                <RelativeLayout
-                    android:id="@+id/cityNameHolder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/attraction_name"
-                    android:paddingBottom="@dimen/margin_xshort">
+            <TextView
+                android:id="@+id/reservationRequestRowCodeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="کد درخواست" />
 
-                    <TextView
-                        android:id="@+id/textCityName"
-                        style="@style/SmallText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/txtTypeRoome"
-                        android:maxLines="1"
-                        android:text="دو تخته" />
-
-                    <TextView
-                        android:id="@+id/txtTypeRoome"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignTop="@+id/textCityName"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:scaleType="centerCrop"
-                        android:text="نوع اتاق" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/cityNameHolderz"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/cityNameHolder"
-                    android:paddingBottom="@dimen/margin_xshort">
-
-                    <TextView
-                        android:id="@+id/textTimeDuration"
-                        style="@style/SmallText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/txtRequestCode"
-                        android:maxLines="1"
-                        android:text="12000033" />
-
-                    <TextView
-                        android:id="@+id/txtRequestCode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:text="کد درخواست" />
-
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-    </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>
