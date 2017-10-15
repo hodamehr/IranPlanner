@@ -16,6 +16,7 @@ public final class Constants {
     public static final String wishImg = "1";
     public static final String homeSearch = "homeSearch";
     public static final String homeHotel = "homeHotel";
+    public static final String homeAttraction = "homeAttraction";
     public static final String hotelCode = "147";
     public static final String hotelApartmentCode = "3762";
     public static final String hotelboomgardiCode = "3795";

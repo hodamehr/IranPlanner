@@ -753,13 +753,32 @@
                 android:text="@string/near_city" />
         </RelativeLayout>
         <!--listProvince-->
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewProvinceShow"
+        <RelativeLayout
+            android:id="@+id/provinceHomeHolder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/cityHomeHolder"
-            android:layout_margin="15dp" />
+            android:padding="@dimen/padding_standard"
+            android:visibility="visible">
 
-    </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewProvinceShow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtProvinceTitle"
+                />
+
+
+
+            <TextView
+                android:id="@+id/txtProvinceTitle"
+                style="@style/StandardTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="@dimen/margin_short"
+                android:text="@string/provineList" />
+        </RelativeLayout>
+</RelativeLayout>
+
 </ScrollView>
