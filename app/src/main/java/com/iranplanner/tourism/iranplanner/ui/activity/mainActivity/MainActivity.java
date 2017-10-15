@@ -148,7 +148,6 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
                     tab.setCustomView(pagerAdapter.getTabView(i));
                 }
             }
-
         }
 
         int position = 2;
@@ -190,7 +189,6 @@ public class MainActivity extends StandardActivity implements ForceUpdateChecker
             Toast.makeText(this, "برای خروج مجددا کلیک کنید", Toast.LENGTH_SHORT).show();
 
             new Handler().postDelayed(new Runnable() {
-
                 @Override
                 public void run() {
                     doubleBackToExitPressedOnce = false;
