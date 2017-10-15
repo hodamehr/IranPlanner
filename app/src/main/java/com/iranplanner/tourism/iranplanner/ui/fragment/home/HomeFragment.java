@@ -970,7 +970,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     @Override
     public boolean onBackPressed() {
         return super.onBackPressed();
-
     }
 
     private void getHotelResults(String destination, String selectId, String typeOfHotel) {

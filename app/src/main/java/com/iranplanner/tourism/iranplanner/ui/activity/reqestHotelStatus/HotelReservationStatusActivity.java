@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.iranplanner.tourism.iranplanner.R;
 import com.iranplanner.tourism.iranplanner.RecyclerItemOnClickListener;
@@ -39,7 +40,10 @@ import tools.Util;
  */
 
 public class HotelReservationStatusActivity extends StandardActivity
-        implements HotelReservationStatusContract.View {
+        implements HotelReservationStatusContract.View, View.OnClickListener {
+
+    private TextView tvCountPending, tvCountExamine, tvCountPaid, tvCountReject;
+
     @Inject
     HotelReservationStatusListPresenter hotelReservationStatusListPresenter;
     List<ResultReqCount> resultReqCountList;
@@ -50,7 +54,6 @@ public class HotelReservationStatusActivity extends StandardActivity
         Bundle extras = getIntent().getExtras();
         resultReqCountList = (List<ResultReqCount>) extras.getSerializable("resultReqCountList");
         resultReqBundleList = (List<ResultReqBundle>) extras.getSerializable("resultReqBundleList");
-
     }
 
     @Override
@@ -61,16 +64,53 @@ public class HotelReservationStatusActivity extends StandardActivity
 
         initToolbar();
         getExtras();
+        init();
         initRequestStatusRecyclerView(resultReqCountList, resultReqBundleList);
         DaggerHotelReservationStatusListComponent.builder()
                 .netComponent(((App) getApplicationContext()).getNetComponent())
                 .hotelReservationStatusListModule(new HotelReservationStatusListModule(this))
                 .build().injectHotelReservationStatusActivity(this);
 
-        Log.e(TAG, "broadcast send ");
+        //This finishes the activities remain open :D
         Intent intent = new Intent();
         intent.setAction("KILL");
         sendBroadcast(intent);
+    }
+
+    private void init() {
+        tvCountPending = (TextView) findViewById(R.id.requestStatusPendingCountTv);
+        tvCountExamine = (TextView) findViewById(R.id.requestStatusExamineCountTv);
+        tvCountPaid= (TextView) findViewById(R.id.requestStatusPaidCountTv);
+        tvCountReject= (TextView) findViewById(R.id.requestStatusRejectCountTv);
+
+        tvCountPending.setText(resultReqCountList.get(1).getReservationReqStatus().getStatusCount());
+        tvCountExamine.setText(resultReqCountList.get(2).getReservationReqStatus().getStatusCount());
+        tvCountPaid.setText(resultReqCountList.get(3).getReservationReqStatus().getStatusCount());
+        tvCountReject.setText(resultReqCountList.get(4).getReservationReqStatus().getStatusCount());
+
+        findViewById(R.id.requestStatusPendingBtn).setOnClickListener(this);
+        findViewById(R.id.requestStatusExamineBtn).setOnClickListener(this);
+        findViewById(R.id.requestStatusPaidBtn).setOnClickListener(this);
+        findViewById(R.id.requestStatusRejectBtn).setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.requestStatusPendingBtn:
+                hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), String.valueOf(1), "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                break;
+            case R.id.requestStatusExamineBtn:
+                hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), String.valueOf(2), "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                break;
+            case R.id.requestStatusPaidBtn:
+                hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), String.valueOf(3), "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                break;
+            case R.id.requestStatusRejectBtn:
+                hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), String.valueOf(4), "20", "0", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                break;
+        }
     }
 
     private void initToolbar() {
@@ -92,7 +132,6 @@ public class HotelReservationStatusActivity extends StandardActivity
     }
 
     private void initRequestStatusRecyclerView(final List<ResultReqCount> resultReqCountList, final List<ResultReqBundle> resultReqBundleList) {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.settingRequestStatusRv);
         RecyclerView settingRequestBundle = (RecyclerView) findViewById(R.id.settingRequestBundle);
         settingRequestBundle.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         settingRequestBundle.setAdapter(new RequestBundleAdapter(getApplicationContext(), resultReqBundleList));
@@ -101,7 +140,7 @@ public class HotelReservationStatusActivity extends StandardActivity
             @Override
             public void onItemClick(View view, final int position) {
                 String offset = "0";
-                ((Button)view.findViewById(R.id.btnComplete)).setOnClickListener(new View.OnClickListener() {
+                ((Button) view.findViewById(R.id.btnComplete)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (resultReqCountList.get(position).getReservationReqStatus().getStatusCount() != "0") {
@@ -110,54 +149,24 @@ public class HotelReservationStatusActivity extends StandardActivity
                         }
                     }
                 });
-                ((Button)view.findViewById(R.id.requestStatusRowRemoveBtn)).setOnClickListener(new View.OnClickListener() {
+                ((Button) view.findViewById(R.id.requestStatusRowRemoveBtn)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 //                      remove
                     }
                 });
-
-
             }
         }));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setAdapter(new RequestStatusAdapter(getApplicationContext(), resultReqCountList));
-        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-        recyclerView.addOnItemTouchListener(new RecyclerItemOnClickListener(getApplicationContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, final int position) {
 
-//                ((Button) view.findViewById(R.id.requestStatusRowShowBtn)).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-                        String offset = "0";
-                        if (resultReqCountList.get(position).getReservationReqStatus().getStatusCount() != "0") {
-                            //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_list&lang=fa&uid=792147600796866&type=1
-                            hotelReservationStatusListPresenter.getHotelReservationStatusList("req_user_list", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), String.valueOf(position+1), "20", offset, Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
-                        }
-//                    }
-//                });
-//                ((Button) view.findViewById(R.id.requestStatusRowPaymentBtn)).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        //open view page
-////                        sendToBrowser();
-//                    }
-//                });
-
-
-            }
-
-        }));
     }
 
-    private void sendToBrowser(){
+    private void sendToBrowser() {
         String url = "http://www.example.com";
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
     }
+
     @Override
     public void showHotelReservationStatusList(ReservationRequestList reservationRequestList) {
 
@@ -195,4 +204,5 @@ public class HotelReservationStatusActivity extends StandardActivity
     public void showProgress() {
         progress = Util.showProgressDialog(getApplicationContext(), "لطفا منتظر بمانید", this);
     }
+
 }
