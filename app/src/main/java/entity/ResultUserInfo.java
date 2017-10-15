@@ -5,7 +5,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 public class ResultUserInfo implements Serializable{
 
@@ -14,10 +13,10 @@ public class ResultUserInfo implements Serializable{
     private String status;
     @SerializedName("statuscode")
     @Expose
-    private Integer statuscode;
+    private String statuscode;
     @SerializedName("user_uid")
     @Expose
-    private BigInteger userUid;
+    private String userUid;
     @SerializedName("user_fname")
     @Expose
     private String userFname;
@@ -26,7 +25,7 @@ public class ResultUserInfo implements Serializable{
     private String userLname;
     @SerializedName("user_gender")
     @Expose
-    private Integer userGender;
+    private String userGender;
     @SerializedName("user_email")
     @Expose
     private String userEmail;
@@ -35,31 +34,31 @@ public class ResultUserInfo implements Serializable{
     private String userBirthday;
     @SerializedName("user_city_id")
     @Expose
-    private Integer userCityId;
+    private String userCityId;
     @SerializedName("user_city_name")
     @Expose
     private String userCityName;
     @SerializedName("user_email_status")
     @Expose
-    private Integer userEmailStatus;
+    private String userEmailStatus;
     @SerializedName("user_phone_status")
     @Expose
-    private Integer userPhoneStatus;
+    private String userPhoneStatus;
     @SerializedName("user_phone")
     @Expose
     private String userPhone;
     @SerializedName("user_newsletter")
     @Expose
-    private Integer userNewsletter;
+    private String userNewsletter;
     @SerializedName("user_cid")
     @Expose
-    private Integer userCid;
+    private String userCid;
 
-    public Integer getUserCid() {
+    public String getUserCid() {
         return userCid;
     }
 
-    public void setUserCid(Integer userCid) {
+    public void setUserCid(String userCid) {
         this.userCid = userCid;
     }
 
@@ -71,19 +70,19 @@ public class ResultUserInfo implements Serializable{
         this.status = status;
     }
 
-    public Integer getStatuscode() {
+    public String getStatuscode() {
         return statuscode;
     }
 
-    public void setStatuscode(Integer statuscode) {
+    public void setStatuscode(String statuscode) {
         this.statuscode = statuscode;
     }
 
-    public BigInteger getUserUid() {
+    public String getUserUid() {
         return userUid;
     }
 
-    public void setUserUid(BigInteger userUid) {
+    public void setUserUid(String userUid) {
         this.userUid = userUid;
     }
 
@@ -103,11 +102,11 @@ public class ResultUserInfo implements Serializable{
         this.userLname = userLname;
     }
 
-    public Integer getUserGender() {
+    public String getUserGender() {
         return userGender;
     }
 
-    public void setUserGender(Integer userGender) {
+    public void setUserGender(String userGender) {
         this.userGender = userGender;
     }
 
@@ -127,11 +126,11 @@ public class ResultUserInfo implements Serializable{
         this.userBirthday = userBirthday;
     }
 
-    public Integer getUserCityId() {
+    public String getUserCityId() {
         return userCityId;
     }
 
-    public void setUserCityId(Integer userCityId) {
+    public void setUserCityId(String userCityId) {
         this.userCityId = userCityId;
     }
 
@@ -143,19 +142,19 @@ public class ResultUserInfo implements Serializable{
         this.userCityName = userCityName;
     }
 
-    public Integer getUserEmailStatus() {
+    public String getUserEmailStatus() {
         return userEmailStatus;
     }
 
-    public void setUserEmailStatus(Integer userEmailStatus) {
+    public void setUserEmailStatus(String userEmailStatus) {
         this.userEmailStatus = userEmailStatus;
     }
 
-    public Integer getUserPhoneStatus() {
+    public String getUserPhoneStatus() {
         return userPhoneStatus;
     }
 
-    public void setUserPhoneStatus(Integer userPhoneStatus) {
+    public void setUserPhoneStatus(String userPhoneStatus) {
         this.userPhoneStatus = userPhoneStatus;
     }
 
@@ -167,11 +166,11 @@ public class ResultUserInfo implements Serializable{
         this.userPhone = userPhone;
     }
 
-    public Integer getUserNewsletter() {
+    public String getUserNewsletter() {
         return userNewsletter;
     }
 
-    public void setUserNewsletter(Integer userNewsletter) {
+    public void setUserNewsletter(String userNewsletter) {
         this.userNewsletter = userNewsletter;
     }
 

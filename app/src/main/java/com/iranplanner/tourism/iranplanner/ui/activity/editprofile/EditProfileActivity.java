@@ -127,9 +127,9 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
     }
 
     private void setValues(ResultUserInfo resultUserInfo) {
-        String gender = (resultUserInfo.getUserGender() == 0) ? "زن" : "مرد";
-        txtNewsValueShow.setText((resultUserInfo.getUserNewsletter() == 1) ? "دارم" : "ندارم");
-        if (resultUserInfo.getUserEmailStatus() == 0) {
+        String gender = (resultUserInfo.getUserGender() .equals("0")) ? "زن" : "مرد";
+        txtNewsValueShow.setText((resultUserInfo.getUserNewsletter() .equals("1")) ? "دارم" : "ندارم");
+        if (resultUserInfo.getUserEmailStatus().equals("0")) {
             verifyEmailHolder.setVisibility(View.VISIBLE);
             ImgUserEmailStatus.setBackgroundResource(R.mipmap.ic_cancel_red);
 
@@ -158,10 +158,15 @@ public class EditProfileActivity extends StandardActivity implements View.OnClic
         input_family.setText(resultUserInfo.getUserLname());
         input_lodging.setText(resultUserInfo.getUserCityName());
 
-        radioWoman.setChecked((resultUserInfo.getUserGender() == 0) ? true : false);
-        radioMan.setChecked((resultUserInfo.getUserGender() == 1) ? true : false);
-        txtBirthdayValueShow.setText(Util.persianNumbers(Utils.getSimpleDateMilli(birthday)));
-        if (resultUserInfo.getUserNewsletter() == 1) {
+        radioWoman.setChecked((resultUserInfo.getUserGender() .equals("0")) ? true : false);
+        radioMan.setChecked((resultUserInfo.getUserGender() .equals("1")) ? true : false);
+        if(resultUserInfo.getUserBirthday() != null){
+            txtBirthdayValueShow.setText(Util.persianNumbers(Utils.getSimpleDateMilli(birthday)));
+        }else {
+            txtBirthdayValueShow.setText("");
+        }
+
+        if (resultUserInfo.getUserNewsletter() .equals("1")) {
             checkBoxNews.setChecked(true);
         } else {
             checkBoxNews.setChecked(false);
