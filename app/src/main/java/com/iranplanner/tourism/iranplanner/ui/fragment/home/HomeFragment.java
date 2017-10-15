@@ -307,8 +307,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         return rootView;
     }
 
-    Bundle bundle = new Bundle();
-
     private void getfeatureHolderHight() {
         ViewTreeObserver vto = SelectHolder.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -408,19 +406,12 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
                 showAboutCityOrProvince();
                 break;
             case R.id.homeNavAttraction:
-
-
-                if (SelectedType != null && SelectedType.equals("city")) {
-                    Log.e("itinerary", "city clicked");
+                if (SelectedType != null && SelectedType.equals("city"))
                     mainSearchPresenter.loadItineraryFromCity("list", "fa", selectId, "20", offset, selectId, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
-                } else if (SelectedType != null && SelectedType.equals("province")) {
+                else if (SelectedType != null && SelectedType.equals("province"))
                     mainSearchPresenter.loadItineraryFromProvince("searchprovince", selectId, offset, Util.getTokenFromSharedPreferences(getContext()), Util.getAndroidIdFromSharedPreferences(getContext()));
-
-                } else {
-                    ViewPager viewPager = (ViewPager) getActivity().findViewById(R.id.main_view_pager);
-                    viewPager.setCurrentItem(0);
-
-                }
+                else
+                    ((ViewPager) getActivity().findViewById(R.id.main_view_pager)).setCurrentItem(0);
                 break;
             case R.id.attractionHistoricalHolder:
                 getAttractionMore(Constants.attractionHistoricalCode);
