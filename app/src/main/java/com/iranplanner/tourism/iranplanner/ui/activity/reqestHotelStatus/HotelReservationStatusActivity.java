@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,10 +41,11 @@ import tools.Util;
  */
 
 public class HotelReservationStatusActivity extends StandardActivity
-        implements HotelReservationStatusContract.View, View.OnClickListener {
+        implements HotelReservationStatusContract.View, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private TextView tvCountPending, tvCountExamine, tvCountPaid, tvCountReject;
     private int which;
+    private SwipeRefreshLayout swipe;
 
     @Inject
     HotelReservationStatusListPresenter hotelReservationStatusListPresenter;
@@ -84,6 +86,9 @@ public class HotelReservationStatusActivity extends StandardActivity
         tvCountPaid = (TextView) findViewById(R.id.requestStatusPaidCountTv);
         tvCountReject = (TextView) findViewById(R.id.requestStatusRejectCountTv);
 
+        swipe = (SwipeRefreshLayout) findViewById(R.id.requestStatusSwipe);
+        swipe.setOnRefreshListener(this);
+
         tvCountPending.setText(Util.persianNumbers(resultReqCountList.get(1).getReservationReqStatus().getStatusCount()));
         tvCountExamine.setText(Util.persianNumbers(resultReqCountList.get(2).getReservationReqStatus().getStatusCount()));
         tvCountPaid.setText(Util.persianNumbers(resultReqCountList.get(3).getReservationReqStatus().getStatusCount()));
@@ -94,6 +99,14 @@ public class HotelReservationStatusActivity extends StandardActivity
         findViewById(R.id.requestStatusPaidBtn).setOnClickListener(this);
         findViewById(R.id.requestStatusRejectBtn).setOnClickListener(this);
 
+    }
+
+    //swipe to refresh layout
+    @Override
+    public void onRefresh() {
+
+
+//        swipe.setRefreshing(false);
     }
 
     @Override
@@ -223,5 +236,4 @@ public class HotelReservationStatusActivity extends StandardActivity
     public void showProgress() {
         progress = Util.showProgressDialog(getApplicationContext(), "لطفا منتظر بمانید", this);
     }
-
 }

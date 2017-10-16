@@ -12,343 +12,356 @@
         android:background="@color/main_blue"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <android.support.v4.widget.NestedScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/requestStatusSwipe"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/padding_short"
-            android:paddingRight="@dimen/padding_short"
-            android:paddingTop="@dimen/margin_standard">
+            android:layout_height="match_parent">
 
-            <TextView
-                style="@style/StandardTitle"
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_short"
-                android:text="وضعیت درخواست های ارسال شده" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/padding_short"
+                    android:paddingRight="@dimen/padding_short"
+                    android:paddingTop="@dimen/margin_standard">
 
-                    <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="170dp"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:background="@color/white_"
-                        android:orientation="vertical"
-                        app:cardCornerRadius="6dp">
+                    <TextView
+                        style="@style/StandardTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_short"
+                        android:text="وضعیت درخواست های ارسال شده" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/white_"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:padding="10dp">
-
-                                <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="80dp"
-                                    android:layout_centerInParent="true"
-                                    android:background="@drawable/circle_stroke" />
-
-                                <TextView
-                                    android:id="@+id/requestStatusPendingCountTv"
-                                    style="@style/StandardText"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:gravity="center"
-                                    android:text="12" />
-
-                            </RelativeLayout>
-
-                            <TextView
-                                style="@style/StandardText"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:gravity="center"
-                                android:singleLine="true"
-                                android:text="در حال بررسی" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingLeft="@dimen/padding_standard"
-                                android:paddingRight="@dimen/padding_standard">
-
-                                <Button
-                                    android:id="@+id/requestStatusPendingBtn"
-                                    style="@style/StandardTitle"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginEnd="2dp"
-                                    android:layout_marginStart="2dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/button_corner_grey_dark_stroke"
-                                    android:text="مشاهده"
-                                    android:textColor="@color/grey" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="170dp"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:background="@color/white_"
-                        android:orientation="vertical"
-                        app:cardCornerRadius="6dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/white_"
-                            android:orientation="vertical">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:padding="10dp">
+                            <android.support.v7.widget.CardView
+                                android:layout_width="0dp"
+                                android:layout_height="170dp"
+                                android:layout_margin="4dp"
+                                android:layout_weight="1"
+                                android:background="@color/white_"
+                                android:orientation="vertical"
+                                app:cardCornerRadius="6dp">
 
-                                <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="80dp"
-                                    android:layout_centerInParent="true"
-                                    android:background="@drawable/circle_stroke" />
-
-                                <TextView
-                                    android:id="@+id/requestStatusExamineCountTv"
-                                    style="@style/StandardText"
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:gravity="center"
-                                    android:text="12" />
+                                    android:background="@color/white_"
+                                    android:orientation="vertical">
 
-                            </RelativeLayout>
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="80dp"
+                                        android:padding="10dp">
 
-                            <TextView
-                                style="@style/StandardText"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:gravity="center"
-                                android:singleLine="true"
-                                android:text="درانتظار پرداخت" />
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="80dp"
+                                            android:layout_centerInParent="true"
+                                            android:background="@drawable/circle_stroke" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingLeft="@dimen/padding_standard"
-                                android:paddingRight="@dimen/padding_standard">
+                                        <TextView
+                                            android:id="@+id/requestStatusPendingCountTv"
+                                            style="@style/StandardText"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_centerInParent="true"
+                                            android:gravity="center"
+                                            android:text="12" />
 
-                                <Button
-                                    android:id="@+id/requestStatusExamineBtn"
-                                    style="@style/StandardTitle"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginEnd="2dp"
-                                    android:layout_marginStart="2dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/request_status_green_btn_selector"
-                                    android:text="پرداخت"
-                                    android:textColor="@color/textColorWhite" />
+                                    </RelativeLayout>
 
-                            </LinearLayout>
+                                    <TextView
+                                        style="@style/StandardText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="40dp"
+                                        android:gravity="center"
+                                        android:singleLine="true"
+                                        android:text="در حال بررسی" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="@dimen/padding_standard"
+                                        android:paddingRight="@dimen/padding_standard">
+
+                                        <Button
+                                            android:id="@+id/requestStatusPendingBtn"
+                                            style="@style/StandardTitle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="40dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginEnd="2dp"
+                                            android:layout_marginStart="2dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/button_corner_grey_dark_stroke"
+                                            android:text="مشاهده"
+                                            android:textColor="@color/grey" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </android.support.v7.widget.CardView>
+
+                            <android.support.v7.widget.CardView
+                                android:layout_width="0dp"
+                                android:layout_height="170dp"
+                                android:layout_margin="4dp"
+                                android:layout_weight="1"
+                                android:background="@color/white_"
+                                android:orientation="vertical"
+                                app:cardCornerRadius="6dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/white_"
+                                    android:orientation="vertical">
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="80dp"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="80dp"
+                                            android:layout_centerInParent="true"
+                                            android:background="@drawable/circle_stroke" />
+
+                                        <TextView
+                                            android:id="@+id/requestStatusExamineCountTv"
+                                            style="@style/StandardText"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_centerInParent="true"
+                                            android:gravity="center"
+                                            android:text="12" />
+
+                                    </RelativeLayout>
+
+                                    <TextView
+                                        style="@style/StandardText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="40dp"
+                                        android:gravity="center"
+                                        android:singleLine="true"
+                                        android:text="درانتظار پرداخت" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="@dimen/padding_standard"
+                                        android:paddingRight="@dimen/padding_standard">
+
+                                        <Button
+                                            android:id="@+id/requestStatusExamineBtn"
+                                            style="@style/StandardTitle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="40dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginEnd="2dp"
+                                            android:layout_marginStart="2dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/request_status_green_btn_selector"
+                                            android:text="پرداخت"
+                                            android:textColor="@color/textColorWhite" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </android.support.v7.widget.CardView>
 
                         </LinearLayout>
 
-                    </android.support.v7.widget.CardView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <android.support.v7.widget.CardView
+                                android:layout_width="0dp"
+                                android:layout_height="170dp"
+                                android:layout_margin="4dp"
+                                android:layout_weight="1"
+                                android:background="@color/white_"
+                                android:orientation="vertical"
+                                app:cardCornerRadius="6dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/white_"
+                                    android:orientation="vertical">
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="80dp"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="80dp"
+                                            android:layout_centerInParent="true"
+                                            android:background="@drawable/circle_stroke" />
+
+                                        <TextView
+                                            android:id="@+id/requestStatusPaidCountTv"
+                                            style="@style/StandardText"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_centerInParent="true"
+                                            android:gravity="center"
+                                            android:text="12" />
+
+                                    </RelativeLayout>
+
+                                    <TextView
+                                        style="@style/StandardText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="40dp"
+                                        android:gravity="center"
+                                        android:singleLine="true"
+                                        android:text="پرداخت شده" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="@dimen/padding_standard"
+                                        android:paddingRight="@dimen/padding_standard">
+
+                                        <Button
+                                            android:id="@+id/requestStatusPaidBtn"
+                                            style="@style/StandardTitle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="40dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginEnd="2dp"
+                                            android:layout_marginStart="2dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/button_corner_grey_dark_stroke"
+                                            android:text="مشاهده"
+                                            android:textColor="@color/grey" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </android.support.v7.widget.CardView>
+
+                            <android.support.v7.widget.CardView
+                                android:layout_width="0dp"
+                                android:layout_height="170dp"
+                                android:layout_margin="4dp"
+                                android:layout_weight="1"
+                                android:background="@color/white_"
+                                android:orientation="vertical"
+                                app:cardCornerRadius="6dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/white_"
+                                    android:orientation="vertical">
+
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="80dp"
+                                        android:padding="10dp">
+
+                                        <ImageView
+                                            android:layout_width="60dp"
+                                            android:layout_height="80dp"
+                                            android:layout_centerInParent="true"
+                                            android:background="@drawable/circle_stroke" />
+
+                                        <TextView
+                                            android:id="@+id/requestStatusRejectCountTv"
+                                            style="@style/StandardText"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_centerInParent="true"
+                                            android:gravity="center"
+                                            android:text="12" />
+
+                                    </RelativeLayout>
+
+                                    <TextView
+                                        style="@style/StandardText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="40dp"
+                                        android:gravity="center"
+                                        android:singleLine="true"
+                                        android:text="رد شده" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="@dimen/padding_standard"
+                                        android:paddingRight="@dimen/padding_standard">
+
+                                        <Button
+                                            android:id="@+id/requestStatusRejectBtn"
+                                            style="@style/StandardTitle"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="40dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginEnd="2dp"
+                                            android:layout_marginStart="2dp"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/button_corner_grey_dark_stroke"
+                                            android:text="مشاهده"
+                                            android:textColor="@color/grey" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </android.support.v7.widget.CardView>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/StandardTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_short"
+                        android:layout_marginTop="@dimen/margin_standard"
+                        android:text="درخواست های ارسال نشده" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/settingRequestBundle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+        </android.support.v4.widget.SwipeRefreshLayout>
 
-                    <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="170dp"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:background="@color/white_"
-                        android:orientation="vertical"
-                        app:cardCornerRadius="6dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/white_"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:padding="10dp">
-
-                                <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="80dp"
-                                    android:layout_centerInParent="true"
-                                    android:background="@drawable/circle_stroke" />
-
-                                <TextView
-                                    android:id="@+id/requestStatusPaidCountTv"
-                                    style="@style/StandardText"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:gravity="center"
-                                    android:text="12" />
-
-                            </RelativeLayout>
-
-                            <TextView
-                                style="@style/StandardText"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:gravity="center"
-                                android:singleLine="true"
-                                android:text="پرداخت شده" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingLeft="@dimen/padding_standard"
-                                android:paddingRight="@dimen/padding_standard">
-
-                                <Button
-                                    android:id="@+id/requestStatusPaidBtn"
-                                    style="@style/StandardTitle"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginEnd="2dp"
-                                    android:layout_marginStart="2dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/button_corner_grey_dark_stroke"
-                                    android:text="مشاهده"
-                                    android:textColor="@color/grey" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="170dp"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:background="@color/white_"
-                        android:orientation="vertical"
-                        app:cardCornerRadius="6dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/white_"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="80dp"
-                                android:padding="10dp">
-
-                                <ImageView
-                                    android:layout_width="60dp"
-                                    android:layout_height="80dp"
-                                    android:layout_centerInParent="true"
-                                    android:background="@drawable/circle_stroke" />
-
-                                <TextView
-                                    android:id="@+id/requestStatusRejectCountTv"
-                                    style="@style/StandardText"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:gravity="center"
-                                    android:text="12" />
-
-                            </RelativeLayout>
-
-                            <TextView
-                                style="@style/StandardText"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:gravity="center"
-                                android:singleLine="true"
-                                android:text="رد شده" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingLeft="@dimen/padding_standard"
-                                android:paddingRight="@dimen/padding_standard">
-
-                                <Button
-                                    android:id="@+id/requestStatusRejectBtn"
-                                    style="@style/StandardTitle"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center"
-                                    android:layout_marginEnd="2dp"
-                                    android:layout_marginStart="2dp"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/button_corner_grey_dark_stroke"
-                                    android:text="مشاهده"
-                                    android:textColor="@color/grey" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <TextView
-                style="@style/StandardTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_short"
-                android:layout_marginTop="@dimen/margin_standard"
-                android:text="درخواست های ارسال نشده" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/settingRequestBundle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </RelativeLayout>
 </LinearLayout>
