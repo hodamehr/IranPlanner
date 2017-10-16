@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,7 @@ public class RequestBundleAdapter extends RecyclerView.Adapter<RequestBundleAdap
         holder.hotelNameTv.setText(resultReqBundleList.get(position).getBundleRequest().getBundleLodgingTitle());
         holder.hotelRoomNumberTv.setText(resultReqBundleList.get(position).getBundleRequest().getBundleDateCount());
         holder.txtHotelDateReq.setText(Util.persianNumbers(Utils.getSimpleDateMilli(Long.valueOf(resultReqBundleList.get(position).getBundleRequest().getBundleDateFrom()))));
+        Util.setImageView(resultReqBundleList.get(position).getBundleRequest().getLodgingImgUrl(),context,holder.imageHotel,holder.imageLoading);
     }
 
     @Override
@@ -70,6 +72,9 @@ public class RequestBundleAdapter extends RecyclerView.Adapter<RequestBundleAdap
         TextView hotelRoomNumberTv;
         @InjectView(R.id.txtHotelDateReq)
         TextView txtHotelDateReq;
+        @InjectView(R.id.imageLoading)
+        ProgressBar imageLoading;
+
 
         public Holder(View itemView) {
             super(itemView);

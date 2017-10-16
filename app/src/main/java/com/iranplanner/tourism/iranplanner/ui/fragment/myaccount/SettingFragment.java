@@ -24,6 +24,8 @@ import com.iranplanner.tourism.iranplanner.ui.activity.editprofile.EditProfileAc
 import com.iranplanner.tourism.iranplanner.ui.activity.login.LoginActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.ScrollingActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus.HotelReservationStatusActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus.HotelReservationStatusContract;
+import com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus.HotelReservationStatusListPresenter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -32,6 +34,8 @@ import javax.inject.Inject;
 
 import entity.GetInfoReqSend;
 import entity.GetInfoResult;
+import entity.ReservationRequestList;
+import entity.ResultBundleStatus;
 import entity.ResultReqBundle;
 import entity.ResultReqCount;
 import entity.ResultReservationReqStatus;
@@ -41,7 +45,7 @@ import tools.Util;
 /**
  * Created by Hoda on 10/01/2017.
  */
-public class SettingFragment extends StandardFragment implements View.OnClickListener, SettingContract.View {
+public class SettingFragment extends StandardFragment implements View.OnClickListener, SettingContract.View ,HotelReservationStatusContract.View {
 
     TextView txtProfileName, btnEditProfile, txtHotelReservationStatus;
     RelativeLayout LayoutShowProfileHolder, exitFromAccount;
@@ -53,7 +57,8 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
     String andId;
     String uid;
     View view;
-
+    @Inject
+    HotelReservationStatusListPresenter hotelReservationStatusListPresenter;
     public static SettingFragment newInstance() {
         SettingFragment fragment = new SettingFragment();
         return fragment;
@@ -91,7 +96,7 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
         setLoginName();
         getSharedpreferences();
         DaggerSettingComponent.builder().netComponent(((App) getActivity().getApplicationContext()).getNetComponent())
-                .settingModule(new SettingModule(this))
+                .settingModule(new SettingModule(this,this))
                 .build().inject(this);
 
         return view;
@@ -104,7 +109,8 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
     }
 
     private void getRerReservation() {
-        settingPresenter.getResultReservationReqStatus("req_user_count_bundle", uid, "fa", cid, andId);
+        showProgress();
+        hotelReservationStatusListPresenter.getResultReservationReqStatus("req_user_count_bundle", uid, "fa", cid, andId);
     }
 
     public void onClick(View v) {
@@ -150,6 +156,16 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
     }
 
     @Override
+    public void showHotelReservationStatusList(ReservationRequestList reservationRequestList) {
+
+    }
+
+    @Override
+    public void showHotelReservationBundleStatus(ResultBundleStatus resultBundleStatus) {
+
+    }
+
+    @Override
     public void showError(String message) {
         Log.e("complete", "get attraction list");
         if (progressDialog.isShowing()) {
@@ -182,6 +198,7 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
 
     @Override
     public void showResultReservationReqStatus(ResultReservationReqStatus resultReservationReqStatus) {
+        dismissProgress();
         List<ResultReqCount> resultReqCountList = resultReservationReqStatus.getResultReqCountBundle().getResultReqCount();
         List<ResultReqBundle> resultReqBundleList = resultReservationReqStatus.getResultReqCountBundle().getResultReqBundle();
 //        initRequestStatusRecyclerView(view, resultReqCountList);

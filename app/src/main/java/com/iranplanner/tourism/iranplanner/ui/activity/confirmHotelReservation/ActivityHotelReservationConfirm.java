@@ -21,6 +21,8 @@ import com.iranplanner.tourism.iranplanner.standard.ClickableViewPager;
 import com.iranplanner.tourism.iranplanner.standard.DataTransferInterface;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus.HotelReservationStatusActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus.HotelReservationStatusContract;
+import com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus.HotelReservationStatusListPresenter;
 import com.iranplanner.tourism.iranplanner.ui.activity.showRoom.ShowRoomActivity;
 import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingContract;
 import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingFragment;
@@ -41,6 +43,8 @@ import entity.ReqLodgingReservation;
 import entity.RequestLodgingReservationMain;
 import entity.ReservationRequestComplete;
 import entity.ReservationRequestDeleteRoom;
+import entity.ReservationRequestList;
+import entity.ResultBundleStatus;
 import entity.ResultLodging;
 import entity.ResultLodgingReservation;
 import entity.ResultReqBundle;
@@ -54,7 +58,7 @@ import tools.Util;
  * Created by HoDA on 8/5/2017.
  */
 
-public class ActivityHotelReservationConfirm extends StandardActivity implements DataTransferInterface, View.OnClickListener, ConfirmHotelContract.View, SettingContract.View/*, HotelReservationConfirmListAdapter.GoBackInterface*/ {
+public class ActivityHotelReservationConfirm extends StandardActivity implements DataTransferInterface, View.OnClickListener, ConfirmHotelContract.View, HotelReservationStatusContract.View/*, HotelReservationConfirmListAdapter.GoBackInterface*/ {
     private List<ResultRoom> ResultRooms;
     private Date startOfTravel;
     private int durationTravel;
@@ -72,7 +76,7 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
     @Inject
     ConfirmHotelPresenter confirmHotelPresenter;
     @Inject
-    SettingPresenter settingPresenter;
+    HotelReservationStatusListPresenter hotelReservationStatusListPresenter;
     @InjectView(R.id.pager)
     ClickableViewPager pager;
 
@@ -311,7 +315,7 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
         if (reservationRequestComplete.getStatus().getStatus() == 200) {
             String cid = Util.getTokenFromSharedPreferences(getApplicationContext());
             String andId = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
-            settingPresenter.getResultReservationReqStatus("req_user_count_bundle", Util.getUseRIdFromShareprefrence(getApplicationContext()), "fa", cid, andId);
+            hotelReservationStatusListPresenter.getResultReservationReqStatus("req_user_count_bundle", Util.getUseRIdFromShareprefrence(getApplicationContext()), "fa", cid, andId);
         }
     }
 
@@ -326,8 +330,15 @@ public class ActivityHotelReservationConfirm extends StandardActivity implements
     }
 
 
+
+
     @Override
-    public void showInfoUserResult(GetInfoResult infoResult) {
+    public void showHotelReservationStatusList(ReservationRequestList reservationRequestList) {
+
+    }
+
+    @Override
+    public void showHotelReservationBundleStatus(ResultBundleStatus resultBundleStatus) {
 
     }
 

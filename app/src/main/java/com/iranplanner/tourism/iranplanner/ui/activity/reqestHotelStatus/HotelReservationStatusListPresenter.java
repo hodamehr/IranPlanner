@@ -5,6 +5,7 @@ import javax.inject.Inject;
 
 import entity.ReservationRequestList;
 import entity.ResultBundleStatus;
+import entity.ResultReservationReqStatus;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -84,26 +85,64 @@ public class HotelReservationStatusListPresenter extends HotelReservationStatusC
                 });
     }
 
+    @Override
+    public void getResultReservationReqStatus(String action, String type, String value, String cid, String androidId) {
 
-    public interface HotelReservationStatusLisService {
-        //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_list&lang=fa&uid=792147600796866&type=1
-        @GET("api-reservation.php")
-        Observable<ReservationRequestList> getHotelReservationStatusList(@Query("action") String action,
-                                                                         @Query("lang") String lang,
-                                                                         @Query("uid") String uid,
-                                                                         @Query("type") String type,
-                                                                         @Query("limit") String limit,
-                                                                         @Query("offset") String offset,
-                                                                         @Query("cid") String cid,
-                                                                         @Query("andId") String andId);
 
-        //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_bundle_full&uid=792147600796866&lang=fa&id=12150158259660
-        @GET("api-reservation.php")
-        Observable<ResultBundleStatus> getHotelReservationBundleFull(@Query("action") String action,
+        retrofit.create(HotelReservationStatusLisService.class).getResultReservationReqStatus(action, type, value, cid, androidId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultReservationReqStatus>() {
+
+                    @Override
+                    public void onCompleted() {
+
+                        mView.showComplete();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        mView.showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(ResultReservationReqStatus resultReservationReqStatus) {
+                        mView.showResultReservationReqStatus(resultReservationReqStatus);
+                    }
+                });
+
+}
+
+
+public interface HotelReservationStatusLisService {
+    //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_list&lang=fa&uid=792147600796866&type=1
+    @GET("api-reservation.php")
+    Observable<ReservationRequestList> getHotelReservationStatusList(@Query("action") String action,
                                                                      @Query("lang") String lang,
                                                                      @Query("uid") String uid,
-                                                                     @Query("id") String bundleId,
+                                                                     @Query("type") String type,
+                                                                     @Query("limit") String limit,
+                                                                     @Query("offset") String offset,
                                                                      @Query("cid") String cid,
                                                                      @Query("andId") String andId);
-    }
+
+    //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_bundle_full&uid=792147600796866&lang=fa&id=12150158259660
+    @GET("api-reservation.php")
+    Observable<ResultBundleStatus> getHotelReservationBundleFull(@Query("action") String action,
+                                                                 @Query("lang") String lang,
+                                                                 @Query("uid") String uid,
+                                                                 @Query("id") String bundleId,
+                                                                 @Query("cid") String cid,
+                                                                 @Query("andId") String andId);
+
+    @GET("api-reservation.php")
+    Observable<ResultReservationReqStatus> getResultReservationReqStatus(@Query("action") String action,
+                                                                         @Query("uid") String uid,
+                                                                         @Query("lang") String lang,
+                                                                         @Query("cid") String cid,
+                                                                         @Query("andId") String androidId);
+}
+
 }

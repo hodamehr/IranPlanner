@@ -4,6 +4,7 @@ package com.iranplanner.tourism.iranplanner.ui.activity.reqestHotelStatus;
 import entity.ReservationRequestList;
 import entity.ResultBundleStatus;
 import entity.ResultLodgingHotel;
+import entity.ResultReservationReqStatus;
 
 /**
  * Created by Hoda
@@ -20,6 +21,7 @@ public abstract class HotelReservationStatusContract {
         void dismissProgress();
 
         void showProgress();
+        void  showResultReservationReqStatus(ResultReservationReqStatus resultReservationReqStatus);
     }
 
 
@@ -38,4 +40,9 @@ public abstract class HotelReservationStatusContract {
                                                        String bundleId,
                                                        String cid,
                                                        String andId);
+    public abstract void getResultReservationReqStatus(String action,
+                                                       String type,
+                                                       String value,
+                                                       String cid,
+                                                       String androidId);
 }

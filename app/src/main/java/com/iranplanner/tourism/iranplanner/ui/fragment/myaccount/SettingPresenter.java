@@ -79,33 +79,33 @@ public class SettingPresenter extends SettingContract {
                 });
     }
 
-    @Override
-    public void getResultReservationReqStatus(String action, String uid, String lang, String cid, String androidId) {
-        mView.showProgress();
-        retrofit.create(GetInfoService.class).getResultReservationReqStatus(action, uid, lang, cid, androidId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(new Observer<ResultReservationReqStatus>() {
-
-                    @Override
-                    public void onCompleted() {
-                        mView.dismissProgress();
-                        mView.showComplete();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.dismissProgress();
-                        mView.showError(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(ResultReservationReqStatus resultReservationReqStatus) {
-                        mView.showResultReservationReqStatus(resultReservationReqStatus);
-                    }
-                });
-    }
+//    @Override
+//    public void getResultReservationReqStatus(String action, String uid, String lang, String cid, String androidId) {
+//        mView.showProgress();
+//        retrofit.create(GetInfoService.class).getResultReservationReqStatus(action, uid, lang, cid, androidId)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .unsubscribeOn(Schedulers.io())
+//                .subscribe(new Observer<ResultReservationReqStatus>() {
+//
+//                    @Override
+//                    public void onCompleted() {
+//                        mView.dismissProgress();
+//                        mView.showComplete();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        mView.dismissProgress();
+//                        mView.showError(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(ResultReservationReqStatus resultReservationReqStatus) {
+//                        mView.showResultReservationReqStatus(resultReservationReqStatus);
+//                    }
+//                });
+//    }
 
     public interface GetInfoService {
 
@@ -116,11 +116,11 @@ public class SettingPresenter extends SettingContract {
         //   https://api.parsdid.com/iranplanner/app/api-lodging.php?action=req_user_count&uid=792147600796866&lang=fa
 //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_count_bundle&uid=792147600796866&lang=faervation
 
-        @GET("api-reservation.php")
-        Observable<ResultReservationReqStatus> getResultReservationReqStatus(@Query("action") String action,
-                                                                             @Query("uid") String uid,
-                                                                             @Query("lang") String lang,
-                                                                             @Query("cid") String cid,
-                                                                             @Query("andId") String androidId);
+//        @GET("api-reservation.php")
+//        Observable<ResultReservationReqStatus> getResultReservationReqStatus(@Query("action") String action,
+//                                                                             @Query("uid") String uid,
+//                                                                             @Query("lang") String lang,
+//                                                                             @Query("cid") String cid,
+//                                                                             @Query("andId") String androidId);
     }
 }

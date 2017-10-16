@@ -26,9 +26,9 @@ public abstract class SettingContract extends Presenter<SettingContract.View> {
 
     public abstract void getUserInfoPostResult(GetInfoReqSend getInfoReqSend, String cid, String androidId);
 
-    public abstract void getResultReservationReqStatus(String action,
-                                                       String type,
-                                                       String value,
-                                                       String cid,
-                                                       String androidId);
+//    public abstract void getResultReservationReqStatus(String action,
+//                                                       String type,
+//                                                       String value,
+//                                                       String cid,
+//                                                       String androidId);
 }

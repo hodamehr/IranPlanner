@@ -23,6 +23,8 @@ import com.iranplanner.tourism.iranplanner.di.model.App;
 import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.confirmHotelReservation.ActivityHotelReservationConfirm;
 import com.iranplanner.tourism.iranplanner.ui.activity.reservationRequestList.ReservationRequestActivity;
+import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingContract;
+import com.iranplanner.tourism.iranplanner.ui.fragment.myaccount.SettingPresenter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -30,10 +32,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import entity.GetInfoResult;
 import entity.ReservationRequestList;
 import entity.ResultBundleStatus;
 import entity.ResultReqBundle;
 import entity.ResultReqCount;
+import entity.ResultReservationReqStatus;
 import tools.Util;
 
 /**
@@ -49,6 +53,7 @@ public class HotelReservationStatusActivity extends StandardActivity
 
     @Inject
     HotelReservationStatusListPresenter hotelReservationStatusListPresenter;
+
     List<ResultReqCount> resultReqCountList;
     private ProgressDialog progress;
     List<ResultReqBundle> resultReqBundleList;
@@ -104,9 +109,9 @@ public class HotelReservationStatusActivity extends StandardActivity
     //swipe to refresh layout
     @Override
     public void onRefresh() {
-
-
 //        swipe.setRefreshing(false);
+//        settingPresenter.getResultReservationReqStatus("req_user_count_bundle", Util.getUseRIdFromShareprefrence(getApplicationContext()), "fa", Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+        hotelReservationStatusListPresenter.getResultReservationReqStatus("req_user_count_bundle", Util.getUseRIdFromShareprefrence(getApplicationContext()), "fa", Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
     }
 
     @Override
@@ -161,10 +166,8 @@ public class HotelReservationStatusActivity extends StandardActivity
                 ((Button) view.findViewById(R.id.btnComplete)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (resultReqCountList.get(position).getReservationReqStatus().getStatusCount() != "0") {
-                            //        https://api.parsdid.com/iranplanner/app/api-reservation.php?action=req_user_bundle_full&uid=792147600796866&lang=fa&id=12150158259660
-                            hotelReservationStatusListPresenter.getHotelReservationBundleFull("req_user_bundle_full", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), resultReqBundleList.get(position).getBundleRequest().getBundleId(), Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
-                        }
+                       hotelReservationStatusListPresenter.getHotelReservationBundleFull("req_user_bundle_full", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), resultReqBundleList.get(position).getBundleRequest().getBundleId(), Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+
                     }
                 });
                 ((Button) view.findViewById(R.id.requestStatusRowRemoveBtn)).setOnClickListener(new View.OnClickListener() {
@@ -176,16 +179,10 @@ public class HotelReservationStatusActivity extends StandardActivity
             }
         }));
 
+
     }
 
-    private void sendToBrowser() {
-        String url = "http://www.example.com";
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
-        startActivity(i);
-    }
-
-    @Override
+      @Override
     public void showHotelReservationStatusList(ReservationRequestList reservationRequestList) {
 
         Intent intent = new Intent(HotelReservationStatusActivity.this, ReservationRequestActivity.class);
@@ -217,7 +214,7 @@ public class HotelReservationStatusActivity extends StandardActivity
         startActivity(intentReservationRegisterRoom);
     }
 
-    @Override
+     @Override
     public void showError(String message) {
 
     }
@@ -230,6 +227,15 @@ public class HotelReservationStatusActivity extends StandardActivity
     @Override
     public void dismissProgress() {
         Util.dismissProgress(progress);
+    }
+
+    @Override
+    public void showResultReservationReqStatus(ResultReservationReqStatus resultReservationReqStatus) {
+        resultReqCountList = resultReservationReqStatus.getResultReqCountBundle().getResultReqCount();
+        resultReqBundleList = resultReservationReqStatus.getResultReqCountBundle().getResultReqBundle();
+        init();
+        initRequestStatusRecyclerView(resultReqCountList, resultReqBundleList);
+        swipe.setRefreshing(false);
     }
 
     @Override
