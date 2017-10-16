@@ -308,6 +308,11 @@ public class SplashActivity extends StandardActivity implements MainSearchPresen
     }
 
     @Override
+    public void ShowItineryDetail(ResultItineraryList resultItineraryList) {
+
+    }
+
+    @Override
     public void ShowAttractionLists(ShowAttractionMoreList showAttractionList) {
 
     }

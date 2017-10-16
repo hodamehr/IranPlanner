@@ -842,6 +842,8 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         recyclerItinerary.addOnItemTouchListener(new RecyclerItemOnClickListener(getContext(), new RecyclerItemOnClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
+//                https://api.parsdid.com/iranplanner/app/api-itinerary.php?action=full&id=28439&lang=fa
+                homePresenter.getItineraryDetail("full",homeItineraries.get(position).getItineraryId(),"fa",Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
 //                String cityid = homeItineraries.get(position).getItineraryId();
 //                String name = Util.getUseRIdFromShareprefrence(getContext());
 //                Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
@@ -917,6 +919,14 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
     @Override
     public void dismissProgress() {
         Util.dismissProgress(progressDialog);
+    }
+
+    @Override
+    public void ShowItineryDetail(ResultItineraryList resultItineraryList) {
+        Intent intent = new Intent(getActivity(), MoreItemItineraryActivity.class);
+        intent.putExtra("itineraryData", (Serializable) resultItineraryList.getResultItinerary().get(0));
+        intent.putExtra("duration", "");
+        startActivity(intent);
     }
 
     @Override
