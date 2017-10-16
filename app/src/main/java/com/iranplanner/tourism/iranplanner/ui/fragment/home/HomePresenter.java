@@ -136,6 +136,34 @@ public class HomePresenter extends HomeContract {
                 });
     }
 
+    @Override
+    public void getEventDetail(String action, String lang, String id, String cid, String androidId) {
+        mView.showProgress();
+        retrofit.create(HomeService.class)
+                .getEventDetail( action,  lang,  id,  cid,  androidId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResultEvents>() {
+
+                    @Override
+                    public void onCompleted() {
+                        mView.showComplete();
+                        mView.dismissProgress();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError(e.getMessage());
+                        mView.dismissProgress();
+                    }
+
+                    @Override
+                    public void onNext(ResultEvents ResultEvent) {
+                        mView.ShowEventDetail(ResultEvent);
+                    }
+                });
+    }
+
 
     //    action=home&type=city&value=309
     public interface HomeService {
@@ -167,6 +195,14 @@ public class HomePresenter extends HomeContract {
                 @Query("lang") String lang,
                 @Query("id") String id,
                 @Query("type") String type,
+                @Query("cid") String cid,
+                @Query("andId") String androidId        );
+//        https://api.parsdid.com/iranplanner/app/api-event.php?action=full&lang=fa&id=37750
+        @GET("api-event.php")
+        Observable<ResultEvents> getEventDetail(
+                @Query("action") String action,
+                @Query("lang") String lang,
+                @Query("id") String id,
                 @Query("cid") String cid,
                 @Query("andId") String androidId        );
 

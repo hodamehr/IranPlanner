@@ -48,6 +48,7 @@ import com.iranplanner.tourism.iranplanner.ui.activity.StandardActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.AttractionListMorePresenter;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractioListMore.ShowAttractionListMoreActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.attractionDetails.attractionDetailActivity;
+import com.iranplanner.tourism.iranplanner.ui.activity.event.EventActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.event.EventListActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelDetails.ReservationHotelDetailActivity;
 import com.iranplanner.tourism.iranplanner.ui.activity.hotelReservationListOfCity.ReservationContract;
@@ -770,11 +771,26 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
 
     }
 
-    private void setViewPagerEvent(List<HomeEvent> homeEvents) {
+    @Override
+    public void ShowEventDetail(ResultEvents resultEvent) {
+        Log.e("get","eventDetail");
+        Intent intent = new Intent(getContext(), EventActivity.class);
+        intent.putExtra("ResultEvent", (Serializable) resultEvent.getResultEvent().get(0));
+        startActivity(intent);
+    }
+
+    private void setViewPagerEvent(final List<HomeEvent> homeEvents) {
         ShowHomeEventAdapter showHomeEventAdapter = new ShowHomeEventAdapter(getContext(), getActivity(), homeEvents);
         eventsViewPager.setAdapter(showHomeEventAdapter);
         indicator.setViewPager(eventsViewPager);
-        eventsViewPager.setCurrentItem(2);
+        eventsViewPager.setCurrentItem(homeEvents.size()-1);
+        eventsViewPager.setOnItemClickListener(new ClickableViewPager.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Log.d("event","clicked");
+                homePresenter.getEventDetail("full","fa",homeEvents.get(position).getEventId(),Util.getTokenFromSharedPreferences(getContext()),Util.getAndroidIdFromSharedPreferences(getContext()));
+            }
+        });
     }
 
     boolean b = true;

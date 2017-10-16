@@ -38,6 +38,7 @@ import javax.inject.Inject;
 
 import entity.GetHomeResult;
 import entity.ResultCommentList;
+import entity.ResultEvent;
 import entity.ResultEvents;
 import entity.ResultItineraryList;
 import entity.ResultLodgingHotel;
@@ -289,6 +290,12 @@ public class SplashActivity extends StandardActivity implements MainSearchPresen
     public void ShowEventLists(ResultEvents resultEvents) {
 
     }
+
+    @Override
+    public void ShowEventDetail(ResultEvents resultEvent) {
+
+    }
+
 
     @Override
     public void showProgress() {
