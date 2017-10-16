@@ -4,6 +4,7 @@ import com.iranplanner.tourism.iranplanner.ui.presenter.Presenter;
 
 import entity.GetHomeResult;
 import entity.ResultEvents;
+import entity.ResultItineraryList;
 import entity.ShowAttractionListMore;
 import entity.ShowAttractionMoreList;
 
@@ -23,12 +24,14 @@ public abstract class HomeContract extends Presenter<HomeContract.View> {
         void ShowAttractionLists(ShowAttractionListMore getAttractionList);
 
         void ShowEventLists(ResultEvents resultEvents);
+
         void ShowEventDetail(ResultEvents resultEvent);
 
         void showProgress();
 
         void dismissProgress();
 
+        void ShowItineryDetail(ResultItineraryList resultItineraryList);
     }
 
 
@@ -62,4 +65,10 @@ public abstract class HomeContract extends Presenter<HomeContract.View> {
             String id,
             String cid,
             String androidId);
+
+    public abstract void getItineraryDetail(String action,
+                                            String id,
+                                            String lang,
+                                            String cid,
+                                            String androidId);
 }
