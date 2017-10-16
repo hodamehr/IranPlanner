@@ -111,7 +111,7 @@ public class HotelReservationStatusActivity extends StandardActivity
     public void onRefresh() {
 //        swipe.setRefreshing(false);
 //        settingPresenter.getResultReservationReqStatus("req_user_count_bundle", Util.getUseRIdFromShareprefrence(getApplicationContext()), "fa", Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
-        hotelReservationStatusListPresenter.getResultReservationReqStatus("req_user_count_bundle", Util.getUseRIdFromShareprefrence(getApplicationContext()), "fa", Util.getTokenFromSharedPreferences(getApplicationContext()),Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+        hotelReservationStatusListPresenter.getResultReservationReqStatus("req_user_count_bundle", Util.getUseRIdFromShareprefrence(getApplicationContext()), "fa", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
     }
 
     @Override
@@ -166,7 +166,7 @@ public class HotelReservationStatusActivity extends StandardActivity
                 ((Button) view.findViewById(R.id.btnComplete)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       hotelReservationStatusListPresenter.getHotelReservationBundleFull("req_user_bundle_full", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), resultReqBundleList.get(position).getBundleRequest().getBundleId(), Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+                        hotelReservationStatusListPresenter.getHotelReservationBundleFull("req_user_bundle_full", "fa", Util.getUseRIdFromShareprefrence(getApplicationContext()), resultReqBundleList.get(position).getBundleRequest().getBundleId(), Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
 
                     }
                 });
@@ -178,11 +178,9 @@ public class HotelReservationStatusActivity extends StandardActivity
                 });
             }
         }));
-
-
     }
 
-      @Override
+    @Override
     public void showHotelReservationStatusList(ReservationRequestList reservationRequestList) {
 
         Intent intent = new Intent(HotelReservationStatusActivity.this, ReservationRequestActivity.class);
@@ -190,10 +188,10 @@ public class HotelReservationStatusActivity extends StandardActivity
                 (ReservationRequestList.INTENT_KEY_RESULT_RESERVATION, (Serializable) reservationRequestList.getResultReservationReqList());
         switch (which) {
             case 1:
-                intent.putExtra("status", "درانتظار پرداخت");
+                intent.putExtra("status", "در حال بررسی");
                 break;
             case 2:
-                intent.putExtra("status", "در حال بررسی");
+                intent.putExtra("status", "درانتظار پرداخت");
                 break;
             case 3:
                 intent.putExtra("status", "پرداخت شده");
@@ -214,7 +212,7 @@ public class HotelReservationStatusActivity extends StandardActivity
         startActivity(intentReservationRegisterRoom);
     }
 
-     @Override
+    @Override
     public void showError(String message) {
 
     }

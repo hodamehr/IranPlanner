@@ -64,8 +64,6 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         tvFinalPrice = (TextView) findViewById(R.id.hotelFinalPriceTv);
         hotelPurchaseBtn = (Button) findViewById(R.id.hotelPurchaseBtn);
 
-        hotelPurchaseBtn.setVisibility(View.INVISIBLE);
-
         tvHotelName.setText(hotelName);
         tvRoomTypeTv.setText(roomType);
         tvReqCode.setText(reqCode);
@@ -85,7 +83,9 @@ public class ReservationRequestDetailActivity extends StandardActivity {
 
         reqStatus = "وضعیت درخواست : " + intent.getExtras().getString("status");
 
-        if (intent.getExtras().getString("status").equals("پرداخت شده"))
+        hotelPurchaseBtn = (Button) findViewById(R.id.hotelPurchaseBtn);
+        hotelPurchaseBtn.setVisibility(View.INVISIBLE);
+        if (intent.getExtras().getString("status").equals("درانتظار پرداخت"))
             hotelPurchaseBtn.setVisibility(View.VISIBLE);
 
         hotelName = reservationReqFulls.get(0).getRequest().getReqLodgingTitle();

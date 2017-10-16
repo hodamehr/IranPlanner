@@ -51,10 +51,7 @@ public class RequestBundleAdapter extends RecyclerView.Adapter<RequestBundleAdap
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        holder.hotelNameTv.setText(resultReqBundleList.get(position).getBundleRequest().getBundleLodgingTitle());
-        holder.hotelRoomNumberTv.setText(resultReqBundleList.get(position).getBundleRequest().getBundleDateCount());
-        holder.txtHotelDateReq.setText(Util.persianNumbers(Utils.getSimpleDateMilli(Long.valueOf(resultReqBundleList.get(position).getBundleRequest().getBundleDateFrom()))));
-        Util.setImageView(resultReqBundleList.get(position).getBundleRequest().getLodgingImgUrl(),context,holder.imageHotel,holder.imageLoading);
+        holder.setData(resultReqBundleList.get(position));
     }
 
     @Override
@@ -64,24 +61,27 @@ public class RequestBundleAdapter extends RecyclerView.Adapter<RequestBundleAdap
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @InjectView(R.id.imageHotel)
-        ImageView imageHotel;
-        @InjectView(R.id.hotelNameTv)
-        TextView hotelNameTv;
-        @InjectView(R.id.hotelRoomNumberTv)
-        TextView hotelRoomNumberTv;
-        @InjectView(R.id.txtHotelDateReq)
-        TextView txtHotelDateReq;
-        @InjectView(R.id.imageLoading)
-        ProgressBar imageLoading;
-
+        private ImageView imageHotel;
+        private TextView hotelNameTv, hotelRoomNumberTv, txtHotelDateReq;
+        private ProgressBar imageLoading;
 
         public Holder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            imageHotel = (ImageView) itemView.findViewById(R.id.imageHotel);
+            hotelNameTv = (TextView) itemView.findViewById(R.id.hotelNameTv);
+            hotelRoomNumberTv = (TextView) itemView.findViewById(R.id.hotelRoomNumberTv);
+            txtHotelDateReq = (TextView) itemView.findViewById(R.id.txtHotelDateReq);
+            imageLoading = (ProgressBar) itemView.findViewById(R.id.imageLoading);
         }
 
-
+        public void setData(ResultReqBundle current) {
+            hotelNameTv.setText(current.getBundleRequest().getBundleLodgingTitle());
+            String roomNumber = "تعداد اتاق : " + current.getBundleRequest().getBundleDateCount();
+            hotelRoomNumberTv.setText(roomNumber);
+            String dateReq = "تاریخ درخواست : " + Util.persianNumbers(Utils.getSimpleDateMilli(Long.valueOf(current.getBundleRequest().getBundleDateFrom())));
+            txtHotelDateReq.setText(dateReq);
+            Util.setImageView(current.getBundleRequest().getLodgingImgUrl(), context, imageHotel, imageLoading);
+        }
 
         @Override
         public void onClick(View view) {

@@ -24,12 +24,10 @@ import tools.Util;
 
 public class ReservationRequestAdapter extends RecyclerView.Adapter<ReservationRequestAdapter.Holder> {
 
-    private Context context;
     private LayoutInflater inflater;
     private List<ResultReservationReqList> reservationReqLists;
 
     public ReservationRequestAdapter(Context context, List<ResultReservationReqList> reservationReqLists) {
-        this.context = context;
         this.reservationReqLists = reservationReqLists;
         inflater = LayoutInflater.from(context);
     }

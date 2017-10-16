@@ -1,5 +1,6 @@
 package com.iranplanner.tourism.iranplanner.ui.activity.reservationRequestList;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import entity.ReservationRequestFull;
 import entity.ReservationRequestList;
 import entity.ResultReservationReqList;
 import tools.Util;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ReservationRequestActivity extends StandardActivity implements ReservationRequestFullContract.View {
     @Inject
@@ -110,5 +112,10 @@ public class ReservationRequestActivity extends StandardActivity implements Rese
     @Override
     public void showProgress() {
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }
