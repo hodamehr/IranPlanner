@@ -48,7 +48,7 @@ import tools.Util;
 public class SettingFragment extends StandardFragment implements View.OnClickListener, SettingContract.View ,HotelReservationStatusContract.View {
 
     TextView txtProfileName, btnEditProfile, txtHotelReservationStatus;
-    RelativeLayout LayoutShowProfileHolder, exitFromAccount;
+    RelativeLayout LayoutShowProfileHolder, exitFromAccount,HotelReservationStatusHolder;
     @Inject
     SettingPresenter settingPresenter;
     private String tagFrom;
@@ -87,12 +87,13 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
         txtProfileName = (TextView) view.findViewById(R.id.txtProfileName);
         btnEditProfile = (TextView) view.findViewById(R.id.btnEditProfile);
         txtHotelReservationStatus = (TextView) view.findViewById(R.id.txtHotelReservationStatus);
+        HotelReservationStatusHolder = (RelativeLayout) view.findViewById(R.id.HotelReservationStatusHolder);
         LayoutShowProfileHolder = (RelativeLayout) view.findViewById(R.id.LayoutShowProfileHolder);
         exitFromAccount = (RelativeLayout) view.findViewById(R.id.exitFromAccount);
         btnEditProfile.setOnClickListener(this);
         LayoutShowProfileHolder.setOnClickListener(this);
         exitFromAccount.setOnClickListener(this);
-        txtHotelReservationStatus.setOnClickListener(this);
+        HotelReservationStatusHolder.setOnClickListener(this);
         setLoginName();
         getSharedpreferences();
         DaggerSettingComponent.builder().netComponent(((App) getActivity().getApplicationContext()).getNetComponent())
@@ -132,7 +133,7 @@ public class SettingFragment extends StandardFragment implements View.OnClickLis
                 Intent intent = new Intent(getActivity(), SplashActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.txtHotelReservationStatus:
+            case R.id.HotelReservationStatusHolder:
                 getRerReservation();
                 break;
 

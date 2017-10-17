@@ -150,6 +150,12 @@ public class HotelReservationStatusActivity extends StandardActivity
     }
 
     @Override
+    protected void onResume() {
+        hotelReservationStatusListPresenter.getResultReservationReqStatus("req_user_count_bundle", Util.getUseRIdFromShareprefrence(getApplicationContext()), "fa", Util.getTokenFromSharedPreferences(getApplicationContext()), Util.getAndroidIdFromSharedPreferences(getApplicationContext()));
+        super.onResume();
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_status_reservation_hotel;
     }
