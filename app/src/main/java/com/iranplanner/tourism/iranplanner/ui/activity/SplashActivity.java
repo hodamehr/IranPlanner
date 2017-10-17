@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appsee.Appsee;
 import com.bumptech.glide.Glide;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -74,6 +75,8 @@ public class SplashActivity extends StandardActivity implements MainSearchPresen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        Appsee.start(getString(R.string.app_see_key));
 
         //Load Background Image
         Glide.with(this).load(R.drawable.splash_bg_blur).centerCrop().override(600, 400).into((ImageView) findViewById(R.id.splashBgIv));

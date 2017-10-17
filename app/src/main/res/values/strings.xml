@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">IranPlanner</string>
 
+    <string name="app_see_key">6171dabacaf7485e9f70b8daf21ae546</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
