@@ -37,7 +37,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@color/main_blue"
+                    android:background="@color/transparent"
                     app:layout_collapseMode="pin"
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
             </android.support.design.widget.CollapsingToolbarLayout>

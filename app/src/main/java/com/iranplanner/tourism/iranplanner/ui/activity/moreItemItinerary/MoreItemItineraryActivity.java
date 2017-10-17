@@ -9,9 +9,11 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -107,6 +109,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     @Inject
     ItineraryPresenter itineraryPresenter;
 
+    private CollapsingToolbarLayout collapsingToolbar;
     private GoogleMap mMap;
     private ArrayList<LatLng> MarkerPoints;
     private GoogleApiClient mGoogleApiClient;
@@ -165,9 +168,9 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         toolsPager = (ViewPager) findViewById(R.id.toolsPager);
         txtItinerary_attraction_type = (TextView) findViewById(R.id.txtItinerary_attraction_type);
         txtItinerary_count_attraction = (TextView) findViewById(R.id.txtItinerary_count_attraction);
-        itineraryDuration = (TextView) findViewById(R.id.itineraryDuration);
-        fromCityName = (TextView) findViewById(R.id.fromCityName);
-        toCityName = (TextView) findViewById(R.id.toCityName);
+//        itineraryDuration = (TextView) findViewById(R.id.itineraryDuration);
+//        fromCityName = (TextView) findViewById(R.id.fromCityName);
+//        toCityName = (TextView) findViewById(R.id.toCityName);
         showReservation = (Button) findViewById(R.id.showReservation);
         itinerary_attraction_type_more = (ImageView) findViewById(R.id.itinerary_attraction_type_more);
 //        showItinerys = (TextView) findViewById(R.id.showItinerys);
@@ -212,6 +215,9 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 //        nowVisitedImg = (ImageView) findViewById(R.id.nowVisitedImg);
 //        triangleShowAttraction = (ImageView) findViewById(R.id.triangleShowAttraction);
 //        nowVisitedImg = (ImageView) findViewById(R.id.nowVisitedImg);
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
+        AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appBar);
+        ViewCompat.setElevation(appBar, Util.dpToPx(this, 28));
     }
 
 //    private void setInterestResponce(List<ResultWidget> resultWidget) {
@@ -283,13 +289,13 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 //        resultLodging();
         txtItinerary_attraction_Difficulty.setText(itineraryData.getItineraryDifficulty().getItineraryDifficultyGroup());
         txtItinerary_count_attraction.setText(Util.persianNumbers(itineraryData.getItineraryCountAttraction()) + " مکان دیدنی");
-        itineraryDuration.setText(duration);
+//        itineraryDuration.setText(duration);
         if (itineraryData.getItineraryFromCityName().equals(itineraryData.getItineraryToCityName())) {
-            fromCityName.setText(itineraryData.getItineraryFromCityName());
-            toCityName.setText("درون شهری");
+//            fromCityName.setText(itineraryData.getItineraryFromCityName());
+//            toCityName.setText("درون شهری");
         } else {
-            fromCityName.setText(itineraryData.getItineraryFromCityName());
-            toCityName.setText(itineraryData.getItineraryToCityName());
+//            fromCityName.setText(itineraryData.getItineraryFromCityName());
+//            toCityName.setText(itineraryData.getItineraryToCityName());
         }
 //// TODO: 04/10/2017 vase show more
         //listener bara inke vaghti maghadir width , height set shod
@@ -387,19 +393,21 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
 //        return true;
 //    }
 
-    private Menu menu=null;
+    private Menu menu = null;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_itinerary_more, menu);
-        this.menu=menu;
+        this.menu = menu;
 //        menu.findItem(R.id.menuItineraryFav).setVisible(true);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 //            case R.id.menuItineraryComment:
-                //here comes the comment code section
+            //here comes the comment code section
 //                break;
 //            case R.id.menuItineraryFav:
 //                if (toggleFav()) {
@@ -587,9 +595,9 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
     private void OnClickedIntrestedWidget(String gType, String gValue, ImageView imageView) {
         if (!Util.getUseRIdFromShareprefrence(getApplicationContext()).isEmpty()) {
 //            itineraryPresenter.doWaitingAnimation(imageView);
-            String user=Util.getUseRIdFromShareprefrence(getApplicationContext());
-            String ss= Util.getAndroidIdFromSharedPreferences(getApplicationContext());
-            itineraryPresenter.getInterest("widget", user, "1", "itinerary", itineraryId, gType, gValue,ss);
+            String user = Util.getUseRIdFromShareprefrence(getApplicationContext());
+            String ss = Util.getAndroidIdFromSharedPreferences(getApplicationContext());
+            itineraryPresenter.getInterest("widget", user, "1", "itinerary", itineraryId, gType, gValue, ss);
         } else {
             Log.e("user is not login", "error");
             Toast.makeText(getApplicationContext(), "شما به حساب کاربری خود وارد نشده اید", Toast.LENGTH_LONG).show();
@@ -974,8 +982,7 @@ public class MoreItemItineraryActivity extends StandardActivity implements OnMap
         if (toggleFav()) {
 
 //            menu.findItem(R.id.menuItineraryFav).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_off));
-        }
-        else {
+        } else {
 //            menu.findItem(R.id.menuItineraryFav).setIcon(getApplicationContext().getResources().getDrawable(R.mipmap.ic_like_on));
 
         }

@@ -6,8 +6,11 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        app:elevation="8dp">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbar"
@@ -34,62 +37,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:scaleType="centerCrop" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:translationZ="1dp">
-
-                    <TextView
-                        android:id="@+id/itineraryDuration"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="text"
-                        android:textAlignment="center"
-                        android:textColor="@color/white_"
-                        android:translationZ="1dp" />
-
-                </RelativeLayout>
-
-                <ImageView
-                    android:id="@+id/imageTypeAttraction"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/circle_tohi"
-                    android:translationZ="1dp" />
-
-                <TextView
-                    android:id="@+id/fromCityName"
-                    style="@style/StandardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/imageTypeAttraction"
-                    android:paddingEnd="@dimen/padding_short"
-                    android:paddingStart="@dimen/padding_short"
-                    android:text="from"
-                    android:textColor="@color/white_"
-                    android:translationZ="2dp" />
-
-                <TextView
-                    android:id="@+id/toCityName"
-                    style="@style/StandardTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/imageTypeAttraction"
-                    android:paddingEnd="@dimen/padding_short"
-                    android:paddingStart="@dimen/padding_short"
-                    android:text="destintion"
-                    android:textColor="@color/white_"
-                    android:translationZ="2dp" />
 
             </RelativeLayout>
 
@@ -125,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                        <include layout="@layout/content_itinerary_more" />
+                    <include layout="@layout/content_itinerary_more" />
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
