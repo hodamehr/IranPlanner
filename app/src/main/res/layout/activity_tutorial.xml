@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/tut_background_pattern"
     android:layoutDirection="ltr"
     tools:context="com.iranplanner.tourism.iranplanner.ui.tutorial.TutorialActivity">
 

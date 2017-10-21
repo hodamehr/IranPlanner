@@ -30,6 +30,11 @@ import tools.Util;
 
 public class ReservationRequestDetailActivity extends StandardActivity {
 
+    private final int STATUS_PAID = 0;
+    private final int STATUS_PENDING = 1;
+
+    private int status;
+
     private String hotelName, roomType, reqCode, startDueDate, reqStatus, reqDate, supervisorName, startPrice, off, finalPrice;
     private TextView tvHotelName, tvRoomTypeTv, tvReqCode, tvStartDueDate, tvReqStatus, tvReqDate, tvSupervisorName, tvStartPrice, tvOff, tvFinalPrice;
     private Button hotelPurchaseBtn;
@@ -47,7 +52,14 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         hotelPurchaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendToBrowser(reservationReqFulls.get(0).getRequest().getReqKey());
+                switch (status){
+                    case STATUS_PENDING:
+                        sendToBrowser(reservationReqFulls.get(0).getRequest().getReqKey());
+                        break;
+                    case STATUS_PAID:
+                        // handle the pdf shpw stuff here dudy :D
+                        break;
+                }
             }
         });
     }
@@ -85,9 +97,15 @@ public class ReservationRequestDetailActivity extends StandardActivity {
 
         hotelPurchaseBtn = (Button) findViewById(R.id.hotelPurchaseBtn);
         hotelPurchaseBtn.setVisibility(View.INVISIBLE);
-        if (intent.getExtras().getString("status").equals("درانتظار پرداخت"))
-            hotelPurchaseBtn.setVisibility(View.VISIBLE);
 
+        if (intent.getExtras().getString("status").equals("درانتظار پرداخت")) {
+            hotelPurchaseBtn.setVisibility(View.VISIBLE);
+            status = STATUS_PENDING;
+        } else if (intent.getExtras().getString("status").equals("پرداخت شده")) {
+            hotelPurchaseBtn.setVisibility(View.VISIBLE);
+            hotelPurchaseBtn.setText("مشاهده ی ووجر");
+            status = STATUS_PAID;
+        }
         hotelName = reservationReqFulls.get(0).getRequest().getReqLodgingTitle();
         roomType = "نوع اتاق : " + reservationReqFulls.get(0).getRequest().getReqRoomTitle();
         reqCode = "کد درخواست " + Util.persianNumbers(reservationReqFulls.get(0).getRequest().getReqId());
