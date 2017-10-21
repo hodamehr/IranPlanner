@@ -18,6 +18,13 @@
 # Glide specific rules #
 # https://github.com/bumptech/glide
 
+#app see proguard rules
+-keep class com.appsee.** { *; }
+-dontwarn com.appsee.**
+-keep class android.support.** { *; }
+-keep interface android.support.** { *; }
+-keepattributes SourceFile,LineNumberTable
+
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
     **[] $VALUES;
