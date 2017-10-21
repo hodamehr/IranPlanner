@@ -52,12 +52,13 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         hotelPurchaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (status){
+                switch (status) {
                     case STATUS_PENDING:
                         sendToBrowser(reservationReqFulls.get(0).getRequest().getReqKey());
                         break;
                     case STATUS_PAID:
                         // handle the pdf shpw stuff here dudy :D
+                        sendToPdf();
                         break;
                 }
             }
@@ -148,6 +149,16 @@ public class ReservationRequestDetailActivity extends StandardActivity {
         Intent i = new Intent(Intent.ACTION_VIEW);
         Uri uri = Uri.parse(url).buildUpon()
                 .appendQueryParameter("req", reqKey)
+                .build();
+        i.setData(uri);
+        startActivity(i);
+    }
+
+    private void sendToPdf() {
+        String url = "iranplanner.com/files/voucher/1515079827407921.pdf";
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse(url).buildUpon()
                 .build();
         i.setData(uri);
         startActivity(i);
