@@ -337,10 +337,6 @@ public class HomeFragment extends StandardFragment implements DataTransferInterf
         root.findViewById(R.id.navCommentTv).setOnClickListener(navClickListener);
         root.findViewById(R.id.navRecommendTv).setOnClickListener(navClickListener);
         root.findViewById(R.id.navTutorialTv).setOnClickListener(navClickListener);
-
-//        View tour = root.findViewById(R.id.navTutorialTv);
-//        tour.setVisibility(View.GONE);
-
     }
 
     private View.OnClickListener navClickListener = new View.OnClickListener() {
